@@ -17,6 +17,7 @@ The current features are
 
 The planned features are
 
+* Allow adding/changing of section/key/values
 * Saving the INI file
 * Improving the regular expressions
 * Unit tests
@@ -50,3 +51,7 @@ std::string Value = IniParser.GetSectionKeyValue(Section, Key, Default);
 ## Contributing ##
 
 Any kind of contribution is welcome.
+
+## License ##
+
+This project is published unter the GNU GENERAL PUBLIC LICENSE, Version 3.
