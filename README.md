@@ -19,9 +19,13 @@ The planned features are
 
 * Allow adding/changing of section/key/values
 * Saving the INI file
-* Improving the regular expressions
 * Unit tests
+
+Features done
+
+* Improving the regular expressions
 * Doxygen documentation
+* Added test program
 
 ## Implementation details ##
 
