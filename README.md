@@ -8,28 +8,16 @@ Searching for INI parsers for C++ fires up a lot of them. Most of them come with
 
 ## Features ##
 
-The current features are
+The current features are:
 
 * Reading and parsing an INI file
 * Get a vector of strings containing all sections
 * Get a vector of strings containing all keys of a section
 * Get a value of a section/key combination - Note: This is a templated method and requires in any case a default value.
 
-The planned features are
-
-* Allow adding/changing of section/key/values
-* Saving the INI file
-* Unit tests
-
-Features done
-
-* Improving the regular expressions
-* Doxygen documentation
-* Added test program
-
 ## Implementation details ##
 
-* Convenience typedefs for datatypes in YAIPData.h
+* Convenience typedefs for datatypes in <code>YAIP++Data.h</code>
 * Data containers are STL elements like vector or map
 * Detection of section and key/value pair is done using regular expressions
 
