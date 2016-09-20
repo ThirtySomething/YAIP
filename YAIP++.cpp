@@ -160,7 +160,7 @@ namespace YAIP{
 
 	// ******************************************************************
 	// ******************************************************************
-	tVectorString YAIP::GetSectionList(void)
+	tVectorString YAIP::SectionListGet(void)
 	{
 		tVectorString SectionList;
 
@@ -175,7 +175,7 @@ namespace YAIP{
 
 	// ******************************************************************
 	// ******************************************************************
-	tVectorString YAIP::GetSectionKeys(std::string Section)
+	tVectorString YAIP::SectionKeyListGet(std::string Section)
 	{
 		tVectorString KeyList;
 
