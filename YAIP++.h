@@ -40,24 +40,25 @@ namespace YAIP
 		 * Get all section of the INI file
 		 * \return Vector with a std::strings for each section
 		 */
-		tVectorString GetSectionList(void);
+		tVectorString SectionListGet(void);
 
 		/**
 		 * Get all keys of a section of the INI file
 		 * \param Section Specified section
 		 * \return Vector with a std::strings for each key
 		 */
-		tVectorString GetSectionKeys(std::string Section);
+		tVectorString SectionKeyListGet(std::string Section);
 
 		/**
-		 * Templated method to retrieve a value of the specified section/key combination
+		 * Templated method to retrieve a value of the specified section/key combination - will work
+		 * for almost everything except std::string
 		 * \param Section Specified section
 		 * \param Key Specified key
 		 * \param Default Specified default value in case key does not exist
 		 * \return Returns either the default value or the value of the existing section/key combination
 		 */
 		template<typename VariableType>
-		VariableType GetSectionKeyValue(std::string Section, std::string Key, VariableType Default)
+		VariableType SectionKeyValueGet(std::string Section, std::string Key, VariableType Default)
 		{
 			// First of all ensure the default return value
 			VariableType ReturnValue = Default;
@@ -70,12 +71,62 @@ namespace YAIP
 				tMapStringString::iterator KeyDataRaw = SectionData.find(Key);
 				if (SectionData.end() != KeyDataRaw)
 				{
-					std::stringstream StringStream(KeyDataRaw->second);
-					StringStream >> ReturnValue;
+					// Check for std::string
+					if (nullptr != dynamic_cast<std::string*>(&Default))
+					{
+						// std::string == std::string
+						ReturnValue = KeyDataRaw->second;
+					}
+					else
+					{
+						// Convert std::string into VariableType
+						std::stringstream StringStream(KeyDataRaw->second);
+						StringStream >> ReturnValue;
+					}
 				}
 			}
 
 			return ReturnValue;
+		}
+
+		/**
+		 * Templated method to set a value of the specified section/key combination
+		 * \param Section Specified section
+		 * \param Key Specified key
+		 * \param Value Specified value to set
+		 */
+		template<typename VariableType>
+		void SectionKeyValueSet(std::string Section, std::string Key, VariableType Value)
+		{
+			// Write data into string stream and convert to a std::string
+			std::ostringstream DataRaw(Value);
+			std::string Data = DataRaw.str();
+
+			// Create new key/value pair
+			tMapStringString KeyValueNew;
+			KeyValueNew.insert(std::make_pair(Key, Data));
+
+			// Old key/value data
+			tMapStringString KeyValueOld;
+
+			// Check for section
+			tMapMapStringString::iterator SectionDataRaw = m_IniData.find(Section);
+			if (m_IniData.end() != SectionDataRaw)
+			{
+				// Section already exists, pick data and erase section
+				KeyValueOld = SectionDataRaw->second;
+				m_IniData.erase(Section);
+			}
+
+			tMapStringString::iterator KeyValueOldPosition = KeyValueOld.find(Key);
+			if (KeyValueOld.end() != KeyValueOldPosition)
+			{
+				// Section already exists, pick data and erase section
+				KeyValueOld.erase(Key);
+			}
+
+			KeyValueOld.insert(KeyValueNew.begin(), KeyValueNew.end());
+			m_IniData.insert(std::make_pair(Section, KeyValueOld));
 		}
 
 	protected:
