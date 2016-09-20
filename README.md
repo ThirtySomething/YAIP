@@ -30,14 +30,17 @@ The usage is just simple:
 IniParser.INIFileLoad("C:\\Windows\\system.ini");
 
 // Get a vector of strings containing all section names
-tVectorString SectionList = IniParser.GetSectionList();
+tVectorString SectionList = IniParser.SectionListGet();
 
 // Get a vector of strings containing all keys of a section
-tVectorString KeyList = IniParser.GetSectionKeys(Section);
+tVectorString KeyList = IniParser.SectionKeyListGet(Section);
 
 // Get a value of a key from a section
 std::string Default = "Default value";
-std::string Value = IniParser.GetSectionKeyValue(Section, Key, Default);
+std::string Value = IniParser.SectionKeyValueGet(Section, Key, Default);
+
+// Write a value to the INI file
+IniParser.SectionKeyValueSet("Section", "Key", "Value");
 </pre>
 
 ## Contributing ##
