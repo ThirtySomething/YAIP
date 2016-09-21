@@ -44,5 +44,8 @@ int main()
 	// Display modified content
 	DisplayINI(IniParser);
 
+	// Save new INI file
+	IniParser.INIFileSave("C:\\Windows\\Temp\\_YAIP.ini");
+
 	return 0;
 }

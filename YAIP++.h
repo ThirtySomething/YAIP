@@ -9,9 +9,9 @@
 #include "YAIP++Data.h"
 #include <sstream>
 
-/**
- * Namespace of YAIP
- */
+ /**
+  * Namespace of YAIP
+  */
 namespace YAIP
 {
 	/**
@@ -35,6 +35,12 @@ namespace YAIP
 		 * \param Filename Full qualified filename of the INI file
 		 */
 		void INIFileLoad(std::string Filename);
+
+		/**
+		 * Save internal structures to INI file
+		 * \param Filename Full qualified filename of the INI file
+		 */
+		void INIFileSave(std::string Filename);
 
 		/**
 		 * Get all section of the INI file
@@ -74,7 +80,7 @@ namespace YAIP
 					// Check for std::string
 					if (nullptr != dynamic_cast<std::string*>(&Default))
 					{
-						// std::string == std::string
+						// Assignment of complete std::string
 						ReturnValue = KeyDataRaw->second;
 					}
 					else
@@ -167,5 +173,12 @@ namespace YAIP
 		 * \return true for section match, otherwise false
 		 */
 		static bool NewKeyValue(const std::string &Line, std::string &Key, std::string &Value);
+
+		/**
+		 * Save given section into INI file
+		 * \param Section Section to write
+		 * \param IniFile INI file to read section to
+		 */
+		void INIFileSaveSection(std::string Section, std::ofstream &IniFile);
 	};
 }
