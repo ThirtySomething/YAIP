@@ -8,10 +8,11 @@
 #include <iostream>
 #include <fstream>
 
-/**
- * Namespace of YAIP
- */
-namespace YAIP{
+ /**
+  * Namespace of YAIP
+  */
+namespace YAIP
+{
 	// ******************************************************************
 	// ******************************************************************
 	// Regular expressioin for matching a section
@@ -82,6 +83,28 @@ namespace YAIP{
 
 			// After reading parse the data
 			ParseFileContent(FileContent);
+		}
+	}
+
+	// ******************************************************************
+	// ******************************************************************
+	void YAIP::INIFileSave(std::string Filename)
+	{
+		std::ofstream IniFile;
+
+		// Open the INI file for reading
+		IniFile.open(Filename, std::ios::trunc);
+
+		// How to handle file errors like file does not exist?
+		if (true == IniFile.is_open())
+		{
+			tVectorString SectionList = SectionListGet();
+			for (tVectorString::iterator LoopSection = SectionList.begin(); LoopSection != SectionList.end(); ++LoopSection)
+			{
+				INIFileSaveSection(*LoopSection, IniFile);
+			}
+
+			IniFile.close();
 		}
 	}
 
@@ -192,5 +215,24 @@ namespace YAIP{
 		}
 
 		return KeyList;
+	}
+
+	// ******************************************************************
+	// ******************************************************************
+	void YAIP::INIFileSaveSection(std::string Section, std::ofstream &IniFile)
+	{
+		if (0 != Section.length())
+		{
+			IniFile << "[" << Section << "]" << std::endl;
+		}
+
+		tVectorString KeyList = SectionKeyListGet(Section);
+		for (tVectorString::iterator LoopKey = KeyList.begin(); LoopKey != KeyList.end(); ++LoopKey)
+		{
+			std::string Default = "";
+			std::string Key = *LoopKey;
+			std::string Value = SectionKeyValueGet(Section, Key, Default);
+			IniFile << Key << "=" << Value << std::endl;
+		}
 	}
 }
