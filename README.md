@@ -2,6 +2,10 @@
 
 Yet another INI parser
 
+## Build status ##
+
+ [![Build Status](https://travis-ci.org/ThirtySomething/YAIP.svg?branch=master)](https://travis-ci.org/ThirtySomething/YAIP)
+
 ## Motivation ##
 
 Searching for INI parsers for C++ fires up a lot of them. Most of them come with a lot of stuff/classes around, some of them as library. Only a few of them offers plain classes. Also only a few of them are portable. I like to improve my C++ skills so I decided to write my own INI file parser.
