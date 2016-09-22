@@ -47,6 +47,10 @@ IniParser.SectionKeyValueSet("Section", "Key", "Value");
 IniParser.INIFileSave("C:\\Windows\\Temp\\YAIP.ini");
 </pre>
 
+## Doxygen documentation ##
+
+The doxygen documentation can be found [here](https://cdn.rawgit.com/ThirtySomething/YAIP/master/doxygen/html/index.html).
+
 ## Contributing ##
 
 Any kind of contribution is welcome.
