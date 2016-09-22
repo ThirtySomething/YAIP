@@ -51,7 +51,7 @@ IniParser.INIFileSave("C:\\Windows\\Temp\\YAIP.ini");
 
 ## Doxygen documentation ##
 
-The doxygen documentation can be found [here](https://cdn.rawgit.com/ThirtySomething/YAIP/master/doxygen/html/index.html).
+The doxygen documentation can be found <a href="https://cdn.rawgit.com/ThirtySomething/YAIP/master/doxygen/html/index.html" target="_blank">here</a>.
 
 ## Contributing ##
 
