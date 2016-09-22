@@ -2,9 +2,7 @@
 
 Yet another INI parser
 
-## Build status ##
-
- [![Build Status](https://travis-ci.org/ThirtySomething/YAIP.svg?branch=master)](https://travis-ci.org/ThirtySomething/YAIP)
+[![Build Status](https://cdn.travis-ci.org/ThirtySomething/YAIP.svg?branch=master)](https://cdn.travis-ci.org/ThirtySomething/YAIP)
 
 ## Motivation ##
 
