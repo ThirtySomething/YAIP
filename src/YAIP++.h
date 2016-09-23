@@ -9,9 +9,9 @@
 #include "YAIP++Data.h"
 #include <sstream>
 
- /**
-  * Namespace of YAIP
-  */
+/**
+ * Namespace of YAIP
+ */
 namespace YAIP
 {
 	/**
@@ -49,6 +49,13 @@ namespace YAIP
 		tVectorString SectionListGet(void);
 
 		/**
+		 * Remove key completely from section of internal data structure
+		 * \param Section Specified section
+		 * \param Key Specified key
+		 */
+		void SectionKeyKill(std::string Section, std::string Key);
+
+		/**
 		 * Get all keys of a section of the INI file
 		 * \param Section Specified section
 		 * \return Vector with a std::strings for each key
@@ -56,8 +63,7 @@ namespace YAIP
 		tVectorString SectionKeyListGet(std::string Section);
 
 		/**
-		 * Templated method to retrieve a value of the specified section/key combination - will work
-		 * for almost everything except std::string
+		 * Templated method to retrieve a value of the specified section/key combination
 		 * \param Section Specified section
 		 * \param Key Specified key
 		 * \param Default Specified default value in case key does not exist
@@ -66,26 +72,27 @@ namespace YAIP
 		template<typename VariableType>
 		VariableType SectionKeyValueGet(std::string Section, std::string Key, VariableType Default)
 		{
-			// First of all ensure the default return value
+			// Ensure default return value
 			VariableType ReturnValue = Default;
 
-			// Check for section
+			// First check for section existence
 			tMapMapStringString::iterator SectionDataRaw = m_IniData.find(Section);
 			if (m_IniData.end() != SectionDataRaw)
 			{
 				tMapStringString SectionData = SectionDataRaw->second;
+
+				// Figure out if requested key exists
 				tMapStringString::iterator KeyDataRaw = SectionData.find(Key);
 				if (SectionData.end() != KeyDataRaw)
 				{
-					// Check for std::string
 					if (nullptr != dynamic_cast<std::string*>(&Default))
 					{
-						// Assignment of complete std::string
+						// std::string requires special handling
 						ReturnValue = KeyDataRaw->second;
 					}
 					else
 					{
-						// Convert std::string into VariableType
+						// Convert data into VariableType
 						std::stringstream StringStream(KeyDataRaw->second);
 						StringStream >> ReturnValue;
 					}
@@ -119,7 +126,7 @@ namespace YAIP
 			tMapMapStringString::iterator SectionDataRaw = m_IniData.find(Section);
 			if (m_IniData.end() != SectionDataRaw)
 			{
-				// Section already exists, pick data and erase section
+				// Section exists, pick data and kill section
 				KeyValueOld = SectionDataRaw->second;
 				m_IniData.erase(Section);
 			}
@@ -127,13 +134,20 @@ namespace YAIP
 			tMapStringString::iterator KeyValueOldPosition = KeyValueOld.find(Key);
 			if (KeyValueOld.end() != KeyValueOldPosition)
 			{
-				// Section already exists, pick data and erase section
+				// Key exists, pick data and kill key
 				KeyValueOld.erase(Key);
 			}
 
+			// Merge new and existing data and memorize them
 			KeyValueOld.insert(KeyValueNew.begin(), KeyValueNew.end());
 			m_IniData.insert(std::make_pair(Section, KeyValueOld));
 		}
+
+		/**
+		 * Remove section completely from internal data structure
+		 * \param Section Specified section
+		 */
+		void SectionKill(std::string Section);
 
 	protected:
 		/**
@@ -142,28 +156,21 @@ namespace YAIP
 		tMapMapStringString m_IniData;
 
 		/**
-		 * Regular expression to detect the sections
-		 */
-		static const std::regex RegExSection;
-
-		/**
 		 * Regular expression to detect the key/value pairs
 		 */
 		static const std::regex RegExKeyValue;
 
 		/**
-		 * Loop over file content to determine sections and key/values to populate internal storage
-		 * \param FileContent The INI file as a vector of std::strings, each line a string
+		 * Regular expression to detect the sections
 		 */
-		void ParseFileContent(tVectorString &FileContent);
+		static const std::regex RegExSection;
 
 		/**
-		 * In case a new section is matched by the regex, the return value signals new section and the variable is populated.
-		 * \param Line of INI file
-		 * \param Section Where to write new section value to
-		 * \return true for section match, otherwise false
+		 * Save given section into INI file
+		 * \param Section Section to write
+		 * \param IniFile INI file to read section to
 		 */
-		static bool NewSection(const std::string &Line, std::string &Section);
+		void INIFileSaveSection(std::string Section, std::ofstream &IniFile);
 
 		/**
 		 * In case a new key/value-pair is matched by the regex, the return value signals new data and the variables are populated.
@@ -175,10 +182,17 @@ namespace YAIP
 		static bool NewKeyValue(const std::string &Line, std::string &Key, std::string &Value);
 
 		/**
-		 * Save given section into INI file
-		 * \param Section Section to write
-		 * \param IniFile INI file to read section to
+		 * In case a new section is matched by the regex, the return value signals new section and the variable is populated.
+		 * \param Line of INI file
+		 * \param Section Where to write new section value to
+		 * \return true for section match, otherwise false
 		 */
-		void INIFileSaveSection(std::string Section, std::ofstream &IniFile);
+		static bool NewSection(const std::string &Line, std::string &Section);
+
+		/**
+		 * Loop over file content to determine sections and key/values to populate internal storage
+		 * \param FileContent The INI file as a vector of std::strings, each line a string
+		 */
+		void ParseFileContent(tVectorString &FileContent);
 	};
 }

@@ -1,8 +1,10 @@
 #include <iostream>
 #include "YAIP++.h"
 
-void DisplayINI(YAIP::YAIP &IniParser)
+void DisplayINI(YAIP::YAIP &IniParser, std::string Comment)
 {
+	std::cout << "----- " << Comment << std::endl;
+
 	YAIP::tVectorString SectionList = IniParser.SectionListGet();
 	for (YAIP::tVectorString::iterator LoopSection = SectionList.begin(); LoopSection != SectionList.end(); ++LoopSection)
 	{
@@ -32,7 +34,7 @@ int main()
 	IniParser.INIFileLoad("C:\\Windows\\system.ini");
 
 	// Display original content
-	DisplayINI(IniParser);
+	DisplayINI(IniParser, "Original");
 
 	// Add new section/key/value
 	IniParser.SectionKeyValueSet("Section", "Key", "Value");
@@ -42,7 +44,13 @@ int main()
 	IniParser.SectionKeyValueSet("drivers", "wave", "Value");
 
 	// Display modified content
-	DisplayINI(IniParser);
+	DisplayINI(IniParser, "Modified");
+
+	IniParser.SectionKill("Section");
+	IniParser.SectionKeyKill("386Enh", "Key");
+
+	// Display modified content
+	DisplayINI(IniParser, "Deleted");
 
 	// Save new INI file
 	IniParser.INIFileSave("C:\\Windows\\Temp\\_YAIP.ini");

@@ -17,6 +17,8 @@ The current features are:
 * Get a vector of strings containing all keys of a section
 * Get a value of a section/key combination - Note: This is a templated method and requires in any case a default value.
 * Set a value of a section/key combination - Note: This is a templated method and may require a cast.
+* Delete a key
+* Delete a complete section
 
 ## Implementation details ##
 
@@ -44,6 +46,12 @@ std::string Value = IniParser.SectionKeyValueGet(Section, Key, Default);
 
 // Write a value to the INI file
 IniParser.SectionKeyValueSet("Section", "Key", "Value");
+
+// Delete a key
+IniParser.SectionKeyKill("Section", "Key");
+
+// Delete a complete section
+IniParser.SectionKill("Section");
 
 // Save modified INI file
 IniParser.INIFileSave("C:\\Windows\\Temp\\YAIP.ini");
