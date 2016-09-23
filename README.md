@@ -2,7 +2,7 @@
 
 Yet another INI parser
 
-[![Build Status](https://cdn.travis-ci.org/ThirtySomething/YAIP.svg?branch=master)](https://cdn.travis-ci.org/ThirtySomething/YAIP)
+[![Build Status](https://travis-ci.org/ThirtySomething/YAIP.svg?branch=master)](https://travis-ci.org/ThirtySomething/YAIP)
 
 ## Motivation ##
 
@@ -51,7 +51,11 @@ IniParser.INIFileSave("C:\\Windows\\Temp\\YAIP.ini");
 
 ## Doxygen documentation ##
 
-The doxygen documentation can be found [here](https://cdn.rawgit.com/ThirtySomething/YAIP/master/doxygen/html/index.html).
+The doxygen documentation can be generated when you need it. The config file is located here:
+
+<pre>
+doxygen\YAIP++.doxy
+</pre>
 
 ## Contributing ##
 
