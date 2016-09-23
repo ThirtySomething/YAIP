@@ -45,6 +45,12 @@ std::string Value = IniParser.SectionKeyValueGet(Section, Key, Default);
 // Write a value to the INI file
 IniParser.SectionKeyValueSet("Section", "Key", "Value");
 
+// Delete a key
+IniParser.SectionKeyKill("Section", "Key");
+
+// Delete a complete section
+IniParser.SectionKill("Section");
+
 // Save modified INI file
 IniParser.INIFileSave("C:\\Windows\\Temp\\YAIP.ini");
 </pre>

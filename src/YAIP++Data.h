@@ -12,9 +12,9 @@
 #include <string>
 #include <vector>
 
- /**
-  * Namespace of YAIP
-  */
+/**
+ * Namespace of YAIP
+ */
 namespace YAIP
 {
 	/**
@@ -52,12 +52,6 @@ namespace YAIP
 	};
 
 	/**
-	 * Convenience typedef for a vector of strings.
-	 * Used to represent the content of a INI file, a list of sections or a list of keys.
-	 */
-	typedef std::vector<std::string> tVectorString;
-
-	/**
 	 * Convenience typedef for a map of strings.
 	 * Used to represent keys and their corresponding values.
 	 * Map will be sorted caseless.
@@ -70,4 +64,10 @@ namespace YAIP
 	 * Map will be sorted caseless.
 	 */
 	typedef std::map<std::string, tMapStringString, StringCompareCaseLess> tMapMapStringString;
+
+	/**
+	 * Convenience typedef for a vector of strings.
+	 * Used to represent the content of a INI file, a list of sections or a list of keys.
+	 */
+	typedef std::vector<std::string> tVectorString;
 }
