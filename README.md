@@ -70,5 +70,4 @@ doxygen\YAIP++.doxy
 Any kind of contribution is welcome.
 
 ## License ##
-
-This project is published unter the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
+**YAIP++** is distributed under the terms of the **GNU LESSER GENERAL PUBLIC LICENSE**, version 3.0. The text of the **License.txt** is included in the file LICENSE in the root of the project.
