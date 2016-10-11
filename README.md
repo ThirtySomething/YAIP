@@ -6,25 +6,27 @@ Yet another INI parser
 
 ## Motivation ##
 
-Searching for INI parsers for C++ fires up a lot of them. Most of them come with a lot of stuff/classes around, some of them as library. Only a few of them offers plain classes. Also only a few of them are portable. I like to improve my C++ skills so I decided to write my own INI file parser.
+Searching for INI parsers for C++ fires up a lot of them. Most of them come with a lot of stuff/classes around, some of them as library. Only a few of them offers plain classes. Also only a few of them are portable. And I'm missing the usage of modern C++ like templates and the usage of the STL. I like to improve my C++ skills so I decided to write my own INI file parser.
 
 ## Features ##
 
 The current features are:
 
-* Reading and parsing an INI file
+* Reading an INI file
+* Parsing an INI file
 * Get a vector of strings containing all sections
 * Get a vector of strings containing all keys of a section
-* Get a value of a section/key combination - Note: This is a templated method and requires in any case a default value.
-* Set a value of a section/key combination - Note: This is a templated method and may require a cast.
+* Get a value of a section/key combination - *Note: This is a templated method and requires in any case a default value. This is to figure out the return type of the method.*
+* Set a value of a section/key combination - *Note: This is a templated method and may require a cast.*
 * Delete a key
 * Delete a complete section
+* Saving an INI file
 
 ## Implementation details ##
 
 * Convenience typedefs for datatypes in <code>YAIP++Data.h</code>
-* Data containers are STL elements like vector or map
-* Detection of section and key/value pair is done using regular expressions
+* Data containers are STL elements like [vector](http://en.cppreference.com/w/cpp/container/vector) or [map](http://en.cppreference.com/w/cpp/container/map)
+* Detection of section and key/value pair is done using [regular expressions](http://en.cppreference.com/w/cpp/regex)
 
 ## Sample usage ##
 
@@ -54,18 +56,12 @@ IniParser.SectionKeyKill("Section", "Key");
 IniParser.SectionKill("Section");
 
 // Save modified INI file
-IniParser.INIFileSave("C:\\Windows\\Temp\\YAIP.ini");
+IniParser.INIFileSave("C:\\Windows\\Temp\\_YAIP.ini");
 </pre>
 
 ## Doxygen documentation ##
 
-The doxygen documentation can be generated. The config file is located at:
-
-<pre>
-doxygen\YAIP++.doxy
-</pre>
-
-The latest version can be found <a href="https://cdn.rawgit.com/ThirtySomething/YAIP/master/doxygen/html/index.html" target="_blank">here</a>.
+The latest version of the doxygen documentation can be found [here](https://cdn.rawgit.com/ThirtySomething/YAIP/master/doxygen/html/index.html).
 
 ## Contributing ##
 
