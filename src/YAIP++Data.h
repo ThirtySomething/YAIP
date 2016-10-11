@@ -29,25 +29,25 @@ namespace YAIP
 		{
 			/**
 			 * Operator for usage in string compare
-			 * \param c1 Left string to check
-			 * \param c2 Right string to check
+			 * \param StringLeft Left string to check
+			 * \param StringRight Right string to check
 			 * \return true in case the left string is less than the right string
 			 */
-			bool operator() (const unsigned char& c1, const unsigned char& c2) const
+			bool operator() (const unsigned char& StringLeft, const unsigned char& StringRight) const
 			{
-				return tolower(c1) < tolower(c2);
+				return tolower(StringLeft) < tolower(StringRight);
 			}
 		};
 
 		/**
 		 * Operator for usage in string compare
-		 * \param s1 Left string to check
-		 * \param s2 Right string to check
+		 * \param StringLeft Left string to check
+		 * \param StringRight Right string to check
 		 * \return true in case the left string is less than the right string
 		 */
-		bool operator() (const std::string & s1, const std::string & s2) const
+		bool operator() (const std::string & StringLeft, const std::string & StringRight) const
 		{
-			return std::lexicographical_compare(s1.begin(), s1.end(), s2.begin(), s2.end(), CompareCaseless());
+			return std::lexicographical_compare(StringLeft.begin(), StringLeft.end(), StringRight.begin(), StringRight.end(), CompareCaseless());
 		}
 	};
 

@@ -68,7 +68,9 @@ namespace YAIP
 		// Open the INI file for reading
 		IniFile.open(Filename, std::ios::in);
 
-		// TODO: Handle file errors like file does not exist
+		/**
+		 * \todo Handle file errors like file does not exist
+		 */
 		if (true == IniFile.is_open())
 		{
 			std::string CurrentLine;
@@ -97,7 +99,9 @@ namespace YAIP
 		// Open the INI file for writing
 		IniFile.open(Filename, std::ios::trunc);
 
-		// TODO: Handle file errors like file does not exist
+		/**
+		 * \todo Handle file errors like cannot open file
+		 */
 		if (true == IniFile.is_open())
 		{
 			// Get a list of all existing sections
@@ -116,20 +120,27 @@ namespace YAIP
 	// ******************************************************************
 	void YAIP::INIFileSaveSection(std::string Section, std::ofstream &IniFile)
 	{
-		// Write section marker
-		if (0 != Section.length())
-		{
-			IniFile << "[" << Section << "]" << std::endl;
-		}
-
-		// Retrieve list of keys and write them with their values
+		// Retrieve list of keys
 		tVectorString KeyList = SectionKeyListGet(Section);
-		for (tVectorString::iterator LoopKey = KeyList.begin(); LoopKey != KeyList.end(); ++LoopKey)
+
+		// Write only if keys are available - no keys, no write
+		if (0 < KeyList.size())
 		{
-			std::string Default = "";
-			std::string Key = *LoopKey;
-			std::string Value = SectionKeyValueGet(Section, Key, Default);
-			IniFile << Key << "=" << Value << std::endl;
+			// Write section marker
+			if (0 != Section.length())
+			{
+				IniFile << "[" << Section << "]" << std::endl;
+			}
+
+
+			// Loop over all keys, retrieve the values and save them
+			for (tVectorString::iterator LoopKey = KeyList.begin(); LoopKey != KeyList.end(); ++LoopKey)
+			{
+				std::string Default = "";
+				std::string Key = *LoopKey;
+				std::string Value = SectionKeyValueGet(Section, Key, Default);
+				IniFile << Key << "=" << Value << std::endl;
+			}
 		}
 	}
 
@@ -144,7 +155,7 @@ namespace YAIP
 		// Check for match
 		if (true == std::regex_search(Line, RegExpMatch, YAIP::RegExKeyValue))
 		{
-			// Change section only in case of a match.
+			// Change new key/value pair only in case of a match.
 			// Unfortunately in C++ there are no named groups possible
 			// so we have to use the index of the group.
 			Key = RegExpMatch[2].str();
