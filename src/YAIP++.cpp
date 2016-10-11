@@ -132,7 +132,6 @@ namespace YAIP
 				IniFile << "[" << Section << "]" << std::endl;
 			}
 
-
 			// Loop over all keys, retrieve the values and save them
 			for (tVectorString::iterator LoopKey = KeyList.begin(); LoopKey != KeyList.end(); ++LoopKey)
 			{
@@ -223,7 +222,7 @@ namespace YAIP
 
 	// ******************************************************************
 	// ******************************************************************
-	void YAIP::SectionKeyKill(std::string Section, std::string Key)
+	void YAIP::SectionKeyKill(const std::string &Section, const std::string &Key)
 	{
 		// First check for section existence
 		tMapMapStringString::iterator SectionDataRaw = m_IniData.find(Section);
@@ -250,7 +249,7 @@ namespace YAIP
 
 	// ******************************************************************
 	// ******************************************************************
-	tVectorString YAIP::SectionKeyListGet(std::string Section)
+	tVectorString YAIP::SectionKeyListGet(const std::string &Section)
 	{
 		tVectorString KeyList;
 
@@ -271,7 +270,7 @@ namespace YAIP
 
 	// ******************************************************************
 	// ******************************************************************
-	void YAIP::SectionKill(std::string Section)
+	void YAIP::SectionKill(const std::string &Section)
 	{
 		// First check for section existence
 		tMapMapStringString::iterator SectionDataRaw = m_IniData.find(Section);

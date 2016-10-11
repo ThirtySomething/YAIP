@@ -1,7 +1,7 @@
 #include <iostream>
 #include "YAIP++.h"
 
-void DisplayINI(YAIP::YAIP &IniParser, std::string Comment)
+void DisplayINI(YAIP::YAIP &IniParser, std::string &Comment)
 {
 	std::cout << "----- " << Comment << std::endl;
 
@@ -28,29 +28,39 @@ void DisplayINI(YAIP::YAIP &IniParser, std::string Comment)
 int main()
 {
 	YAIP::YAIP IniParser;
+	std::string IniSection;
+	std::string IniKey;
+	std::string IniValue;
+	std::string IniComment;
 
 	std::cout << "Test of YAIP" << std::endl;
 
 	IniParser.INIFileLoad("C:\\Windows\\system.ini");
 
 	// Display original content
-	DisplayINI(IniParser, "Original");
+	IniComment = "Original";
+	DisplayINI(IniParser, IniComment);
 
 	// Add new section/key/value
-	IniParser.SectionKeyValueSet("Section", "Key", "Value");
+	IniSection = "Section";
+	IniKey = "Key";
+	IniValue = "Value";
+	IniParser.SectionKeyValueSet(IniSection, IniKey, IniValue);
 	// Add to existing section a new key value
 	IniParser.SectionKeyValueSet("386Enh", "Key", "Value");
 	// Update existing section/key/value
 	IniParser.SectionKeyValueSet("drivers", "wave", "Value");
 
 	// Display modified content
-	DisplayINI(IniParser, "Modified");
+	IniComment = "Modified";
+	DisplayINI(IniParser, IniComment);
 
 	IniParser.SectionKill("Section");
 	IniParser.SectionKeyKill("386Enh", "Key");
 
 	// Display modified content
-	DisplayINI(IniParser, "Deleted");
+	IniComment = "Deleted";
+	DisplayINI(IniParser, IniComment);
 
 	// Save new INI file
 	IniParser.INIFileSave("C:\\Windows\\Temp\\_YAIP.ini");

@@ -59,8 +59,8 @@ namespace YAIP
 	typedef std::map<std::string, std::string, StringCompareCaseLess> tMapStringString;
 
 	/**
-	 * Convenience typedef for a map of strings.
-	 * Used to represent a section with their corrresponding keys/value storage.
+	 * Convenience typedef for a map of keys/values.
+	 * Used to represent a section with their corrresponding keys/values storage.
 	 * Map will be sorted caseless.
 	 */
 	typedef std::map<std::string, tMapStringString, StringCompareCaseLess> tMapMapStringString;
