@@ -40,11 +40,11 @@ tVectorString SectionList = IniParser.SectionListGet();
 // Get a vector of strings containing all keys of a section
 tVectorString KeyList = IniParser.SectionKeyListGet(Section);
 
-// Get a value of a key from a section
+// Read a value
 std::string Default = "Default value";
 std::string Value = IniParser.SectionKeyValueGet(Section, Key, Default);
 
-// Write a value to the INI file
+// Write a value
 IniParser.SectionKeyValueSet("Section", "Key", "Value");
 
 // Delete a key
@@ -59,7 +59,7 @@ IniParser.INIFileSave("C:\\Windows\\Temp\\YAIP.ini");
 
 ## Doxygen documentation ##
 
-The doxygen documentation can be generated when you need it. The config file is located here:
+The doxygen documentation can be generated. The config file is located at:
 
 <pre>
 doxygen\YAIP++.doxy
@@ -71,4 +71,4 @@ Any kind of contribution is welcome.
 
 ## License ##
 
-This project is published unter the GNU GENERAL PUBLIC LICENSE, Version 3.
+This project is published unter the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
