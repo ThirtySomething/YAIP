@@ -65,6 +65,8 @@ The doxygen documentation can be generated when you need it. The config file is 
 doxygen\YAIP++.doxy
 </pre>
 
+The latest version can be found <a href="https://cdn.rawgit.com/ThirtySomething/YAIP/master/doxygen/html/index.html" target="_blank">here</a>.
+
 ## Contributing ##
 
 Any kind of contribution is welcome.
