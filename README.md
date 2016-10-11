@@ -19,7 +19,7 @@ The current features are:
 * Get a value of a section/key combination - *Note: This is a templated method and requires in any case a default value. This is to figure out the return type of the method.*
 * Set a value of a section/key combination - *Note: This is a templated method and may require a cast.*
 * Delete a key
-* Delete a complete section
+* Delete a section with contents
 * Saving an INI file
 
 ## Implementation details ##

@@ -53,14 +53,14 @@ namespace YAIP
 		 * \param Section Specified section
 		 * \param Key Specified key
 		 */
-		void SectionKeyKill(std::string Section, std::string Key);
+		void SectionKeyKill(const std::string &Section, const std::string &Key);
 
 		/**
 		 * Get all keys of a section of the INI file
 		 * \param Section Specified section
 		 * \return Vector with a std::strings for each key
 		 */
-		tVectorString SectionKeyListGet(std::string Section);
+		tVectorString SectionKeyListGet(const std::string &Section);
 
 		/**
 		 * Templated method to retrieve a value of the specified section/key combination
@@ -70,7 +70,7 @@ namespace YAIP
 		 * \return Returns either the default value or the value of the existing section/key combination
 		 */
 		template<typename VariableType>
-		VariableType SectionKeyValueGet(std::string Section, std::string Key, VariableType Default)
+		VariableType SectionKeyValueGet(const std::string &Section, const std::string &Key, VariableType &Default)
 		{
 			// Ensure default return value
 			VariableType ReturnValue = Default;
@@ -109,7 +109,7 @@ namespace YAIP
 		 * \param Value Specified value to set
 		 */
 		template<typename VariableType>
-		void SectionKeyValueSet(std::string Section, std::string Key, VariableType Value)
+		void SectionKeyValueSet(const std::string &Section, const std::string &Key, const VariableType &Value)
 		{
 			// Write data into string stream and convert to a std::string
 			std::ostringstream DataRaw(Value);
@@ -147,7 +147,7 @@ namespace YAIP
 		 * Remove section completely from internal data structure
 		 * \param Section Specified section
 		 */
-		void SectionKill(std::string Section);
+		void SectionKill(const std::string &Section);
 
 	protected:
 		/**
