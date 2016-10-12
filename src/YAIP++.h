@@ -70,7 +70,7 @@ namespace YAIP
 		 * \return Returns either the default value or the value of the existing section/key combination
 		 */
 		template<typename VariableType>
-		VariableType SectionKeyValueGet(const std::string &Section, const std::string &Key, VariableType &Default)
+		VariableType SectionKeyValueGet(const std::string &Section, const std::string &Key, const VariableType &Default)
 		{
 			// Ensure default return value
 			VariableType ReturnValue = Default;
@@ -85,7 +85,7 @@ namespace YAIP
 				tMapStringString::iterator KeyDataRaw = SectionData.find(Key);
 				if (SectionData.end() != KeyDataRaw)
 				{
-					if (nullptr != dynamic_cast<std::string*>(&Default))
+					if (nullptr != dynamic_cast<std::string*>(&ReturnValue))
 					{
 						// std::string requires special handling
 						ReturnValue = KeyDataRaw->second;

@@ -8,14 +8,16 @@
  */
 void DisplayINI(YAIP::YAIP &IniParser, std::string &Comment)
 {
-	std::cout << "----- " << Comment << std::endl;
+	std::cout << "----- " << Comment << " -----" << std::endl;
 
 	YAIP::tVectorString SectionList = IniParser.SectionListGet();
 	for (YAIP::tVectorString::iterator LoopSection = SectionList.begin(); LoopSection != SectionList.end(); ++LoopSection)
 	{
-		std::cout << "-----" << std::endl;
 		std::string Section = *LoopSection;
-		std::cout << "[" << Section << "]" << std::endl;
+		if (0 < Section.length())
+		{
+			std::cout << "[" << Section << "]" << std::endl;
+		}
 
 		YAIP::tVectorString KeyList = IniParser.SectionKeyListGet(Section);
 		int SectionCount = 0;

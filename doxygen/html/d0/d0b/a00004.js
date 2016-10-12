@@ -10,7 +10,7 @@ var a00004 =
     [ "ParseFileContent", "d0/d0b/a00004.html#acaea94cdebe8c1617c34605c9b816626", null ],
     [ "SectionKeyKill", "d0/d0b/a00004.html#a906f10e9b97ca9b9d35ef376b5070ce1", null ],
     [ "SectionKeyListGet", "d0/d0b/a00004.html#a884fab5ed3ff16454a92976b55e64597", null ],
-    [ "SectionKeyValueGet", "d0/d0b/a00004.html#a5d6e4fa3e1439450fc17ad92758fdbb4", null ],
+    [ "SectionKeyValueGet", "d0/d0b/a00004.html#a73da1225dc9361306f5c5c023918b119", null ],
     [ "SectionKeyValueSet", "d0/d0b/a00004.html#a7d30bef401df9e2d6e20093bd8416a64", null ],
     [ "SectionKill", "d0/d0b/a00004.html#aee2bcb0696e9cacf68c5e6a58fa467b3", null ],
     [ "SectionListGet", "d0/d0b/a00004.html#a30b724a1111b4a086e91982f4631e5e2", null ],
