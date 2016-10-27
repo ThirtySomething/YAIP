@@ -6,6 +6,9 @@ Yet another INI parser
 
 [![Build Status](https://travis-ci.org/ThirtySomething/YAIP.svg?branch=master)](https://travis-ci.org/ThirtySomething/YAIP) This build is done at [travis](https://travis-ci.org) using GCC C++ 4.9, GCC C++ 5, CLANG C++ 3.6 and CLANG C++ 3.7.
 
+## License ##
+[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0) **YAIP++** is distributed under the terms of the **GNU LESSER GENERAL PUBLIC LICENSE**, version 3.0. The text of the license is included in the file **LICENSE.TXT** in the root of the project.
+
 ## Motivation ##
 
 Searching for INI parsers for C++ fires up a lot of them. Most of them come with a lot of stuff/classes around, some of them as library. Only a few of them offers plain classes. Also only a few of them are portable. And I'm missing the usage of modern C++ like templates and the usage of the STL. I like to improve my C++ skills so I decided to write my own INI file parser.
@@ -68,6 +71,3 @@ The latest version of the doxygen documentation can be found [here](https://cdn.
 ## Contributing ##
 
 Any kind of contribution is welcome.
-
-## License ##
-**YAIP++** is distributed under the terms of the **GNU LESSER GENERAL PUBLIC LICENSE**, version 3.0. The text of the license is included in the file **LICENSE.TXT** in the root of the project.
