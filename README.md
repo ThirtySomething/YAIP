@@ -2,16 +2,13 @@
 
 Yet another INI parser
 
-## Build status ##
+## General information ##
 
-[![Build Status](https://travis-ci.org/ThirtySomething/YAIP.svg?branch=master)](https://travis-ci.org/ThirtySomething/YAIP) [codecov](https://codecov.io/gh/ThirtySomething/ffb.depot.client/branch/master/graph/badge.svg)](https://codecov.io/gh/ThirtySomething/ffb.depot.client)
+[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0) [![Build Status](https://travis-ci.org/ThirtySomething/YAIP.svg?branch=master)](https://travis-ci.org/ThirtySomething/YAIP) [![codecov](https://codecov.io/gh/ThirtySomething/ffb.depot.client/branch/master/graph/badge.svg)](https://codecov.io/gh/ThirtySomething/ffb.depot.client)
 
+-  **YAIP++** is distributed under the terms of the **GNU LESSER GENERAL PUBLIC LICENSE**, version 3.0. The text of the license is included in the file **LICENSE.TXT** in the root of the project.
 - The build is done at [travis](https://travis-ci.org) using GCC C++ 4.9, GCC C++ 5, CLANG C++ 3.6 and CLANG C++ 3.7.
 - For code coverage [codecov]{https://codecov.io} is used.
-
-
-## License ##
-[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0) **YAIP++** is distributed under the terms of the **GNU LESSER GENERAL PUBLIC LICENSE**, version 3.0. The text of the license is included in the file **LICENSE.TXT** in the root of the project.
 
 ## Motivation ##
 
