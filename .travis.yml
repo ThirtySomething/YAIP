@@ -42,7 +42,12 @@ matrix:
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -y libopencv-dev
+  - sudo pip install codecov
+
 script:
   - cmake -Hsrc -Bbuild -DCMAKE_BUILD_TYPE=$BUILD_TYPE
   - cd build
   - make
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
