@@ -42,7 +42,7 @@ int main()
 
 	std::cout << "Test of YAIP" << std::endl;
 
-	IniParser.INIFileLoad("C:\\Windows\\system.ini");
+	IniParser.INIFileLoad("sample.ini");
 
 	// Display content
 	IniComment = "Original";
@@ -55,12 +55,13 @@ int main()
 	IniParser.SectionKeyValueSet(IniSection, IniKey, IniValue);
 
 	// Add to existing section a new key value
-	IniSection = "386Enh";
+	IniSection = "Section01";
 	IniParser.SectionKeyValueSet(IniSection, IniKey, IniValue);
 
 	// Update existing section/key/value
-	IniSection = "drivers";
-	IniKey = "wave";
+	IniSection = "Section01";
+	IniKey = "Entry02";
+	IniValue = "2nd";
 	IniParser.SectionKeyValueSet(IniSection, IniKey, IniValue);
 
 	// Display content
@@ -68,7 +69,7 @@ int main()
 	DisplayINI(IniParser, IniComment);
 
 	// Delete a key
-	IniSection = "386Enh";
+	IniSection = "Section01";
 	IniKey = "Key";
 	IniParser.SectionKeyKill(IniSection, IniKey);
 
@@ -81,7 +82,7 @@ int main()
 	DisplayINI(IniParser, IniComment);
 
 	// Save new INI file
-	IniParser.INIFileSave("C:\\Windows\\Temp\\_YAIP.ini");
+	IniParser.INIFileSave("sample_yaip.ini");
 
 	return 0;
 }
