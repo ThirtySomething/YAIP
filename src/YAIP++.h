@@ -7,6 +7,7 @@
 #pragma once
 
 #include "YAIP++Data.h"
+#include <regex>
 
  /**
   * Namespace of YAIP

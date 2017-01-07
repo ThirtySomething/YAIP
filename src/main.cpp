@@ -1,11 +1,6 @@
 #define CATCH_CONFIG_MAIN
 #include "./../externals/Catch/single_include/catch.hpp"
 #include "YAIP++.h"
-#include <algorithm>
-#include <iterator>
-#include <string>
-#include <sys/stat.h>
-#include <vector>
 
 /**
  * Base class for fixtures and tests

@@ -5,7 +5,6 @@
  * \brief	Implementation of Yet Another INI Parser
  */
 #include "YAIP++.h"
-#include <iostream>
 #include <fstream>
 #include <sstream>
 

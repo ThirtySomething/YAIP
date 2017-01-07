@@ -6,10 +6,9 @@
  */
 #pragma once
 
+#include <functional>
+#include <locale>
 #include <map>
-#include <memory>
-#include <regex>
-#include <string>
 #include <vector>
 
  /**
@@ -35,7 +34,8 @@ namespace YAIP
 			 */
 			bool operator() (const unsigned char& StringLeft, const unsigned char& StringRight) const
 			{
-				return tolower(StringLeft) < tolower(StringRight);
+				std::locale loc;
+				return std::tolower(StringLeft, loc) < std::tolower(StringRight, loc);
 			}
 		};
 
