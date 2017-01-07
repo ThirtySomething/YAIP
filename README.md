@@ -38,7 +38,7 @@ The current features are:
 
 ## Simple Extension ##
 
-If any datatype is currently not supported, the extension is very simple. Just extebd the class *YAIP::Convert* with conversion methods from/to your data type.
+If any datatype is currently not supported, the extension is very simple. Just extend the class *YAIP::Convert* with conversion methods from/to your data type.
 
 ## Sample usage ##
 
