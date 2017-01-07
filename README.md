@@ -9,6 +9,7 @@ Yet another INI parser
 -  **YAIP++** is distributed under the terms of the **GNU LESSER GENERAL PUBLIC LICENSE**, version 3.0. The text of the license is included in the file **LICENSE.TXT** in the root of the project.
 - The build is done at [travis](https://travis-ci.org) using GCC C++ 4.9, GCC C++ 5, CLANG C++ 3.6 and CLANG C++ 3.7.
 - For code coverage [codecov](https://codecov.io) is used.
+- As testing framework [Catch](https://github.com/philsquared/Catch) is used.
 
 ## Motivation ##
 
