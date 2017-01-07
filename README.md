@@ -18,21 +18,27 @@ Searching for INI parsers for C++ fires up a lot of them. Most of them come with
 
 The current features are:
 
-* Reading an INI file
-* Parsing an INI file
+* Reading of an INI file
+* Parsing of an INI file
 * Get a vector of strings containing all sections
 * Get a vector of strings containing all keys of a section
 * Get a value of a section/key combination - *Note: This is a templated method and requires in any case a default value. This is to figure out the return type of the method.*
 * Set a value of a section/key combination - *Note: This is a templated method and may require a cast.*
-* Delete a key
-* Delete a section with contents
-* Saving an INI file
+* Deletion of a key
+* Deletion of a section with contents
+* Saving of an INI file
 
 ## Implementation details ##
 
 * Convenience typedefs for datatypes in <code>YAIP++Data.h</code>
 * Data containers are STL elements like [vector](http://en.cppreference.com/w/cpp/container/vector) or [map](http://en.cppreference.com/w/cpp/container/map)
 * Detection of section and key/value pair is done using [regular expressions](http://en.cppreference.com/w/cpp/regex)
+* The major methods are based on *std::string*
+* The templated methods using converters from and to *std::string*
+
+## Simple Extension ##
+
+If any datatype is currently not supported, the extension is very simple. Just extebd the class *YAIP::Convert* with conversion methods from/to your data type.
 
 ## Sample usage ##
 

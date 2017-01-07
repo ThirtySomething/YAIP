@@ -1,2 +1,8 @@
-<map id="YAIP::StringCompareCaseLess::CompareCaseless" name="YAIP::StringCompareCaseLess::CompareCaseless">
+<map id="YAIPTestFixtureBase" name="YAIPTestFixtureBase">
+<area shape="rect" id="node2" href="$d3/d52/a00023.html" title="{YAIPTestFixtureSave\n|+ ValueBool\l+ ValueDouble\l+ ValueInt\l+ ValueString\l|}" alt="" coords="5,219,151,340"/>
+<area shape="rect" id="node4" href="$d3/de7/a00039.html" title="{YAIPTestFixtureSectionKeyKill\n||}" alt="" coords="175,241,378,318"/>
+<area shape="rect" id="node5" href="$d4/d8c/a00035.html" title="{YAIPTestFixtureSectionKeyList\n||}" alt="" coords="402,241,607,318"/>
+<area shape="rect" id="node6" href="$d6/d42/a00043.html" title="{YAIPTestFixtureSectionKill\n||}" alt="" coords="631,241,810,318"/>
+<area shape="rect" id="node7" href="$df/d61/a00031.html" title="{YAIPTestFixtureSectionList\n||}" alt="" coords="835,241,1017,318"/>
+<area shape="rect" id="node3" href="$d0/d33/a00027.html" title="{YAIPTestFixtureLoad\n|+ DefaultBool\l+ DefaultDouble\l+ DefaultInt\l+ DefaultString\l|}" alt="" coords="5,388,151,509"/>
 </map>

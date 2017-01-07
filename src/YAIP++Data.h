@@ -12,9 +12,9 @@
 #include <string>
 #include <vector>
 
-/**
- * Namespace of YAIP
- */
+ /**
+  * Namespace of YAIP
+  */
 namespace YAIP
 {
 	/**

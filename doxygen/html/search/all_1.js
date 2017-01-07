@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['inifileload',['INIFileLoad',['../d0/d0b/a00004.html#a1dd8ad021925629a5ad4019c9161da65',1,'YAIP::YAIP']]],
-  ['inifilesave',['INIFileSave',['../d0/d0b/a00004.html#a54b8be60ddca63f4e7849c67dcdf4e28',1,'YAIP::YAIP']]],
-  ['inifilesavesection',['INIFileSaveSection',['../d0/d0b/a00004.html#a7e53fd75b376b0b9a297cbdabed8dab0',1,'YAIP::YAIP']]]
+  ['defaultbool',['DefaultBool',['../d0/d33/a00027.html#a6bb4b2e03c632c0197c6f4fc2547d958',1,'YAIPTestFixtureLoad']]],
+  ['defaultdouble',['DefaultDouble',['../d0/d33/a00027.html#ac203f151cf7856e7dd3b0ebd19a45cc9',1,'YAIPTestFixtureLoad']]],
+  ['defaultint',['DefaultInt',['../d0/d33/a00027.html#aa19d6bd1e6148d688dd7a75ce95ab1d3',1,'YAIPTestFixtureLoad']]],
+  ['defaultstring',['DefaultString',['../d0/d33/a00027.html#aef51dc82962bf95049500cbb2c6b5cdd',1,'YAIPTestFixtureLoad']]]
 ];

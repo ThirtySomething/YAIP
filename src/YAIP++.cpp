@@ -7,12 +7,70 @@
 #include "YAIP++.h"
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
-/**
- * Namespace of YAIP
- */
+ /**
+  * Namespace of YAIP
+  */
 namespace YAIP
 {
+	// ******************************************************************
+	// ******************************************************************
+	const std::string Convert::StringTrue = "true";
+	const std::string Convert::StringFalse = "false";
+
+	// ******************************************************************
+	// ******************************************************************
+	void Convert::ConvertTo(const int &Value, std::string &ValueString)
+	{
+		ValueString = std::to_string(Value);
+	}
+
+	// ******************************************************************
+	// ******************************************************************
+	void Convert::ConvertTo(const double &Value, std::string &ValueString)
+	{
+		std::ostringstream StringStream;
+		StringStream << Value;
+		ValueString = StringStream.str();
+	}
+
+	// ******************************************************************
+	// ******************************************************************
+	void Convert::ConvertTo(const bool &Value, std::string &ValueString)
+	{
+		ValueString = Convert::StringFalse;
+		if (true == Value)
+		{
+			ValueString = Convert::StringTrue;
+		}
+	}
+
+	// ******************************************************************
+	// ******************************************************************
+	void Convert::ConvertTo(const std::string &ValueString, int &Value)
+	{
+		Value = std::stoi(ValueString);
+	}
+
+	// ******************************************************************
+	// ******************************************************************
+	void Convert::ConvertTo(const std::string &ValueString, double &Value)
+	{
+		Value = std::stod(ValueString);
+	}
+
+	// ******************************************************************
+	// ******************************************************************
+	void Convert::ConvertTo(const std::string &ValueString, bool &Value)
+	{
+		Value = false;
+		if (0 == ValueString.compare(Convert::StringTrue))
+		{
+			Value = true;
+		}
+	}
+
 	// ******************************************************************
 	// ******************************************************************
 	// Regular expressioin for matching a key/value pair
@@ -58,8 +116,9 @@ namespace YAIP
 
 	// ******************************************************************
 	// ******************************************************************
-	void YAIP::INIFileLoad(std::string Filename)
+	bool YAIP::INIFileLoad(std::string Filename)
 	{
+		bool Success = false;
 		std::ifstream IniFile;
 
 		// Always clear internal storage
@@ -87,13 +146,17 @@ namespace YAIP
 
 			// Parse INI file
 			ParseFileContent(FileContent);
+			Success = true;
 		}
+
+		return Success;
 	}
 
 	// ******************************************************************
 	// ******************************************************************
-	void YAIP::INIFileSave(std::string Filename)
+	bool YAIP::INIFileSave(std::string Filename)
 	{
+		bool Success = false;
 		std::ofstream IniFile;
 
 		// Open the INI file for writing
@@ -113,7 +176,10 @@ namespace YAIP
 			}
 
 			IniFile.close();
+			Success = true;
 		}
+
+		return Success;
 	}
 
 	// ******************************************************************
@@ -290,5 +356,70 @@ namespace YAIP
 		}
 
 		return SectionList;
+	}
+
+	// ******************************************************************
+	// ******************************************************************
+	std::string YAIP::SectionKeyValueGet(const std::string &Section, const std::string &Key, const std::string &Default)
+	{
+		// Ensure default return value
+		std::string ReturnValue = Default;
+
+		// First check for section existence
+		tMapMapStringString::iterator SectionDataRaw = m_IniData.find(Section);
+		if (m_IniData.end() != SectionDataRaw)
+		{
+			tMapStringString SectionData = SectionDataRaw->second;
+
+			// Figure out if requested key exists
+			tMapStringString::iterator KeyDataRaw = SectionData.find(Key);
+			if (SectionData.end() != KeyDataRaw)
+			{
+				ReturnValue = KeyDataRaw->second;
+			}
+		}
+
+		return ReturnValue;
+	}
+
+	// ******************************************************************
+	// ******************************************************************
+	bool YAIP::SectionKeyValueSet(const std::string &Section, const std::string &Key, const std::string &Value)
+	{
+		bool Success = false;
+		std::string Data = Value;
+
+		// Create new key/value pair
+		tMapStringString KeyValueNew;
+		KeyValueNew.insert(std::make_pair(Key, Data));
+
+		// Old key/value data
+		tMapStringString KeyValueOld;
+
+		// Check for section
+		tMapMapStringString::iterator SectionDataRaw = m_IniData.find(Section);
+		if (m_IniData.end() != SectionDataRaw)
+		{
+			// Section exists, pick data and kill section
+			KeyValueOld = SectionDataRaw->second;
+			m_IniData.erase(Section);
+		}
+
+		tMapStringString::iterator KeyValueOldPosition = KeyValueOld.find(Key);
+		if (KeyValueOld.end() != KeyValueOldPosition)
+		{
+			// Key exists, pick data and kill key
+			KeyValueOld.erase(Key);
+		}
+
+		// Merge new and existing data and memorize them
+		KeyValueOld.insert(KeyValueNew.begin(), KeyValueNew.end());
+		auto Result = m_IniData.insert(std::make_pair(Section, KeyValueOld));
+		if (false != Result.second)
+		{
+			Success = true;
+		}
+
+		return Success;
 	}
 }

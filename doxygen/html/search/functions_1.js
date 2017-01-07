@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['newkeyvalue',['NewKeyValue',['../d0/d0b/a00004.html#abefc9832add217263f414e34ee9df686',1,'YAIP::YAIP']]],
-  ['newsection',['NewSection',['../d0/d0b/a00004.html#a1f89d4938131d1707b75dbd8a39dc3f0',1,'YAIP::YAIP']]]
+  ['inifileload',['INIFileLoad',['../d2/d79/a00051.html#aae0505d5e9f970d3fe0b5024f5c4d7ae',1,'YAIP::YAIP']]],
+  ['inifilesave',['INIFileSave',['../d2/d79/a00051.html#a885848bd7a2b17d4f5bcf2ae10e0da04',1,'YAIP::YAIP']]],
+  ['inifilesavesection',['INIFileSaveSection',['../d2/d79/a00051.html#a7e53fd75b376b0b9a297cbdabed8dab0',1,'YAIP::YAIP']]]
 ];

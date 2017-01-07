@@ -7,13 +7,71 @@
 #pragma once
 
 #include "YAIP++Data.h"
-#include <sstream>
 
-/**
- * Namespace of YAIP
- */
+ /**
+  * Namespace of YAIP
+  */
 namespace YAIP
 {
+	/**
+	 * Class to convert data from and to std::string
+	 */
+	class Convert
+	{
+	public:
+		/**
+		 * Used as constant for bool
+		 */
+		static const std::string StringTrue;
+
+		/**
+		 * Used as constant for bool
+		 */
+		static const std::string StringFalse;
+
+		/**
+		 * Convert integer to std::string
+		 * \param Value Value to convert from
+		 * \param ValueString Value to convert to
+		 */
+		static void ConvertTo(const int &Value, std::string &ValueString);
+
+		/**
+		 * Convert double to std::string
+		 * \param Value Value to convert from
+		 * \param ValueString Value to convert to
+		 */
+		static void ConvertTo(const double &Value, std::string &ValueString);
+
+		/**
+		 * Convert bool to std::string
+		 * \param Value Value to convert from
+		 * \param ValueString Value to convert to
+		 */
+		static void ConvertTo(const bool &Value, std::string &ValueString);
+
+		/**
+		 * Convert std::string to int
+		 * \param ValueString Value to convert from
+		 * \param Value Value to convert to
+		 */
+		static void ConvertTo(const std::string &ValueString, int &Value);
+
+		/**
+		 * Convert std::string to double
+		 * \param ValueString Value to convert from
+		 * \param Value Value to convert to
+		 */
+		static void ConvertTo(const std::string &ValueString, double &Value);
+
+		/**
+		 * Convert std::string to bool
+		 * \param ValueString Value to convert from
+		 * \param Value Value to convert to
+		 */
+		static void ConvertTo(const std::string &ValueString, bool &Value);
+	};
+
 	/**
 	 * Class to read INI files and offer access to the data
 	 */
@@ -33,14 +91,16 @@ namespace YAIP
 		/**
 		 * Load and parse INI file into internal structures
 		 * \param Filename Full qualified filename of the INI file
+		 * \return true on success otherwise false
 		 */
-		void INIFileLoad(std::string Filename);
+		bool INIFileLoad(std::string Filename);
 
 		/**
 		 * Save internal structures to INI file
 		 * \param Filename Full qualified filename of the INI file
+		 * \return true on success otherwise false
 		 */
-		void INIFileSave(std::string Filename);
+		bool INIFileSave(std::string Filename);
 
 		/**
 		 * Get all section of the INI file
@@ -63,6 +123,15 @@ namespace YAIP
 		tVectorString SectionKeyListGet(const std::string &Section);
 
 		/**
+		 * Method to retrieve a value of the specified section/key combination for std::string
+		 * \param Section Specified section
+		 * \param Key Specified key
+		 * \param Default Specified default value in case key does not exist
+		 * \return Returns either the default value or the value of the existing section/key combination
+		 */
+		std::string SectionKeyValueGet(const std::string &Section, const std::string &Key, const std::string &Default);
+
+		/**
 		 * Templated method to retrieve a value of the specified section/key combination
 		 * \param Section Specified section
 		 * \param Key Specified key
@@ -72,75 +141,36 @@ namespace YAIP
 		template<typename VariableType>
 		VariableType SectionKeyValueGet(const std::string &Section, const std::string &Key, const VariableType &Default)
 		{
-			// Ensure default return value
-			VariableType ReturnValue = Default;
-
-			// First check for section existence
-			tMapMapStringString::iterator SectionDataRaw = m_IniData.find(Section);
-			if (m_IniData.end() != SectionDataRaw)
-			{
-				tMapStringString SectionData = SectionDataRaw->second;
-
-				// Figure out if requested key exists
-				tMapStringString::iterator KeyDataRaw = SectionData.find(Key);
-				if (SectionData.end() != KeyDataRaw)
-				{
-					if (nullptr != dynamic_cast<std::string*>(&ReturnValue))
-					{
-						// std::string requires special handling
-						ReturnValue = KeyDataRaw->second;
-					}
-					else
-					{
-						// Convert data into VariableType
-						std::stringstream StringStream(KeyDataRaw->second);
-						StringStream >> ReturnValue;
-					}
-				}
-			}
-
-			return ReturnValue;
+			VariableType ValueReturn;
+			std::string ValueDefault;
+			Convert::ConvertTo(Default, ValueDefault);
+			std::string ValueRaw = SectionKeyValueGet(Section, Key, ValueDefault);
+			Convert::ConvertTo(ValueRaw, ValueReturn);
+			return ValueReturn;
 		}
+
+		/**
+		 * Method to set a value of the specified section/key combination for std:string
+		 * \param Section Specified section
+		 * \param Key Specified key
+		 * \param Value Specified value to set
+		 * \return true on success otherwise false
+		 */
+		bool SectionKeyValueSet(const std::string &Section, const std::string &Key, const std::string &Value);
 
 		/**
 		 * Templated method to set a value of the specified section/key combination
 		 * \param Section Specified section
 		 * \param Key Specified key
 		 * \param Value Specified value to set
+		 * \return true on success otherwise false
 		 */
 		template<typename VariableType>
-		void SectionKeyValueSet(const std::string &Section, const std::string &Key, const VariableType &Value)
+		bool SectionKeyValueSet(const std::string &Section, const std::string &Key, const VariableType &Value)
 		{
-			// Write data into string stream and convert to a std::string
-			std::ostringstream DataRaw(Value);
-			std::string Data = DataRaw.str();
-
-			// Create new key/value pair
-			tMapStringString KeyValueNew;
-			KeyValueNew.insert(std::make_pair(Key, Data));
-
-			// Old key/value data
-			tMapStringString KeyValueOld;
-
-			// Check for section
-			tMapMapStringString::iterator SectionDataRaw = m_IniData.find(Section);
-			if (m_IniData.end() != SectionDataRaw)
-			{
-				// Section exists, pick data and kill section
-				KeyValueOld = SectionDataRaw->second;
-				m_IniData.erase(Section);
-			}
-
-			tMapStringString::iterator KeyValueOldPosition = KeyValueOld.find(Key);
-			if (KeyValueOld.end() != KeyValueOldPosition)
-			{
-				// Key exists, pick data and kill key
-				KeyValueOld.erase(Key);
-			}
-
-			// Merge new and existing data and memorize them
-			KeyValueOld.insert(KeyValueNew.begin(), KeyValueNew.end());
-			m_IniData.insert(std::make_pair(Section, KeyValueOld));
+			std::string ValueString;
+			Convert::ConvertTo(Value, ValueString);
+			return SectionKeyValueSet(Section, Key, ValueString);
 		}
 
 		/**
