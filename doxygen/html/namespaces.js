@@ -1,4 +1,4 @@
 var namespaces =
 [
-    [ "YAIP", "d7/dec/a00010.html", null ]
+    [ "YAIP", "da/da0/a00009.html", null ]
 ];

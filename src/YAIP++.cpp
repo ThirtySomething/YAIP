@@ -92,7 +92,7 @@ namespace YAIP
 	 * \todo Invert regex logic to what is NOT allowed for key/values
 	 */
 	// Regular expressioin for matching a key/value pair
-	const std::regex YAIP::RegExKeyValue("([\\s]+)?(([a-zA-Z0-9\\.])+){1}([\\s]+)?(=){1}([\\s]+)?(([a-zA-Z0-9\\.\\+-])+)?([\\s]+)?([#;])?(.)*");
+	const std::regex YAIP::RegExKeyValue("([\\s]+)?(([a-zA-Z0-9\\.])+){1}([\\s]+)?(=){1}([\\s]+)?(([a-zA-Z0-9\\.\\+-])+)?([\\s]+)?([#;])?(.*)");
 	//                                        1           2                 3       4      5               6                7        8    9
 	// 1 - Possible whitespaces
 	// 2 - Key => Match everything with upper-/lowercase characters, numbers and a dot
@@ -110,7 +110,7 @@ namespace YAIP
 	 * \todo Invert regex logic to what is NOT allowed for sections
 	 */
 	// Regular expressioin for matching a section
-	const std::regex YAIP::RegExSection("([\\s]+)?(\\[){1}([\\s]+)?(([a-zA-Z0-9])+){1}([\\s]+)?(\\]){1}([\\s]+)?([#;])?(.)*");
+	const std::regex YAIP::RegExSection("([\\s]+)?(\\[){1}([\\s]+)?(([a-zA-Z0-9])+){1}([\\s]+)?(\\]){1}([\\s]+)?([#;])?(.*)");
 	//                                      1       2        3            4              5       6        7       8    9
 	// 1 - Possible whitespaces
 	// 2 - Opening square bracked
@@ -314,7 +314,7 @@ namespace YAIP
 	void YAIP::SectionKeyKill(const std::string &Section, const std::string &Key)
 	{
 		// First check for section existence
-		tMapMapStringString::iterator SectionDataRaw = m_IniData.find(Section);
+		tMapStringMapStringString::iterator SectionDataRaw = m_IniData.find(Section);
 		if (m_IniData.end() != SectionDataRaw)
 		{
 			// Memorize section data
@@ -343,7 +343,7 @@ namespace YAIP
 		tVectorString KeyList;
 
 		// First check for section existence
-		tMapMapStringString::iterator SectionDataRaw = m_IniData.find(Section);
+		tMapStringMapStringString::iterator SectionDataRaw = m_IniData.find(Section);
 		if (m_IniData.end() != SectionDataRaw)
 		{
 			tMapStringString SectionData = SectionDataRaw->second;
@@ -362,7 +362,7 @@ namespace YAIP
 	void YAIP::SectionKill(const std::string &Section)
 	{
 		// First check for section existence
-		tMapMapStringString::iterator SectionDataRaw = m_IniData.find(Section);
+		tMapStringMapStringString::iterator SectionDataRaw = m_IniData.find(Section);
 		if (m_IniData.end() != SectionDataRaw)
 		{
 			// Section exists, kill section
@@ -377,7 +377,7 @@ namespace YAIP
 		tVectorString SectionList;
 
 		// Loop over the major map containing all sections
-		for (tMapMapStringString::iterator Loop = m_IniData.begin(); Loop != m_IniData.end(); ++Loop)
+		for (tMapStringMapStringString::iterator Loop = m_IniData.begin(); Loop != m_IniData.end(); ++Loop)
 		{
 			SectionList.push_back(Loop->first);
 		}
@@ -393,7 +393,7 @@ namespace YAIP
 		std::string ReturnValue = Default;
 
 		// First check for section existence
-		tMapMapStringString::iterator SectionDataRaw = m_IniData.find(Section);
+		tMapStringMapStringString::iterator SectionDataRaw = m_IniData.find(Section);
 		if (m_IniData.end() != SectionDataRaw)
 		{
 			tMapStringString SectionData = SectionDataRaw->second;
@@ -424,7 +424,7 @@ namespace YAIP
 		tMapStringString KeyValueOld;
 
 		// Check for section
-		tMapMapStringString::iterator SectionDataRaw = m_IniData.find(Section);
+		tMapStringMapStringString::iterator SectionDataRaw = m_IniData.find(Section);
 		if (m_IniData.end() != SectionDataRaw)
 		{
 			// Section exists, pick data and kill section

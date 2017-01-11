@@ -218,7 +218,7 @@ namespace YAIP
 		/**
 		 * Internal map for all sections, each section represented by a map serving the key/value data
 		 */
-		tMapMapStringString m_IniData;
+		tMapStringMapStringString m_IniData;
 
 		/**
 		 * Regular expression to detect the key/value pairs

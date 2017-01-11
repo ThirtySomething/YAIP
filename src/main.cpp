@@ -96,6 +96,7 @@ int main()
 #define CATCH_CONFIG_MAIN
 #include "./../externals/Catch/single_include/catch.hpp"
 #include "YAIP++.h"
+#include <sys/stat.h>
 
 /**
  * Base class for fixtures and tests

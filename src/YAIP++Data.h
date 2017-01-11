@@ -10,6 +10,7 @@
 #include <locale>
 #include <map>
 #include <vector>
+#include <string>
 
  /**
   * Namespace of YAIP
@@ -63,7 +64,7 @@ namespace YAIP
 	 * Used to represent a section with their corrresponding keys/values storage.
 	 * Map will be sorted caseless.
 	 */
-	typedef std::map<std::string, tMapStringString, StringCompareCaseLess> tMapMapStringString;
+	typedef std::map<std::string, tMapStringString, StringCompareCaseLess> tMapStringMapStringString;
 
 	/**
 	 * Convenience typedef for a vector of strings.
