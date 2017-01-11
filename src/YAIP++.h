@@ -55,56 +55,56 @@ namespace YAIP
 		 * \param Value Value to convert from
 		 * \param ValueString Value to convert to
 		 */
-		static void ConvertTo(const int &Value, std::string &ValueString);
+		static void ConvertTo(int Value, std::string &ValueString);
 
 		/**
 		 * Convert float to std::string
 		 * \param Value Value to convert from
 		 * \param ValueString Value to convert to
 		 */
-		static void ConvertTo(const float &Value, std::string &ValueString);
+		static void ConvertTo(float Value, std::string &ValueString);
 
 		/**
 		 * Convert double to std::string
 		 * \param Value Value to convert from
 		 * \param ValueString Value to convert to
 		 */
-		static void ConvertTo(const double &Value, std::string &ValueString);
+		static void ConvertTo(double Value, std::string &ValueString);
 
 		/**
 		 * Convert bool to std::string
 		 * \param Value Value to convert from
 		 * \param ValueString Value to convert to
 		 */
-		static void ConvertTo(const bool &Value, std::string &ValueString);
+		static void ConvertTo(bool Value, std::string &ValueString);
 
 		/**
 		 * Convert std::string to int
 		 * \param ValueString Value to convert from
 		 * \param Value Value to convert to
 		 */
-		static void ConvertTo(const std::string &ValueString, int &Value);
+		static void ConvertTo(std::string ValueString, int &Value);
 
 		/**
 		 * Convert std::string to float
 		 * \param ValueString Value to convert from
 		 * \param Value Value to convert to
 		 */
-		static void ConvertTo(const std::string &ValueString, float &Value);
+		static void ConvertTo(std::string ValueString, float &Value);
 
 		/**
 		 * Convert std::string to double
 		 * \param ValueString Value to convert from
 		 * \param Value Value to convert to
 		 */
-		static void ConvertTo(const std::string &ValueString, double &Value);
+		static void ConvertTo(std::string ValueString, double &Value);
 
 		/**
 		 * Convert std::string to bool
 		 * \param ValueString Value to convert from
 		 * \param Value Value to convert to
 		 */
-		static void ConvertTo(const std::string &ValueString, bool &Value);
+		static void ConvertTo(std::string ValueString, bool &Value);
 	};
 
 	/**
@@ -138,24 +138,18 @@ namespace YAIP
 		bool INIFileSave(std::string Filename);
 
 		/**
-		 * Get all sections of the INI file
-		 * \return Vector with a std::strings for each section
-		 */
-		tVectorString SectionListGet(void);
-
-		/**
 		 * Remove key completely from section of internal data structure
 		 * \param Section Specified section
 		 * \param Key Specified key
 		 */
-		void SectionKeyKill(const std::string &Section, const std::string &Key);
+		void SectionKeyKill(std::string Section, std::string Key);
 
 		/**
 		 * Get all keys of a section of the INI file
 		 * \param Section Specified section
 		 * \return Vector with a std::strings for each key
 		 */
-		tVectorString SectionKeyListGet(const std::string &Section);
+		tVectorString SectionKeyListGet(std::string Section);
 
 		/**
 		 * Method to retrieve a value of the specified section/key combination for std::string
@@ -164,7 +158,7 @@ namespace YAIP
 		 * \param Default Specified default value in case key does not exist
 		 * \return Returns either the default value or the value of the existing section/key combination
 		 */
-		std::string SectionKeyValueGet(const std::string &Section, const std::string &Key, const std::string &Default);
+		std::string SectionKeyValueGet(std::string Section, std::string Key, std::string Default);
 
 		/**
 		 * Templated method to retrieve a value of the specified section/key combination
@@ -174,7 +168,7 @@ namespace YAIP
 		 * \return Returns either the default value or the value of the existing section/key combination
 		 */
 		template<typename VariableType>
-		VariableType SectionKeyValueGet(const std::string &Section, const std::string &Key, const VariableType &Default)
+		VariableType SectionKeyValueGet(std::string Section, std::string Key, VariableType Default)
 		{
 			VariableType ValueReturn;
 			std::string ValueDefault;
@@ -191,7 +185,7 @@ namespace YAIP
 		 * \param Value Specified value to set
 		 * \return true on success otherwise false
 		 */
-		bool SectionKeyValueSet(const std::string &Section, const std::string &Key, const std::string &Value);
+		bool SectionKeyValueSet(std::string Section, std::string Key, std::string Value);
 
 		/**
 		 * Templated method to set a value of the specified section/key combination
@@ -201,7 +195,7 @@ namespace YAIP
 		 * \return true on success otherwise false
 		 */
 		template<typename VariableType>
-		bool SectionKeyValueSet(const std::string &Section, const std::string &Key, const VariableType &Value)
+		bool SectionKeyValueSet(std::string Section, std::string Key, VariableType Value)
 		{
 			std::string ValueString;
 			Convert::ConvertTo(Value, ValueString);
@@ -212,7 +206,13 @@ namespace YAIP
 		 * Remove section completely from internal data structure
 		 * \param Section Specified section
 		 */
-		void SectionKill(const std::string &Section);
+		void SectionKill(std::string Section);
+
+		/**
+		 * Get all sections of the INI file
+		 * \return Vector with a std::strings for each section
+		 */
+		tVectorString SectionListGet(void);
 
 	protected:
 		/**
@@ -244,7 +244,7 @@ namespace YAIP
 		 * \param Value Where to write new value to
 		 * \return true for section match, otherwise false
 		 */
-		static bool NewKeyValue(const std::string &Line, std::string &Key, std::string &Value);
+		static bool NewKeyValue(std::string Line, std::string &Key, std::string &Value);
 
 		/**
 		 * In case a new section is matched by the regex, the return value signals new section and the variable is populated.
@@ -252,12 +252,12 @@ namespace YAIP
 		 * \param Section Where to write new section value to
 		 * \return true for section match, otherwise false
 		 */
-		static bool NewSection(const std::string &Line, std::string &Section);
+		static bool NewSection(std::string Line, std::string &Section);
 
 		/**
 		 * Loop over file content to determine sections and key/values to populate internal storage
 		 * \param FileContent The INI file as a vector of std::strings, each line a string
 		 */
-		void ParseFileContent(tVectorString &FileContent);
+		void ParseFileContent(tVectorString FileContent);
 	};
 }

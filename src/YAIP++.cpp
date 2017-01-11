@@ -20,14 +20,14 @@ namespace YAIP
 
 	// ******************************************************************
 	// ******************************************************************
-	void Convert::ConvertTo(const int &Value, std::string &ValueString)
+	void Convert::ConvertTo(int Value, std::string &ValueString)
 	{
 		ValueString = std::to_string(Value);
 	}
 
 	// ******************************************************************
 	// ******************************************************************
-	void Convert::ConvertTo(const float &Value, std::string &ValueString)
+	void Convert::ConvertTo(float Value, std::string &ValueString)
 	{
 		std::ostringstream StringStream;
 		StringStream << Value;
@@ -36,7 +36,7 @@ namespace YAIP
 
 	// ******************************************************************
 	// ******************************************************************
-	void Convert::ConvertTo(const double &Value, std::string &ValueString)
+	void Convert::ConvertTo(double Value, std::string &ValueString)
 	{
 		std::ostringstream StringStream;
 		StringStream << Value;
@@ -45,7 +45,7 @@ namespace YAIP
 
 	// ******************************************************************
 	// ******************************************************************
-	void Convert::ConvertTo(const bool &Value, std::string &ValueString)
+	void Convert::ConvertTo(bool Value, std::string &ValueString)
 	{
 		ValueString = Convert::StringFalse;
 		if (true == Value)
@@ -56,28 +56,28 @@ namespace YAIP
 
 	// ******************************************************************
 	// ******************************************************************
-	void Convert::ConvertTo(const std::string &ValueString, int &Value)
+	void Convert::ConvertTo(std::string ValueString, int &Value)
 	{
 		Value = std::stoi(ValueString);
 	}
 
 	// ******************************************************************
 	// ******************************************************************
-	void Convert::ConvertTo(const std::string &ValueString, double &Value)
+	void Convert::ConvertTo(std::string ValueString, double &Value)
 	{
 		Value = std::stod(ValueString);
 	}
 
 	// ******************************************************************
 	// ******************************************************************
-	void Convert::ConvertTo(const std::string &ValueString, float &Value)
+	void Convert::ConvertTo(std::string ValueString, float &Value)
 	{
-		Value = std::stod(ValueString);
+		Value = std::stof(ValueString);
 	}
 
 	// ******************************************************************
 	// ******************************************************************
-	void Convert::ConvertTo(const std::string &ValueString, bool &Value)
+	void Convert::ConvertTo(std::string ValueString, bool &Value)
 	{
 		Value = false;
 		if (0 == ValueString.compare(Convert::StringTrue))
@@ -91,7 +91,7 @@ namespace YAIP
 	/**
 	 * \todo Invert regex logic to what is NOT allowed for key/values
 	 */
-	// Regular expressioin for matching a key/value pair
+	 // Regular expressioin for matching a key/value pair
 	const std::regex YAIP::RegExKeyValue("([\\s]+)?(([a-zA-Z0-9\\.])+){1}([\\s]+)?(=){1}([\\s]+)?(([a-zA-Z0-9\\.\\+-])+)?([\\s]+)?([#;])?(.*)");
 	//                                        1           2                 3       4      5               6                7        8    9
 	// 1 - Possible whitespaces
@@ -109,7 +109,7 @@ namespace YAIP
 	/**
 	 * \todo Invert regex logic to what is NOT allowed for sections
 	 */
-	// Regular expressioin for matching a section
+	 // Regular expressioin for matching a section
 	const std::regex YAIP::RegExSection("([\\s]+)?(\\[){1}([\\s]+)?(([a-zA-Z0-9])+){1}([\\s]+)?(\\]){1}([\\s]+)?([#;])?(.*)");
 	//                                      1       2        3            4              5       6        7       8    9
 	// 1 - Possible whitespaces
@@ -205,6 +205,139 @@ namespace YAIP
 
 	// ******************************************************************
 	// ******************************************************************
+	void YAIP::SectionKeyKill(std::string Section, std::string Key)
+	{
+		// First check for section existence
+		if (0 < m_IniData.count(Section))
+		{
+			// Memorize section data
+			tMapStringString KeyValueData = m_IniData.at(Section);
+
+			// Remove section
+			m_IniData.erase(Section);
+
+			// Figure out if requested key exists
+			if (0 < KeyValueData.count(Key))
+			{
+				// Key exists, kill key
+				KeyValueData.erase(Key);
+			}
+
+			// Re-insert section with deleted key
+			m_IniData.insert(std::make_pair(Section, KeyValueData));
+		}
+	}
+
+	// ******************************************************************
+	// ******************************************************************
+	tVectorString YAIP::SectionKeyListGet(std::string Section)
+	{
+		tVectorString KeyList;
+
+		// First check for section existence
+		if (0 < m_IniData.count(Section))
+		{
+			tMapStringString SectionData = m_IniData.at(Section);
+			// Loop over the key/value map retrieved from section
+			for (tMapStringString::iterator Loop = SectionData.begin(); Loop != SectionData.end(); ++Loop)
+			{
+				KeyList.push_back(Loop->first);
+			}
+		}
+
+		return KeyList;
+	}
+
+	// ******************************************************************
+	// ******************************************************************
+	std::string YAIP::SectionKeyValueGet(std::string Section, std::string Key, std::string Default)
+	{
+		// Ensure default return value
+		std::string ReturnValue = Default;
+
+		// First check for section existence
+		if (0 < m_IniData.count(Section))
+		{
+			tMapStringString SectionData = m_IniData.at(Section);
+
+			// Figure out if requested key exists
+			if (0 < SectionData.count(Key))
+			{
+				ReturnValue = SectionData.at(Key);
+			}
+		}
+
+		return ReturnValue;
+	}
+
+	// ******************************************************************
+	// ******************************************************************
+	bool YAIP::SectionKeyValueSet(std::string Section, std::string Key, std::string Value)
+	{
+		bool Success = false;
+		std::string Data = Value;
+
+		// Create new key/value pair
+		tMapStringString KeyValueNew;
+		KeyValueNew.insert(std::make_pair(Key, Data));
+
+		// Old key/value data
+		tMapStringString KeyValueOld;
+
+		// Check for section
+		if (0 < m_IniData.count(Section))
+		{
+			// Section exists, pick data and kill section
+			KeyValueOld = m_IniData.at(Section);
+			m_IniData.erase(Section);
+		}
+
+		if (0 < KeyValueOld.count(Key))
+		{
+			// Key exists, pick data and kill key
+			KeyValueOld.erase(Key);
+		}
+
+		// Merge new and existing data and memorize them
+		KeyValueOld.insert(KeyValueNew.begin(), KeyValueNew.end());
+		auto Result = m_IniData.insert(std::make_pair(Section, KeyValueOld));
+		if (false != Result.second)
+		{
+			Success = true;
+		}
+
+		return Success;
+	}
+
+	// ******************************************************************
+	// ******************************************************************
+	void YAIP::SectionKill(std::string Section)
+	{
+		// First check for section existence
+		if (0 < m_IniData.count(Section))
+		{
+			// Section exists, kill section
+			m_IniData.erase(Section);
+		}
+	}
+
+	// ******************************************************************
+	// ******************************************************************
+	tVectorString YAIP::SectionListGet(void)
+	{
+		tVectorString SectionList;
+
+		// Loop over the major map containing all sections
+		for (tMapStringMapStringString::iterator Loop = m_IniData.begin(); Loop != m_IniData.end(); ++Loop)
+		{
+			SectionList.push_back(Loop->first);
+		}
+
+		return SectionList;
+	}
+
+	// ******************************************************************
+	// ******************************************************************
 	void YAIP::INIFileSaveSection(std::string Section, std::ofstream &IniFile)
 	{
 		// Retrieve list of keys
@@ -213,7 +346,7 @@ namespace YAIP
 		 * \todo Keep empty sections?
 		 */
 
-		// Write section marker
+		 // Write section marker
 		if (0 != Section.length())
 		{
 			IniFile << "[" << Section << "]" << std::endl;
@@ -231,7 +364,7 @@ namespace YAIP
 
 	// ******************************************************************
 	// ******************************************************************
-	bool YAIP::NewKeyValue(const std::string &Line, std::string &Key, std::string &Value)
+	bool YAIP::NewKeyValue(std::string Line, std::string &Key, std::string &Value)
 	{
 		// Assume no new key/value pair
 		bool Success = false;
@@ -253,7 +386,7 @@ namespace YAIP
 
 	// ******************************************************************
 	// ******************************************************************
-	bool YAIP::NewSection(const std::string &Line, std::string &Section)
+	bool YAIP::NewSection(std::string Line, std::string &Section)
 	{
 		// Assume no new section
 		bool Success = false;
@@ -274,7 +407,7 @@ namespace YAIP
 
 	// ******************************************************************
 	// ******************************************************************
-	void YAIP::ParseFileContent(tVectorString &FileContent)
+	void YAIP::ParseFileContent(tVectorString FileContent)
 	{
 		/**
 		 * \todo Check specification if empty section is allowed
@@ -307,146 +440,5 @@ namespace YAIP
 				m_IniData[CurrentSection].insert(std::make_pair(CurrentKey, CurrentValue));
 			}
 		}
-	}
-
-	// ******************************************************************
-	// ******************************************************************
-	void YAIP::SectionKeyKill(const std::string &Section, const std::string &Key)
-	{
-		// First check for section existence
-		tMapStringMapStringString::iterator SectionDataRaw = m_IniData.find(Section);
-		if (m_IniData.end() != SectionDataRaw)
-		{
-			// Memorize section data
-			tMapStringString KeyValueData = SectionDataRaw->second;
-
-			// Remove section
-			m_IniData.erase(Section);
-
-			// Figure out if requested key exists
-			tMapStringString::iterator KeyValuePosition = KeyValueData.find(Key);
-			if (KeyValueData.end() != KeyValuePosition)
-			{
-				// Key exists, kill key
-				KeyValueData.erase(Key);
-			}
-
-			// Re-insert section with deleted key
-			m_IniData.insert(std::make_pair(Section, KeyValueData));
-		}
-	}
-
-	// ******************************************************************
-	// ******************************************************************
-	tVectorString YAIP::SectionKeyListGet(const std::string &Section)
-	{
-		tVectorString KeyList;
-
-		// First check for section existence
-		tMapStringMapStringString::iterator SectionDataRaw = m_IniData.find(Section);
-		if (m_IniData.end() != SectionDataRaw)
-		{
-			tMapStringString SectionData = SectionDataRaw->second;
-			// Loop over the key/value map retrieved from section
-			for (tMapStringString::iterator Loop = SectionData.begin(); Loop != SectionData.end(); ++Loop)
-			{
-				KeyList.push_back(Loop->first);
-			}
-		}
-
-		return KeyList;
-	}
-
-	// ******************************************************************
-	// ******************************************************************
-	void YAIP::SectionKill(const std::string &Section)
-	{
-		// First check for section existence
-		tMapStringMapStringString::iterator SectionDataRaw = m_IniData.find(Section);
-		if (m_IniData.end() != SectionDataRaw)
-		{
-			// Section exists, kill section
-			m_IniData.erase(Section);
-		}
-	}
-
-	// ******************************************************************
-	// ******************************************************************
-	tVectorString YAIP::SectionListGet(void)
-	{
-		tVectorString SectionList;
-
-		// Loop over the major map containing all sections
-		for (tMapStringMapStringString::iterator Loop = m_IniData.begin(); Loop != m_IniData.end(); ++Loop)
-		{
-			SectionList.push_back(Loop->first);
-		}
-
-		return SectionList;
-	}
-
-	// ******************************************************************
-	// ******************************************************************
-	std::string YAIP::SectionKeyValueGet(const std::string &Section, const std::string &Key, const std::string &Default)
-	{
-		// Ensure default return value
-		std::string ReturnValue = Default;
-
-		// First check for section existence
-		tMapStringMapStringString::iterator SectionDataRaw = m_IniData.find(Section);
-		if (m_IniData.end() != SectionDataRaw)
-		{
-			tMapStringString SectionData = SectionDataRaw->second;
-
-			// Figure out if requested key exists
-			tMapStringString::iterator KeyDataRaw = SectionData.find(Key);
-			if (SectionData.end() != KeyDataRaw)
-			{
-				ReturnValue = KeyDataRaw->second;
-			}
-		}
-
-		return ReturnValue;
-	}
-
-	// ******************************************************************
-	// ******************************************************************
-	bool YAIP::SectionKeyValueSet(const std::string &Section, const std::string &Key, const std::string &Value)
-	{
-		bool Success = false;
-		std::string Data = Value;
-
-		// Create new key/value pair
-		tMapStringString KeyValueNew;
-		KeyValueNew.insert(std::make_pair(Key, Data));
-
-		// Old key/value data
-		tMapStringString KeyValueOld;
-
-		// Check for section
-		tMapStringMapStringString::iterator SectionDataRaw = m_IniData.find(Section);
-		if (m_IniData.end() != SectionDataRaw)
-		{
-			// Section exists, pick data and kill section
-			KeyValueOld = SectionDataRaw->second;
-			m_IniData.erase(Section);
-		}
-
-		tMapStringString::iterator KeyValueOldPosition = KeyValueOld.find(Key);
-		if (KeyValueOld.end() != KeyValueOldPosition)
-		{
-			// Key exists, pick data and kill key
-			KeyValueOld.erase(Key);
-		}
-
-		// Merge new and existing data and memorize them
-		KeyValueOld.insert(KeyValueNew.begin(), KeyValueNew.end());
-		auto Result = m_IniData.insert(std::make_pair(Section, KeyValueOld));
-		if (false != Result.second)
-		{
-			Success = true;
-		}
-
-		return Success;
 	}
 }
