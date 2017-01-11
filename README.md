@@ -27,6 +27,10 @@ Searching for INI parsers for C++ fires up a lot of them. Most of them come with
 
 If any datatype is currently not supported, the extension is very simple. Just extend the class *YAIP::Convert* with conversion methods from/to your data type.
 
+## Doxygen documentation ##
+
+A doxygen documentation can be generated, the config file is located in the doxygen subfolder.
+
 ## API overview ##
 
 * Load INI file
@@ -39,7 +43,7 @@ If any datatype is currently not supported, the extension is very simple. Just e
 		bool INIFileLoad(std::string Filename);
 
 * Save INI file
-* 
+*
 		/**
 		 * Save internal structures to INI file
 		 * \param Filename Full qualified filename of the INI file
@@ -137,11 +141,3 @@ IniParser.SectionKill("Section");
 // Save modified INI file
 IniParser.INIFileSave("C:\\Windows\\Temp\\_YAIP.ini");
 </pre>
-
-## Doxygen documentation ##
-
-The latest version of the doxygen documentation can be found [here](https://cdn.rawgit.com/ThirtySomething/YAIP/master/doxygen/html/index.html).
-
-## Contributing ##
-
-Any kind of contribution is welcome.

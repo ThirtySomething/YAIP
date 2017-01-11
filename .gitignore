@@ -28,3 +28,4 @@
 *.out
 *.app
 /doxygen/YAIP++.log
+/doxygen/html
