@@ -1,1 +1,0 @@
-/usr/bin/c++    -std=c++11    CMakeFiles/YAIP++.dir/YAIP++.cpp.o CMakeFiles/YAIP++.dir/main.cpp.o  -o YAIP++ -rdynamic 
