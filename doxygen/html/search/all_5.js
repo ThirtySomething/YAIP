@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['newkeyvalue',['NewKeyValue',['../d2/d79/a00051.html#abefc9832add217263f414e34ee9df686',1,'YAIP::YAIP']]],
-  ['newsection',['NewSection',['../d2/d79/a00051.html#a1f89d4938131d1707b75dbd8a39dc3f0',1,'YAIP::YAIP']]]
+  ['parsefilecontent',['ParseFileContent',['../dd/dad/a00005.html#acaea94cdebe8c1617c34605c9b816626',1,'YAIP::YAIP']]]
 ];

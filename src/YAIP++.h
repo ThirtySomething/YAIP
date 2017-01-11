@@ -16,6 +16,26 @@ namespace YAIP
 {
 	/**
 	 * Class to convert data from and to std::string
+	 * \todo Add converters for all fundamental types:
+	 * \see http://en.cppreference.com/w/cpp/language/types
+	 * <table>
+	 * <caption id="multi_row">Fundamental types</caption>
+	 * <tr><th>Type</th><th>Done</th></tr>
+	 * <tr><td>bool</td><td>x</td></tr>
+	 * <tr><td>int</td><td>x</td></tr>
+	 * <tr><td>unsigned int</td><td>-</td></tr>
+	 * <tr><td>short</td><td>-</td></tr>
+	 * <tr><td>unsigned short</td><td>-</td></tr>
+	 * <tr><td>long</td><td>-</td></tr>
+	 * <tr><td>unsigned long</td><td>-</td></tr>
+	 * <tr><td>long long</td><td>-</td></tr>
+	 * <tr><td>unsigned long long</td><td>-</td></tr>
+	 * <tr><td>char</td><td>-</td></tr>
+	 * <tr><td>unsigned char</td><td>-</td></tr>
+	 * <tr><td>float</td><td>x</td></tr>
+	 * <tr><td>double</td><td>x</td></tr>
+	 * <tr><td>long double</td><td>-</td></tr>
+	 * </table>
 	 */
 	class Convert
 	{
@@ -38,6 +58,13 @@ namespace YAIP
 		static void ConvertTo(const int &Value, std::string &ValueString);
 
 		/**
+		 * Convert float to std::string
+		 * \param Value Value to convert from
+		 * \param ValueString Value to convert to
+		 */
+		static void ConvertTo(const float &Value, std::string &ValueString);
+
+		/**
 		 * Convert double to std::string
 		 * \param Value Value to convert from
 		 * \param ValueString Value to convert to
@@ -57,6 +84,13 @@ namespace YAIP
 		 * \param Value Value to convert to
 		 */
 		static void ConvertTo(const std::string &ValueString, int &Value);
+
+		/**
+		 * Convert std::string to float
+		 * \param ValueString Value to convert from
+		 * \param Value Value to convert to
+		 */
+		static void ConvertTo(const std::string &ValueString, float &Value);
 
 		/**
 		 * Convert std::string to double
@@ -104,7 +138,7 @@ namespace YAIP
 		bool INIFileSave(std::string Filename);
 
 		/**
-		 * Get all section of the INI file
+		 * Get all sections of the INI file
 		 * \return Vector with a std::strings for each section
 		 */
 		tVectorString SectionListGet(void);

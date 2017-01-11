@@ -1,1 +1,29 @@
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text=auto
+
+# Explicitly declare text files you want to always be normalized and converted
+# to native line endings on checkout.
+*.c text
+*.cpp text
+*.css text
+*.doxy text
+*.h text
+*.html crlf=input
+*.ini text
+*.js text
+*.md text
+*.txt text
+
+# Declare files that will always have CRLF line endings on checkout.
+*.sln text eol=crlf
+
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.jpg binary
+*.svg binary
+*.map binary
+*.md5 binary
+
+# Disable html/css/js files for project overview on github
+# Enables project autodetection as C++
 doxygen/html/* linguist-documentation

@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['regexkeyvalue',['RegExKeyValue',['../d2/d79/a00051.html#abfa8f88755d1a1ef387f488670204f95',1,'YAIP::YAIP']]],
-  ['regexsection',['RegExSection',['../d2/d79/a00051.html#ad28c1ae8babf0889e47c71ae0cd3e05b',1,'YAIP::YAIP']]]
+  ['tmapmapstringstring',['tMapMapStringString',['../d7/dec/a00010.html#af0db2e8c88679ea81af6d604c798ecbb',1,'YAIP']]],
+  ['tmapstringstring',['tMapStringString',['../d7/dec/a00010.html#a108f799d0a3d623b213526665dd16c1a',1,'YAIP']]],
+  ['todo_20list',['Todo List',['../d8/d84/a00001.html',1,'']]],
+  ['tvectorstring',['tVectorString',['../d7/dec/a00010.html#a3fa35b8f3e7f7427796375776bc73d46',1,'YAIP']]]
 ];

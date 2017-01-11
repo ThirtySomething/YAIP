@@ -27,6 +27,15 @@ namespace YAIP
 
 	// ******************************************************************
 	// ******************************************************************
+	void Convert::ConvertTo(const float &Value, std::string &ValueString)
+	{
+		std::ostringstream StringStream;
+		StringStream << Value;
+		ValueString = StringStream.str();
+	}
+
+	// ******************************************************************
+	// ******************************************************************
 	void Convert::ConvertTo(const double &Value, std::string &ValueString)
 	{
 		std::ostringstream StringStream;
@@ -61,6 +70,13 @@ namespace YAIP
 
 	// ******************************************************************
 	// ******************************************************************
+	void Convert::ConvertTo(const std::string &ValueString, float &Value)
+	{
+		Value = std::stod(ValueString);
+	}
+
+	// ******************************************************************
+	// ******************************************************************
 	void Convert::ConvertTo(const std::string &ValueString, bool &Value)
 	{
 		Value = false;
@@ -72,6 +88,9 @@ namespace YAIP
 
 	// ******************************************************************
 	// ******************************************************************
+	/**
+	 * \todo Invert regex logic to what is NOT allowed for key/values
+	 */
 	// Regular expressioin for matching a key/value pair
 	const std::regex YAIP::RegExKeyValue("([\\s]+)?(([a-zA-Z0-9\\.])+){1}([\\s]+)?(=){1}([\\s]+)?(([a-zA-Z0-9\\.\\+-])+)?([\\s]+)?([#;])?(.)*");
 	//                                        1           2                 3       4      5               6                7        8    9
@@ -87,6 +106,9 @@ namespace YAIP
 
 	// ******************************************************************
 	// ******************************************************************
+	/**
+	 * \todo Invert regex logic to what is NOT allowed for sections
+	 */
 	// Regular expressioin for matching a section
 	const std::regex YAIP::RegExSection("([\\s]+)?(\\[){1}([\\s]+)?(([a-zA-Z0-9])+){1}([\\s]+)?(\\]){1}([\\s]+)?([#;])?(.)*");
 	//                                      1       2        3            4              5       6        7       8    9
@@ -187,6 +209,9 @@ namespace YAIP
 	{
 		// Retrieve list of keys
 		tVectorString KeyList = SectionKeyListGet(Section);
+		/**
+		 * \todo Keep empty sections?
+		 */
 
 		// Write section marker
 		if (0 != Section.length())
@@ -251,6 +276,9 @@ namespace YAIP
 	// ******************************************************************
 	void YAIP::ParseFileContent(tVectorString &FileContent)
 	{
+		/**
+		 * \todo Check specification if empty section is allowed
+		 */
 		std::string CurrentSection = "";
 		std::string CurrentKey = "";
 		std::string CurrentValue = "";

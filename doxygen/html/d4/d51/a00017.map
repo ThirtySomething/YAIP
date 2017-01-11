@@ -1,3 +1,2 @@
-<map id="YAIPTestFixtureBase" name="YAIPTestFixtureBase">
-<area shape="rect" id="node2" href="$d2/d79/a00051.html" title="{YAIP::YAIP\n|# m_IniData\l# RegExKeyValue\l# RegExSection\l|+ YAIP()\l+ ~YAIP()\l+ INIFileLoad()\l+ INIFileSave()\l+ SectionKeyKill()\l+ SectionKeyListGet()\l+ SectionKeyValueGet()\l+ SectionKeyValueGet()\l+ SectionKeyValueSet()\l+ SectionKeyValueSet()\l+ SectionKill()\l+ SectionListGet()\l# INIFileSaveSection()\l# ParseFileContent()\l# NewKeyValue()\l# NewSection()\l}" alt="" coords="5,5,168,332"/>
+<map id="YAIP::Convert" name="YAIP::Convert">
 </map>
