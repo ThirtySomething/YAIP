@@ -1,4 +1,4 @@
-#define OLD_STYLE
+// #define OLD_STYLE
 
 #include "YAIP++.h"
 #include <sys/stat.h>

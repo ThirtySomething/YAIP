@@ -41,3 +41,5 @@
 /_IDE/VS2015/x64
 /doxygen/YAIP++.log
 /doxygen/html
+/src/yaip.ini
+

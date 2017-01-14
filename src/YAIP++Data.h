@@ -11,6 +11,7 @@
 #include <map>
 #include <vector>
 #include <string>
+#include <ctype.h>
 
  /**
   * Namespace of YAIP
@@ -29,16 +30,13 @@ namespace YAIP
 		{
 			/**
 			 * Operator for usage in string compare
-			 * \param StringLeft Left character to check
-			 * \param StringRight Right character to check
+			 * \param CharLeft Left character to check
+			 * \param CharRight Right character to check
 			 * \return true in case the left character is less than the right character
 			 */
 			bool operator() (const unsigned char& CharLeft, const unsigned char& CharRight) const
 			{
-				std::locale loc;
-				unsigned char Left = CharLeft;
-				unsigned char Right = CharRight;
-				return std::tolower(Left, loc) < std::tolower(Right, loc);
+				return (tolower(CharLeft) < tolower(CharRight));
 			}
 		};
 
