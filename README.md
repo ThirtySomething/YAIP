@@ -47,7 +47,7 @@ A doxygen documentation can be generated, the config file is located in the doxy
 		bool INIFileLoad(std::string Filename);
 
 * Save INI file
-*
+
 		/**
 		 * Save internal structures to INI file
 		 * \param Filename Full qualified filename of the INI file
