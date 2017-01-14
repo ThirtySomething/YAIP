@@ -9,7 +9,7 @@
 #include <sstream>
 
 #ifdef __MINGW32__
-// GCC on windows does not support std::to_string
+ // GCC on windows does not support std::to_string
 #include <string>
 #include <sstream>
 #include <stdlib.h>
@@ -171,6 +171,7 @@ namespace YAIP
 	// ******************************************************************
 	YAIP::~YAIP(void)
 	{
+		Clear();
 	}
 
 	// ******************************************************************
@@ -181,7 +182,7 @@ namespace YAIP
 		std::ifstream IniFile;
 
 		// Always clear internal storage
-		m_IniData.clear();
+		Clear();
 
 		// Open the INI file for reading
 		IniFile.open(Filename, std::ios::in);
@@ -372,6 +373,19 @@ namespace YAIP
 		}
 
 		return SectionList;
+	}
+
+	// ******************************************************************
+	// ******************************************************************
+	void YAIP::Clear(void)
+	{
+		for (tMapStringMapStringString::iterator Loop = m_IniData.begin(); Loop != m_IniData.end(); ++Loop)
+		{
+			std::string Key = Loop->first;
+			tMapStringString Data = Loop->second;
+
+			Data.clear();
+		}
 	}
 
 	// ******************************************************************

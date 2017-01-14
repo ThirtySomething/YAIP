@@ -214,6 +214,11 @@ namespace YAIP
 		 */
 		tVectorString SectionListGet(void);
 
+		/**
+		 * Drop all data to get a clean INI
+		 */
+		void Clear(void);
+
 	protected:
 		/**
 		 * Internal map for all sections, each section represented by a map serving the key/value data

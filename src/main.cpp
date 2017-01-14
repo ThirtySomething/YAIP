@@ -1,102 +1,8 @@
-// #define OLD_STYLE
+#define OLD_STYLE
 
-#ifdef OLD_STYLE
-
-#include <iostream>
-#include "YAIP++.h"
-
-/**
- * Simple function to display content of INI file
- * \param IniParser An instance of YAIP
- * \param Comment A remark printed on top
- */
-void DisplayINI(YAIP::YAIP &IniParser, std::string &Comment)
-{
-	std::cout << "----- " << Comment << " -----" << std::endl;
-
-	YAIP::tVectorString SectionList = IniParser.SectionListGet();
-	for (YAIP::tVectorString::iterator LoopSection = SectionList.begin(); LoopSection != SectionList.end(); ++LoopSection)
-	{
-		std::string Section = *LoopSection;
-		if (0 < Section.length())
-		{
-			std::cout << "[" << Section << "]" << std::endl;
-		}
-
-		YAIP::tVectorString KeyList = IniParser.SectionKeyListGet(Section);
-		int SectionCount = 0;
-		for (YAIP::tVectorString::iterator LoopKey = KeyList.begin(); LoopKey != KeyList.end(); ++LoopKey)
-		{
-			std::string Default = "Default";
-			std::string Key = *LoopKey;
-			std::string Value = IniParser.SectionKeyValueGet(Section, Key, Default);
-			std::cout << Key << "=" << Value << std::endl;
-			SectionCount++;
-		}
-	}
-}
-
-int main()
-{
-	YAIP::YAIP IniParser;
-	std::string IniSection;
-	std::string IniKey;
-	std::string IniValue;
-	std::string IniComment;
-
-	std::cout << "Test of YAIP" << std::endl;
-
-	IniParser.INIFileLoad("sample.ini");
-
-	// Display content
-	IniComment = "Original";
-	DisplayINI(IniParser, IniComment);
-
-	// Add new section/key/value
-	IniSection = "Section";
-	IniKey = "Key";
-	IniValue = "Value";
-	IniParser.SectionKeyValueSet(IniSection, IniKey, IniValue);
-
-	// Add to existing section a new key value
-	IniSection = "Section01";
-	IniParser.SectionKeyValueSet(IniSection, IniKey, IniValue);
-
-	// Update existing section/key/value
-	IniSection = "Section01";
-	IniKey = "Entry02";
-	IniValue = "2nd";
-	IniParser.SectionKeyValueSet(IniSection, IniKey, IniValue);
-
-	// Display content
-	IniComment = "Modified";
-	DisplayINI(IniParser, IniComment);
-
-	// Delete a key
-	IniSection = "Section01";
-	IniKey = "Key";
-	IniParser.SectionKeyKill(IniSection, IniKey);
-
-	// Delete a section
-	IniSection = "Section";
-	IniParser.SectionKill(IniSection);
-
-	// Display content
-	IniComment = "Deleted";
-	DisplayINI(IniParser, IniComment);
-
-	// Save new INI file
-	IniParser.INIFileSave("sample_yaip.ini");
-
-	return 0;
-}
-
-#else
-
-#define CATCH_CONFIG_MAIN
-#include "./../externals/Catch/single_include/catch.hpp"
 #include "YAIP++.h"
 #include <sys/stat.h>
+#include <iostream>
 
 /**
  * Base class for fixtures and tests
@@ -179,18 +85,6 @@ const double YAIPTestFixtureSave::ValueDouble = 1.23;
 const int YAIPTestFixtureSave::ValueInt = 123;
 const std::string YAIPTestFixtureSave::ValueString = "Value";
 
-TEST_CASE_METHOD(YAIPTestFixtureSave, "Create sample INI file", "[create]")
-{
-	struct stat FileDataRaw;
-
-	CHECK(IniParser.SectionKeyValueSet(Section, KeyBool, ValueBool));
-	CHECK(IniParser.SectionKeyValueSet(Section, KeyDouble, ValueDouble));
-	CHECK(IniParser.SectionKeyValueSet(Section, KeyInteger, ValueInt));
-	CHECK(IniParser.SectionKeyValueSet(Section, KeyString, ValueString));
-	CHECK(IniParser.INIFileSave(INIFilename));
-	CHECK(0 == stat(INIFilename.c_str(), &FileDataRaw));
-}
-
 /**
  * Class for fixtures and tests for loading data
  */
@@ -223,6 +117,356 @@ const double YAIPTestFixtureLoad::DefaultDouble = 0.0;
 const int YAIPTestFixtureLoad::DefaultInt = 0;
 const std::string YAIPTestFixtureLoad::DefaultString = "";
 
+/**
+ * Class for fixtures and tests for reading section list
+ */
+class YAIPTestFixtureSectionList : public YAIPTestFixtureBase
+{
+};
+
+/**
+ * Class for fixtures and tests for reading section key list
+ */
+class YAIPTestFixtureSectionKeyList : public YAIPTestFixtureBase
+{
+};
+
+/**
+ * Class for fixtures and tests for removing section key
+ */
+class YAIPTestFixtureSectionKeyKill : public YAIPTestFixtureBase
+{
+};
+
+/**
+ * Class for fixtures and tests for removing section
+ */
+class YAIPTestFixtureSectionKill : public YAIPTestFixtureBase
+{
+};
+
+#ifdef OLD_STYLE
+
+#include <iostream>
+
+/**
+* Simple function to display content of INI file
+* \param IniParser An instance of YAIP
+* \param Comment A remark printed on top
+*/
+void DisplayINI(YAIP::YAIP &IniParser, std::string &Comment)
+{
+	std::cout << "----- " << Comment << " -----" << std::endl;
+
+	YAIP::tVectorString SectionList = IniParser.SectionListGet();
+	for (YAIP::tVectorString::iterator LoopSection = SectionList.begin(); LoopSection != SectionList.end(); ++LoopSection)
+	{
+		std::string Section = *LoopSection;
+		if (0 < Section.length())
+		{
+			std::cout << "[" << Section << "]" << std::endl;
+		}
+
+		YAIP::tVectorString KeyList = IniParser.SectionKeyListGet(Section);
+		int SectionCount = 0;
+		for (YAIP::tVectorString::iterator LoopKey = KeyList.begin(); LoopKey != KeyList.end(); ++LoopKey)
+		{
+			std::string Default = "Default";
+			std::string Key = *LoopKey;
+			std::string Value = IniParser.SectionKeyValueGet(Section, Key, Default);
+			std::cout << Key << "=" << Value << std::endl;
+			SectionCount++;
+		}
+	}
+}
+
+void TestSave(std::string TestName, std::string INIFilename)
+{
+	YAIPTestFixtureSave Test;
+
+	Test.IniParser.SectionKeyValueSet(Test.Section, Test.KeyBool, Test.ValueBool);
+	Test.IniParser.SectionKeyValueSet(Test.Section, Test.KeyDouble, Test.ValueDouble);
+	Test.IniParser.SectionKeyValueSet(Test.Section, Test.KeyInteger, Test.ValueInt);
+	Test.IniParser.SectionKeyValueSet(Test.Section, Test.KeyString, Test.ValueString);
+	Test.IniParser.INIFileSave(INIFilename);
+
+	DisplayINI(Test.IniParser, TestName);
+}
+
+void TestLoad(std::string TestName, std::string INIFilename)
+{
+	YAIPTestFixtureLoad Test;
+
+	Test.IniParser.INIFileLoad(INIFilename);
+
+	bool ResultBool = Test.IniParser.SectionKeyValueGet(Test.Section, Test.KeyBool, Test.DefaultBool);
+	if ((ResultBool == Test.DefaultBool) ||
+		(ResultBool != Test.ValueBool))
+	{
+		std::cout << "Fehler bei bool!" << std::endl;
+	}
+
+	double ResultDouble = Test.IniParser.SectionKeyValueGet(Test.Section, Test.KeyDouble, Test.DefaultDouble);
+	if ((ResultDouble == Test.DefaultDouble) ||
+		(ResultDouble != Test.ValueDouble))
+	{
+		std::cout << "Fehler bei double!" << std::endl;
+	}
+
+	int ResultInt = Test.IniParser.SectionKeyValueGet(Test.Section, Test.KeyInteger, Test.DefaultInt);
+	if ((ResultInt == Test.DefaultInt) ||
+		(ResultInt != Test.ValueInt))
+	{
+		std::cout << "Fehler bei int!" << std::endl;
+	}
+
+	std::string ResultString = Test.IniParser.SectionKeyValueGet(Test.Section, Test.KeyString, Test.DefaultString);
+	if ((0 == ResultString.compare(Test.DefaultString)) ||
+		(0 != ResultString.compare(Test.ValueString)))
+	{
+		std::cout << "Fehler bei string!" << std::endl;
+	}
+
+	DisplayINI(Test.IniParser, TestName);
+}
+
+void TestSectionList(std::string TestName, std::string INIFilename)
+{
+	YAIPTestFixtureSectionList Test;
+
+	Test.IniParser.INIFileLoad(INIFilename);
+	std::vector<std::string> SectionList = Test.IniParser.SectionListGet();
+
+	auto ResultSection = std::find(std::begin(SectionList), std::end(SectionList), Test.Section);
+	if (ResultSection == std::end(SectionList))
+	{
+		std::cout << "Fehler bei SectionList!" << std::endl;
+	}
+
+	DisplayINI(Test.IniParser, TestName);
+}
+
+void TestSectionKeyList(std::string TestName, std::string INIFilename)
+{
+	YAIPTestFixtureSectionKeyList Test;
+
+	Test.IniParser.INIFileLoad(INIFilename);
+	std::vector<std::string> KeyList = Test.IniParser.SectionKeyListGet(Test.Section);
+
+	auto ResultBool = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyBool);
+	if (ResultBool == std::end(KeyList))
+	{
+		std::cout << "Key for bool not found!" << std::endl;
+	}
+
+	auto ResultDouble = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyDouble);
+	if (ResultDouble == std::end(KeyList))
+	{
+		std::cout << "Key for double not found!" << std::endl;
+	}
+
+	auto ResultInt = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyInteger);
+	if (ResultInt == std::end(KeyList))
+	{
+		std::cout << "Key for int not found!" << std::endl;
+	}
+
+	auto ResultString = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyString);
+	if (ResultString == std::end(KeyList))
+	{
+		std::cout << "Key for string not found!" << std::endl;
+	}
+
+	DisplayINI(Test.IniParser, TestName);
+}
+
+void TestSectionKeyKill(std::string TestName, std::string INIFilename)
+{
+	YAIPTestFixtureSectionKeyKill Test;
+
+	{
+		Test.IniParser.INIFileLoad(INIFilename);
+		Test.IniParser.SectionKeyKill(Test.Section, Test.KeyBool);
+		std::vector<std::string> KeyList = Test.IniParser.SectionKeyListGet(Test.Section);
+
+		auto ResultBool = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyBool);
+		if (ResultBool != std::end(KeyList))
+		{
+			std::cout << "Key for bool found!" << std::endl;
+		}
+
+		auto ResultDouble = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyDouble);
+		if (ResultDouble == std::end(KeyList))
+		{
+			std::cout << "Key for double not found!" << std::endl;
+		}
+
+		auto ResultInt = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyInteger);
+		if (ResultInt == std::end(KeyList))
+		{
+			std::cout << "Key for int not found!" << std::endl;
+		}
+
+		auto ResultString = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyString);
+		if (ResultString == std::end(KeyList))
+		{
+			std::cout << "Key for string not found!" << std::endl;
+		}
+
+		DisplayINI(Test.IniParser, TestName);
+	}
+
+	{
+		Test.IniParser.INIFileLoad(INIFilename);
+		Test.IniParser.SectionKeyKill(Test.Section, Test.KeyDouble);
+		std::vector<std::string> KeyList = Test.IniParser.SectionKeyListGet(Test.Section);
+
+		auto ResultBool = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyBool);
+		if (ResultBool == std::end(KeyList))
+		{
+			std::cout << "Key for bool not found!" << std::endl;
+		}
+
+		auto ResultDouble = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyDouble);
+		if (ResultDouble != std::end(KeyList))
+		{
+			std::cout << "Key for double found!" << std::endl;
+		}
+
+		auto ResultInt = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyInteger);
+		if (ResultInt == std::end(KeyList))
+		{
+			std::cout << "Key for int not found!" << std::endl;
+		}
+
+		auto ResultString = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyString);
+		if (ResultString == std::end(KeyList))
+		{
+			std::cout << "Key for string not found!" << std::endl;
+		}
+
+		DisplayINI(Test.IniParser, TestName);
+	}
+
+	{
+		Test.IniParser.INIFileLoad(INIFilename);
+		Test.IniParser.SectionKeyKill(Test.Section, Test.KeyInteger);
+		std::vector<std::string> KeyList = Test.IniParser.SectionKeyListGet(Test.Section);
+
+		auto ResultBool = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyBool);
+		if (ResultBool == std::end(KeyList))
+		{
+			std::cout << "Key for bool not found!" << std::endl;
+		}
+
+		auto ResultDouble = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyDouble);
+		if (ResultDouble == std::end(KeyList))
+		{
+			std::cout << "Key for double not found!" << std::endl;
+		}
+
+		auto ResultInt = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyInteger);
+		if (ResultInt != std::end(KeyList))
+		{
+			std::cout << "Key for int found!" << std::endl;
+		}
+
+		auto ResultString = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyString);
+		if (ResultString == std::end(KeyList))
+		{
+			std::cout << "Key for string not found!" << std::endl;
+		}
+
+		DisplayINI(Test.IniParser, TestName);
+	}
+
+	{
+		Test.IniParser.INIFileLoad(INIFilename);
+		Test.IniParser.SectionKeyKill(Test.Section, Test.KeyString);
+		std::vector<std::string> KeyList = Test.IniParser.SectionKeyListGet(Test.Section);
+
+		auto ResultBool = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyBool);
+		if (ResultBool == std::end(KeyList))
+		{
+			std::cout << "Key for bool not found!" << std::endl;
+		}
+
+		auto ResultDouble = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyDouble);
+		if (ResultDouble == std::end(KeyList))
+		{
+			std::cout << "Key for double not found!" << std::endl;
+		}
+
+		auto ResultInt = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyInteger);
+		if (ResultInt == std::end(KeyList))
+		{
+			std::cout << "Key for int not found!" << std::endl;
+		}
+
+		auto ResultString = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyString);
+		if (ResultString != std::end(KeyList))
+		{
+			std::cout << "Key for string found!" << std::endl;
+		}
+
+		DisplayINI(Test.IniParser, TestName);
+	}
+}
+
+void TestSectionKill(std::string TestName, std::string INIFilename)
+{
+	YAIPTestFixtureSectionKill Test;
+
+	Test.IniParser.INIFileLoad(INIFilename);
+	Test.IniParser.SectionKill(Test.Section);
+	std::vector<std::string> SectionList = Test.IniParser.SectionListGet();
+
+	auto ResultSection = std::find(std::begin(SectionList), std::end(SectionList), Test.Section);
+	if (ResultSection != std::end(SectionList))
+	{
+		std::cout << "Section found!" << std::endl;
+	}
+
+	DisplayINI(Test.IniParser, TestName);
+}
+
+int main(int argc, char *argv[])
+{
+	std::string INIFile = YAIPTestFixtureBase::INIFilename;
+
+	if (1 < argc)
+	{
+		INIFile = argv[1];
+		INIFile = INIFile + YAIPTestFixtureBase::INIFilename;
+	}
+
+	TestSave(">>> create", INIFile);
+	TestLoad(">>> load", INIFile);
+	TestSectionList(">>> sectionlist", INIFile);
+	TestSectionKeyList(">>> sectionkeylist", INIFile);
+	TestSectionKeyKill(">>> sectionkeykill", INIFile);
+	TestSectionKill(">>> sectionkill", INIFile);
+
+	return 0;
+}
+
+#else
+
+#define CATCH_CONFIG_MAIN
+#include "./../externals/Catch/single_include/catch.hpp"
+
+TEST_CASE_METHOD(YAIPTestFixtureSave, "Create sample INI file", "[save]")
+{
+	struct stat FileDataRaw;
+
+	CHECK(IniParser.SectionKeyValueSet(Section, KeyBool, ValueBool));
+	CHECK(IniParser.SectionKeyValueSet(Section, KeyDouble, ValueDouble));
+	CHECK(IniParser.SectionKeyValueSet(Section, KeyInteger, ValueInt));
+	CHECK(IniParser.SectionKeyValueSet(Section, KeyString, ValueString));
+	CHECK(IniParser.INIFileSave(INIFilename));
+	CHECK(0 == stat(INIFilename.c_str(), &FileDataRaw));
+}
+
 TEST_CASE_METHOD(YAIPTestFixtureLoad, "Load sample INI file", "[load]")
 {
 	CHECK(IniParser.INIFileLoad(INIFilename));
@@ -244,13 +488,6 @@ TEST_CASE_METHOD(YAIPTestFixtureLoad, "Load sample INI file", "[load]")
 	CHECK(0 == ResultString.compare(ValueString));
 }
 
-/**
- * Class for fixtures and tests for reading section list
- */
-class YAIPTestFixtureSectionList : public YAIPTestFixtureBase
-{
-};
-
 TEST_CASE_METHOD(YAIPTestFixtureSectionList, "Get section list", "[sectionlist]")
 {
 	CHECK(IniParser.INIFileLoad(INIFilename));
@@ -259,13 +496,6 @@ TEST_CASE_METHOD(YAIPTestFixtureSectionList, "Get section list", "[sectionlist]"
 	auto ResultSection = std::find(std::begin(SectionList), std::end(SectionList), Section);
 	CHECK(ResultSection != std::end(SectionList));
 }
-
-/**
- * Class for fixtures and tests for reading section key list
- */
-class YAIPTestFixtureSectionKeyList : public YAIPTestFixtureBase
-{
-};
 
 TEST_CASE_METHOD(YAIPTestFixtureSectionKeyList, "Get section key list", "[sectionkeylist]")
 {
@@ -284,13 +514,6 @@ TEST_CASE_METHOD(YAIPTestFixtureSectionKeyList, "Get section key list", "[sectio
 	auto ResultString = std::find(std::begin(KeyList), std::end(KeyList), KeyString);
 	CHECK(ResultString != std::end(KeyList));
 }
-
-/**
- * Class for fixtures and tests for removing section key
- */
-class YAIPTestFixtureSectionKeyKill : public YAIPTestFixtureBase
-{
-};
 
 TEST_CASE_METHOD(YAIPTestFixtureSectionKeyKill, "Kill section key", "[sectionkeykill]")
 {
@@ -366,13 +589,6 @@ TEST_CASE_METHOD(YAIPTestFixtureSectionKeyKill, "Kill section key", "[sectionkey
 		CHECK(ResultString == std::end(KeyList));
 	}
 }
-
-/**
- * Class for fixtures and tests for removing section
- */
-class YAIPTestFixtureSectionKill : public YAIPTestFixtureBase
-{
-};
 
 TEST_CASE_METHOD(YAIPTestFixtureSectionKill, "Kill section", "[sectionkill]")
 {
