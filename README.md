@@ -1,15 +1,19 @@
 # YAIP++ #
 
-Yet another INI parser
+### Yet another INI parser ###
 
 ## General information ##
 
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0) [![Build Status](https://travis-ci.org/ThirtySomething/YAIP.svg?branch=master)](https://travis-ci.org/ThirtySomething/YAIP) [![codecov](https://codecov.io/gh/ThirtySomething/YAIP/branch/master/graph/badge.svg)](https://codecov.io/gh/ThirtySomething/YAIP)
 
--  **YAIP++** is distributed under the terms of the **GNU LESSER GENERAL PUBLIC LICENSE**, version 3.0. The text of the license is included in the file **LICENSE.TXT** in the root of the project.
-- The build is done at [travis](https://travis-ci.org) using GCC C++ 4.9, GCC C++ 5, CLANG C++ 3.6 and CLANG C++ 3.7.
-- For code coverage [codecov](https://codecov.io) is used.
-- As testing framework [Catch](https://github.com/philsquared/Catch) is used.
+-  **YAIP++** is distributed under the terms of the **GNU LESSER GENERAL PUBLIC LICENSE**, version 3.0. The text of the license is included in the file [<code>LICENSE.TXT</code>](https://github.com/ThirtySomething/YAIP/blob/master/LICENSE.TXT) in the project root.
+- The build is done at [*Travis*](https://travis-ci.org) using the following compilers:
+   - GCC C++ 4.9
+   - GCC C++ 5
+   - CLANG C++ 3.6
+   - CLANG C++ 3.7.
+- As testing framework [*Catch*](https://github.com/philsquared/Catch) is used.
+- For code coverage [*Codecov*](https://codecov.io) is planned to use.
 
 ## Motivation ##
 
@@ -18,14 +22,14 @@ Searching for INI parsers for C++ fires up a lot of them. Most of them come with
 ## Implementation details ##
 
 * Convenience typedefs for datatypes in <code>YAIP++Data.h</code>
-* Data containers are STL elements like [vector](http://en.cppreference.com/w/cpp/container/vector) or [map](http://en.cppreference.com/w/cpp/container/map)
-* Detection of section and key/value pair is done using [regular expressions](http://en.cppreference.com/w/cpp/regex)
-* The major methods are based on *[std::string](http://en.cppreference.com/w/cpp/string/basic_string)*
-* The templated methods using converters from and to *[std::string](http://en.cppreference.com/w/cpp/string/basic_string)*
+* Data containers are STL elements like [*vector*](http://en.cppreference.com/w/cpp/container/vector) or [*map*](http://en.cppreference.com/w/cpp/container/map)
+* Detection of section and key/value pair is done using [*regular expressions*](http://en.cppreference.com/w/cpp/regex)
+* The major methods are based on [*std::string*](http://en.cppreference.com/w/cpp/string/basic_string)
+* The templated methods using converters from and to [*std::string*](http://en.cppreference.com/w/cpp/string/basic_string)
 
 ## Extension ##
 
-If any datatype is currently not supported, the extension is very simple. Just extend the class *YAIP::Convert* with conversion methods from/to your data type.
+If any datatype is currently not supported, the extension is very simple. Just extend the class <code>YAIP::Convert</code> with conversion methods from/to your data type.
 
 ## Doxygen documentation ##
 
@@ -52,7 +56,7 @@ A doxygen documentation can be generated, the config file is located in the doxy
 		bool INIFileSave(std::string Filename);
 
 
-* Get a vector of strings containing all sections
+* Get a vector of strings containing all section names
 
 		/**
 		 * Get all sections of the INI file
@@ -60,7 +64,7 @@ A doxygen documentation can be generated, the config file is located in the doxy
 		 */
 		tVectorString SectionListGet(void);
 
-* Deletion of a section with contents
+* Deletion of a section
 
 		/**
 		 * Remove section completely from internal data structure
@@ -111,33 +115,9 @@ A doxygen documentation can be generated, the config file is located in the doxy
 		 */
 		void SectionKeyKill(const std::string &Section, const std::string &Key);
 
-## Sample usage ##
+## IDE project files ##
 
-The usage is just simple:
+In the folder <code>_IDE</code> you can find preconfigured project files for integrated development environments such as
 
-<pre>
-// Read and parse the INI file
-IniParser.INIFileLoad("C:\\Windows\\system.ini");
-
-// Get a vector of strings containing all section names
-tVectorString SectionList = IniParser.SectionListGet();
-
-// Get a vector of strings containing all keys of a section
-tVectorString KeyList = IniParser.SectionKeyListGet(Section);
-
-// Read a value
-std::string Default = "Default value";
-std::string Value = IniParser.SectionKeyValueGet(Section, Key, Default);
-
-// Write a value
-IniParser.SectionKeyValueSet("Section", "Key", "Value");
-
-// Delete a key
-IniParser.SectionKeyKill("Section", "Key");
-
-// Delete a complete section
-IniParser.SectionKill("Section");
-
-// Save modified INI file
-IniParser.INIFileSave("C:\\Windows\\Temp\\_YAIP.ini");
-</pre>
+* [Code::Blocks](http://www.codeblocks.org/)
+* [Visual Studio 2015](https://www.visualstudio.com/)

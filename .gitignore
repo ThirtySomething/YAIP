@@ -27,9 +27,16 @@
 *.exe
 *.out
 *.app
+
+# Ignore user defined files and folders
+/_IDE/CodeBlocks/YAIP.layout
+/_IDE/CodeBlocks/bin
+/_IDE/CodeBlocks/obj
+/_IDE/VS2015/.vs
+/_IDE/VS2015/Win32
+/_IDE/VS2015/YAIP.VC.VC.opendb
+/_IDE/VS2015/YAIP.VC.db
+/_IDE/VS2015/YAIP.vcxproj.user
+/_IDE/VS2015/x64
 /doxygen/YAIP++.log
 /doxygen/html
-/obj
-/bin
-/YAIP.depend
-/YAIP.layout
