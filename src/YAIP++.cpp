@@ -16,38 +16,39 @@
 
 namespace std
 {
-    template < typename T > std::string to_string( const T& n )
-    {
-        std::ostringstream stm ;
-        stm << n ;
-        return stm.str() ;
-    }
+	template < typename T > std::string to_string(const T& n)
+	{
+		std::ostringstream stm;
+		stm << n;
+		return stm.str();
+	}
 
-    int stoi(const std::string s)
-    {
-        int i = atoi(s.c_str());
-        return i;
-    }
+	int stoi(const std::string s)
+	{
+		int i = 0;
+		sscanf(s.c_str(), "%d", &i);
+		return i;
+	}
 
-    double stod(const std::string s)
-    {
-        double d = stod(s.c_str());
-        return d;
-    }
+	double stod(const std::string s)
+	{
+		double d = 0.0;
+		sscanf(s.c_str(), "%lf", &d);
+		return d;
+	}
 
-    float stof(const std::string s)
-    {
-        float f = stof(s.c_str());
-        return f;
-    }
-
+	float stof(const std::string s)
+	{
+		float f = 0.0;
+		sscanf(s.c_str(), "%f", &f);
+		return f;
+	}
 }
 #endif // __MINGW32__
 
-
- /**
-  * Namespace of YAIP
-  */
+/**
+ * Namespace of YAIP
+ */
 namespace YAIP
 {
 	// ******************************************************************
@@ -255,7 +256,7 @@ namespace YAIP
 
 			// Figure out if requested key exists
 			if (0 < KeyValueData.count(Key))
-            {
+			{
 				// Key exists, kill key
 				KeyValueData.erase(Key);
 			}
