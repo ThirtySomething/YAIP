@@ -8,6 +8,43 @@
 #include <fstream>
 #include <sstream>
 
+#ifdef __MINGW32__
+// GCC on windows does not support std::to_string
+#include <string>
+#include <sstream>
+#include <stdlib.h>
+
+namespace std
+{
+    template < typename T > std::string to_string( const T& n )
+    {
+        std::ostringstream stm ;
+        stm << n ;
+        return stm.str() ;
+    }
+
+    int stoi(const std::string s)
+    {
+        int i = atoi(s.c_str());
+        return i;
+    }
+
+    double stod(const std::string s)
+    {
+        double d = stod(s.c_str());
+        return d;
+    }
+
+    float stof(const std::string s)
+    {
+        float f = stof(s.c_str());
+        return f;
+    }
+
+}
+#endif // __MINGW32__
+
+
  /**
   * Namespace of YAIP
   */
@@ -137,7 +174,7 @@ namespace YAIP
 
 	// ******************************************************************
 	// ******************************************************************
-	bool YAIP::INIFileLoad(std::string Filename)
+	bool YAIP::INIFileLoad(const std::string &Filename)
 	{
 		bool Success = false;
 		std::ifstream IniFile;
@@ -175,7 +212,7 @@ namespace YAIP
 
 	// ******************************************************************
 	// ******************************************************************
-	bool YAIP::INIFileSave(std::string Filename)
+	bool YAIP::INIFileSave(const std::string &Filename)
 	{
 		bool Success = false;
 		std::ofstream IniFile;
@@ -205,7 +242,7 @@ namespace YAIP
 
 	// ******************************************************************
 	// ******************************************************************
-	void YAIP::SectionKeyKill(std::string Section, std::string Key)
+	void YAIP::SectionKeyKill(const std::string &Section, const std::string &Key)
 	{
 		// First check for section existence
 		if (0 < m_IniData.count(Section))
@@ -218,7 +255,7 @@ namespace YAIP
 
 			// Figure out if requested key exists
 			if (0 < KeyValueData.count(Key))
-			{
+            {
 				// Key exists, kill key
 				KeyValueData.erase(Key);
 			}
@@ -230,7 +267,7 @@ namespace YAIP
 
 	// ******************************************************************
 	// ******************************************************************
-	tVectorString YAIP::SectionKeyListGet(std::string Section)
+	tVectorString YAIP::SectionKeyListGet(const std::string &Section)
 	{
 		tVectorString KeyList;
 
@@ -250,7 +287,7 @@ namespace YAIP
 
 	// ******************************************************************
 	// ******************************************************************
-	std::string YAIP::SectionKeyValueGet(std::string Section, std::string Key, std::string Default)
+	std::string YAIP::SectionKeyValueGet(const std::string &Section, const std::string &Key, const std::string &Default)
 	{
 		// Ensure default return value
 		std::string ReturnValue = Default;
@@ -272,7 +309,7 @@ namespace YAIP
 
 	// ******************************************************************
 	// ******************************************************************
-	bool YAIP::SectionKeyValueSet(std::string Section, std::string Key, std::string Value)
+	bool YAIP::SectionKeyValueSet(const std::string &Section, const std::string &Key, const std::string &Value)
 	{
 		bool Success = false;
 		std::string Data = Value;
@@ -311,7 +348,7 @@ namespace YAIP
 
 	// ******************************************************************
 	// ******************************************************************
-	void YAIP::SectionKill(std::string Section)
+	void YAIP::SectionKill(const std::string &Section)
 	{
 		// First check for section existence
 		if (0 < m_IniData.count(Section))

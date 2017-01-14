@@ -128,28 +128,28 @@ namespace YAIP
 		 * \param Filename Full qualified filename of the INI file
 		 * \return true on success otherwise false
 		 */
-		bool INIFileLoad(std::string Filename);
+		bool INIFileLoad(const std::string &Filename);
 
 		/**
 		 * Save internal structures to INI file
 		 * \param Filename Full qualified filename of the INI file
 		 * \return true on success otherwise false
 		 */
-		bool INIFileSave(std::string Filename);
+		bool INIFileSave(const std::string &Filename);
 
 		/**
 		 * Remove key completely from section of internal data structure
 		 * \param Section Specified section
 		 * \param Key Specified key
 		 */
-		void SectionKeyKill(std::string Section, std::string Key);
+		void SectionKeyKill(const std::string &Section, const std::string &Key);
 
 		/**
 		 * Get all keys of a section of the INI file
 		 * \param Section Specified section
 		 * \return Vector with a std::strings for each key
 		 */
-		tVectorString SectionKeyListGet(std::string Section);
+		tVectorString SectionKeyListGet(const std::string &Section);
 
 		/**
 		 * Method to retrieve a value of the specified section/key combination for std::string
@@ -158,7 +158,7 @@ namespace YAIP
 		 * \param Default Specified default value in case key does not exist
 		 * \return Returns either the default value or the value of the existing section/key combination
 		 */
-		std::string SectionKeyValueGet(std::string Section, std::string Key, std::string Default);
+		std::string SectionKeyValueGet(const std::string &Section, const std::string &Key, const std::string &Default);
 
 		/**
 		 * Templated method to retrieve a value of the specified section/key combination
@@ -168,7 +168,7 @@ namespace YAIP
 		 * \return Returns either the default value or the value of the existing section/key combination
 		 */
 		template<typename VariableType>
-		VariableType SectionKeyValueGet(std::string Section, std::string Key, VariableType Default)
+		VariableType SectionKeyValueGet(const std::string &Section, const std::string &Key, const VariableType &Default)
 		{
 			VariableType ValueReturn;
 			std::string ValueDefault;
@@ -185,7 +185,7 @@ namespace YAIP
 		 * \param Value Specified value to set
 		 * \return true on success otherwise false
 		 */
-		bool SectionKeyValueSet(std::string Section, std::string Key, std::string Value);
+		bool SectionKeyValueSet(const std::string &Section, const std::string &Key, const std::string &Value);
 
 		/**
 		 * Templated method to set a value of the specified section/key combination
@@ -195,7 +195,7 @@ namespace YAIP
 		 * \return true on success otherwise false
 		 */
 		template<typename VariableType>
-		bool SectionKeyValueSet(std::string Section, std::string Key, VariableType Value)
+		bool SectionKeyValueSet(const std::string &Section, const std::string &Key, const VariableType &Value)
 		{
 			std::string ValueString;
 			Convert::ConvertTo(Value, ValueString);
@@ -206,7 +206,7 @@ namespace YAIP
 		 * Remove section completely from internal data structure
 		 * \param Section Specified section
 		 */
-		void SectionKill(std::string Section);
+		void SectionKill(const std::string &Section);
 
 		/**
 		 * Get all sections of the INI file
