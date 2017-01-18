@@ -8,9 +8,11 @@
 [![Version](https://img.shields.io/github/release/ThirtySomething/YAIP.svg?maxAge=360)](#)
 [![Build Status](https://travis-ci.org/ThirtySomething/YAIP.svg?branch=master)](https://travis-ci.org/ThirtySomething/YAIP)
 [![GitHub issues](https://img.shields.io/github/issues/ThirtySomething/YAIP.svg?maxAge=360)](#)
-[//]: # [![AUR](https://img.shields.io/aur/votes/YAIP.svg?maxAge=3600)](https://aur.archlinux.org/packages/YAIP/)
-[//]: # [![codecov](https://codecov.io/gh/ThirtySomething/YAIP/branch/master/graph/badge.svg)](https://codecov.io/gh/ThirtySomething/YAIP)
-[//]: # ([![Total downloads](https://img.shields.io/github/downloads/ThirtySomething/YAIP/total.svg?maxAge=360)](#)
+<!-- 
+[![AUR](https://img.shields.io/aur/votes/YAIP.svg?maxAge=3600)](https://aur.archlinux.org/packages/YAIP/)
+[![codecov](https://codecov.io/gh/ThirtySomething/YAIP/branch/master/graph/badge.svg)](https://codecov.io/gh/ThirtySomething/YAIP)
+[![Total downloads](https://img.shields.io/github/downloads/ThirtySomething/YAIP/total.svg?maxAge=360)](#)
+-->
 
 -  **YAIP++** is distributed under the terms of the **GNU LESSER GENERAL PUBLIC LICENSE**, version 3.0. The text of the license is included in the file [<code>LICENSE.TXT</code>](https://github.com/ThirtySomething/YAIP/blob/master/LICENSE.TXT) in the project root.
 - The build is done at [*Travis*](https://travis-ci.org) using the following compilers:
@@ -19,7 +21,9 @@
    - CLANG C++ 3.6
    - CLANG C++ 3.7.
 - As testing framework [*Catch*](https://github.com/philsquared/Catch) is used.
+<!--
 - For code coverage [*Codecov*](https://codecov.io) is planned to use.
+-->
 
 ## Motivation ##
 
