@@ -4,7 +4,13 @@
 
 ## General information ##
 
-[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0) [![Build Status](https://travis-ci.org/ThirtySomething/YAIP.svg?branch=master)](https://travis-ci.org/ThirtySomething/YAIP) [![codecov](https://codecov.io/gh/ThirtySomething/YAIP/branch/master/graph/badge.svg)](https://codecov.io/gh/ThirtySomething/YAIP)
+[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0)
+[![Build Status](https://travis-ci.org/ThirtySomething/YAIP.svg?branch=master)](https://travis-ci.org/ThirtySomething/YAIP)
+[![codecov](https://codecov.io/gh/ThirtySomething/YAIP/branch/master/graph/badge.svg)](https://codecov.io/gh/ThirtySomething/YAIP)
+[![Total downloads](https://img.shields.io/github/downloads/ThirtySomething/YAIP/total.svg?maxAge=360)](#)
+[![Version](https://img.shields.io/github/release/ThirtySomething/YAIP.svg?maxAge=360)](#)
+[![GitHub issues](https://img.shields.io/github/issues/ThirtySomething/YAIP.svg?maxAge=360)](#)
+[![AUR](https://img.shields.io/aur/votes/YAIP.svg?maxAge=3600)](https://aur.archlinux.org/packages/YAIP/)
 
 -  **YAIP++** is distributed under the terms of the **GNU LESSER GENERAL PUBLIC LICENSE**, version 3.0. The text of the license is included in the file [<code>LICENSE.TXT</code>](https://github.com/ThirtySomething/YAIP/blob/master/LICENSE.TXT) in the project root.
 - The build is done at [*Travis*](https://travis-ci.org) using the following compilers:
