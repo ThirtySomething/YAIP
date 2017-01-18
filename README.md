@@ -28,7 +28,7 @@
 
 ## Motivation ##
 
-Searching for INI parsers for C++ fires up a lot of them. Most of them come with a lot of stuff/classes around, some of them as library. Only a few of them offers plain classes. Also only a few of them are portable. And I'm missing the usage of modern C++ like templates and the usage of the STL. I like to improve my C++ skills so I decided to write my own INI file parser.
+Searching for INI parsers for C++ fires up a lot of them. Most of them come with a lot of stuff/classes around, some of them as library. Only a few of them offers plain classes. Also only a few of them are portable. And I'm missing the usage of modern C++ like own [*templates*](https://en.wikipedia.org/wiki/Template_(C%2B%2B)) and the usage of the [*STL*](https://de.wikipedia.org/wiki/Standard_Template_Library). I like to improve my C++ skills so I decided to write my own INI file parser.
 
 ## Implementation details ##
 
