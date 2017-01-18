@@ -21,6 +21,7 @@
    - CLANG C++ 3.6
    - CLANG C++ 3.7.
 - As testing framework [*Catch*](https://github.com/philsquared/Catch) is used.
+
 <!--
 - For code coverage [*Codecov*](https://codecov.io) is planned to use.
 -->
