@@ -26,6 +26,12 @@
 - For code coverage [*Codecov*](https://codecov.io) is planned to use.
 -->
 
+## Supported Platforms ##
+Current supported platforms are
+- [*Windows 7*](https://en.wikipedia.org/wiki/Windows_7), [*MinGW32*](http://www.mingw.org/) (Ships with [*Code::Blocks*](http://www.codeblocks.org/))
+- [*Windows 7*](https://en.wikipedia.org/wiki/Windows_7), [*Visual Studio 2013*](https://www.visualstudio.com/en-us/news/releasenotes/vs2013-community-vs)
+- [*Debian 64*](https://www.debian.org/), [*gcc 4.9.2*](https://gcc.gnu.org/)
+
 ## Motivation ##
 
 Searching for INI parsers for C++ fires up a lot of them. Most of them come with a lot of stuff/classes around, some of them as library. Only a few of them offers plain classes. Also only a few of them are portable. And I'm missing the usage of modern C++ like own [*templates*](https://en.wikipedia.org/wiki/Template_(C%2B%2B)) and the usage of the [*STL*](https://de.wikipedia.org/wiki/Standard_Template_Library). I like to improve my C++ skills so I decided to write my own INI file parser.
