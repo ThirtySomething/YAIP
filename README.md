@@ -28,9 +28,9 @@
 
 ## Supported Platforms ##
 Current supported platforms are
-- [*Windows 7*](https://en.wikipedia.org/wiki/Windows_7), [*MinGW32*](http://www.mingw.org/) (Ships with [*Code::Blocks*](http://www.codeblocks.org/))
-- [*Windows 7*](https://en.wikipedia.org/wiki/Windows_7), [*Visual Studio 2013*](https://www.visualstudio.com/en-us/news/releasenotes/vs2013-community-vs)
-- [*Debian 64*](https://www.debian.org/), [*gcc 4.9.2*](https://gcc.gnu.org/)
+- [*Windows 7*](https://en.wikipedia.org/wiki/Windows_7), [*MinGW32, 32-bit*](http://www.mingw.org/) (Ships with [*Code::Blocks*](http://www.codeblocks.org/))
+- [*Windows 7*](https://en.wikipedia.org/wiki/Windows_7), [*Visual Studio 2013, 32-/64-bit*](https://www.visualstudio.com/en-us/news/releasenotes/vs2013-community-vs)
+- [*Debian 8*](https://www.debian.org/), [*gcc 4.9.2, 64-bit*](https://gcc.gnu.org/)
 
 ## Motivation ##
 
