@@ -1,6 +1,4 @@
-# YAIP++ #
-
-### Yet another INI parser ###
+# YAIP++ - Yet another INI parser #
 
 ## General information ##
 
@@ -27,10 +25,12 @@
 -->
 
 ## Supported Platforms ##
-Current supported platforms are
-- [*Windows 7*](https://en.wikipedia.org/wiki/Windows_7), [*MinGW32, 32-bit*](http://www.mingw.org/) (Ships with [*Code::Blocks*](http://www.codeblocks.org/))
-- [*Windows 7*](https://en.wikipedia.org/wiki/Windows_7), [*Visual Studio 2013, 32-/64-bit*](https://www.visualstudio.com/en-us/news/releasenotes/vs2013-community-vs)
-- [*Debian 8*](https://www.debian.org/), [*gcc 4.9.2, 64-bit*](https://gcc.gnu.org/)
+Current supported/tested platforms are
+
+- [*Windows 7*](https://en.wikipedia.org/wiki/Windows_7), [*MinGW32*](http://www.mingw.org/) (Ships with [*Code::Blocks*](http://www.codeblocks.org/)), 32-bit
+- [*Windows 7*](https://en.wikipedia.org/wiki/Windows_7), [*Visual Studio 2013*](https://www.visualstudio.com/), 32-/64-bit
+- [*Windows 7*](https://en.wikipedia.org/wiki/Windows_7), [*Visual Studio 2015*](https://www.visualstudio.com/), 32-/64-bit
+- [*Debian 8*](https://www.debian.org/), [*gcc 4.9.2*](https://gcc.gnu.org/), 64-bit
 
 ## Motivation ##
 
@@ -73,7 +73,7 @@ A doxygen documentation can be generated, the config file is located in the doxy
 		bool INIFileSave(std::string Filename);
 
 
-* Get a vector of strings containing all section names
+* Get all section names in a vector of strings
 
 		/**
 		 * Get all sections of the INI file
@@ -81,7 +81,7 @@ A doxygen documentation can be generated, the config file is located in the doxy
 		 */
 		tVectorString SectionListGet(void);
 
-* Deletion of a section
+* Delete a section
 
 		/**
 		 * Remove section completely from internal data structure
@@ -89,7 +89,7 @@ A doxygen documentation can be generated, the config file is located in the doxy
 		 */
 		void SectionKill(const std::string &Section);
 
-* Get a vector of strings containing all keys of a section
+* Get all keys of a section in a vector of strings
 
 		/**
 		 * Get all keys of a section of the INI file
@@ -98,7 +98,7 @@ A doxygen documentation can be generated, the config file is located in the doxy
 		 */
 		tVectorString SectionKeyListGet(const std::string &Section);
 
-* Get a value of a section/key combination - *Note: This is a templated method and requires in any case a default value. This is to figure out the return type of the method.*
+* Get a value of a section/key combination - *Note: This is a templated method and requires in any case a default value.*
 
 		/**
 		 * Templated method to retrieve a value of the specified section/key combination
@@ -123,7 +123,7 @@ A doxygen documentation can be generated, the config file is located in the doxy
 		template<typename VariableType>
 		bool SectionKeyValueSet(const std::string &Section, const std::string &Key, const VariableType &Value);
 
-* Deletion of a key
+* Delete a key
 
 		/**
 		 * Remove key completely from section of internal data structure
@@ -131,10 +131,3 @@ A doxygen documentation can be generated, the config file is located in the doxy
 		 * \param Key Specified key
 		 */
 		void SectionKeyKill(const std::string &Section, const std::string &Key);
-
-## IDE project files ##
-
-In the folder <code>_IDE</code> you can find preconfigured project files for integrated development environments such as
-
-* [Code::Blocks](http://www.codeblocks.org/)
-* [Visual Studio 2015](https://www.visualstudio.com/)
