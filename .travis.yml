@@ -44,6 +44,7 @@ before_install:
   - sudo apt-get install -y libopencv-dev
   - sudo apt-get install -y lcov
   - git submodule update --init --recursive
+  - uname -a
 
 before_script:
   - cd ${TRAVIS_BUILD_DIR}
