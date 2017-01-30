@@ -39,5 +39,6 @@
 /_IDE/VS2015/YAIP.VC.db
 /_IDE/VS2015/YAIP.vcxproj.user
 /_IDE/VS2015/x64
+/doxygen/html
 /doxygen/YAIP++.log
 /src/yaip.ini

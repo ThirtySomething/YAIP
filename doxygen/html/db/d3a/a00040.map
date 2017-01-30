@@ -1,4 +1,0 @@
-<map id="YAIPTestFixtureSectionKill" name="YAIPTestFixtureSectionKill">
-<area shape="rect" id="node2" href="$de/d21/a00006.html" title="{YAIPTestFixtureBase\n|+ INIFilename\l+ KeyBool\l+ KeyDouble\l+ KeyInteger\l+ KeyString\l+ Section\l|}" alt="" coords="21,409,168,560"/>
-<area shape="rect" id="node3" href="$dd/dad/a00005.html" title="{YAIP::YAIP\n|# m_IniData\l# RegExKeyValue\l# RegExSection\l|+ YAIP()\l+ ~YAIP()\l+ Clear()\l+ INIFileLoad()\l+ INIFileSave()\l+ SectionKeyKill()\l+ SectionKeyListGet()\l+ SectionKeyValueGet()\l+ SectionKeyValueGet()\l+ SectionKeyValueSet()\l+ SectionKeyValueSet()\l+ SectionKill()\l+ SectionListGet()\l# INIFileSaveSection()\l# ParseFileContent()\l# NewKeyValue()\l# NewSection()\l}" alt="" coords="13,5,176,347"/>
-</map>

@@ -13,7 +13,7 @@ public:
 	/**
 	 * Instance of INI parser
 	 */
-	YAIP::YAIP IniParser;
+	org::derpaul::yaip::YAIP IniParser;
 
 	/**
 	 * Name of sample INI file
@@ -154,12 +154,12 @@ class YAIPTestFixtureSectionKill : public YAIPTestFixtureBase
 * \param IniParser An instance of YAIP
 * \param Comment A remark printed on top
 */
-void DisplayINI(YAIP::YAIP &IniParser, std::string &Comment)
+void DisplayINI(org::derpaul::yaip::YAIP &IniParser, std::string &Comment)
 {
 	std::cout << "----- " << Comment << " -----" << std::endl;
 
-	YAIP::tVectorString SectionList = IniParser.SectionListGet();
-	for (YAIP::tVectorString::iterator LoopSection = SectionList.begin(); LoopSection != SectionList.end(); ++LoopSection)
+	org::derpaul::yaip::tVectorString SectionList = IniParser.SectionListGet();
+	for (org::derpaul::yaip::tVectorString::iterator LoopSection = SectionList.begin(); LoopSection != SectionList.end(); ++LoopSection)
 	{
 		std::string Section = *LoopSection;
 		if (0 < Section.length())
@@ -167,9 +167,9 @@ void DisplayINI(YAIP::YAIP &IniParser, std::string &Comment)
 			std::cout << "[" << Section << "]" << std::endl;
 		}
 
-		YAIP::tVectorString KeyList = IniParser.SectionKeyListGet(Section);
+		org::derpaul::yaip::tVectorString KeyList = IniParser.SectionKeyListGet(Section);
 		int SectionCount = 0;
-		for (YAIP::tVectorString::iterator LoopKey = KeyList.begin(); LoopKey != KeyList.end(); ++LoopKey)
+		for (org::derpaul::yaip::tVectorString::iterator LoopKey = KeyList.begin(); LoopKey != KeyList.end(); ++LoopKey)
 		{
 			std::string Default = "Default";
 			std::string Key = *LoopKey;
