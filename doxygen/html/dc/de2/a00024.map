@@ -1,0 +1,8 @@
+<map id="YAIPTestFixtureBase" name="YAIPTestFixtureBase">
+<area shape="rect" id="node2" href="$d4/dee/a00008.html" title="{YAIPTestFixtureSave\n|+ ValueBool\l+ ValueDouble\l+ ValueInt\l+ ValueString\l|}" alt="" coords="5,219,151,340"/>
+<area shape="rect" id="node4" href="$da/da0/a00009.html" title="{YAIPTestFixtureSectionKeyKill\n||}" alt="" coords="175,241,378,318"/>
+<area shape="rect" id="node5" href="$d7/dec/a00010.html" title="{YAIPTestFixtureSectionKeyList\n||}" alt="" coords="402,241,607,318"/>
+<area shape="rect" id="node6" href="$da/d45/a00011.html" title="{YAIPTestFixtureSectionKill\n||}" alt="" coords="631,241,810,318"/>
+<area shape="rect" id="node7" href="$df/d86/a00012.html" title="{YAIPTestFixtureSectionList\n||}" alt="" coords="835,241,1017,318"/>
+<area shape="rect" id="node3" href="$de/d5e/a00007.html" title="{YAIPTestFixtureLoad\n|+ DefaultBool\l+ DefaultDouble\l+ DefaultInt\l+ DefaultString\l|}" alt="" coords="5,388,151,509"/>
+</map>
