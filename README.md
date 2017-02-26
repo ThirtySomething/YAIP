@@ -16,16 +16,14 @@
 -->
 
 -  **YAIP++** is distributed under the terms of the **GNU LESSER GENERAL PUBLIC LICENSE**, version 3.0. The text of the license is included in the file [<code>LICENSE.TXT</code>](https://github.com/ThirtySomething/YAIP/blob/master/LICENSE.TXT) in the project root.
+- As testing framework [*Catch*](https://github.com/philsquared/Catch) is used.
+
 <!--
 - The build is done at [*Travis*](https://travis-ci.org) using the following compilers:
    - GCC C++ 4.9
    - GCC C++ 5
    - CLANG C++ 3.6
    - CLANG C++ 3.7.
--->
-- As testing framework [*Catch*](https://github.com/philsquared/Catch) is used.
-
-<!--
 - For code coverage [*Codecov*](https://codecov.io) is planned to use.
 -->
 
@@ -59,7 +57,7 @@ A doxygen documentation can be generated, the config file is located in the doxy
 
 ## API overview
 
-### To load/save an INI file:
+### File related actions:
 
 * Load INI file
 
