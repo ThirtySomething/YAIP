@@ -1,6 +1,6 @@
-# YAIP++ - Yet another INI parser #
+# YAIP++ - Yet another INI parser
 
-## General information ##
+## General information
 
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0)
 [![Version](https://img.shields.io/github/release/ThirtySomething/YAIP.svg?maxAge=360)](#)
@@ -29,7 +29,7 @@
 - For code coverage [*Codecov*](https://codecov.io) is planned to use.
 -->
 
-## Supported Platforms ##
+## Supported Platforms
 Current supported/tested platforms are
 
 - [*Windows 7*](https://en.wikipedia.org/wiki/Windows_7), [*MinGW32*](http://www.mingw.org/) (Ships with [*Code::Blocks*](http://www.codeblocks.org/)), 32-bit
@@ -37,11 +37,11 @@ Current supported/tested platforms are
 - [*Windows 7*](https://en.wikipedia.org/wiki/Windows_7), [*Visual Studio 2015*](https://www.visualstudio.com/), 32-/64-bit
 - [*Debian 8*](https://www.debian.org/), [*gcc 4.9.2*](https://gcc.gnu.org/), 64-bit
 
-## Motivation ##
+## Motivation
 
 Searching for INI parsers for C++ fires up a lot of them. Most of them come with a lot of stuff/classes around, some of them as library. Only a few of them offers plain classes. Also only a few of them are portable. And I'm missing the usage of modern C++ like own [*templates*](https://en.wikipedia.org/wiki/Template_(C%2B%2B)) and the usage of the [*STL*](https://de.wikipedia.org/wiki/Standard_Template_Library). I like to improve my C++ skills so I decided to write my own INI file parser.
 
-## Implementation details ##
+## Implementation details
 
 * Convenience typedefs for datatypes in <code>YAIP++.h</code>
 * Data containers are STL elements like [*vector*](http://en.cppreference.com/w/cpp/container/vector) or [*map*](http://en.cppreference.com/w/cpp/container/map)
@@ -49,15 +49,17 @@ Searching for INI parsers for C++ fires up a lot of them. Most of them come with
 * The major methods are based on [*std::string*](http://en.cppreference.com/w/cpp/string/basic_string)
 * The templated methods using converters from and to [*std::string*](http://en.cppreference.com/w/cpp/string/basic_string)
 
-## Extension ##
+## Extension
 
 If any datatype is currently not supported, the extension is very simple. Just extend the class <code>YAIP::Convert</code> with conversion methods from/to your data type.
 
-## Doxygen documentation ##
+## Doxygen documentation
 
 A doxygen documentation can be generated, the config file is located in the doxygen subfolder.
 
-## API overview ##
+## API overview
+
+### To load/save an INI file:
 
 * Load INI file
 
@@ -77,8 +79,9 @@ A doxygen documentation can be generated, the config file is located in the doxy
 		 */
 		bool INIFileSave(std::string Filename);
 
+### Section related actions:
 
-* Get all section names in a vector of strings
+* Get a list of all sections
 
 		/**
 		 * Get all sections of the INI file
@@ -94,7 +97,9 @@ A doxygen documentation can be generated, the config file is located in the doxy
 		 */
 		void SectionKill(const std::string &Section);
 
-* Get all keys of a section in a vector of strings
+### Key related actions:
+
+* Get a list of keys of a section
 
 		/**
 		 * Get all keys of a section of the INI file
