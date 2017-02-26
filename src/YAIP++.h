@@ -6,8 +6,13 @@
  */
 #pragma once
 
-#include "YAIP++Data.h"
+#include <ctype.h>
+#include <functional>
+#include <locale>
+#include <map>
 #include <regex>
+#include <string>
+#include <vector>
 
  /**
   * Namespace of YAIP
@@ -25,6 +30,60 @@ namespace org
 		namespace yaip
 		{
 			/**
+			 * This struct will be passed to each map and will ensure an alphabetical order of all keys
+			 */
+			struct StringCompareCaseLess : std::binary_function<std::string, std::string, bool>
+			{
+				/**
+				 * Comparison of two strings represented by unsigned chars
+				 */
+				struct CompareCaseless : public std::binary_function<unsigned char, unsigned char, bool>
+				{
+					/**
+					 * Operator for usage in string compare
+					 * \param CharLeft Left character to check
+					 * \param CharRight Right character to check
+					 * \return true in case the left character is less than the right character
+					 */
+					bool operator() (const unsigned char& CharLeft, const unsigned char& CharRight) const
+					{
+						return (tolower(CharLeft) < tolower(CharRight));
+					}
+				};
+
+				/**
+				 * Operator for usage in string compare
+				 * \param StringLeft Left string to check
+				 * \param StringRight Right string to check
+				 * \return true in case the left string is less than the right string
+				 */
+				bool operator() (const std::string & StringLeft, const std::string & StringRight) const
+				{
+					return std::lexicographical_compare(StringLeft.begin(), StringLeft.end(), StringRight.begin(), StringRight.end(), CompareCaseless());
+				}
+			};
+
+			/**
+			 * Convenience typedef for a map of strings.
+			 * Used to represent keys and their corresponding values.
+			 * Map will be sorted caseless.
+			 */
+			typedef std::map<std::string, std::string, StringCompareCaseLess> tMapStringString;
+
+			/**
+			 * Convenience typedef for a map of keys/values.
+			 * Used to represent a section with their corrresponding keys/values storage.
+			 * Map will be sorted caseless.
+			 */
+			typedef std::map<std::string, tMapStringString, StringCompareCaseLess> tMapStringMapStringString;
+
+			/**
+			 * Convenience typedef for a vector of strings.
+			 * Used to represent the content of a INI file, a list of sections or a list of keys.
+			 */
+			typedef std::vector<std::string> tVectorString;
+
+			/**
 			 * Class to convert data from and to std::string
 			 * \todo Add converters for all fundamental types:
 			 * \see http://en.cppreference.com/w/cpp/language/types
@@ -33,7 +92,7 @@ namespace org
 			 * <tr><th>Type</th><th>Done</th></tr>
 			 * <tr><td>bool</td><td>x</td></tr>
 			 * <tr><td>int</td><td>x</td></tr>
-			 * <tr><td>unsigned int</td><td>-</td></tr>
+			 * <tr><td>unsigned int</td><td>-</td>x</tr>
 			 * <tr><td>short</td><td>-</td></tr>
 			 * <tr><td>unsigned short</td><td>-</td></tr>
 			 * <tr><td>long</td><td>-</td></tr>
@@ -68,6 +127,13 @@ namespace org
 				static void ConvertTo(int Value, std::string &ValueString);
 
 				/**
+				 * Convert integer to std::string
+				 * \param Value Value to convert from
+				 * \param ValueString Value to convert to
+				 */
+				static void ConvertTo(unsigned int Value, std::string &ValueString);
+
+				/**
 				 * Convert float to std::string
 				 * \param Value Value to convert from
 				 * \param ValueString Value to convert to
@@ -94,6 +160,13 @@ namespace org
 				 * \param Value Value to convert to
 				 */
 				static void ConvertTo(std::string ValueString, int &Value);
+
+				/**
+				 * Convert std::string to unsigned int
+				 * \param ValueString Value to convert from
+				 * \param Value Value to convert to
+				 */
+				static void ConvertTo(std::string ValueString, unsigned int &Value);
 
 				/**
 				 * Convert std::string to float

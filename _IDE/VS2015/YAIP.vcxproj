@@ -19,12 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include=".\..\..\src\main_classic.cpp" />
+    <ClCompile Include=".\..\..\src\main_fixtures.cpp" />
     <ClCompile Include=".\..\..\src\main.cpp" />
     <ClCompile Include=".\..\..\src\YAIP++.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include=".\..\..\src\main_catch.h" />
+    <ClInclude Include=".\..\..\src\main_classic.h" />
+    <ClInclude Include=".\..\..\src\main_fixtures.h" />
     <ClInclude Include=".\..\..\src\YAIP++.h" />
-    <ClInclude Include=".\..\..\src\YAIP++Data.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6C81DA65-96B1-411A-AD7A-478A1B52B27B}</ProjectGuid>

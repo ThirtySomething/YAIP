@@ -33,10 +33,14 @@
 			<Add option="-std=c++11" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="./../../src/YAIP++.cpp" />
-		<Unit filename="./../../src/YAIP++.h" />
-		<Unit filename="./../../src/YAIP++Data.h" />
-		<Unit filename="./../../src/main.cpp" />
+		<Unit filename="../../src/YAIP++.cpp" />
+		<Unit filename="../../src/YAIP++.h" />
+		<Unit filename="../../src/main.cpp" />
+		<Unit filename="../../src/main_catch.h" />
+		<Unit filename="../../src/main_classic.cpp" />
+		<Unit filename="../../src/main_classic.h" />
+		<Unit filename="../../src/main_fixtures.cpp" />
+		<Unit filename="../../src/main_fixtures.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

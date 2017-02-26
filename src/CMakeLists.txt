@@ -10,9 +10,14 @@ FIND_PACKAGE(codecov)
 
 SET(YAIP_SOURCE
 	./../src/YAIP++.h
-	./../src/YAIP++Data.h
 	./../src/YAIP++.cpp
-	./../src/main.cpp)
+	./../src/main.cpp
+	./../src/main_catch.h
+	./../src/main_classic.h
+	./../src/main_classic.cpp
+	./../src/main_fixtures.h
+	./../src/main_fixtures.cpp
+	)
 
 ADD_EXECUTABLE(YAIP++ ${YAIP_SOURCE})
 ADD_COVERAGE(YAIP++)

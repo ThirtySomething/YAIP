@@ -75,6 +75,13 @@ namespace org
 
 			// ******************************************************************
 			// ******************************************************************
+			void Convert::ConvertTo(unsigned int Value, std::string &ValueString)
+			{
+				ValueString = std::to_string(Value);
+			}
+
+			// ******************************************************************
+			// ******************************************************************
 			void Convert::ConvertTo(float Value, std::string &ValueString)
 			{
 				std::ostringstream StringStream;
@@ -105,6 +112,13 @@ namespace org
 			// ******************************************************************
 			// ******************************************************************
 			void Convert::ConvertTo(std::string ValueString, int &Value)
+			{
+				Value = std::stoi(ValueString);
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			void Convert::ConvertTo(std::string ValueString, unsigned int &Value)
 			{
 				Value = std::stoi(ValueString);
 			}
