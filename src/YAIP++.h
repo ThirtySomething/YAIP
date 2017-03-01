@@ -14,9 +14,9 @@
 #include <string>
 #include <vector>
 
- /**
-  * Namespace of YAIP
-  */
+/**
+ * Namespace of YAIP
+ */
 namespace org
 {
 	/**
@@ -127,11 +127,18 @@ namespace org
 				static void ConvertTo(int Value, std::string &ValueString);
 
 				/**
-				 * Convert integer to std::string
+				 * Convert unsigned integer to std::string
 				 * \param Value Value to convert from
 				 * \param ValueString Value to convert to
 				 */
 				static void ConvertTo(unsigned int Value, std::string &ValueString);
+
+				/**
+				 * Convert long to std::string
+				 * \param Value Value to convert from
+				 * \param ValueString Value to convert to
+				 */
+				static void ConvertTo(long Value, std::string &ValueString);
 
 				/**
 				 * Convert float to std::string
@@ -167,6 +174,13 @@ namespace org
 				 * \param Value Value to convert to
 				 */
 				static void ConvertTo(std::string ValueString, unsigned int &Value);
+
+				/**
+				 * Convert std::string to long
+				 * \param ValueString Value to convert from
+				 * \param Value Value to convert to
+				 */
+				static void ConvertTo(std::string ValueString, long &Value);
 
 				/**
 				 * Convert std::string to float

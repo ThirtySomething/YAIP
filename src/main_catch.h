@@ -7,13 +7,55 @@
 #define CATCH_CONFIG_MAIN
 #include "./../externals/Catch/single_include/catch.hpp"
 
+/**
+ * Helper method: vector contains given value
+ * \param KeyList Vector of strings
+ * \param Value Value to search for
+ */
+template <typename T>
+void VectorCompareExist(const std::vector<std::string> &KeyList, const std::string &Value)
+{
+	auto ResultValue = std::find(std::begin(KeyList), std::end(KeyList), Value);
+	CHECK(ResultValue != std::end(KeyList));
+}
+
+/**
+ * Helper method: vector does not contain given value
+ * \param KeyList Vector of strings
+ * \param Value Value to search for
+ */
+template <typename T>
+void VectorCompareExistNot(const std::vector<std::string> &KeyList, const std::string &Value)
+{
+	auto ResultValue = std::find(std::begin(KeyList), std::end(KeyList), Value);
+	CHECK(ResultValue == std::end(KeyList));
+}
+
+/**
+ * Templated method to check correct read of value
+ * \param Parser Reference to INI parser
+ * \param Section The section name
+ * \param Key The key name
+ * \param Default Default value
+ * \param Value Expected value
+ */
+template <typename T>
+void TestKeyValue(org::derpaul::yaip::YAIP &Parser, const std::string &Section, const std::string &Key, const T &Default, const T &Value)
+{
+	T ResultValue = Parser.SectionKeyValueGet(Section, Key, Default);
+	CHECK(ResultValue != Default);
+	CHECK(ResultValue == Value);
+}
+
 TEST_CASE_METHOD(YAIPTestFixtureSave, "Create sample INI file", "[save]")
 {
 	struct stat FileDataRaw;
 
 	CHECK(IniParser.SectionKeyValueSet(Section, KeyBool, ValueBool));
 	CHECK(IniParser.SectionKeyValueSet(Section, KeyDouble, ValueDouble));
-	CHECK(IniParser.SectionKeyValueSet(Section, KeyInteger, ValueInt));
+	CHECK(IniParser.SectionKeyValueSet(Section, KeyFloat, ValueFloat));
+	CHECK(IniParser.SectionKeyValueSet(Section, KeyInteger, ValueInteger));
+	CHECK(IniParser.SectionKeyValueSet(Section, KeyLong, ValueLong));
 	CHECK(IniParser.SectionKeyValueSet(Section, KeyString, ValueString));
 	CHECK(IniParser.INIFileSave(INIFilename));
 	CHECK(0 == stat(INIFilename.c_str(), &FileDataRaw));
@@ -23,21 +65,12 @@ TEST_CASE_METHOD(YAIPTestFixtureLoad, "Load sample INI file", "[load]")
 {
 	CHECK(IniParser.INIFileLoad(INIFilename));
 
-	bool ResultBool = IniParser.SectionKeyValueGet(Section, KeyBool, DefaultBool);
-	CHECK(ResultBool != DefaultBool);
-	CHECK(ResultBool == ValueBool);
-
-	double ResultDouble = IniParser.SectionKeyValueGet(Section, KeyDouble, DefaultDouble);
-	CHECK(ResultDouble != DefaultDouble);
-	CHECK(ResultDouble == ValueDouble);
-
-	int ResultInt = IniParser.SectionKeyValueGet(Section, KeyInteger, DefaultInt);
-	CHECK(ResultInt != DefaultInt);
-	CHECK(ResultInt == ValueInt);
-
-	std::string ResultString = IniParser.SectionKeyValueGet(Section, KeyString, DefaultString);
-	CHECK(0 != ResultString.compare(DefaultString));
-	CHECK(0 == ResultString.compare(ValueString));
+	TestKeyValue(IniParser, Section, KeyBool, DefaultBool, ValueBool);
+	TestKeyValue(IniParser, Section, KeyDouble, DefaultDouble, ValueDouble);
+	TestKeyValue(IniParser, Section, KeyFloat, DefaultFloat, ValueFloat);
+	TestKeyValue(IniParser, Section, KeyInteger, DefaultInteger, ValueInteger);
+	TestKeyValue(IniParser, Section, KeyLong, DefaultLong, ValueLong);
+	TestKeyValue(IniParser, Section, KeyString, DefaultString, ValueString);
 }
 
 TEST_CASE_METHOD(YAIPTestFixtureSectionList, "Get section list", "[sectionlist]")
@@ -45,8 +78,7 @@ TEST_CASE_METHOD(YAIPTestFixtureSectionList, "Get section list", "[sectionlist]"
 	CHECK(IniParser.INIFileLoad(INIFilename));
 	std::vector<std::string> SectionList = IniParser.SectionListGet();
 
-	auto ResultSection = std::find(std::begin(SectionList), std::end(SectionList), Section);
-	CHECK(ResultSection != std::end(SectionList));
+	VectorCompareExist<std::string>(SectionList, Section);
 }
 
 TEST_CASE_METHOD(YAIPTestFixtureSectionKeyList, "Get section key list", "[sectionkeylist]")
@@ -54,17 +86,12 @@ TEST_CASE_METHOD(YAIPTestFixtureSectionKeyList, "Get section key list", "[sectio
 	CHECK(IniParser.INIFileLoad(INIFilename));
 	std::vector<std::string> KeyList = IniParser.SectionKeyListGet(Section);
 
-	auto ResultBool = std::find(std::begin(KeyList), std::end(KeyList), KeyBool);
-	CHECK(ResultBool != std::end(KeyList));
-
-	auto ResultDouble = std::find(std::begin(KeyList), std::end(KeyList), KeyDouble);
-	CHECK(ResultDouble != std::end(KeyList));
-
-	auto ResultInt = std::find(std::begin(KeyList), std::end(KeyList), KeyInteger);
-	CHECK(ResultInt != std::end(KeyList));
-
-	auto ResultString = std::find(std::begin(KeyList), std::end(KeyList), KeyString);
-	CHECK(ResultString != std::end(KeyList));
+	VectorCompareExist<bool>(KeyList, KeyBool);
+	VectorCompareExist<double>(KeyList, KeyDouble);
+	VectorCompareExist<float>(KeyList, KeyFloat);
+	VectorCompareExist<int>(KeyList, KeyInteger);
+	VectorCompareExist<long>(KeyList, KeyLong);
+	VectorCompareExist<std::string>(KeyList, KeyString);
 }
 
 TEST_CASE_METHOD(YAIPTestFixtureSectionKeyKill, "Kill section key", "[sectionkeykill]")
@@ -74,17 +101,12 @@ TEST_CASE_METHOD(YAIPTestFixtureSectionKeyKill, "Kill section key", "[sectionkey
 		IniParser.SectionKeyKill(Section, KeyBool);
 		std::vector<std::string> KeyList = IniParser.SectionKeyListGet(Section);
 
-		auto ResultBool = std::find(std::begin(KeyList), std::end(KeyList), KeyBool);
-		CHECK(ResultBool == std::end(KeyList));
-
-		auto ResultDouble = std::find(std::begin(KeyList), std::end(KeyList), KeyDouble);
-		CHECK(ResultDouble != std::end(KeyList));
-
-		auto ResultInt = std::find(std::begin(KeyList), std::end(KeyList), KeyInteger);
-		CHECK(ResultInt != std::end(KeyList));
-
-		auto ResultString = std::find(std::begin(KeyList), std::end(KeyList), KeyString);
-		CHECK(ResultString != std::end(KeyList));
+		VectorCompareExistNot<bool>(KeyList, KeyBool);
+		VectorCompareExist<double>(KeyList, KeyDouble);
+		VectorCompareExist<float>(KeyList, KeyFloat);
+		VectorCompareExist<int>(KeyList, KeyInteger);
+		VectorCompareExist<long>(KeyList, KeyLong);
+		VectorCompareExist<std::string>(KeyList, KeyString);
 	}
 
 	{
@@ -92,17 +114,25 @@ TEST_CASE_METHOD(YAIPTestFixtureSectionKeyKill, "Kill section key", "[sectionkey
 		IniParser.SectionKeyKill(Section, KeyDouble);
 		std::vector<std::string> KeyList = IniParser.SectionKeyListGet(Section);
 
-		auto ResultBool = std::find(std::begin(KeyList), std::end(KeyList), KeyBool);
-		CHECK(ResultBool != std::end(KeyList));
+		VectorCompareExist<bool>(KeyList, KeyBool);
+		VectorCompareExistNot<double>(KeyList, KeyDouble);
+		VectorCompareExist<float>(KeyList, KeyFloat);
+		VectorCompareExist<int>(KeyList, KeyInteger);
+		VectorCompareExist<long>(KeyList, KeyLong);
+		VectorCompareExist<std::string>(KeyList, KeyString);
+	}
 
-		auto ResultDouble = std::find(std::begin(KeyList), std::end(KeyList), KeyDouble);
-		CHECK(ResultDouble == std::end(KeyList));
+	{
+		CHECK(IniParser.INIFileLoad(INIFilename));
+		IniParser.SectionKeyKill(Section, KeyFloat);
+		std::vector<std::string> KeyList = IniParser.SectionKeyListGet(Section);
 
-		auto ResultInt = std::find(std::begin(KeyList), std::end(KeyList), KeyInteger);
-		CHECK(ResultInt != std::end(KeyList));
-
-		auto ResultString = std::find(std::begin(KeyList), std::end(KeyList), KeyString);
-		CHECK(ResultString != std::end(KeyList));
+		VectorCompareExist<bool>(KeyList, KeyBool);
+		VectorCompareExist<double>(KeyList, KeyDouble);
+		VectorCompareExistNot<float>(KeyList, KeyFloat);
+		VectorCompareExist<int>(KeyList, KeyInteger);
+		VectorCompareExist<long>(KeyList, KeyLong);
+		VectorCompareExist<std::string>(KeyList, KeyString);
 	}
 
 	{
@@ -110,17 +140,25 @@ TEST_CASE_METHOD(YAIPTestFixtureSectionKeyKill, "Kill section key", "[sectionkey
 		IniParser.SectionKeyKill(Section, KeyInteger);
 		std::vector<std::string> KeyList = IniParser.SectionKeyListGet(Section);
 
-		auto ResultBool = std::find(std::begin(KeyList), std::end(KeyList), KeyBool);
-		CHECK(ResultBool != std::end(KeyList));
+		VectorCompareExist<bool>(KeyList, KeyBool);
+		VectorCompareExist<double>(KeyList, KeyDouble);
+		VectorCompareExist<float>(KeyList, KeyFloat);
+		VectorCompareExistNot<int>(KeyList, KeyInteger);
+		VectorCompareExist<long>(KeyList, KeyLong);
+		VectorCompareExist<std::string>(KeyList, KeyString);
+	}
 
-		auto ResultDouble = std::find(std::begin(KeyList), std::end(KeyList), KeyDouble);
-		CHECK(ResultDouble != std::end(KeyList));
+	{
+		CHECK(IniParser.INIFileLoad(INIFilename));
+		IniParser.SectionKeyKill(Section, KeyLong);
+		std::vector<std::string> KeyList = IniParser.SectionKeyListGet(Section);
 
-		auto ResultInt = std::find(std::begin(KeyList), std::end(KeyList), KeyInteger);
-		CHECK(ResultInt == std::end(KeyList));
-
-		auto ResultString = std::find(std::begin(KeyList), std::end(KeyList), KeyString);
-		CHECK(ResultString != std::end(KeyList));
+		VectorCompareExist<bool>(KeyList, KeyBool);
+		VectorCompareExist<double>(KeyList, KeyDouble);
+		VectorCompareExist<float>(KeyList, KeyFloat);
+		VectorCompareExist<int>(KeyList, KeyInteger);
+		VectorCompareExistNot<long>(KeyList, KeyLong);
+		VectorCompareExist<std::string>(KeyList, KeyString);
 	}
 
 	{
@@ -128,17 +166,12 @@ TEST_CASE_METHOD(YAIPTestFixtureSectionKeyKill, "Kill section key", "[sectionkey
 		IniParser.SectionKeyKill(Section, KeyString);
 		std::vector<std::string> KeyList = IniParser.SectionKeyListGet(Section);
 
-		auto ResultBool = std::find(std::begin(KeyList), std::end(KeyList), KeyBool);
-		CHECK(ResultBool != std::end(KeyList));
-
-		auto ResultDouble = std::find(std::begin(KeyList), std::end(KeyList), KeyDouble);
-		CHECK(ResultDouble != std::end(KeyList));
-
-		auto ResultInt = std::find(std::begin(KeyList), std::end(KeyList), KeyInteger);
-		CHECK(ResultInt != std::end(KeyList));
-
-		auto ResultString = std::find(std::begin(KeyList), std::end(KeyList), KeyString);
-		CHECK(ResultString == std::end(KeyList));
+		VectorCompareExist<bool>(KeyList, KeyBool);
+		VectorCompareExist<double>(KeyList, KeyDouble);
+		VectorCompareExist<float>(KeyList, KeyFloat);
+		VectorCompareExist<int>(KeyList, KeyInteger);
+		VectorCompareExist<long>(KeyList, KeyLong);
+		VectorCompareExistNot<std::string>(KeyList, KeyString);
 	}
 }
 
@@ -148,6 +181,5 @@ TEST_CASE_METHOD(YAIPTestFixtureSectionKill, "Kill section", "[sectionkill]")
 	IniParser.SectionKill(Section);
 	std::vector<std::string> SectionList = IniParser.SectionListGet();
 
-	auto ResultSection = std::find(std::begin(SectionList), std::end(SectionList), Section);
-	CHECK(ResultSection == std::end(SectionList));
+	VectorCompareExistNot<std::string>(SectionList, Section);
 }

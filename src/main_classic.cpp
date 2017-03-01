@@ -32,22 +32,48 @@ void DisplayINI(org::derpaul::yaip::YAIP &IniParser, std::string &Comment)
 
 //******************************************************************************
 //******************************************************************************
+void VectorCompareExist(const std::vector<std::string> &KeyList, const std::string &Value, const std::string Message)
+{
+	auto ResultValue = std::find(std::begin(KeyList), std::end(KeyList), Value);
+	if (ResultValue == std::end(KeyList))
+	{
+		std::cout << Message << std::endl;
+		exit(-1);
+	}
+}
+
+//******************************************************************************
+//******************************************************************************
+void VectorCompareExistNot(const std::vector<std::string> &KeyList, const std::string &Value, const std::string Message)
+{
+	auto ResultValue = std::find(std::begin(KeyList), std::end(KeyList), Value);
+	if (ResultValue != std::end(KeyList))
+	{
+		std::cout << Message << std::endl;
+		exit(-1);
+	}
+}
+
+//******************************************************************************
+//******************************************************************************
 void TestSave(std::string TestName, std::string INIFilename)
 {
-    struct stat FileDataRaw;
+	struct stat FileDataRaw;
 	YAIPTestFixtureSave Test;
 
 	Test.IniParser.SectionKeyValueSet(Test.Section, Test.KeyBool, Test.ValueBool);
 	Test.IniParser.SectionKeyValueSet(Test.Section, Test.KeyDouble, Test.ValueDouble);
-	Test.IniParser.SectionKeyValueSet(Test.Section, Test.KeyInteger, Test.ValueInt);
+	Test.IniParser.SectionKeyValueSet(Test.Section, Test.KeyFloat, Test.ValueFloat);
+	Test.IniParser.SectionKeyValueSet(Test.Section, Test.KeyInteger, Test.ValueInteger);
+	Test.IniParser.SectionKeyValueSet(Test.Section, Test.KeyLong, Test.ValueLong);
 	Test.IniParser.SectionKeyValueSet(Test.Section, Test.KeyString, Test.ValueString);
 	Test.IniParser.INIFileSave(INIFilename);
 
 	if (0 != stat(INIFilename.c_str(), &FileDataRaw))
-    {
-        std::cout << __FUNCTION__ << ": INI file not created, failure!" << std::endl;
-        exit(-1);
-    }
+	{
+		std::cout << __FUNCTION__ << ": INI file not created, failure!" << std::endl;
+		exit(-1);
+	}
 
 	DisplayINI(Test.IniParser, TestName);
 }
@@ -60,33 +86,12 @@ void TestLoad(std::string TestName, std::string INIFilename)
 
 	Test.IniParser.INIFileLoad(INIFilename);
 
-	bool ResultBool = Test.IniParser.SectionKeyValueGet(Test.Section, Test.KeyBool, Test.DefaultBool);
-	if ((ResultBool == Test.DefaultBool) ||
-		(ResultBool != Test.ValueBool))
-	{
-		std::cout << "Fehler bei bool!" << std::endl;
-	}
-
-	double ResultDouble = Test.IniParser.SectionKeyValueGet(Test.Section, Test.KeyDouble, Test.DefaultDouble);
-	if ((ResultDouble == Test.DefaultDouble) ||
-		(ResultDouble != Test.ValueDouble))
-	{
-		std::cout << "Fehler bei double!" << std::endl;
-	}
-
-	int ResultInt = Test.IniParser.SectionKeyValueGet(Test.Section, Test.KeyInteger, Test.DefaultInt);
-	if ((ResultInt == Test.DefaultInt) ||
-		(ResultInt != Test.ValueInt))
-	{
-		std::cout << "Fehler bei int!" << std::endl;
-	}
-
-	std::string ResultString = Test.IniParser.SectionKeyValueGet(Test.Section, Test.KeyString, Test.DefaultString);
-	if ((0 == ResultString.compare(Test.DefaultString)) ||
-		(0 != ResultString.compare(Test.ValueString)))
-	{
-		std::cout << "Fehler bei string!" << std::endl;
-	}
+	TestKeyValue(Test.IniParser, Test.Section, Test.KeyBool, Test.DefaultBool, Test.ValueBool, "Error on type bool!");
+	TestKeyValue(Test.IniParser, Test.Section, Test.KeyDouble, Test.DefaultDouble, Test.ValueDouble, "Error on type double!");
+	TestKeyValue(Test.IniParser, Test.Section, Test.KeyFloat, Test.DefaultFloat, Test.ValueFloat, "Error on type float!");
+	TestKeyValue(Test.IniParser, Test.Section, Test.KeyInteger, Test.DefaultInteger, Test.ValueInteger, "Error on type int!");
+	TestKeyValue(Test.IniParser, Test.Section, Test.KeyLong, Test.DefaultLong, Test.ValueLong, "Error on type long!");
+	TestKeyValue(Test.IniParser, Test.Section, Test.KeyString, Test.DefaultString, Test.ValueString, "Error on type string!");
 
 	DisplayINI(Test.IniParser, TestName);
 }
@@ -100,11 +105,7 @@ void TestSectionList(std::string TestName, std::string INIFilename)
 	Test.IniParser.INIFileLoad(INIFilename);
 	std::vector<std::string> SectionList = Test.IniParser.SectionListGet();
 
-	auto ResultSection = std::find(std::begin(SectionList), std::end(SectionList), Test.Section);
-	if (ResultSection == std::end(SectionList))
-	{
-		std::cout << "Fehler bei SectionList!" << std::endl;
-	}
+	VectorCompareExist(SectionList, Test.Section, "Error on SectionList!");
 
 	DisplayINI(Test.IniParser, TestName);
 }
@@ -118,29 +119,12 @@ void TestSectionKeyList(std::string TestName, std::string INIFilename)
 	Test.IniParser.INIFileLoad(INIFilename);
 	std::vector<std::string> KeyList = Test.IniParser.SectionKeyListGet(Test.Section);
 
-	auto ResultBool = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyBool);
-	if (ResultBool == std::end(KeyList))
-	{
-		std::cout << "Key for bool not found!" << std::endl;
-	}
-
-	auto ResultDouble = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyDouble);
-	if (ResultDouble == std::end(KeyList))
-	{
-		std::cout << "Key for double not found!" << std::endl;
-	}
-
-	auto ResultInt = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyInteger);
-	if (ResultInt == std::end(KeyList))
-	{
-		std::cout << "Key for int not found!" << std::endl;
-	}
-
-	auto ResultString = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyString);
-	if (ResultString == std::end(KeyList))
-	{
-		std::cout << "Key for string not found!" << std::endl;
-	}
+	VectorCompareExist(KeyList, Test.KeyBool, "Key for bool not found!");
+	VectorCompareExist(KeyList, Test.KeyDouble, "Key for double not found!");
+	VectorCompareExist(KeyList, Test.KeyFloat, "Key for float not found!");
+	VectorCompareExist(KeyList, Test.KeyInteger, "Key for integer not found!");
+	VectorCompareExist(KeyList, Test.KeyLong, "Key for long not found!");
+	VectorCompareExist(KeyList, Test.KeyString, "Key for string not found!");
 
 	DisplayINI(Test.IniParser, TestName);
 }
@@ -156,29 +140,12 @@ void TestSectionKeyKill(std::string TestName, std::string INIFilename)
 		Test.IniParser.SectionKeyKill(Test.Section, Test.KeyBool);
 		std::vector<std::string> KeyList = Test.IniParser.SectionKeyListGet(Test.Section);
 
-		auto ResultBool = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyBool);
-		if (ResultBool != std::end(KeyList))
-		{
-			std::cout << "Key for bool found!" << std::endl;
-		}
-
-		auto ResultDouble = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyDouble);
-		if (ResultDouble == std::end(KeyList))
-		{
-			std::cout << "Key for double not found!" << std::endl;
-		}
-
-		auto ResultInt = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyInteger);
-		if (ResultInt == std::end(KeyList))
-		{
-			std::cout << "Key for int not found!" << std::endl;
-		}
-
-		auto ResultString = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyString);
-		if (ResultString == std::end(KeyList))
-		{
-			std::cout << "Key for string not found!" << std::endl;
-		}
+		VectorCompareExistNot(KeyList, Test.KeyBool, "Key for bool found!");
+		VectorCompareExist(KeyList, Test.KeyDouble, "Key for double not found!");
+		VectorCompareExist(KeyList, Test.KeyFloat, "Key for float not found!");
+		VectorCompareExist(KeyList, Test.KeyInteger, "Key for integer not found!");
+		VectorCompareExist(KeyList, Test.KeyLong, "Key for long not found!");
+		VectorCompareExist(KeyList, Test.KeyString, "Key for string not found!");
 
 		DisplayINI(Test.IniParser, TestName);
 	}
@@ -188,29 +155,27 @@ void TestSectionKeyKill(std::string TestName, std::string INIFilename)
 		Test.IniParser.SectionKeyKill(Test.Section, Test.KeyDouble);
 		std::vector<std::string> KeyList = Test.IniParser.SectionKeyListGet(Test.Section);
 
-		auto ResultBool = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyBool);
-		if (ResultBool == std::end(KeyList))
-		{
-			std::cout << "Key for bool not found!" << std::endl;
-		}
+		VectorCompareExist(KeyList, Test.KeyBool, "Key for bool not found!");
+		VectorCompareExistNot(KeyList, Test.KeyDouble, "Key for double found!");
+		VectorCompareExist(KeyList, Test.KeyFloat, "Key for float not found!");
+		VectorCompareExist(KeyList, Test.KeyInteger, "Key for integer not found!");
+		VectorCompareExist(KeyList, Test.KeyLong, "Key for long not found!");
+		VectorCompareExist(KeyList, Test.KeyString, "Key for string not found!");
 
-		auto ResultDouble = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyDouble);
-		if (ResultDouble != std::end(KeyList))
-		{
-			std::cout << "Key for double found!" << std::endl;
-		}
+		DisplayINI(Test.IniParser, TestName);
+	}
 
-		auto ResultInt = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyInteger);
-		if (ResultInt == std::end(KeyList))
-		{
-			std::cout << "Key for int not found!" << std::endl;
-		}
+	{
+		Test.IniParser.INIFileLoad(INIFilename);
+		Test.IniParser.SectionKeyKill(Test.Section, Test.KeyFloat);
+		std::vector<std::string> KeyList = Test.IniParser.SectionKeyListGet(Test.Section);
 
-		auto ResultString = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyString);
-		if (ResultString == std::end(KeyList))
-		{
-			std::cout << "Key for string not found!" << std::endl;
-		}
+		VectorCompareExist(KeyList, Test.KeyBool, "Key for bool not found!");
+		VectorCompareExist(KeyList, Test.KeyDouble, "Key for double not found!");
+		VectorCompareExistNot(KeyList, Test.KeyFloat, "Key for float found!");
+		VectorCompareExist(KeyList, Test.KeyInteger, "Key for integer not found!");
+		VectorCompareExist(KeyList, Test.KeyLong, "Key for long not found!");
+		VectorCompareExist(KeyList, Test.KeyString, "Key for string not found!");
 
 		DisplayINI(Test.IniParser, TestName);
 	}
@@ -220,29 +185,27 @@ void TestSectionKeyKill(std::string TestName, std::string INIFilename)
 		Test.IniParser.SectionKeyKill(Test.Section, Test.KeyInteger);
 		std::vector<std::string> KeyList = Test.IniParser.SectionKeyListGet(Test.Section);
 
-		auto ResultBool = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyBool);
-		if (ResultBool == std::end(KeyList))
-		{
-			std::cout << "Key for bool not found!" << std::endl;
-		}
+		VectorCompareExist(KeyList, Test.KeyBool, "Key for bool not found!");
+		VectorCompareExist(KeyList, Test.KeyDouble, "Key for double not found!");
+		VectorCompareExist(KeyList, Test.KeyFloat, "Key for float not found!");
+		VectorCompareExistNot(KeyList, Test.KeyInteger, "Key for integer found!");
+		VectorCompareExist(KeyList, Test.KeyLong, "Key for long not found!");
+		VectorCompareExist(KeyList, Test.KeyString, "Key for string not found!");
 
-		auto ResultDouble = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyDouble);
-		if (ResultDouble == std::end(KeyList))
-		{
-			std::cout << "Key for double not found!" << std::endl;
-		}
+		DisplayINI(Test.IniParser, TestName);
+	}
 
-		auto ResultInt = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyInteger);
-		if (ResultInt != std::end(KeyList))
-		{
-			std::cout << "Key for int found!" << std::endl;
-		}
+	{
+		Test.IniParser.INIFileLoad(INIFilename);
+		Test.IniParser.SectionKeyKill(Test.Section, Test.KeyLong);
+		std::vector<std::string> KeyList = Test.IniParser.SectionKeyListGet(Test.Section);
 
-		auto ResultString = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyString);
-		if (ResultString == std::end(KeyList))
-		{
-			std::cout << "Key for string not found!" << std::endl;
-		}
+		VectorCompareExist(KeyList, Test.KeyBool, "Key for bool not found!");
+		VectorCompareExist(KeyList, Test.KeyDouble, "Key for double not found!");
+		VectorCompareExist(KeyList, Test.KeyFloat, "Key for float not found!");
+		VectorCompareExist(KeyList, Test.KeyInteger, "Key for integer not found!");
+		VectorCompareExistNot(KeyList, Test.KeyLong, "Key for long found!");
+		VectorCompareExist(KeyList, Test.KeyString, "Key for string not found!");
 
 		DisplayINI(Test.IniParser, TestName);
 	}
@@ -252,29 +215,12 @@ void TestSectionKeyKill(std::string TestName, std::string INIFilename)
 		Test.IniParser.SectionKeyKill(Test.Section, Test.KeyString);
 		std::vector<std::string> KeyList = Test.IniParser.SectionKeyListGet(Test.Section);
 
-		auto ResultBool = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyBool);
-		if (ResultBool == std::end(KeyList))
-		{
-			std::cout << "Key for bool not found!" << std::endl;
-		}
-
-		auto ResultDouble = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyDouble);
-		if (ResultDouble == std::end(KeyList))
-		{
-			std::cout << "Key for double not found!" << std::endl;
-		}
-
-		auto ResultInt = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyInteger);
-		if (ResultInt == std::end(KeyList))
-		{
-			std::cout << "Key for int not found!" << std::endl;
-		}
-
-		auto ResultString = std::find(std::begin(KeyList), std::end(KeyList), Test.KeyString);
-		if (ResultString != std::end(KeyList))
-		{
-			std::cout << "Key for string found!" << std::endl;
-		}
+		VectorCompareExist(KeyList, Test.KeyBool, "Key for bool not found!");
+		VectorCompareExist(KeyList, Test.KeyDouble, "Key for double not found!");
+		VectorCompareExist(KeyList, Test.KeyFloat, "Key for float not found!");
+		VectorCompareExist(KeyList, Test.KeyInteger, "Key for integer not found!");
+		VectorCompareExist(KeyList, Test.KeyLong, "Key for long not found!");
+		VectorCompareExistNot(KeyList, Test.KeyString, "Key for string found!");
 
 		DisplayINI(Test.IniParser, TestName);
 	}
@@ -290,11 +236,7 @@ void TestSectionKill(std::string TestName, std::string INIFilename)
 	Test.IniParser.SectionKill(Test.Section);
 	std::vector<std::string> SectionList = Test.IniParser.SectionListGet();
 
-	auto ResultSection = std::find(std::begin(SectionList), std::end(SectionList), Test.Section);
-	if (ResultSection != std::end(SectionList))
-	{
-		std::cout << "Section found!" << std::endl;
-	}
+	VectorCompareExistNot(SectionList, Test.Section, "Section found!");
 
 	DisplayINI(Test.IniParser, TestName);
 }

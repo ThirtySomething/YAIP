@@ -7,9 +7,13 @@
 #include "YAIP++.h"
 #include <fstream>
 #include <sstream>
+#include <ios>
+#include <iostream>
+#include <iomanip>
+#include <limits>
 
 #ifdef __MINGW32__
- // GCC on windows does not support std::to_string
+// GCC on windows does not support std::to_string
 #include <string>
 #include <sstream>
 #include <stdlib.h>
@@ -82,10 +86,18 @@ namespace org
 
 			// ******************************************************************
 			// ******************************************************************
+			void Convert::ConvertTo(long Value, std::string &ValueString)
+			{
+				ValueString = std::to_string(Value);
+			}
+
+			// ******************************************************************
+			// ******************************************************************
 			void Convert::ConvertTo(float Value, std::string &ValueString)
 			{
+				typedef std::numeric_limits<float> Limits;
 				std::ostringstream StringStream;
-				StringStream << Value;
+				StringStream << std::setprecision(Limits::max_digits10) << std::scientific << Value;
 				ValueString = StringStream.str();
 			}
 
@@ -93,8 +105,9 @@ namespace org
 			// ******************************************************************
 			void Convert::ConvertTo(double Value, std::string &ValueString)
 			{
+				typedef std::numeric_limits<double> Limits;
 				std::ostringstream StringStream;
-				StringStream << Value;
+				StringStream << std::setprecision(Limits::max_digits10) << std::scientific << Value;
 				ValueString = StringStream.str();
 			}
 
@@ -121,6 +134,13 @@ namespace org
 			void Convert::ConvertTo(std::string ValueString, unsigned int &Value)
 			{
 				Value = std::stoi(ValueString);
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			void Convert::ConvertTo(std::string ValueString, long &Value)
+			{
+				Value = std::stol(ValueString);
 			}
 
 			// ******************************************************************
@@ -153,7 +173,7 @@ namespace org
 			/**
 			 * \todo Invert regex logic to what is NOT allowed for key/values
 			 */
-			 // Regular expressioin for matching a key/value pair
+			// Regular expressioin for matching a key/value pair
 			const std::regex YAIP::RegExKeyValue("([\\s]+)?(([a-zA-Z0-9\\.])+){1}([\\s]+)?(=){1}([\\s]+)?(([a-zA-Z0-9\\.\\+-])+)?([\\s]+)?([#;])?(.*)");
 			//                                        1           2                 3       4      5               6                7        8    9
 			// 1 - Possible whitespaces
@@ -171,7 +191,7 @@ namespace org
 			/**
 			 * \todo Invert regex logic to what is NOT allowed for sections
 			 */
-			 // Regular expressioin for matching a section
+			// Regular expressioin for matching a section
 			const std::regex YAIP::RegExSection("([\\s]+)?(\\[){1}([\\s]+)?(([a-zA-Z0-9])+){1}([\\s]+)?(\\]){1}([\\s]+)?([#;])?(.*)");
 			//                                      1       2        3            4              5       6        7       8    9
 			// 1 - Possible whitespaces
@@ -405,7 +425,6 @@ namespace org
 			{
 				for (tMapStringMapStringString::iterator Loop = m_IniData.begin(); Loop != m_IniData.end(); ++Loop)
 				{
-					std::string Key = Loop->first;
 					tMapStringString Data = Loop->second;
 
 					Data.clear();
@@ -422,7 +441,7 @@ namespace org
 				 * \todo Keep empty sections?
 				 */
 
-				 // Write section marker
+				// Write section marker
 				if (0 != Section.length())
 				{
 					IniFile << "[" << Section << "]" << std::endl;

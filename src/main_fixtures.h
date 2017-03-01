@@ -34,9 +34,19 @@ public:
 	static const std::string KeyDouble;
 
 	/**
+	 * Name of key for float
+	 */
+	static const std::string KeyFloat;
+
+	/**
 	 * Name of key for integer
 	 */
 	static const std::string KeyInteger;
+
+	/**
+	 * Name of key for long
+	 */
+	static const std::string KeyLong;
 
 	/**
 	 * Name of key for string
@@ -61,9 +71,19 @@ public:
 	static const double ValueDouble;
 
 	/**
+	 * Value for float
+	 */
+	static const float ValueFloat;
+
+	/**
 	 * Value for integer
 	 */
-	static const int ValueInt;
+	static const int ValueInteger;
+
+	/**
+	 * Value for long
+	 */
+	static const long ValueLong;
 
 	/**
 	 * Value for string
@@ -88,9 +108,19 @@ public:
 	static const double DefaultDouble;
 
 	/**
+	 * Default value for float
+	 */
+	static const float DefaultFloat;
+
+	/**
 	 * Default value for integer
 	 */
-	static const int DefaultInt;
+	static const int DefaultInteger;
+
+	/**
+	 * Default value for long
+	 */
+	static const long DefaultLong;
 
 	/**
 	 * Default value for string

@@ -50,3 +50,39 @@ void TestSectionKeyKill(std::string TestName, std::string INIFilename);
  * \param INIFilename Name of INI file
  */
 void TestSectionKill(std::string TestName, std::string INIFilename);
+
+/**
+ * Helper method: vector contains given value
+ * \param KeyList Vector of strings
+ * \param Value Value to search for
+ * \param Message Error message to print
+ */
+void VectorCompareExist(const std::vector<std::string> &KeyList, const std::string &Value, const std::string Message);
+
+/**
+ * Helper method: vector does not contain given value
+ * \param KeyList Vector of strings
+ * \param Value Value to search for
+ * \param Message Error message to print
+ */
+void VectorCompareExistNot(const std::vector<std::string> &KeyList, const std::string &Value, const std::string Message);
+
+/**
+ * Templated method to check correct read of value
+ * \param Parser Reference to INI parser
+ * \param Section The section name
+ * \param Key The key name
+ * \param Default Default value
+ * \param Value Expected value
+ * \param Message Error message to print
+ */
+template <typename T>
+void TestKeyValue(org::derpaul::yaip::YAIP &Parser, const std::string &Section, const std::string &Key, const T &Default, const T &Value, const std::string Message)
+{
+	T ResultValue = Parser.SectionKeyValueGet(Section, Key, Default);
+	if ((ResultValue == Default) ||
+		(ResultValue != Value))
+	{
+		std::cout << Message << std::endl;
+	}
+}
