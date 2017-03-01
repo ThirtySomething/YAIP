@@ -30,6 +30,7 @@
 ## Requirements
 To use **YAIP++** you need to have an modern [C++11](https://en.wikipedia.org/wiki/C%2B%2B11 "C++11") compiler. See the used parts at the section **Implementation Details**. You can use
 * [Visual Studio 2013](https://www.visualstudio.com/ "Visual Studio") and above
+* [GCC 4.9.2](https://gcc.gnu.org/ "GCC") and above
 * [MinGW 4.9.2](http://www.mingw.org/ "MinGW") and above
 
 ## Supported Platforms
