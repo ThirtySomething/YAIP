@@ -80,10 +80,10 @@ void VectorCompareExistNot(const std::vector<std::string> &KeyList, const std::s
 template <typename T>
 void TestKeyValue(org::derpaul::yaip::YAIP &Parser, const std::string &Section, const std::string &Key, const T &Default, const T &Value, const std::string Message)
 {
-    T ResultValue = Parser.SectionKeyValueGet(Section, Key, Default);
-    if ((ResultValue == Default) ||
-            (ResultValue != Value))
-    {
-        std::cout << Message << std::endl;
-    }
+	T ResultValue = Parser.SectionKeyValueGet(Section, Key, Default);
+	if ((ResultValue == Default) ||
+		(ResultValue != Value))
+	{
+		std::cout << Message << std::endl;
+	}
 }

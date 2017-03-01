@@ -6,22 +6,22 @@
 
 int main(int argc, char *argv[])
 {
-    std::string INIFile = YAIPTestFixtureBase::INIFilename;
+	std::string INIFile = YAIPTestFixtureBase::INIFilename;
 
-    if (1 < argc)
-    {
-        INIFile = argv[1];
-        INIFile = INIFile + YAIPTestFixtureBase::INIFilename;
-    }
+	if (1 < argc)
+	{
+		INIFile = argv[1];
+		INIFile = INIFile + YAIPTestFixtureBase::INIFilename;
+	}
 
-    TestSave(">>> create", INIFile);
-    TestLoad(">>> load", INIFile);
-    TestSectionList(">>> sectionlist", INIFile);
-    TestSectionKeyList(">>> sectionkeylist", INIFile);
-    TestSectionKeyKill(">>> sectionkeykill", INIFile);
-    TestSectionKill(">>> sectionkill", INIFile);
+	TestSave(">>> create", INIFile);
+	TestLoad(">>> load", INIFile);
+	TestSectionList(">>> sectionlist", INIFile);
+	TestSectionKeyList(">>> sectionkeylist", INIFile);
+	TestSectionKeyKill(">>> sectionkeykill", INIFile);
+	TestSectionKill(">>> sectionkill", INIFile);
 
-    return 0;
+	return 0;
 }
 
 #else
