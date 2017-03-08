@@ -52,6 +52,11 @@ public:
 	 * Name of key for string
 	 */
 	static const std::string KeyString;
+
+	/**
+	 * Default Constructor for initialization
+	 */
+	YAIPTestFixtureBase(void);
 };
 
 /**
@@ -89,6 +94,11 @@ public:
 	 * Value for string
 	 */
 	static const std::string ValueString;
+
+	/**
+	 * Default Constructor for initialization
+	 */
+	YAIPTestFixtureSave(void);
 };
 
 /**
@@ -126,6 +136,11 @@ public:
 	 * Default value for string
 	 */
 	static const std::string DefaultString;
+
+	/**
+	 * Default Constructor for initialization
+	 */
+	YAIPTestFixtureLoad(void);
 };
 
 /**
@@ -133,6 +148,11 @@ public:
  */
 class YAIPTestFixtureSectionList : public YAIPTestFixtureBase
 {
+public:
+	/**
+	 * Default Constructor for initialization
+	 */
+	YAIPTestFixtureSectionList(void);
 };
 
 /**
@@ -140,6 +160,11 @@ class YAIPTestFixtureSectionList : public YAIPTestFixtureBase
  */
 class YAIPTestFixtureSectionKeyList : public YAIPTestFixtureBase
 {
+public:
+	/**
+	 * Default Constructor for initialization
+	 */
+	YAIPTestFixtureSectionKeyList(void);
 };
 
 /**
@@ -147,6 +172,11 @@ class YAIPTestFixtureSectionKeyList : public YAIPTestFixtureBase
  */
 class YAIPTestFixtureSectionKeyKill : public YAIPTestFixtureBase
 {
+public:
+	/**
+	 * Default Constructor for initialization
+	 */
+	YAIPTestFixtureSectionKeyKill(void);
 };
 
 /**
@@ -154,4 +184,9 @@ class YAIPTestFixtureSectionKeyKill : public YAIPTestFixtureBase
  */
 class YAIPTestFixtureSectionKill : public YAIPTestFixtureBase
 {
+public:
+	/**
+	 * Default Constructor for initialization
+	 */
+	YAIPTestFixtureSectionKill(void);
 };

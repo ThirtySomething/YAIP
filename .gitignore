@@ -42,3 +42,6 @@
 /doxygen/html
 /doxygen/YAIP++.log
 /src/yaip.ini
+/_IDE/VS2015/YAIP.sdf
+/_IDE/VS2015/YAIP.v12.suo
+/src/YAIP.cppcheck

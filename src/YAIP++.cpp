@@ -27,28 +27,28 @@ namespace std
 		return stm.str();
 	}
 
-	int stoi(const std::string s)
+	int stoi(const std::string &s)
 	{
 		int i = 0;
 		sscanf(s.c_str(), "%d", &i);
 		return i;
 	}
 
-	int stol(const std::string s)
+	int stol(const std::string &s)
 	{
 		long i = 0;
 		sscanf(s.c_str(), "%ld", &i);
 		return i;
 	}
 
-	double stod(const std::string s)
+	double stod(const std::string &s)
 	{
 		double d = 0.0;
 		sscanf(s.c_str(), "%lf", &d);
 		return d;
 	}
 
-	float stof(const std::string s)
+	float stof(const std::string &s)
 	{
 		float f = 0.0;
 		sscanf(s.c_str(), "%f", &f);

@@ -58,7 +58,7 @@ void TestSectionKill(std::string TestName, std::string INIFilename);
  * \param Value Value to search for
  * \param Message Error message to print
  */
-void VectorCompareExist(const std::vector<std::string> &KeyList, const std::string &Value, const std::string Message);
+void VectorCompareExist(const std::vector<std::string> &KeyList, const std::string &Value, const std::string &Message);
 
 /**
  * Helper method: vector does not contain given value
@@ -66,7 +66,7 @@ void VectorCompareExist(const std::vector<std::string> &KeyList, const std::stri
  * \param Value Value to search for
  * \param Message Error message to print
  */
-void VectorCompareExistNot(const std::vector<std::string> &KeyList, const std::string &Value, const std::string Message);
+void VectorCompareExistNot(const std::vector<std::string> &KeyList, const std::string &Value, const std::string &Message);
 
 /**
  * Templated method to check correct read of value
@@ -78,7 +78,7 @@ void VectorCompareExistNot(const std::vector<std::string> &KeyList, const std::s
  * \param Message Error message to print
  */
 template <typename T>
-void TestKeyValue(org::derpaul::yaip::YAIP &Parser, const std::string &Section, const std::string &Key, const T &Default, const T &Value, const std::string Message)
+void TestKeyValue(org::derpaul::yaip::YAIP &Parser, const std::string &Section, const std::string &Key, const T &Default, const T &Value, const std::string &Message)
 {
 	T ResultValue = Parser.SectionKeyValueGet(Section, Key, Default);
 	if ((ResultValue == Default) ||

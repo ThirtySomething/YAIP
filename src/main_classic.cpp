@@ -18,21 +18,19 @@ void DisplayINI(org::derpaul::yaip::YAIP &IniParser, std::string &Comment)
 		}
 
 		org::derpaul::yaip::tVectorString KeyList = IniParser.SectionKeyListGet(Section);
-		int SectionCount = 0;
 		for (org::derpaul::yaip::tVectorString::iterator LoopKey = KeyList.begin(); LoopKey != KeyList.end(); ++LoopKey)
 		{
 			std::string Default = "Default";
 			std::string Key = *LoopKey;
 			std::string Value = IniParser.SectionKeyValueGet(Section, Key, Default);
 			std::cout << Key << "=" << Value << std::endl;
-			SectionCount++;
 		}
 	}
 }
 
 //******************************************************************************
 //******************************************************************************
-void VectorCompareExist(const std::vector<std::string> &KeyList, const std::string &Value, const std::string Message)
+void VectorCompareExist(const std::vector<std::string> &KeyList, const std::string &Value, const std::string &Message)
 {
 	auto ResultValue = std::find(std::begin(KeyList), std::end(KeyList), Value);
 	if (ResultValue == std::end(KeyList))
@@ -44,7 +42,7 @@ void VectorCompareExist(const std::vector<std::string> &KeyList, const std::stri
 
 //******************************************************************************
 //******************************************************************************
-void VectorCompareExistNot(const std::vector<std::string> &KeyList, const std::string &Value, const std::string Message)
+void VectorCompareExistNot(const std::vector<std::string> &KeyList, const std::string &Value, const std::string &Message)
 {
 	auto ResultValue = std::find(std::begin(KeyList), std::end(KeyList), Value);
 	if (ResultValue != std::end(KeyList))
