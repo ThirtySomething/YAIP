@@ -200,7 +200,7 @@ namespace org
 			 * \todo Invert regex logic to what is NOT allowed for key/values
 			 */
 			// Regular expressioin for matching a key/value pair
-			const std::regex YAIP::RegExKeyValue("([\\s]+)?(([a-zA-Z0-9\\.])+){1}([\\s]+)?(=){1}([\\s]+)?(([a-zA-Z0-9\\.\\+-])+)?([\\s]+)?([#;])?(.*)");
+			const std::regex YAIP::RegExKeyValue("([\\s]+)?(([a-zA-Z0-9\\._])+){1}([\\s]+)?(=){1}([\\s]+)?(([a-zA-Z0-9\\.\\+-])+)?([\\s]+)?([#;])?(.*)");
 			//                                        1           2                 3       4      5               6                7        8    9
 			// 1 - Possible whitespaces
 			// 2 - Key => Match everything with upper-/lowercase characters, numbers and a dot
@@ -218,7 +218,7 @@ namespace org
 			 * \todo Invert regex logic to what is NOT allowed for sections
 			 */
 			// Regular expressioin for matching a section
-			const std::regex YAIP::RegExSection("([\\s]+)?(\\[){1}([\\s]+)?(([a-zA-Z0-9])+){1}([\\s]+)?(\\]){1}([\\s]+)?([#;])?(.*)");
+			const std::regex YAIP::RegExSection("([\\s]+)?(\\[){1}([\\s]+)?(([a-zA-Z0-9_])+){1}([\\s]+)?(\\]){1}([\\s]+)?([#;])?(.*)");
 			//                                      1       2        3            4              5       6        7       8    9
 			// 1 - Possible whitespaces
 			// 2 - Opening square bracked
