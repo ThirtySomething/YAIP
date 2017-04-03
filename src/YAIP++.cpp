@@ -100,21 +100,27 @@ namespace org
 			// ******************************************************************
 			void Convert::ConvertTo(int Value, std::string &ValueString)
 			{
-				ValueString = std::to_string(Value);
+				std::ostringstream StringStream;
+				StringStream << std::scientific << Value;
+				ValueString = StringStream.str();
 			}
 
 			// ******************************************************************
 			// ******************************************************************
 			void Convert::ConvertTo(unsigned int Value, std::string &ValueString)
 			{
-				ValueString = std::to_string(Value);
+				std::ostringstream StringStream;
+				StringStream << std::scientific << Value;
+				ValueString = StringStream.str();
 			}
 
 			// ******************************************************************
 			// ******************************************************************
 			void Convert::ConvertTo(long Value, std::string &ValueString)
 			{
-				ValueString = std::to_string(Value);
+				std::ostringstream StringStream;
+				StringStream << std::scientific << Value;
+				ValueString = StringStream.str();
 			}
 
 			// ******************************************************************
