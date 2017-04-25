@@ -50,6 +50,8 @@
 /_IDE/VS2015/YAIP.vcxproj.user
 /_IDE/VS2017/.vs
 /_IDE/VS2017/YAIP.vcxproj.user
+/Bin
+/Build
 /doxygen/YAIP++.log
 /doxygen/html
 /src/ALL_BUILD.vcxproj

@@ -7,8 +7,9 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/YAIP" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Debug/" />
+				<Option output="./../../Bin/YAIP.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="./../../Build" />
+				<Option object_output="./../../Bin" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -16,8 +17,9 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/YAIP" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Release/" />
+				<Option output="./../../Bin/YAIP.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="./../../Build" />
+				<Option object_output="./../../Bin" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
