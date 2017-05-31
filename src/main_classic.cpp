@@ -23,12 +23,12 @@
 
 //******************************************************************************
 //******************************************************************************
-void DisplayINI(org::derpaul::yaip::YAIP &IniParser, std::string &Comment)
+void DisplayINI(net::derpaul::yaip::YAIP &IniParser, std::string &Comment)
 {
 	std::cout << "----- " << Comment << " -----" << std::endl;
 
-	org::derpaul::yaip::tVectorString SectionList = IniParser.SectionListGet();
-	for (org::derpaul::yaip::tVectorString::iterator LoopSection = SectionList.begin(); LoopSection != SectionList.end(); ++LoopSection)
+	net::derpaul::yaip::tVectorString SectionList = IniParser.SectionListGet();
+	for (net::derpaul::yaip::tVectorString::iterator LoopSection = SectionList.begin(); LoopSection != SectionList.end(); ++LoopSection)
 	{
 		std::string Section = *LoopSection;
 		if (0 < Section.length())
@@ -36,8 +36,8 @@ void DisplayINI(org::derpaul::yaip::YAIP &IniParser, std::string &Comment)
 			std::cout << "[" << Section << "]" << std::endl;
 		}
 
-		org::derpaul::yaip::tVectorString KeyList = IniParser.SectionKeyListGet(Section);
-		for (org::derpaul::yaip::tVectorString::iterator LoopKey = KeyList.begin(); LoopKey != KeyList.end(); ++LoopKey)
+		net::derpaul::yaip::tVectorString KeyList = IniParser.SectionKeyListGet(Section);
+		for (net::derpaul::yaip::tVectorString::iterator LoopKey = KeyList.begin(); LoopKey != KeyList.end(); ++LoopKey)
 		{
 			std::string Default = "Default";
 			std::string Key = *LoopKey;

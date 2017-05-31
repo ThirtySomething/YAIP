@@ -30,7 +30,7 @@ public:
 	/**
 	 * Instance of INI parser
 	 */
-	org::derpaul::yaip::YAIP IniParser;
+	net::derpaul::yaip::YAIP IniParser;
 
 	/**
 	 * Name of sample INI file
