@@ -147,3 +147,8 @@ A doxygen documentation can be generated, the config file is located in the doxy
 		 * \param Key Specified key
 		 */
 		void SectionKeyKill(const std::string &Section, const std::string &Key);
+
+## ToDo's
+
+* The implementation has to be checked against the inofficial specification at [Wikipedia](https://en.wikipedia.org/wiki/INI_file#Comments) and the tests have to satisfiy the specification.
+* Comments are currently not supported - add this feature as desscribed in the specification.
