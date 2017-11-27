@@ -36,7 +36,7 @@
 /**
  * Namespace of YAIP
  */
-namespace net
+namespace org
 {
 	/**
 	 * Namespace of YAIP
@@ -265,7 +265,7 @@ namespace net
 				 * \param Section Specified section
 				 * \return Vector with a std::strings for each key
 				 */
-				tVectorString SectionKeyListGet(const std::string &Section);
+				tVectorString SectionKeyListGet(const std::string &Section) const;
 
 				/**
 				 * Method to retrieve a value of the specified section/key combination for std::string
@@ -274,7 +274,7 @@ namespace net
 				 * \param Default Specified default value in case key does not exist
 				 * \return Returns either the default value or the value of the existing section/key combination
 				 */
-				std::string SectionKeyValueGet(const std::string &Section, const std::string &Key, const std::string &Default);
+				std::string SectionKeyValueGet(const std::string &Section, const std::string &Key, const std::string &Default) const;
 
 				/**
 				 * Templated method to retrieve a value of the specified section/key combination
@@ -284,7 +284,7 @@ namespace net
 				 * \return Returns either the default value or the value of the existing section/key combination
 				 */
 				template<typename VariableType>
-				VariableType SectionKeyValueGet(const std::string &Section, const std::string &Key, const VariableType &Default)
+				VariableType SectionKeyValueGet(const std::string &Section, const std::string &Key, const VariableType &Default) const
 				{
 					VariableType ValueReturn;
 					std::string ValueDefault;
@@ -328,7 +328,7 @@ namespace net
 				 * Get all sections of the INI file
 				 * \return Vector with a std::strings for each section
 				 */
-				tVectorString SectionListGet(void);
+				tVectorString SectionListGet(void) const;
 
 				/**
 				 * Drop all data to get a clean INI

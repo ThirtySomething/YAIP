@@ -59,7 +59,7 @@ void VectorCompareExistNot(const std::vector<std::string> &KeyList, const std::s
  * \param Value Expected value
  */
 template <typename T>
-void TestKeyValue(net::derpaul::yaip::YAIP &Parser, const std::string &Section, const std::string &Key, const T &Default, const T &Value)
+void TestKeyValue(org::derpaul::yaip::YAIP &Parser, const std::string &Section, const std::string &Key, const T &Default, const T &Value)
 {
 	T ResultValue = Parser.SectionKeyValueGet(Section, Key, Default);
 	CHECK((ResultValue != Default));
