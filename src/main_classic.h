@@ -27,7 +27,7 @@
  * \param IniParser An instance of YAIP
  * \param Comment A remark printed on top
  */
-void DisplayINI(net::derpaul::yaip::YAIP &IniParser, std::string &Comment);
+void DisplayINI(org::derpaul::yaip::YAIP &IniParser, std::string &Comment);
 
 /**
  * Test for saving an INI file
@@ -97,7 +97,7 @@ void VectorCompareExistNot(const std::vector<std::string> &KeyList, const std::s
  * \param Message Error message to print
  */
 template <typename T>
-void TestKeyValue(net::derpaul::yaip::YAIP &Parser, const std::string &Section, const std::string &Key, const T &Default, const T &Value, const std::string &Message)
+void TestKeyValue(org::derpaul::yaip::YAIP &Parser, const std::string &Section, const std::string &Key, const T &Default, const T &Value, const std::string &Message)
 {
 	T ResultValue = Parser.SectionKeyValueGet(Section, Key, Default);
 	if ((ResultValue == Default) ||

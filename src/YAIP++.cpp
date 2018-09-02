@@ -79,7 +79,7 @@ namespace std
 /**
  * Namespace of YAIP
  */
-namespace net
+namespace org
 {
 	/**
 	 * Namespace of YAIP
@@ -206,14 +206,14 @@ namespace net
 			 * \todo Invert regex logic to what is NOT allowed for key/values
 			 */
 			// Regular expressioin for matching a key/value pair
-			const std::regex YAIP::RegExKeyValue("([\\s]+)?(([a-zA-Z0-9\\._])+){1}([\\s]+)?(=){1}([\\s]+)?(([a-zA-Z0-9( ):\\\\\\.\\+-])+)?([\\s]+)?([#;])?(.*)");
+			const std::regex YAIP::RegExKeyValue("([\\s]+)?(([a-zA-Z0-9\\._])+){1}([\\s]+)?(=){1}([\\s]+)?(([a-zA-Z0-9( ):\\\\\\.,_|\\+-])+)?([\\s]+)?([#;])?(.*)");
 			//                                        1           2                 3       4      5               6                7        8    9
 			// 1 - Possible whitespaces
-			// 2 - Key => Match everything with upper-/lowercase characters, numbers and a dot
+			// 2 - Key => Match everything with upper-/lowercase characters, numbers, underscore and a dot
 			// 3 - Possible whitespaces
 			// 4 - The assignment
 			// 5 - Possible whitespaces
-			// 6 - Value => Match everything with upper-/lowercase characters, numbers, dot, plus and minus sign
+			// 6 - Value => Match everything with upper-/lowercase characters, numbers, dot, comma, underscore, vertical bar, plus and minus sign
 			// 7 - Possible whitespaces
 			// 8 - Marker for "comment start"
 			// 9 - Comment
@@ -345,7 +345,7 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			tVectorString YAIP::SectionKeyListGet(const std::string &Section)
+			tVectorString YAIP::SectionKeyListGet(const std::string &Section) const
 			{
 				tVectorString KeyList;
 
@@ -365,7 +365,7 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			std::string YAIP::SectionKeyValueGet(const std::string &Section, const std::string &Key, const std::string &Default)
+			std::string YAIP::SectionKeyValueGet(const std::string &Section, const std::string &Key, const std::string &Default) const
 			{
 				// Ensure default return value
 				std::string ReturnValue = Default;
@@ -438,12 +438,12 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			tVectorString YAIP::SectionListGet(void)
+			tVectorString YAIP::SectionListGet(void) const
 			{
 				tVectorString SectionList;
 
 				// Loop over the major map containing all sections
-				for (tMapStringMapStringString::iterator Loop = m_IniData.begin(); Loop != m_IniData.end(); ++Loop)
+				for (tMapStringMapStringString::const_iterator Loop = m_IniData.begin(); Loop != m_IniData.end(); ++Loop)
 				{
 					SectionList.push_back(Loop->first);
 				}
