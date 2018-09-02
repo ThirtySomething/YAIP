@@ -79,7 +79,7 @@ namespace std
 /**
  * Namespace of YAIP
  */
-namespace org
+namespace net
 {
 	/**
 	 * Namespace of YAIP
