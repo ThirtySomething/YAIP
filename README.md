@@ -5,7 +5,7 @@
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0 "LGPL-3.0")
 [![Version](https://img.shields.io/github/release/ThirtySomething/YAIP.svg?maxAge=360)](#  "Latest Release")
 [![GitHub issues](https://img.shields.io/github/issues/ThirtySomething/YAIP.svg?maxAge=360)](# "Open Issues")
-<!-- 
+<!--
 [![Build Status](https://travis-ci.org/ThirtySomething/YAIP.svg?branch=master)](https://travis-ci.org/ThirtySomething/YAIP "YAIP++@Travis-CI")
 
 [![AUR](https://img.shields.io/aur/votes/YAIP.svg?maxAge=3600)](https://aur.archlinux.org/packages/YAIP/ "Votes")
@@ -93,7 +93,7 @@ A doxygen documentation can be generated, the config file is located in the doxy
 		 * Get all sections of the INI file
 		 * \return Vector with a std::strings for each section
 		 */
-		tVectorString SectionListGet(void);
+		tVectorString SectionListGet(void) const;
 
 * Delete a section
 
@@ -112,7 +112,7 @@ A doxygen documentation can be generated, the config file is located in the doxy
 		 * \param Section Specified section
 		 * \return Vector with a std::strings for each key
 		 */
-		tVectorString SectionKeyListGet(const std::string &Section);
+		tVectorString SectionKeyListGet(const std::string &Section) const;
 
 * Get a value of a section/key combination - *Note: This is a templated method and requires in any case a default value.*
 
