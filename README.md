@@ -1,35 +1,17 @@
 # YAIP++ - Yet another INI parser
 
+## Badges
+
+[![License: LGPL v3][yaip_license_badge]][yaip_license] [![Version][yaip_release_badge]][yaip_release] [![GitHub issues][yaip_issues_badge]][yaip_issues]
+
 ## General information
 
-[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0 "LGPL-3.0")
-[![Version](https://img.shields.io/github/release/ThirtySomething/YAIP.svg?maxAge=360)](#  "Latest Release")
-[![GitHub issues](https://img.shields.io/github/issues/ThirtySomething/YAIP.svg?maxAge=360)](# "Open Issues")
-<!--
-[![Build Status](https://travis-ci.org/ThirtySomething/YAIP.svg?branch=master)](https://travis-ci.org/ThirtySomething/YAIP "YAIP++@Travis-CI")
-
-[![AUR](https://img.shields.io/aur/votes/YAIP.svg?maxAge=3600)](https://aur.archlinux.org/packages/YAIP/ "Votes")
-
-[![codecov](https://codecov.io/gh/ThirtySomething/YAIP/branch/master/graph/badge.svg)](https://codecov.io/gh/ThirtySomething/YAIP "YAIP++@Codecov.io")
-
-[![Total downloads](https://img.shields.io/github/downloads/ThirtySomething/YAIP/total.svg?maxAge=360)](# "Downloads")
--->
-
--  **YAIP++** is distributed under the terms of the **GNU LESSER GENERAL PUBLIC LICENSE**, version 3.0. The text of the license is included in the file [<code>LICENSE.TXT</code>](https://github.com/ThirtySomething/YAIP/blob/master/LICENSE.TXT "LGPL-3.0") in the project root.
-- As testing framework [*Catch*](https://github.com/philsquared/Catch "Catch") is used.
-
-<!--
-- The build is done at [*Travis*](https://travis-ci.org "Travis-CI") using the following compilers:
-   - GCC C++ 4.9
-   - GCC C++ 5
-   - CLANG C++ 3.6
-   - CLANG C++ 3.7.
-- For code coverage [*Codecov*](https://codecov.io "Codecov.io") is planned to use.
--->
+- **YAIP++** is distributed under the terms of the **GNU LESSER GENERAL PUBLIC LICENSE**, version 3.0. The text of the license is included in the file [<code>LICENSE.TXT</code>][license] in the project root.
+- As testing framework [*Catch2*][catch2] is used.
 
 ## Requirements
 
-To use **YAIP++** you need to have an modern [C++11](https://en.wikipedia.org/wiki/C%2B%2B11 "C++11") compiler. See the used parts at the section **Implementation Details**. Tested with [Visual Studio 2017](https://www.visualstudio.com/ "Visual Studio").
+To use **YAIP++** you need to have an modern [C++11][cpp_eleven] compiler. See the used parts at the section **Implementation Details**. Tested with [Visual Studio 2017][msvs].
 
 ## Supported Platforms
 
@@ -37,15 +19,15 @@ Supported platforms are all platforms where the code compiles and the tests run 
 
 ## Motivation
 
-Searching for INI parsers for C++ fires up a lot of them. Most of them come with a lot of stuff/classes around, some of them as library. Only a few of them offers plain classes. Also only a few of them are portable. And I'm missing the usage of modern C++ like own [*templates*](https://en.wikipedia.org/wiki/Template_(C%2B%2B) "Templates") and the usage of the [*STL*](https://de.wikipedia.org/wiki/Standard_Template_Library "STL"). I like to improve my C++ skills so I decided to write my own INI file parser.
+Searching for INI parsers for C++ fires up a lot of them. Most of them come with a lot of stuff/classes around, some of them as library. Only a few of them offers plain classes. Also only a few of them are portable. And I'm missing the usage of modern C++ like own [*templates*][cpp_templates] and the usage of the [*STL*][cpp_stl]. I like to improve my C++ skills so I decided to write my own INI file parser.
 
 ## Implementation Details
 
 * Convenience typedefs for datatypes in <code>YAIP++.h</code>
-* Data containers are STL elements like [*vector*](http://en.cppreference.com/w/cpp/container/vector "Vector") or [*map*](http://en.cppreference.com/w/cpp/container/map "Map")
-* Detection of section and key/value pair is done using [*regular expressions*](http://en.cppreference.com/w/cpp/regex "Regular Expression"), see also [*regular expression*](https://en.wikipedia.org/wiki/Regular_expression "Regular Expression")
-* The major methods are based on [*std::string*](http://en.cppreference.com/w/cpp/string/basic_string "String")
-* The templated methods using converters from and to [*std::string*](http://en.cppreference.com/w/cpp/string/basic_string "String")
+* Data containers are STL elements like [*vector*][cpp_vector]  or [*map*][cpp_map]
+* Detection of section and key/value pair is done using [*regular expressions*][cpp_regexp], see also [*regular expression*][wiki_regexp]
+* The major methods are based on [*std::string*][cpp_string]
+* The templated methods using converters from and to [*std::string*][cpp_string]
 
 ## Extension
 
@@ -57,118 +39,158 @@ A doxygen documentation can be generated, the config file is located in the doxy
 
 ## API Overview
 
-### File related actions:
+### File related actions
 
-* Load INI file
+- Load INI file
 
-		/**
-		 * Load and parse INI file into internal structures
-		 * \param Filename Full qualified filename of the INI file
-		 * \return true on success otherwise false
-		 */
-		bool INIFileLoad(std::string Filename);
+<pre>
+/**
+ * Load and parse INI file into internal structures
+ * \param Filename Full qualified filename of the INI file
+ * \return true on success otherwise false
+ */
+bool INIFileLoad(std::string Filename);
+</pre>
 
-* Save INI file
+- Save INI file
 
-		/**
-		 * Save internal structures to INI file
-		 * \param Filename Full qualified filename of the INI file
-		 * \return true on success otherwise false
-		 */
-		bool INIFileSave(std::string Filename);
+<pre>
+/**
+ * Save internal structures to INI file
+ * \param Filename Full qualified filename of the INI file
+ * \return true on success otherwise false
+ */
+bool INIFileSave(std::string Filename);
+</pre>
 
-* INI file exists
+- Does INI file exists
 
-		/**
-		 * Check if given INI file exists
-		 * \param Filename Full qualified filename of the INI file
-		 * \return true if file exists otherwise false
-		 */
-		bool INIFileExist(const std::string &Filename) const;
+<pre>
+/**
+ * Check if given INI file exists
+ * \param Filename Full qualified filename of the INI file
+ * \return true if file exists otherwise false
+ */
+bool INIFileExist(const std::string &Filename) const;
+</pre>
 
-* INI file delete
+- Delete INI file
 
-		/**
-		 * Delete given INI file
-		 * \param Filename Full qualified filename of the INI file
-		 * \return true if file is deleted otherwise false
-		 */
-		bool INIFileDelete(const std::string &Filename) const;
+<pre>
+/**
+ * Delete given INI file
+ * \param Filename Full qualified filename of the INI file
+ * \return true if file is deleted otherwise false
+ */
+bool INIFileDelete(const std::string &Filename) const;
+</pre>
 
-### Section related actions:
+### Section related actions
 
-* Get a list of all sections
+- Get a list of all sections
 
-		/**
-		 * Get all sections of the INI file
-		 * \return Vector with a std::strings for each section
-		 */
-		tVectorString SectionListGet(void) const;
+<pre>
+/**
+ * Get all sections of the INI file
+ * \return Vector with a std::strings for each section
+ */
+tVectorString SectionListGet(void) const;
+</pre>
 
-* Delete a section
+- Delete a section
 
-		/**
-		 * Remove section completely from internal data structure
-		 * \param Section Specified section
-		 */
-		void SectionKill(const std::string &Section);
+<pre>
+/**
+ * Remove section completely from internal data structure
+ * \param Section Specified section
+ */
+void SectionKill(const std::string &Section);
+</pre>
 
-### Key related actions:
+- Check if section is empty
 
-* Check if section is empty
+<pre>
+/**
+ * Check if section contains data
+ * \param Section Specified section
+ * \return true for empty section otherwise false
+ */
+bool SectionEmpty(const std::string &Section) const;
+</pre>
 
-		/**
-		 * Check if section contains data
-		 * \param Section Specified section
-		 * \return true for empty section otherwise false
-		 */
-		bool SectionEmpty(const std::string &Section) const;
+### Key related actions
 
+- Get a list of keys of a section
 
-* Get a list of keys of a section
+<pre>
+/**
+ * Get all keys of a section of the INI file
+ * \param Section Specified section
+ * \return Vector with a std::strings for each key
+ */
+tVectorString SectionKeyListGet(const std::string &Section) const;
+</pre>
 
-		/**
-		 * Get all keys of a section of the INI file
-		 * \param Section Specified section
-		 * \return Vector with a std::strings for each key
-		 */
-		tVectorString SectionKeyListGet(const std::string &Section) const;
+- Get a value of a section/key combination - *Note: This is a templated method and requires in any case a default value.*
 
-* Get a value of a section/key combination - *Note: This is a templated method and requires in any case a default value.*
+<pre>
+/**
+ * Templated method to retrieve a value of the specified section/key combination
+ * \param Section Specified section
+ * \param Key Specified key
+ * \param Default Specified default value in case key does not exist
+ * \return Returns either the default value or the value of the existing section/key combination
+ */
+template&lt;typename VariableType&gt;
+VariableType SectionKeyValueGet(const std::string &Section, const std::string &Key, const VariableType &Default);
+</pre>
 
-		/**
-		 * Templated method to retrieve a value of the specified section/key combination
-		 * \param Section Specified section
-		 * \param Key Specified key
-		 * \param Default Specified default value in case key does not exist
-		 * \return Returns either the default value or the value of the existing section/key combination
-		 */
-		template<typename VariableType>
-		VariableType SectionKeyValueGet(const std::string &Section, const std::string &Key, const VariableType &Default);
+- Set a value of a section/key combination - *Note: This is a templated method and may require a cast.*
 
+<pre>
+/**
+ * Templated method to set a value of the specified section/key combination
+ * \param Section Specified section
+ * \param Key Specified key
+ * \param Value Specified value to set
+ * \return true on success otherwise false
+ */
+template&lt;typename VariableType&gt;
+bool SectionKeyValueSet(const std::string &Section, const std::string &Key, const VariableType &Value);
+</pre>
 
-* Set a value of a section/key combination - *Note: This is a templated method and may require a cast.*
+- Delete a key
 
-		/**
-		 * Templated method to set a value of the specified section/key combination
-		 * \param Section Specified section
-		 * \param Key Specified key
-		 * \param Value Specified value to set
-		 * \return true on success otherwise false
-		 */
-		template<typename VariableType>
-		bool SectionKeyValueSet(const std::string &Section, const std::string &Key, const VariableType &Value);
-
-* Delete a key
-
-		/**
-		 * Remove key completely from section of internal data structure
-		 * \param Section Specified section
-		 * \param Key Specified key
-		 */
-		void SectionKeyKill(const std::string &Section, const std::string &Key);
+<pre>
+/**
+ * Remove key completely from section of internal data structure
+ * \param Section Specified section
+ * \param Key Specified key
+ */
+void SectionKeyKill(const std::string &Section, const std::string &Key);
+</pre>
 
 ## ToDo's
 
-* The implementation has to be checked against the inofficial specification at [Wikipedia](https://en.wikipedia.org/wiki/INI_file#Comments) and the tests have to satisfiy the specification.
-* Comments are currently not supported - add this feature as desscribed in the specification.
+- The implementation has to be checked against the inofficial specification at [Wikipedia][wiki_ini] and the tests have to satisfiy the specification.
+- Comments are currently not supported - add this feature as desscribed in the specification.
+
+[catch2]: https://github.com/philsquared/Catch
+[cpp_eleven]: https://en.wikipedia.org/wiki/C%2B%2B11
+[cpp_map]: http://en.cppreference.com/w/cpp/container/map
+[cpp_templates]: https://en.wikipedia.org/wiki/Template_(C%2B%2B)
+[cpp_regexp]: http://en.cppreference.com/w/cpp/regex
+[cpp_stl]: https://de.wikipedia.org/wiki/Standard_Template_Library
+[cpp_string]: http://en.cppreference.com/w/cpp/string/basic_string
+[cpp_vector]: http://en.cppreference.com/w/cpp/container/vector
+[license]: https://github.com/ThirtySomething/YAIP/blob/master/LICENSE.TXT
+[msvs]: https://www.visualstudio.com/
+[wiki_ini]: https://en.wikipedia.org/wiki/INI_file#Comments
+[wiki_regexp]: https://en.wikipedia.org/wiki/Regular_expression
+
+[yaip_license]: http://www.gnu.org/licenses/lgpl-3.0
+[yaip_license_badge]: https://img.shields.io/badge/License-LGPL%20v3-blue.svg
+[yaip_release]: # "Latest Release"
+[yaip_release_badge]: https://img.shields.io/github/release/ThirtySomething/YAIP.svg?maxAge=360
+[yaip_issues]: # "Open Issues"
+[yaip_issues_badge]: https://img.shields.io/github/issues/ThirtySomething/YAIP.svg?maxAge=360
