@@ -100,6 +100,13 @@ namespace net
 				static void ConvertTo(long Value, std::string &ValueString);
 
 				/**
+				 * Convert unsigned long to std::string
+				 * \param Value Value to convert from
+				 * \param ValueString Value to convert to
+				 */
+				static void ConvertTo(unsigned long Value, std::string &ValueString);
+
+				/**
 				 * Convert float to std::string
 				 * \param Value Value to convert from
 				 * \param ValueString Value to convert to
@@ -140,6 +147,13 @@ namespace net
 				 * \param Value Value to convert to
 				 */
 				static void ConvertTo(std::string ValueString, long &Value);
+
+				/**
+				 * Convert std::string to unsigned long
+				 * \param ValueString Value to convert from
+				 * \param Value Value to convert to
+				 */
+				static void ConvertTo(std::string ValueString, unsigned long &Value);
 
 				/**
 				 * Convert std::string to float

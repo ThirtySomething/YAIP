@@ -45,6 +45,7 @@ SCENARIO("Processing of datatype [unsigned integer]", "[net::derpaul::yaip::YAIP
 			{
 				REQUIRE(false == sut.SectionListGet().empty());
 				REQUIRE(1 == sut.SectionListGet().size());
+				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_UNSIGNED_INTEGER).size());
 			}
 		}
 
@@ -75,9 +76,10 @@ SCENARIO("Processing of datatype [unsigned integer]", "[net::derpaul::yaip::YAIP
 
 			THEN("What you save is what you get")
 			{
-				// REQUIRE(1 == sut.SectionListGet().size());
-				unsigned int integer_value = sut.SectionKeyValueGet(S_SECTION_UNSIGNED_INTEGER, S_KEY_UNSIGNED_INTEGER, 0);
-				REQUIRE(VALUE_UNSIGNED_INTEGER == integer_value);
+				REQUIRE(1 == sut.SectionListGet().size());
+				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_UNSIGNED_INTEGER).size());
+				unsigned int ini_value= sut.SectionKeyValueGet(S_SECTION_UNSIGNED_INTEGER, S_KEY_UNSIGNED_INTEGER, 0);
+				REQUIRE(VALUE_UNSIGNED_INTEGER == ini_value);
 			}
 		}
 

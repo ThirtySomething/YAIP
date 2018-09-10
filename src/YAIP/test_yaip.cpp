@@ -17,6 +17,14 @@
 // along with YAIP++. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************
 
-#include "main_catch.h"
+#define CATCH_CONFIG_MAIN
+#include "./../../externals/Catch/single_include/Catch2/catch.hpp"
+
 #include "test_integer.h"
 #include "test_unsigned_integer.h"
+#include "test_long.h"
+#include "test_unsigned_long.h"
+#include "test_bool.h"
+#include "test_float.h"
+#include "test_double.h"
+#include "test_string.h"

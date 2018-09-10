@@ -128,6 +128,15 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
+			void Convert::ConvertTo(unsigned long Value, std::string &ValueString)
+			{
+				std::ostringstream StringStream;
+				StringStream << std::scientific << Value;
+				ValueString = StringStream.str();
+			}
+
+			// ******************************************************************
+			// ******************************************************************
 			void Convert::ConvertTo(float Value, std::string &ValueString)
 			{
 				typedef std::numeric_limits<float> Limits;
@@ -176,6 +185,13 @@ namespace net
 			void Convert::ConvertTo(std::string ValueString, long &Value)
 			{
 				Value = static_cast<long>(std::stoll(ValueString));
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			void Convert::ConvertTo(std::string ValueString, unsigned long &Value)
+			{
+				Value = static_cast<unsigned long>(std::stoll(ValueString));
 			}
 
 			// ******************************************************************

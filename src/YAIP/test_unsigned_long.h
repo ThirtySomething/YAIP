@@ -23,21 +23,21 @@
 #include "YAIP++.h"
 #include <limits>
 
-static const std::string S_FILE_INI_INTEGER = "integer.ini";
-static const std::string S_SECTION_INTEGER = "SECTION_INTEGER";
-static const std::string S_KEY_INTEGER = "KEY_INTEGER";
+static const std::string S_FILE_INI_UNSIGNED_LONG = "unsignedlong.ini";
+static const std::string S_SECTION_UNSIGNED_LONG = "SECTION_UNSIGNED_LONG";
+static const std::string S_KEY_UNSIGNED_LONG = "KEY_UNSIGNED_LONG";
 
-SCENARIO("Processing of datatype [integer]", "[net::derpaul::yaip::YAIP]")
+SCENARIO("Processing of datatype [unsigned long]", "[net::derpaul::yaip::YAIP]")
 {
-	auto VALUE_INTEGER = GENERATE(std::numeric_limits<int>::min(), 0, std::numeric_limits<int>::max());
+	auto VALUE_UNSIGNED_LONG = GENERATE(std::numeric_limits<unsigned long>::min(), 0, std::numeric_limits<unsigned long>::max());
 
-	INFO("Current value [" << VALUE_INTEGER << "]");
+	INFO("Current value [" << VALUE_UNSIGNED_LONG << "]");
 
 	GIVEN("An empty instance of the YAIP parser")
 	{
 		net::derpaul::yaip::YAIP sut;
 		REQUIRE(true == sut.SectionListGet().empty());
-		REQUIRE(true == sut.SectionKeyValueSet(S_SECTION_INTEGER, S_KEY_INTEGER, VALUE_INTEGER));
+		REQUIRE(true == sut.SectionKeyValueSet(S_SECTION_UNSIGNED_LONG, S_KEY_UNSIGNED_LONG, VALUE_UNSIGNED_LONG));
 
 		WHEN("Add a new section/key/value")
 		{
@@ -45,17 +45,17 @@ SCENARIO("Processing of datatype [integer]", "[net::derpaul::yaip::YAIP]")
 			{
 				REQUIRE(false == sut.SectionListGet().empty());
 				REQUIRE(1 == sut.SectionListGet().size());
-				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_INTEGER).size());
+				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_UNSIGNED_LONG).size());
 			}
 		}
 
 		WHEN("Save ini file")
 		{
-			REQUIRE(true == sut.INIFileSave(S_FILE_INI_INTEGER));
+			REQUIRE(true == sut.INIFileSave(S_FILE_INI_UNSIGNED_LONG));
 
 			THEN("File exists")
 			{
-				REQUIRE(true == sut.INIFileExist(S_FILE_INI_INTEGER));
+				REQUIRE(true == sut.INIFileExist(S_FILE_INI_UNSIGNED_LONG));
 			}
 		}
 
@@ -71,26 +71,26 @@ SCENARIO("Processing of datatype [integer]", "[net::derpaul::yaip::YAIP]")
 
 		WHEN("Reload from ini file")
 		{
-			REQUIRE(true == sut.INIFileExist(S_FILE_INI_INTEGER));
-			REQUIRE(true == sut.INIFileLoad(S_FILE_INI_INTEGER));
+			REQUIRE(true == sut.INIFileExist(S_FILE_INI_UNSIGNED_LONG));
+			REQUIRE(true == sut.INIFileLoad(S_FILE_INI_UNSIGNED_LONG));
 
 			THEN("What you save is what you get")
 			{
 				REQUIRE(1 == sut.SectionListGet().size());
-				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_INTEGER).size());
-				unsigned int ini_value= sut.SectionKeyValueGet(S_SECTION_INTEGER, S_KEY_INTEGER, 0);
-				REQUIRE(VALUE_INTEGER == ini_value);
+				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_UNSIGNED_LONG).size());
+				unsigned long ini_value= sut.SectionKeyValueGet(S_SECTION_UNSIGNED_LONG, S_KEY_UNSIGNED_LONG, 0L);
+				REQUIRE(VALUE_UNSIGNED_LONG == ini_value);
 			}
 		}
 
 		WHEN("Cleanup and delete ini file")
 		{
-			REQUIRE(true == sut.INIFileExist(S_FILE_INI_INTEGER));
-			REQUIRE(true == sut.INIFileDelete(S_FILE_INI_INTEGER));
+			REQUIRE(true == sut.INIFileExist(S_FILE_INI_UNSIGNED_LONG));
+			REQUIRE(true == sut.INIFileDelete(S_FILE_INI_UNSIGNED_LONG));
 
 			THEN("When the ini file is gone")
 			{
-				REQUIRE(false == sut.INIFileExist(S_FILE_INI_INTEGER));
+				REQUIRE(false == sut.INIFileExist(S_FILE_INI_UNSIGNED_LONG));
 			}
 		}
 	}
