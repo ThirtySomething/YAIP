@@ -25,12 +25,6 @@
  */
 #include "YAIP++.h"
 #include <fstream>
-#include <sstream>
-#include <ios>
-#include <iostream>
-#include <iomanip>
-#include <limits>
-#include <sys/stat.h>
 
 /**
  * Namespace of YAIP

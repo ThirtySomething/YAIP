@@ -26,13 +26,11 @@
 #pragma once
 
 #include "Convert.h"
-#include <ctype.h>
 #include <functional>
-#include <locale>
+#include <ctype.h>
 #include <map>
-#include <regex>
-#include <string>
 #include <vector>
+#include <regex>
 
 /**
  * Namespace of YAIP

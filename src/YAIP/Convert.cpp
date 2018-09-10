@@ -18,20 +18,15 @@
 //******************************************************************************
 
 /**
- * \file	YAIP++.cpp
+ * \file	Convert.cpp
  * \author	ThirtySomething
  * \date	2016-09-19
- * \brief	Implementation of Yet Another INI Parser
+ * \brief	Converter between different datatypes and std::string
  */
-#include "YAIP++.h"
 #include "Convert.h"
-#include <fstream>
 #include <sstream>
-#include <ios>
-#include <iostream>
 #include <iomanip>
-#include <limits>
-#include <sys/stat.h>
+
 #ifdef __MINGW32__
  // GCC on windows does not support std::to_string
 #include <string>

@@ -18,20 +18,14 @@
 //******************************************************************************
 
 /**
- * \file	YAIP++.h
+ * \file	Convert.h
  * \author	ThirtySomething
  * \date	2016-09-19
- * \brief	Header of Yet Another INI Parser
+ * \brief	Converter between different datatypes and std::string
  */
 #pragma once
 
-#include <ctype.h>
-#include <functional>
-#include <locale>
-#include <map>
-#include <regex>
 #include <string>
-#include <vector>
 
 /**
  * Namespace of YAIP
