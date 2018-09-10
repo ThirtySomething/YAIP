@@ -30,51 +30,7 @@
 #include <iostream>
 #include <iomanip>
 #include <limits>
-
-#ifdef __MINGW32__
-// GCC on windows does not support std::to_string
-#include <string>
-#include <sstream>
-#include <stdlib.h>
-
-namespace std
-{
-	template < typename T > std::string to_string(const T& n)
-	{
-		std::ostringstream stm;
-		stm << n;
-		return stm.str();
-	}
-
-	int stoi(const std::string &s)
-	{
-		int i = 0;
-		sscanf(s.c_str(), "%d", &i);
-		return i;
-	}
-
-	int stol(const std::string &s)
-	{
-		long i = 0;
-		sscanf(s.c_str(), "%ld", &i);
-		return i;
-	}
-
-	double stod(const std::string &s)
-	{
-		double d = 0.0;
-		sscanf(s.c_str(), "%lf", &d);
-		return d;
-	}
-
-	float stof(const std::string &s)
-	{
-		float f = 0.0;
-		sscanf(s.c_str(), "%f", &f);
-		return f;
-	}
-}
-#endif // __MINGW32__
+#include <sys/stat.h>
 
 /**
  * Namespace of YAIP
@@ -91,115 +47,6 @@ namespace net
 		 */
 		namespace yaip
 		{
-			// ******************************************************************
-			// ******************************************************************
-			const std::string Convert::StringTrue = "true";
-			const std::string Convert::StringFalse = "false";
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(int Value, std::string &ValueString)
-			{
-				std::ostringstream StringStream;
-				StringStream << std::scientific << Value;
-				ValueString = StringStream.str();
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(unsigned int Value, std::string &ValueString)
-			{
-				std::ostringstream StringStream;
-				StringStream << std::scientific << Value;
-				ValueString = StringStream.str();
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(long Value, std::string &ValueString)
-			{
-				std::ostringstream StringStream;
-				StringStream << std::scientific << Value;
-				ValueString = StringStream.str();
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(float Value, std::string &ValueString)
-			{
-				typedef std::numeric_limits<float> Limits;
-				std::ostringstream StringStream;
-				StringStream << std::setprecision(Limits::max_digits10) << std::scientific << Value;
-				ValueString = StringStream.str();
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(double Value, std::string &ValueString)
-			{
-				typedef std::numeric_limits<double> Limits;
-				std::ostringstream StringStream;
-				StringStream << std::setprecision(Limits::max_digits10) << std::scientific << Value;
-				ValueString = StringStream.str();
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(bool Value, std::string &ValueString)
-			{
-				ValueString = Convert::StringFalse;
-				if (true == Value)
-				{
-					ValueString = Convert::StringTrue;
-				}
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(std::string ValueString, int &Value)
-			{
-				Value = std::stoi(ValueString);
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(std::string ValueString, unsigned int &Value)
-			{
-				Value = std::stoi(ValueString);
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(std::string ValueString, long &Value)
-			{
-				Value = std::stol(ValueString);
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(std::string ValueString, double &Value)
-			{
-				Value = std::stod(ValueString);
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(std::string ValueString, float &Value)
-			{
-				Value = std::stof(ValueString);
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(std::string ValueString, bool &Value)
-			{
-				Value = false;
-				if (0 == ValueString.compare(Convert::StringTrue))
-				{
-					Value = true;
-				}
-			}
-
 			// ******************************************************************
 			// ******************************************************************
 			/**
@@ -252,6 +99,23 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
+			bool YAIP::INIFileDelete(const std::string &Filename) const
+			{
+				bool deleted = (0 == remove(Filename.c_str()));
+				return deleted;
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			bool YAIP::INIFileExist(const std::string &Filename) const
+			{
+				struct stat buffer;
+				bool exist = (0 == stat(Filename.c_str(), &buffer));
+				return exist;
+			}
+
+			// ******************************************************************
+			// ******************************************************************
 			bool YAIP::INIFileLoad(const std::string &Filename)
 			{
 				bool Success = false;
@@ -282,6 +146,7 @@ namespace net
 
 					// Parse INI file
 					ParseFileContent(FileContent);
+					InternalCleanup();
 					Success = true;
 				}
 
@@ -426,6 +291,23 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
+			bool YAIP::SectionEmpty(const std::string &Section) const
+			{
+				bool empty = true;
+
+				// Check for section
+				if (0 < m_IniData.count(Section))
+				{
+					// Section exists, pick data and kill section
+					tMapStringString SectionData = m_IniData.at(Section);
+					empty = (0 == SectionData.size());
+				}
+
+				return empty;
+			}
+
+			// ******************************************************************
+			// ******************************************************************
 			void YAIP::SectionKill(const std::string &Section)
 			{
 				// First check for section existence
@@ -461,6 +343,7 @@ namespace net
 
 					Data.clear();
 				}
+				m_IniData.clear();
 			}
 
 			// ******************************************************************
@@ -566,6 +449,28 @@ namespace net
 						// Add new data
 						m_IniData[CurrentSection].insert(std::make_pair(CurrentKey, CurrentValue));
 					}
+				}
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			void YAIP::InternalCleanup(void)
+			{
+				tVectorString SectionList = SectionListGet();
+				tVectorString SectionsToDelete;
+
+				for (tVectorString::iterator LoopSection = SectionList.begin(); LoopSection != SectionList.end(); ++LoopSection)
+				{
+					tVectorString KeyList = SectionKeyListGet(*LoopSection);
+					if (true == SectionEmpty(*LoopSection))
+					{
+						SectionsToDelete.push_back(*LoopSection);
+					}
+				}
+
+				for (tVectorString::iterator LoopSection = SectionsToDelete.begin(); LoopSection != SectionsToDelete.end(); ++LoopSection)
+				{
+					SectionKill(*LoopSection);
 				}
 			}
 		}

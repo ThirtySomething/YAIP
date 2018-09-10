@@ -28,20 +28,12 @@
 -->
 
 ## Requirements
-To use **YAIP++** you need to have an modern [C++11](https://en.wikipedia.org/wiki/C%2B%2B11 "C++11") compiler. See the used parts at the section **Implementation Details**. You can use
-* [Visual Studio 2010](https://www.visualstudio.com/ "Visual Studio") and above
-* [GCC 4.9.2](https://gcc.gnu.org/ "GCC") and above
-* [MinGW 4.9.2](http://www.mingw.org/ "MinGW") and above
+
+To use **YAIP++** you need to have an modern [C++11](https://en.wikipedia.org/wiki/C%2B%2B11 "C++11") compiler. See the used parts at the section **Implementation Details**. Tested with [Visual Studio 2017](https://www.visualstudio.com/ "Visual Studio").
 
 ## Supported Platforms
-Current supported/tested platforms are
 
-- [*Windows 7*](https://en.wikipedia.org/wiki/Windows_7 "Windows 7"), [*MinGW32*](http://www.mingw.org/ "MinGW") (Ships with [*Code::Blocks*](http://www.codeblocks.org/)), 32-bit
-- [*Windows 7*](https://en.wikipedia.org/wiki/Windows_7 "Windows 7"), [*Visual Studio 2010*](https://www.visualstudio.com/ "Visual Studio"), 32-/64-bit
-- [*Windows 7*](https://en.wikipedia.org/wiki/Windows_7 "Windows 7"), [*Visual Studio 2013*](https://www.visualstudio.com/ "Visual Studio"), 32-/64-bit
-- [*Windows 7*](https://en.wikipedia.org/wiki/Windows_7 "Windows 7"), [*Visual Studio 2015*](https://www.visualstudio.com/ "Visual Studio"), 32-/64-bit
-- [*Windows 7*](https://en.wikipedia.org/wiki/Windows_7 "Windows 7"), [*Visual Studio 2017*](https://www.visualstudio.com/ "Visual Studio"), 32-/64-bit
-- [*Debian 8*](https://www.debian.org/ "Debian"), [*gcc 4.9.2*](https://gcc.gnu.org/ "GCC"), 64-bit
+Supported platforms are all platforms where the code compiles and the tests run without any error.
 
 ## Motivation
 
@@ -85,6 +77,24 @@ A doxygen documentation can be generated, the config file is located in the doxy
 		 */
 		bool INIFileSave(std::string Filename);
 
+* INI file exists
+
+		/**
+		 * Check if given INI file exists
+		 * \param Filename Full qualified filename of the INI file
+		 * \return true if file exists otherwise false
+		 */
+		bool INIFileExist(const std::string &Filename) const;
+
+* INI file delete
+
+		/**
+		 * Delete given INI file
+		 * \param Filename Full qualified filename of the INI file
+		 * \return true if file is deleted otherwise false
+		 */
+		bool INIFileDelete(const std::string &Filename) const;
+
 ### Section related actions:
 
 * Get a list of all sections
@@ -104,6 +114,16 @@ A doxygen documentation can be generated, the config file is located in the doxy
 		void SectionKill(const std::string &Section);
 
 ### Key related actions:
+
+* Check if section is empty
+
+		/**
+		 * Check if section contains data
+		 * \param Section Specified section
+		 * \return true for empty section otherwise false
+		 */
+		bool SectionEmpty(const std::string &Section) const;
+
 
 * Get a list of keys of a section
 

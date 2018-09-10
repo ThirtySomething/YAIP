@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "YAIP", "YAIP.vcxproj", "{7DFF9533-F233-43AA-BFB9-54BAA442F35F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "YAIP", "YAIP\YAIP.vcxproj", "{7DFF9533-F233-43AA-BFB9-54BAA442F35F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

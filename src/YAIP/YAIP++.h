@@ -25,6 +25,7 @@
  */
 #pragma once
 
+#include "Convert.h"
 #include <ctype.h>
 #include <functional>
 #include <locale>
@@ -103,127 +104,6 @@ namespace net
 			typedef std::vector<std::string> tVectorString;
 
 			/**
-			 * Class to convert data from and to std::string
-			 * \todo Add converters for all fundamental types:
-			 * \see http://en.cppreference.com/w/cpp/language/types
-			 * <table>
-			 * <caption id="multi_row">Fundamental types</caption>
-			 * <tr><th>Type</th><th>Done</th></tr>
-			 * <tr><td>bool</td><td>x</td></tr>
-			 * <tr><td>int</td><td>x</td></tr>
-			 * <tr><td>unsigned int</td><td>-</td>x</tr>
-			 * <tr><td>short</td><td>-</td></tr>
-			 * <tr><td>unsigned short</td><td>-</td></tr>
-			 * <tr><td>long</td><td>-</td></tr>
-			 * <tr><td>unsigned long</td><td>-</td></tr>
-			 * <tr><td>long long</td><td>-</td></tr>
-			 * <tr><td>unsigned long long</td><td>-</td></tr>
-			 * <tr><td>char</td><td>-</td></tr>
-			 * <tr><td>unsigned char</td><td>-</td></tr>
-			 * <tr><td>float</td><td>x</td></tr>
-			 * <tr><td>double</td><td>x</td></tr>
-			 * <tr><td>long double</td><td>-</td></tr>
-			 * </table>
-			 */
-			class Convert
-			{
-			public:
-				/**
-				 * Used as constant for bool
-				 */
-				static const std::string StringTrue;
-
-				/**
-				 * Used as constant for bool
-				 */
-				static const std::string StringFalse;
-
-				/**
-				 * Convert integer to std::string
-				 * \param Value Value to convert from
-				 * \param ValueString Value to convert to
-				 */
-				static void ConvertTo(int Value, std::string &ValueString);
-
-				/**
-				 * Convert unsigned integer to std::string
-				 * \param Value Value to convert from
-				 * \param ValueString Value to convert to
-				 */
-				static void ConvertTo(unsigned int Value, std::string &ValueString);
-
-				/**
-				 * Convert long to std::string
-				 * \param Value Value to convert from
-				 * \param ValueString Value to convert to
-				 */
-				static void ConvertTo(long Value, std::string &ValueString);
-
-				/**
-				 * Convert float to std::string
-				 * \param Value Value to convert from
-				 * \param ValueString Value to convert to
-				 */
-				static void ConvertTo(float Value, std::string &ValueString);
-
-				/**
-				 * Convert double to std::string
-				 * \param Value Value to convert from
-				 * \param ValueString Value to convert to
-				 */
-				static void ConvertTo(double Value, std::string &ValueString);
-
-				/**
-				 * Convert bool to std::string
-				 * \param Value Value to convert from
-				 * \param ValueString Value to convert to
-				 */
-				static void ConvertTo(bool Value, std::string &ValueString);
-
-				/**
-				 * Convert std::string to int
-				 * \param ValueString Value to convert from
-				 * \param Value Value to convert to
-				 */
-				static void ConvertTo(std::string ValueString, int &Value);
-
-				/**
-				 * Convert std::string to unsigned int
-				 * \param ValueString Value to convert from
-				 * \param Value Value to convert to
-				 */
-				static void ConvertTo(std::string ValueString, unsigned int &Value);
-
-				/**
-				 * Convert std::string to long
-				 * \param ValueString Value to convert from
-				 * \param Value Value to convert to
-				 */
-				static void ConvertTo(std::string ValueString, long &Value);
-
-				/**
-				 * Convert std::string to float
-				 * \param ValueString Value to convert from
-				 * \param Value Value to convert to
-				 */
-				static void ConvertTo(std::string ValueString, float &Value);
-
-				/**
-				 * Convert std::string to double
-				 * \param ValueString Value to convert from
-				 * \param Value Value to convert to
-				 */
-				static void ConvertTo(std::string ValueString, double &Value);
-
-				/**
-				 * Convert std::string to bool
-				 * \param ValueString Value to convert from
-				 * \param Value Value to convert to
-				 */
-				static void ConvertTo(std::string ValueString, bool &Value);
-			};
-
-			/**
 			 * Class to read INI files and offer access to the data
 			 */
 			class YAIP
@@ -238,6 +118,20 @@ namespace net
 				 * Default destructor
 				 */
 				virtual ~YAIP(void);
+
+				/**
+				 * Delete given INI file
+				 * \param Filename Full qualified filename of the INI file
+				 * \return true if file is deleted otherwise false
+				 */
+				bool INIFileDelete(const std::string &Filename) const;
+
+				/**
+				 * Check if given INI file exists
+				 * \param Filename Full qualified filename of the INI file
+				 * \return true if file exists otherwise false
+				 */
+				bool INIFileExist(const std::string &Filename) const;
 
 				/**
 				 * Load and parse INI file into internal structures
@@ -319,6 +213,13 @@ namespace net
 				}
 
 				/**
+				 * Check if section contains data
+				 * \param Section Specified section
+				 * \return true for empty section otherwise false
+				 */
+				bool SectionEmpty(const std::string &Section) const;
+
+				/**
 				 * Remove section completely from internal data structure
 				 * \param Section Specified section
 				 */
@@ -380,6 +281,11 @@ namespace net
 				 * \param FileContent The INI file as a vector of std::strings, each line a string
 				 */
 				void ParseFileContent(tVectorString FileContent);
+
+				/**
+				 * Check all sections for key/value pairs and remove empty sections
+				 */
+				void InternalCleanup(void);
 			};
 		}
 	}
