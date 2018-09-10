@@ -43,9 +43,6 @@ namespace net
 		{
 			// ******************************************************************
 			// ******************************************************************
-			/**
-			 * \todo Invert regex logic to what is NOT allowed for key/values
-			 */
 			// Regular expressioin for matching a key/value pair
 			const std::regex YAIP::RegExKeyValue("([\\s]+)?(([a-zA-Z0-9\\._])+){1}([\\s]+)?(=){1}([\\s]+)?(([a-zA-Z0-9( ):\\\\\\.,_|\\+-])+)?([\\s]+)?([#;])?(.*)");
 			//                                        1           2                 3       4      5               6                7        8    9
@@ -61,9 +58,6 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			/**
-			 * \todo Invert regex logic to what is NOT allowed for sections
-			 */
 			// Regular expressioin for matching a section
 			const std::regex YAIP::RegExSection("([\\s]+)?(\\[){1}([\\s]+)?(([a-zA-Z0-9_])+){1}([\\s]+)?(\\]){1}([\\s]+)?([#;])?(.*)");
 			//                                      1       2        3            4              5       6        7       8    9
@@ -199,6 +193,13 @@ namespace net
 
 					// Re-insert section with deleted key
 					m_IniData.insert(std::make_pair(Section, KeyValueData));
+				}
+
+				// If section is empty
+				if (true == SectionEmpty(Section))
+				{
+					// Remove empty section
+					SectionKill(Section);
 				}
 			}
 
@@ -346,9 +347,6 @@ namespace net
 			{
 				// Retrieve list of keys
 				tVectorString KeyList = SectionKeyListGet(Section);
-				/**
-				 * \todo Keep empty sections?
-				 */
 
 				// Write section marker
 				if (0 != Section.length())

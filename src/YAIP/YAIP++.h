@@ -102,7 +102,7 @@ namespace net
 			typedef std::vector<std::string> tVectorString;
 
 			/**
-			 * Class to read INI files and offer access to the data
+			 * Class to manipulate INI files
 			 */
 			class YAIP
 			{

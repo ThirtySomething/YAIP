@@ -51,11 +51,11 @@ namespace net
 			 * <tr><th>Type</th><th>Done</th></tr>
 			 * <tr><td>bool</td><td>x</td></tr>
 			 * <tr><td>int</td><td>x</td></tr>
-			 * <tr><td>unsigned int</td><td>-</td>x</tr>
+			 * <tr><td>unsigned int</td><td>x</td></tr>
 			 * <tr><td>short</td><td>-</td></tr>
 			 * <tr><td>unsigned short</td><td>-</td></tr>
-			 * <tr><td>long</td><td>-</td></tr>
-			 * <tr><td>unsigned long</td><td>-</td></tr>
+			 * <tr><td>long</td><td>x</td></tr>
+			 * <tr><td>unsigned long</td><td>x</td></tr>
 			 * <tr><td>long long</td><td>-</td></tr>
 			 * <tr><td>unsigned long long</td><td>-</td></tr>
 			 * <tr><td>char</td><td>-</td></tr>
