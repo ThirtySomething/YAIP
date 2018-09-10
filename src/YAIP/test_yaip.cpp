@@ -18,7 +18,7 @@
 //******************************************************************************
 
 #define CATCH_CONFIG_MAIN
-#include "./../../externals/Catch/single_include/Catch2/catch.hpp"
+#include "./../../externals/Catch2/single_include/Catch2/catch.hpp"
 
 #include "test_integer.h"
 #include "test_unsigned_integer.h"

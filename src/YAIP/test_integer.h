@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "./../../externals/Catch/single_include/Catch2/catch.hpp"
+#include "./../../externals/Catch2/single_include/Catch2/catch.hpp"
 #include "YAIP++.h"
 #include <limits>
 
