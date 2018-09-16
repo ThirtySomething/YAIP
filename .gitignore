@@ -71,3 +71,4 @@ _IDE/VS2017/YAIP.v12.suo
 src/.vs/YAIP/v15/.suo
 /src/.vs
 src/YAIP/YAIP.vcxproj.user
+*.ini

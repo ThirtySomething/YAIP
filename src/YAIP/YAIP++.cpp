@@ -43,33 +43,19 @@ namespace net
 		{
 			// ******************************************************************
 			// ******************************************************************
-			// Regular expressioin for matching a key/value pair
-			const std::regex YAIP::RegExKeyValue("([\\s]+)?(([a-zA-Z0-9\\._])+){1}([\\s]+)?(=){1}([\\s]+)?(([a-zA-Z0-9( ):\\\\\\.,_|\\+-])+)?([\\s]+)?([#;])?(.*)");
-			//                                        1           2                 3       4      5               6                7        8    9
-			// 1 - Possible whitespaces
-			// 2 - Key => Match everything with upper-/lowercase characters, numbers, underscore and a dot
-			// 3 - Possible whitespaces
-			// 4 - The assignment
-			// 5 - Possible whitespaces
-			// 6 - Value => Match everything with upper-/lowercase characters, numbers, dot, comma, underscore, vertical bar, plus and minus sign
-			// 7 - Possible whitespaces
-			// 8 - Marker for "comment start"
-			// 9 - Comment
-
+			// Regular expression for matching a key/value pair
+			const std::regex YAIP::RegExKeyValue("([^=]+)=([^;]+);?(.+)?");
+			//                                       1       2      3
+			// 1 - Match for key: Everything except assignment
+			// 2 - Match for value: Everything except semicolon
+			// 3 - Optional match for comment
 			// ******************************************************************
 			// ******************************************************************
-			// Regular expressioin for matching a section
-			const std::regex YAIP::RegExSection("([\\s]+)?(\\[){1}([\\s]+)?(([a-zA-Z0-9_])+){1}([\\s]+)?(\\]){1}([\\s]+)?([#;])?(.*)");
-			//                                      1       2        3            4              5       6        7       8    9
-			// 1 - Possible whitespaces
-			// 2 - Opening square bracked
-			// 3 - Possible whitespaces
-			// 4 - Section => Match everything with upper-/lowercase characters and numbers
-			// 5 - Possible whitespaces
-			// 6 - Closing square bracked
-			// 7 - Possible whitespaces
-			// 8 - Marker for "comment start"
-			// 9 - Comment
+			// Regular expression for matching a section
+			const std::regex YAIP::RegExSection("\\[([^\\]]+)\\]\\s*(;(.+))?");
+			//                                        1            2    
+			// 1 - Match for section: Everything between square brackets
+			// 2 - Optional match for comment
 
 			// ******************************************************************
 			// ******************************************************************
@@ -239,6 +225,12 @@ namespace net
 					if (0 < SectionData.count(Key))
 					{
 						ReturnValue = SectionData.at(Key);
+
+						// Got empty data?
+						if (0 == ReturnValue.length())
+						{
+							ReturnValue = Default;
+						}
 					}
 				}
 
@@ -378,8 +370,8 @@ namespace net
 					// Change new key/value pair only in case of a match.
 					// Unfortunately in C++ there are no named groups possible
 					// so we have to use the index of the group.
-					Key = RegExpMatch[2].str();
-					Value = RegExpMatch[7].str();
+					Key = RegExpMatch[1].str();
+					Value = RegExpMatch[2].str();
 					Success = true;
 				}
 
@@ -400,7 +392,7 @@ namespace net
 					// Change section only in case of a match.
 					// Unfortunately in C++ there are no named groups possible
 					// so we have to use the index of the group.
-					Section = RegExpMatch[4].str();
+					Section = RegExpMatch[1].str();
 					Success = true;
 				}
 

@@ -26,13 +26,17 @@
   <ItemGroup>
     <ClInclude Include="Convert.h" />
     <ClInclude Include="test_bool.h" />
+    <ClInclude Include="test_char.h" />
     <ClInclude Include="test_double.h" />
     <ClInclude Include="test_float.h" />
     <ClInclude Include="test_integer.h" />
     <ClInclude Include="test_long.h" />
+    <ClInclude Include="test_short.h" />
     <ClInclude Include="test_string.h" />
+    <ClInclude Include="test_unsigned_char.h" />
     <ClInclude Include="test_unsigned_integer.h" />
     <ClInclude Include="test_unsigned_long.h" />
+    <ClInclude Include="test_unsigned_short.h" />
     <ClInclude Include="YAIP++.h" />
   </ItemGroup>
   <ItemGroup>

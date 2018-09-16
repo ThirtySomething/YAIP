@@ -26,10 +26,12 @@
 static const std::string S_FILE_INI_DOUBLE = "double.ini";
 static const std::string S_SECTION_DOUBLE = "SECTION_DOUBLE";
 static const std::string S_KEY_DOUBLE = "KEY_DOUBLE";
+static const std::string S_KEY_INVALID_DOUBLE = "KEY_INVALID";
+static const double S_VALUE_DEFAULT_DOUBLE = 0.0;
 
 SCENARIO("Processing of datatype [double]", "[net::derpaul::yaip::YAIP]")
 {
-	auto VALUE_DOUBLE = GENERATE(std::numeric_limits<double>::max(), std::numeric_limits<double>::min(), std::numeric_limits<double>::infinity());
+	auto VALUE_DOUBLE = GENERATE(std::numeric_limits<double>::min(), std::numeric_limits<double>::max(), std::numeric_limits<double>::infinity());
 
 	INFO("Current value [" << VALUE_DOUBLE << "]");
 
@@ -76,10 +78,24 @@ SCENARIO("Processing of datatype [double]", "[net::derpaul::yaip::YAIP]")
 
 			THEN("What you save is what you get")
 			{
-				REQUIRE(1 == sut.SectionListGet().size());
-				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_DOUBLE).size());
-				double ini_value= sut.SectionKeyValueGet(S_SECTION_DOUBLE, S_KEY_DOUBLE, 0.0);
+				auto SectionList = sut.SectionListGet();
+				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_DOUBLE);
+
+				REQUIRE(1 == SectionList.size());
+				REQUIRE(1 == SectionKeyList.size());
+
+				double ini_value= sut.SectionKeyValueGet(S_SECTION_DOUBLE, S_KEY_DOUBLE, S_VALUE_DEFAULT_DOUBLE);
 				REQUIRE(VALUE_DOUBLE == Approx(ini_value));
+			}
+		}
+
+		WHEN("Read from invalid key")
+		{
+			double ini_value = sut.SectionKeyValueGet(S_SECTION_DOUBLE, S_KEY_INVALID_DOUBLE, S_VALUE_DEFAULT_DOUBLE);
+
+			THEN("We get the default value")
+			{
+				REQUIRE(S_VALUE_DEFAULT_DOUBLE == Approx(ini_value));
 			}
 		}
 

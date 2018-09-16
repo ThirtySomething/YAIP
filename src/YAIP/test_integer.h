@@ -26,10 +26,12 @@
 static const std::string S_FILE_INI_INTEGER = "integer.ini";
 static const std::string S_SECTION_INTEGER = "SECTION_INTEGER";
 static const std::string S_KEY_INTEGER = "KEY_INTEGER";
+static const std::string S_KEY_INVALID_INTEGER = "KEY_INVALID";
+static const int S_VALUE_DEFAULT_INTEGER = 0;
 
 SCENARIO("Processing of datatype [integer]", "[net::derpaul::yaip::YAIP]")
 {
-	auto VALUE_INTEGER = GENERATE(std::numeric_limits<int>::min(), 0, std::numeric_limits<int>::max());
+	auto VALUE_INTEGER = GENERATE(std::numeric_limits<int>::min(), std::numeric_limits<int>::max(), std::numeric_limits<int>::infinity());
 
 	INFO("Current value [" << VALUE_INTEGER << "]");
 
@@ -76,10 +78,24 @@ SCENARIO("Processing of datatype [integer]", "[net::derpaul::yaip::YAIP]")
 
 			THEN("What you save is what you get")
 			{
-				REQUIRE(1 == sut.SectionListGet().size());
-				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_INTEGER).size());
-				unsigned int ini_value= sut.SectionKeyValueGet(S_SECTION_INTEGER, S_KEY_INTEGER, 0);
+				auto SectionList = sut.SectionListGet();
+				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_INTEGER);
+
+				REQUIRE(1 == SectionList.size());
+				REQUIRE(1 == SectionKeyList.size());
+
+				int ini_value= sut.SectionKeyValueGet(S_SECTION_INTEGER, S_KEY_INTEGER, S_VALUE_DEFAULT_INTEGER);
 				REQUIRE(VALUE_INTEGER == ini_value);
+			}
+		}
+
+		WHEN("Read from invalid key")
+		{
+			int ini_value = sut.SectionKeyValueGet(S_SECTION_INTEGER, S_KEY_INVALID_INTEGER, S_VALUE_DEFAULT_INTEGER);
+
+			THEN("We get the default value")
+			{
+				REQUIRE(S_VALUE_DEFAULT_INTEGER == ini_value);
 			}
 		}
 

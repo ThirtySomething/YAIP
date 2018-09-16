@@ -27,8 +27,10 @@
 static const std::string S_FILE_INI_STRING = "string.ini";
 static const std::string S_SECTION_STRING = "SECTION_STRING";
 static const std::string S_KEY_STRING = "KEY_STRING";
+static const std::string S_KEY_INVALID_STRING = "KEY_INVALID";
+static const std::string S_VALUE_DEFAULT_STRING = "-=>DEFAULT<=-";
 
-std::string testString("ABCDEFGHIJKLMNOPQRSTUVXYZ abcdefghijklmnopqrstuvxyz 0123456789 ., _ +- |");
+std::string testString("ABCDEFGHIJKLMNOPQRSTUVXYZ abcdefghijklmnopqrstuvxyz () 0123456789 ., _ +- |");
 
 SCENARIO("Processing of datatype [string]", "[net::derpaul::yaip::YAIP]")
 {
@@ -79,10 +81,24 @@ SCENARIO("Processing of datatype [string]", "[net::derpaul::yaip::YAIP]")
 
 			THEN("What you save is what you get")
 			{
-				REQUIRE(1 == sut.SectionListGet().size());
-				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_STRING).size());
-				std::string ini_value = sut.SectionKeyValueGet(S_SECTION_STRING, S_KEY_STRING, "-=>DEFAULT<=-");
+				auto SectionList = sut.SectionListGet();
+				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_STRING);
+
+				REQUIRE(1 == SectionList.size());
+				REQUIRE(1 == SectionKeyList.size());
+
+				std::string ini_value = sut.SectionKeyValueGet(S_SECTION_STRING, S_KEY_STRING, S_VALUE_DEFAULT_STRING);
 				REQUIRE(VALUE_STRING == ini_value);
+			}
+		}
+
+		WHEN("Read from invalid key")
+		{
+			std::string ini_value = sut.SectionKeyValueGet(S_SECTION_STRING, S_KEY_INVALID_STRING, S_VALUE_DEFAULT_STRING);
+
+			THEN("We get the default value")
+			{
+				REQUIRE(S_VALUE_DEFAULT_STRING == ini_value);
 			}
 		}
 

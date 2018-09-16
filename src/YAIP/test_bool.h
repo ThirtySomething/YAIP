@@ -26,10 +26,12 @@
 static const std::string S_FILE_INI_BOOL = "bool.ini";
 static const std::string S_SECTION_BOOL = "SECTION_BOOL";
 static const std::string S_KEY_BOOL = "KEY_BOOL";
+static const std::string S_KEY_INVALID_BOOL = "KEY_INVALID";
+static const bool S_VALUE_DEFAULT_BOOL = true;
 
 SCENARIO("Processing of datatype [bool]", "[net::derpaul::yaip::YAIP]")
 {
-	auto VALUE_BOOL = GENERATE(true, false);
+	auto VALUE_BOOL = GENERATE(std::numeric_limits<bool>::min(), std::numeric_limits<bool>::max(), std::numeric_limits<bool>::infinity());
 
 	INFO("Current value [" << VALUE_BOOL << "]");
 
@@ -76,10 +78,24 @@ SCENARIO("Processing of datatype [bool]", "[net::derpaul::yaip::YAIP]")
 
 			THEN("What you save is what you get")
 			{
-				REQUIRE(1 == sut.SectionListGet().size());
-				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_BOOL).size());
-				bool ini_value= sut.SectionKeyValueGet(S_SECTION_BOOL, S_KEY_BOOL, false);
+				auto SectionList = sut.SectionListGet();
+				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_BOOL);
+
+				REQUIRE(1 == SectionList.size());
+				REQUIRE(1 == SectionKeyList.size());
+
+				bool ini_value= sut.SectionKeyValueGet(S_SECTION_BOOL, S_KEY_BOOL, S_VALUE_DEFAULT_BOOL);
 				REQUIRE(VALUE_BOOL == ini_value);
+			}
+		}
+
+		WHEN("Read from invalid key")
+		{
+			bool ini_value = sut.SectionKeyValueGet(S_SECTION_BOOL, S_KEY_INVALID_BOOL, S_VALUE_DEFAULT_BOOL);
+
+			THEN("We get the default value")
+			{
+				REQUIRE(S_VALUE_DEFAULT_BOOL == ini_value);
 			}
 		}
 

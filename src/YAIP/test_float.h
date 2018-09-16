@@ -26,10 +26,12 @@
 static const std::string S_FILE_INI_FLOAT = "float.ini";
 static const std::string S_SECTION_FLOAT = "SECTION_FLOAT";
 static const std::string S_KEY_FLOAT = "KEY_FLOAT";
+static const std::string S_KEY_INVALID_FLOAT = "KEY_INVALID";
+static const float S_VALUE_DEFAULT_FLOAT = 0.0f;
 
 SCENARIO("Processing of datatype [float]", "[net::derpaul::yaip::YAIP]")
 {
-	auto VALUE_FLOAT = GENERATE(std::numeric_limits<float>::max(), std::numeric_limits<float>::min(), std::numeric_limits<float>::infinity());
+	auto VALUE_FLOAT = GENERATE(std::numeric_limits<float>::min(), std::numeric_limits<float>::max(), std::numeric_limits<float>::infinity());
 
 	INFO("Current value [" << VALUE_FLOAT << "]");
 
@@ -76,10 +78,24 @@ SCENARIO("Processing of datatype [float]", "[net::derpaul::yaip::YAIP]")
 
 			THEN("What you save is what you get")
 			{
-				REQUIRE(1 == sut.SectionListGet().size());
-				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_FLOAT).size());
-				float ini_value= sut.SectionKeyValueGet(S_SECTION_FLOAT, S_KEY_FLOAT, 0.0f);
+				auto SectionList = sut.SectionListGet();
+				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_FLOAT);
+
+				REQUIRE(1 == SectionList.size());
+				REQUIRE(1 == SectionKeyList.size());
+
+				float ini_value= sut.SectionKeyValueGet(S_SECTION_FLOAT, S_KEY_FLOAT, S_VALUE_DEFAULT_FLOAT);
 				REQUIRE(VALUE_FLOAT == Approx(ini_value));
+			}
+		}
+
+		WHEN("Read from invalid key")
+		{
+			float ini_value = sut.SectionKeyValueGet(S_SECTION_FLOAT, S_KEY_INVALID_FLOAT, S_VALUE_DEFAULT_FLOAT);
+
+			THEN("We get the default value")
+			{
+				REQUIRE(S_VALUE_DEFAULT_FLOAT == Approx(ini_value));
 			}
 		}
 

@@ -26,10 +26,12 @@
 static const std::string S_FILE_INI_LONG = "long.ini";
 static const std::string S_SECTION_LONG = "SECTION_LONG";
 static const std::string S_KEY_LONG = "KEY_LONG";
+static const std::string S_KEY_INVALID_LONG = "KEY_INVALID";
+static const long S_VALUE_DEFAULT_LONG = 0L;
 
 SCENARIO("Processing of datatype [long]", "[net::derpaul::yaip::YAIP]")
 {
-	auto VALUE_LONG = GENERATE(std::numeric_limits<long>::min(), 0, std::numeric_limits<long>::max());
+	auto VALUE_LONG = GENERATE(std::numeric_limits<long>::min(), std::numeric_limits<long>::max(), std::numeric_limits<long>::infinity());
 
 	INFO("Current value [" << VALUE_LONG << "]");
 
@@ -76,10 +78,24 @@ SCENARIO("Processing of datatype [long]", "[net::derpaul::yaip::YAIP]")
 
 			THEN("What you save is what you get")
 			{
-				REQUIRE(1 == sut.SectionListGet().size());
-				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_LONG).size());
-				long ini_value= sut.SectionKeyValueGet(S_SECTION_LONG, S_KEY_LONG, 0L);
+				auto SectionList = sut.SectionListGet();
+				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_LONG);
+
+				REQUIRE(1 == SectionList.size());
+				REQUIRE(1 == SectionKeyList.size());
+
+				long ini_value= sut.SectionKeyValueGet(S_SECTION_LONG, S_KEY_LONG, S_VALUE_DEFAULT_LONG);
 				REQUIRE(VALUE_LONG == ini_value);
+			}
+		}
+
+		WHEN("Read from invalid key")
+		{
+			long ini_value = sut.SectionKeyValueGet(S_SECTION_LONG, S_KEY_INVALID_LONG, S_VALUE_DEFAULT_LONG);
+
+			THEN("We get the default value")
+			{
+				REQUIRE(S_VALUE_DEFAULT_LONG == ini_value);
 			}
 		}
 

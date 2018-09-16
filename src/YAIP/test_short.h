@@ -23,23 +23,23 @@
 #include "YAIP++.h"
 #include <limits>
 
-static const std::string S_FILE_INI_UNSIGNED_LONG = "unsignedlong.ini";
-static const std::string S_SECTION_UNSIGNED_LONG = "SECTION_UNSIGNED_LONG";
-static const std::string S_KEY_UNSIGNED_LONG = "KEY_UNSIGNED_LONG";
-static const std::string S_KEY_INVALID_UNSIGNED_LONG = "KEY_INVALID";
-static const unsigned long S_VALUE_DEFAULT_UNSIGNED_LONG = 0L;
+static const std::string S_FILE_INI_SHORT = "short.ini";
+static const std::string S_SECTION_SHORT = "SECTION_SHORT";
+static const std::string S_KEY_SHORT = "KEY_SHORT";
+static const std::string S_KEY_INVALID_SHORT = "KEY_INVALID";
+static const short S_VALUE_DEFAULT_SHORT = 0;
 
-SCENARIO("Processing of datatype [unsigned long]", "[net::derpaul::yaip::YAIP]")
+SCENARIO("Processing of datatype [short]", "[net::derpaul::yaip::YAIP]")
 {
-	auto VALUE_UNSIGNED_LONG = GENERATE(std::numeric_limits<unsigned long>::min(), std::numeric_limits<unsigned long>::max(), std::numeric_limits<unsigned long>::infinity());
+	auto VALUE_SHORT = GENERATE(std::numeric_limits<short>::min(), std::numeric_limits<short>::max(), std::numeric_limits<short>::infinity());
 
-	INFO("Current value [" << VALUE_UNSIGNED_LONG << "]");
+	INFO("Current value [" << VALUE_SHORT << "]");
 
 	GIVEN("An empty instance of the YAIP parser")
 	{
 		net::derpaul::yaip::YAIP sut;
 		REQUIRE(true == sut.SectionListGet().empty());
-		REQUIRE(true == sut.SectionKeyValueSet(S_SECTION_UNSIGNED_LONG, S_KEY_UNSIGNED_LONG, VALUE_UNSIGNED_LONG));
+		REQUIRE(true == sut.SectionKeyValueSet(S_SECTION_SHORT, S_KEY_SHORT, VALUE_SHORT));
 
 		WHEN("Add a new section/key/value")
 		{
@@ -47,17 +47,17 @@ SCENARIO("Processing of datatype [unsigned long]", "[net::derpaul::yaip::YAIP]")
 			{
 				REQUIRE(false == sut.SectionListGet().empty());
 				REQUIRE(1 == sut.SectionListGet().size());
-				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_UNSIGNED_LONG).size());
+				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_SHORT).size());
 			}
 		}
 
 		WHEN("Save ini file")
 		{
-			REQUIRE(true == sut.INIFileSave(S_FILE_INI_UNSIGNED_LONG));
+			REQUIRE(true == sut.INIFileSave(S_FILE_INI_SHORT));
 
 			THEN("File exists")
 			{
-				REQUIRE(true == sut.INIFileExist(S_FILE_INI_UNSIGNED_LONG));
+				REQUIRE(true == sut.INIFileExist(S_FILE_INI_SHORT));
 			}
 		}
 
@@ -73,40 +73,40 @@ SCENARIO("Processing of datatype [unsigned long]", "[net::derpaul::yaip::YAIP]")
 
 		WHEN("Reload from ini file")
 		{
-			REQUIRE(true == sut.INIFileExist(S_FILE_INI_UNSIGNED_LONG));
-			REQUIRE(true == sut.INIFileLoad(S_FILE_INI_UNSIGNED_LONG));
+			REQUIRE(true == sut.INIFileExist(S_FILE_INI_SHORT));
+			REQUIRE(true == sut.INIFileLoad(S_FILE_INI_SHORT));
 
 			THEN("What you save is what you get")
 			{
 				auto SectionList = sut.SectionListGet();
-				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_UNSIGNED_LONG);
+				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_SHORT);
 
 				REQUIRE(1 == SectionList.size());
 				REQUIRE(1 == SectionKeyList.size());
 
-				unsigned long ini_value= sut.SectionKeyValueGet(S_SECTION_UNSIGNED_LONG, S_KEY_UNSIGNED_LONG, S_VALUE_DEFAULT_UNSIGNED_LONG);
-				REQUIRE(VALUE_UNSIGNED_LONG == ini_value);
+				short ini_value= sut.SectionKeyValueGet(S_SECTION_SHORT, S_KEY_SHORT, S_VALUE_DEFAULT_SHORT);
+				REQUIRE(VALUE_SHORT == ini_value);
 			}
 		}
 
 		WHEN("Read from invalid key")
 		{
-			unsigned long ini_value = sut.SectionKeyValueGet(S_SECTION_UNSIGNED_LONG, S_KEY_INVALID_UNSIGNED_LONG, S_VALUE_DEFAULT_UNSIGNED_LONG);
+			short ini_value = sut.SectionKeyValueGet(S_SECTION_SHORT, S_KEY_INVALID_SHORT, S_VALUE_DEFAULT_SHORT);
 
 			THEN("We get the default value")
 			{
-				REQUIRE(S_VALUE_DEFAULT_UNSIGNED_LONG == ini_value);
+				REQUIRE(S_VALUE_DEFAULT_SHORT == ini_value);
 			}
 		}
 
 		WHEN("Cleanup and delete ini file")
 		{
-			REQUIRE(true == sut.INIFileExist(S_FILE_INI_UNSIGNED_LONG));
-			REQUIRE(true == sut.INIFileDelete(S_FILE_INI_UNSIGNED_LONG));
+			REQUIRE(true == sut.INIFileExist(S_FILE_INI_SHORT));
+			REQUIRE(true == sut.INIFileDelete(S_FILE_INI_SHORT));
 
 			THEN("When the ini file is gone")
 			{
-				REQUIRE(false == sut.INIFileExist(S_FILE_INI_UNSIGNED_LONG));
+				REQUIRE(false == sut.INIFileExist(S_FILE_INI_SHORT));
 			}
 		}
 	}
