@@ -25,6 +25,7 @@
  */
 #include "YAIP++.h"
 #include <fstream>
+#include <sstream>
 
 /**
  * Namespace of YAIP
@@ -43,25 +44,24 @@ namespace net
 		{
 			// ******************************************************************
 			// ******************************************************************
-			// Regular expression for matching a key/value pair
-			const std::regex YAIP::RegExKeyValue("([^=]+)=([^;]+);?(.+)?");
-			//                                       1       2      3
-			// 1 - Match for key: Everything except assignment
-			// 2 - Match for value: Everything except semicolon
-			// 3 - Optional match for comment
-			// ******************************************************************
-			// ******************************************************************
-			// Regular expression for matching a section
-			const std::regex YAIP::RegExSection("\\[([^\\]]+)\\]\\s*(;(.+))?");
-			//                                        1            2    
-			// 1 - Match for section: Everything between square brackets
-			// 2 - Optional match for comment
+			// Regular expression mask parts for matching a key/value pair
+			const std::string YAIP::RegExKeyValueMask1("\\s*([^=]+)\\s*=\\s*([^");
+			const std::string YAIP::RegExKeyValueMask2("]+)");
+			const std::string YAIP::RegExKeyValueMask3("?(.+)?");
 
 			// ******************************************************************
 			// ******************************************************************
-			YAIP::YAIP(void)
+			// Regular expression mask parts for matching a section
+			const std::string YAIP::RegExSectionMask1("\\s*\\[\\s*([^\\]]+)\\]\\s*(");
+			const std::string YAIP::RegExSectionMask2("(.+))?");
+
+			// ******************************************************************
+			// ******************************************************************
+			YAIP::YAIP(const char &commentSeperator)
 				:m_IniData()
 			{
+				SetExpressionKeyValue(commentSeperator);
+				SetExpressionSection(commentSeperator);
 			}
 
 			// ******************************************************************
@@ -335,6 +335,24 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
+			void YAIP::SetExpressionKeyValue(const char &commentSeperator)
+			{
+				std::ostringstream tmpStream;
+				tmpStream << RegExKeyValueMask1 << commentSeperator << RegExKeyValueMask2 << commentSeperator << RegExKeyValueMask3;
+				RegExKeyValue = tmpStream.str();
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			void YAIP::SetExpressionSection(const char &commentSeperator)
+			{
+				std::ostringstream tmpStream;
+				tmpStream << RegExSectionMask1 << commentSeperator << RegExSectionMask2;
+				RegExSection = tmpStream.str();
+			}
+
+			// ******************************************************************
+			// ******************************************************************
 			void YAIP::INIFileSaveSection(std::string Section, std::ofstream &IniFile)
 			{
 				// Retrieve list of keys
@@ -365,7 +383,7 @@ namespace net
 				std::smatch RegExpMatch;
 
 				// Check for match
-				if (true == std::regex_search(Line, RegExpMatch, YAIP::RegExKeyValue))
+				if (true == std::regex_search(Line, RegExpMatch, RegExKeyValue))
 				{
 					// Change new key/value pair only in case of a match.
 					// Unfortunately in C++ there are no named groups possible
@@ -387,7 +405,7 @@ namespace net
 				std::smatch RegExpMatch;
 
 				// Check for match
-				if (true == std::regex_search(Line, RegExpMatch, YAIP::RegExSection))
+				if (true == std::regex_search(Line, RegExpMatch, RegExSection))
 				{
 					// Change section only in case of a match.
 					// Unfortunately in C++ there are no named groups possible

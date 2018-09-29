@@ -109,8 +109,9 @@ namespace net
 			public:
 				/**
 				 * Default constructor
+				 * \param commentSeperator Seperator character for comments, by default it's a semicolon
 				 */
-				YAIP(void);
+				YAIP(const char &commentSeperator = ';');
 
 				/**
 				 * Default destructor
@@ -241,14 +242,51 @@ namespace net
 				tMapStringMapStringString m_IniData;
 
 				/**
+				 * Key/Value - Regular expression mask because of comment separator, part 1
+				 */
+				static const std::string RegExKeyValueMask1;
+
+				/**
+				 * Key/Value - Regular expression mask because of comment separator, part 2
+				 */
+				static const std::string RegExKeyValueMask2;
+
+				/**
+				 * Key/Value - Regular expression mask because of comment separator, part 3
+				 */
+				static const std::string RegExKeyValueMask3;
+
+				/**
 				 * Regular expression to detect the key/value pairs
 				 */
-				static const std::regex RegExKeyValue;
+				std::regex RegExKeyValue;
+
+				/**
+				 * Section - Regular expression mask because of comment, part 1
+				 */
+				static const std::string RegExSectionMask1;
+
+				/**
+				 * Section - Regular expression mask because of comment, part 2
+				 */
+				static const std::string RegExSectionMask2;
 
 				/**
 				 * Regular expression to detect the sections
 				 */
-				static const std::regex RegExSection;
+				std::regex RegExSection;
+
+				/**
+				 * Create regular expression for key/value/comments
+				 * \param commentSeperator Seperator character for comments
+				 */
+				void SetExpressionKeyValue(const char &commentSeperator);
+
+				/**
+				 * Create regular expression for section/comments
+				 * \param commentSeperator Seperator character for comments
+				 */
+				void SetExpressionSection(const char &commentSeperator);
 
 				/**
 				 * Save given section into INI file
@@ -264,7 +302,7 @@ namespace net
 				 * \param Value Where to write new value to
 				 * \return true for section match, otherwise false
 				 */
-				static bool NewKeyValue(std::string Line, std::string &Key, std::string &Value);
+				bool NewKeyValue(std::string Line, std::string &Key, std::string &Value);
 
 				/**
 				 * In case a new section is matched by the regex, the return value signals new section and the variable is populated.
@@ -272,7 +310,7 @@ namespace net
 				 * \param Section Where to write new section value to
 				 * \return true for section match, otherwise false
 				 */
-				static bool NewSection(std::string Line, std::string &Section);
+				bool NewSection(std::string Line, std::string &Section);
 
 				/**
 				 * Loop over file content to determine sections and key/values to populate internal storage
