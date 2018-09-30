@@ -257,11 +257,6 @@ namespace net
 				static const std::string RegExKeyValueMask3;
 
 				/**
-				 * Regular expression to detect the key/value pairs
-				 */
-				std::regex RegExKeyValue;
-
-				/**
 				 * Section - Regular expression mask because of comment, part 1
 				 */
 				static const std::string RegExSectionMask1;
@@ -272,21 +267,21 @@ namespace net
 				static const std::string RegExSectionMask2;
 
 				/**
-				 * Regular expression to detect the sections
+				 * Character for signaling of start of comments
 				 */
-				std::regex RegExSection;
+				char CommentSeperator;
 
 				/**
-				 * Create regular expression for key/value/comments
-				 * \param commentSeperator Seperator character for comments
+				 * Get regular expression for key/value/comments
+				 * \return Regular expression for key/value/comments
 				 */
-				void SetExpressionKeyValue(const char &commentSeperator);
+				std::regex GetExpressionKeyValue(void) const;
 
 				/**
-				 * Create regular expression for section/comments
-				 * \param commentSeperator Seperator character for comments
+				 * Get regular expression for section/comments
+				 * \return Regular expression for section/comments
 				 */
-				void SetExpressionSection(const char &commentSeperator);
+				std::regex GetExpressionSection(void) const;
 
 				/**
 				 * Save given section into INI file

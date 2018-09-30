@@ -58,10 +58,9 @@ namespace net
 			// ******************************************************************
 			// ******************************************************************
 			YAIP::YAIP(const char &commentSeperator)
-				:m_IniData()
+				: m_IniData()
+				, CommentSeperator(commentSeperator)
 			{
-				SetExpressionKeyValue(commentSeperator);
-				SetExpressionSection(commentSeperator);
 			}
 
 			// ******************************************************************
@@ -335,20 +334,22 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			void YAIP::SetExpressionKeyValue(const char &commentSeperator)
+			std::regex YAIP::GetExpressionKeyValue(void) const
 			{
 				std::ostringstream tmpStream;
-				tmpStream << RegExKeyValueMask1 << commentSeperator << RegExKeyValueMask2 << commentSeperator << RegExKeyValueMask3;
-				RegExKeyValue = tmpStream.str();
+				tmpStream << RegExKeyValueMask1 << CommentSeperator << RegExKeyValueMask2 << CommentSeperator << RegExKeyValueMask3;
+				std::regex regexpKeyValue(tmpStream.str());
+				return regexpKeyValue;
 			}
 
 			// ******************************************************************
 			// ******************************************************************
-			void YAIP::SetExpressionSection(const char &commentSeperator)
+			std::regex YAIP::GetExpressionSection(void) const
 			{
 				std::ostringstream tmpStream;
-				tmpStream << RegExSectionMask1 << commentSeperator << RegExSectionMask2;
-				RegExSection = tmpStream.str();
+				tmpStream << RegExSectionMask1 << CommentSeperator << RegExSectionMask2;
+				std::regex regexpKeyValue(tmpStream.str());
+				return regexpKeyValue;
 			}
 
 			// ******************************************************************
@@ -383,7 +384,7 @@ namespace net
 				std::smatch RegExpMatch;
 
 				// Check for match
-				if (true == std::regex_search(Line, RegExpMatch, RegExKeyValue))
+				if (true == std::regex_search(Line, RegExpMatch, GetExpressionKeyValue()))
 				{
 					// Change new key/value pair only in case of a match.
 					// Unfortunately in C++ there are no named groups possible
@@ -405,7 +406,7 @@ namespace net
 				std::smatch RegExpMatch;
 
 				// Check for match
-				if (true == std::regex_search(Line, RegExpMatch, RegExSection))
+				if (true == std::regex_search(Line, RegExpMatch, GetExpressionSection()))
 				{
 					// Change section only in case of a match.
 					// Unfortunately in C++ there are no named groups possible
