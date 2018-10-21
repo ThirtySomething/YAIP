@@ -2,7 +2,7 @@
 
 ## Badges
 
-[![License: LGPL v3][yaip_license_badge]][yaip_license] [![Version][yaip_release_badge]][yaip_release] [![GitHub forks][yaip_forks_badge]][yaip_forks] [![GitHub issues][yaip_issues_badge]][yaip_issues] [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/) [![Language][lang_cpp_badge]][lang_cpp_badge]
+[![License: LGPL v3][yaip_license_badge]][yaip_license] [![Version][yaip_release_badge]][yaip_release] [![GitHub forks](https://img.shields.io/github/forks/ThirtySomething/YAIP.svg?style=social&label=Fork&maxAge=2592000)](https://GitHub.com/ThirtySomething/YAIP/network/) [![GitHub issues][yaip_issues_badge]][yaip_issues] [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/) [![Language][lang_cpp_badge]][lang_cpp_badge]
 
 ## General information
 
@@ -190,8 +190,6 @@ void SectionKeyKill(const std::string &Section, const std::string &Key);
 
 [lang_cpp]: https://isocpp.org/
 [lang_cpp_badge]: https://img.shields.io/badge/language-C++-blue.svg
-[yaip_forks]: https://img.shields.io/github/forks/ThirtySomething/YAIP.svg?style=social&label=Fork&maxAge=360
-[yaip_forks_badge]: https://GitHub.com/ThirtySomething/YAIP/network/
 [yaip_issues]: # "Open Issues"
 [yaip_issues_badge]: https://img.shields.io/github/issues/ThirtySomething/YAIP.svg?maxAge=360
 [yaip_license]: http://www.gnu.org/licenses/lgpl-3.0
