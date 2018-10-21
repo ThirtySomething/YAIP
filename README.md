@@ -2,7 +2,7 @@
 
 ## Badges
 
-[![License: LGPL v3][yaip_license_badge]][yaip_license] [![Version][yaip_release_badge]][yaip_release] [![GitHub issues][yaip_issues_badge]][yaip_issues]
+[![License: LGPL v3][yaip_license_badge]][yaip_license] [![Version][yaip_release_badge]][yaip_release] [![GitHub forks][yaip_forks_badge]][yaip_forks] [![GitHub issues][yaip_issues_badge]][yaip_issues] [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/) [![Language][lang_cpp_badge]][lang_cpp_badge]
 
 ## General information
 
@@ -23,11 +23,11 @@ Searching for INI parsers for C++ fires up a lot of them. Most of them come with
 
 ## Implementation Details
 
-* Convenience typedefs for datatypes in <code>YAIP++.h</code>
-* Data containers are STL elements like [*vector*][cpp_vector]  or [*map*][cpp_map]
-* Detection of section and key/value pair is done using [*regular expressions*][cpp_regexp], see also [*regular expression*][wiki_regexp]
-* The major methods are based on [*std::string*][cpp_string]
-* The templated methods using converters from and to [*std::string*][cpp_string]
+- Convenience typedefs for datatypes in <code>YAIP++.h</code>
+- Data containers are STL elements like [*vector*][cpp_vector]  or [*map*][cpp_map]
+- Detection of section and key/value pair is done using [*regular expressions*][cpp_regexp], see also [*regular expression*][wiki_regexp]
+- The major methods are based on [*std::string*][cpp_string]
+- The templated methods using converters from and to [*std::string*][cpp_string]
 
 ## Extension
 
@@ -43,97 +43,97 @@ A doxygen documentation can be generated, the config file is located in the doxy
 
 - Load INI file
 
-<pre>
+```C++
 /**
  * Load and parse INI file into internal structures
  * \param Filename Full qualified filename of the INI file
  * \return true on success otherwise false
  */
 bool INIFileLoad(std::string Filename);
-</pre>
+```
 
 - Save INI file
 
-<pre>
+```C++
 /**
  * Save internal structures to INI file
  * \param Filename Full qualified filename of the INI file
  * \return true on success otherwise false
  */
 bool INIFileSave(std::string Filename);
-</pre>
+```
 
 - Does INI file exists
 
-<pre>
+```C++
 /**
  * Check if given INI file exists
  * \param Filename Full qualified filename of the INI file
  * \return true if file exists otherwise false
  */
 bool INIFileExist(const std::string &Filename) const;
-</pre>
+```
 
 - Delete INI file
 
-<pre>
+```C++
 /**
  * Delete given INI file
  * \param Filename Full qualified filename of the INI file
  * \return true if file is deleted otherwise false
  */
 bool INIFileDelete(const std::string &Filename) const;
-</pre>
+```
 
 ### Section related actions
 
 - Get a list of all sections
 
-<pre>
+```C++
 /**
  * Get all sections of the INI file
  * \return Vector with a std::strings for each section
  */
 tVectorString SectionListGet(void) const;
-</pre>
+```
 
 - Delete a section
 
-<pre>
+```C++
 /**
  * Remove section completely from internal data structure
  * \param Section Specified section
  */
 void SectionKill(const std::string &Section);
-</pre>
+```
 
 - Check if section is empty
 
-<pre>
+```C++
 /**
  * Check if section contains data
  * \param Section Specified section
  * \return true for empty section otherwise false
  */
 bool SectionEmpty(const std::string &Section) const;
-</pre>
+```
 
 ### Key related actions
 
 - Get a list of keys of a section
 
-<pre>
+```C++
 /**
  * Get all keys of a section of the INI file
  * \param Section Specified section
  * \return Vector with a std::strings for each key
  */
 tVectorString SectionKeyListGet(const std::string &Section) const;
-</pre>
+```
 
 - Get a value of a section/key combination - *Note: This is a templated method and requires in any case a default value.*
 
-<pre>
+```C++
 /**
  * Templated method to retrieve a value of the specified section/key combination
  * \param Section Specified section
@@ -141,13 +141,13 @@ tVectorString SectionKeyListGet(const std::string &Section) const;
  * \param Default Specified default value in case key does not exist
  * \return Returns either the default value or the value of the existing section/key combination
  */
-template&lt;typename VariableType&gt;
+template<typename VariableType>
 VariableType SectionKeyValueGet(const std::string &Section, const std::string &Key, const VariableType &Default);
-</pre>
+```
 
 - Set a value of a section/key combination - *Note: This is a templated method and may require a cast.*
 
-<pre>
+```C++
 /**
  * Templated method to set a value of the specified section/key combination
  * \param Section Specified section
@@ -155,20 +155,20 @@ VariableType SectionKeyValueGet(const std::string &Section, const std::string &K
  * \param Value Specified value to set
  * \return true on success otherwise false
  */
-template&lt;typename VariableType&gt;
+template<typename VariableType>
 bool SectionKeyValueSet(const std::string &Section, const std::string &Key, const VariableType &Value);
-</pre>
+```
 
 - Delete a key
 
-<pre>
+```C++
 /**
  * Remove key completely from section of internal data structure
  * \param Section Specified section
  * \param Key Specified key
  */
 void SectionKeyKill(const std::string &Section, const std::string &Key);
-</pre>
+```
 
 ## ToDo's
 
@@ -188,9 +188,13 @@ void SectionKeyKill(const std::string &Section, const std::string &Key);
 [wiki_ini]: https://en.wikipedia.org/wiki/INI_file#Comments
 [wiki_regexp]: https://en.wikipedia.org/wiki/Regular_expression
 
+[lang_cpp]: https://isocpp.org/
+[lang_cpp_badge]: https://img.shields.io/badge/language-C++-blue.svg
+[yaip_forks]: https://img.shields.io/github/forks/ThirtySomething/YAIP.svg?style=social&label=Fork&maxAge=360
+[yaip_forks_badge]: https://GitHub.com/ThirtySomething/YAIP/network/
+[yaip_issues]: # "Open Issues"
+[yaip_issues_badge]: https://img.shields.io/github/issues/ThirtySomething/YAIP.svg?maxAge=360
 [yaip_license]: http://www.gnu.org/licenses/lgpl-3.0
 [yaip_license_badge]: https://img.shields.io/badge/License-LGPL%20v3-blue.svg
 [yaip_release]: # "Latest Release"
 [yaip_release_badge]: https://img.shields.io/github/release/ThirtySomething/YAIP.svg?maxAge=360
-[yaip_issues]: # "Open Issues"
-[yaip_issues_badge]: https://img.shields.io/github/issues/ThirtySomething/YAIP.svg?maxAge=360
