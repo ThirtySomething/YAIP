@@ -1,4 +1,4 @@
-# YAIP++ - Yet another INI parser
+# YAIP - Yet another INI parser
 
 ## Badges
 
@@ -6,12 +6,12 @@
 
 ## General information
 
-- **YAIP++** is distributed under the terms of the **GNU LESSER GENERAL PUBLIC LICENSE**, version 3.0. The text of the license is included in the file [<code>LICENSE.TXT</code>][license] in the project root.
+- **YAIP** is distributed under the terms of the **GNU LESSER GENERAL PUBLIC LICENSE**, version 3.0. The text of the license is included in the file [<code>LICENSE.TXT</code>][license] in the project root.
 - As testing framework [*Catch2*][catch2] is used.
 
 ## Requirements
 
-To use **YAIP++** you need to have an modern [C++11][cpp_eleven] compiler. See the used parts at the section **Implementation Details**. Tested with [Visual Studio 2017][msvs].
+To use **YAIP** you need to have an modern [C++11][cpp_eleven] compiler. See the used parts at the section **Implementation Details**. Tested with [Visual Studio 2017][msvs].
 
 ## Supported Platforms
 
@@ -23,7 +23,7 @@ Searching for INI parsers for C++ fires up a lot of them. Most of them come with
 
 ## Implementation Details
 
-- Convenience typedefs for datatypes in <code>YAIP++.h</code>
+- Convenience typedefs for datatypes in <code>YAIP.h</code>
 - Data containers are STL elements like [*vector*][cpp_vector]  or [*map*][cpp_map]
 - Detection of section and key/value pair is done using [*regular expressions*][cpp_regexp], see also [*regular expression*][wiki_regexp]
 - The major methods are based on [*std::string*][cpp_string]

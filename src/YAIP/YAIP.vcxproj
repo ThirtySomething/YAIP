@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Convert.cpp" />
     <ClCompile Include="test_yaip.cpp" />
-    <ClCompile Include="YAIP++.cpp" />
+    <ClCompile Include="YAIP.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Convert.h" />
@@ -37,7 +37,7 @@
     <ClInclude Include="test_unsigned_integer.h" />
     <ClInclude Include="test_unsigned_long.h" />
     <ClInclude Include="test_unsigned_short.h" />
-    <ClInclude Include="YAIP++.h" />
+    <ClInclude Include="YAIP.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Project.props" />
