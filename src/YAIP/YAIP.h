@@ -26,11 +26,13 @@
 #pragma once
 
 #include "Convert.h"
-#include <functional>
+#include "IniSection.h"
 #include <ctype.h>
+#include <functional>
 #include <map>
-#include <vector>
+#include <memory>
 #include <regex>
+#include <vector>
 
 /**
  * Namespace of YAIP
@@ -100,6 +102,8 @@ namespace net
 			 * Used to represent the content of a INI file, a list of sections or a list of keys.
 			 */
 			typedef std::vector<std::string> tVectorString;
+
+			typedef std::vector<IniSectionPtr> tSectionList;
 
 			/**
 			 * Class to manipulate INI files
@@ -242,46 +246,14 @@ namespace net
 				tMapStringMapStringString m_IniData;
 
 				/**
-				 * Key/Value - Regular expression mask because of comment separator, part 1
+				 * List of all sections
 				 */
-				static const std::string RegExKeyValueMask1;
-
-				/**
-				 * Key/Value - Regular expression mask because of comment separator, part 2
-				 */
-				static const std::string RegExKeyValueMask2;
-
-				/**
-				 * Key/Value - Regular expression mask because of comment separator, part 3
-				 */
-				static const std::string RegExKeyValueMask3;
-
-				/**
-				 * Section - Regular expression mask because of comment, part 1
-				 */
-				static const std::string RegExSectionMask1;
-
-				/**
-				 * Section - Regular expression mask because of comment, part 2
-				 */
-				static const std::string RegExSectionMask2;
+				tSectionList m_Sections;
 
 				/**
 				 * Character for signaling of start of comments
 				 */
 				char CommentSeperator;
-
-				/**
-				 * Get regular expression for key/value/comments
-				 * \return Regular expression for key/value/comments
-				 */
-				std::regex GetExpressionKeyValue(void) const;
-
-				/**
-				 * Get regular expression for section/comments
-				 * \return Regular expression for section/comments
-				 */
-				std::regex GetExpressionSection(void) const;
 
 				/**
 				 * Save given section into INI file
@@ -291,32 +263,10 @@ namespace net
 				void INIFileSaveSection(std::string Section, std::ofstream &IniFile);
 
 				/**
-				 * In case a new key/value-pair is matched by the regex, the return value signals new data and the variables are populated.
-				 * \param Line of INI file
-				 * \param Key Where to write new key to
-				 * \param Value Where to write new value to
-				 * \return true for section match, otherwise false
-				 */
-				bool NewKeyValue(std::string Line, std::string &Key, std::string &Value);
-
-				/**
-				 * In case a new section is matched by the regex, the return value signals new section and the variable is populated.
-				 * \param Line of INI file
-				 * \param Section Where to write new section value to
-				 * \return true for section match, otherwise false
-				 */
-				bool NewSection(std::string Line, std::string &Section);
-
-				/**
 				 * Loop over file content to determine sections and key/values to populate internal storage
 				 * \param FileContent The INI file as a vector of std::strings, each line a string
 				 */
 				void ParseFileContent(tVectorString FileContent);
-
-				/**
-				 * Check all sections for key/value pairs and remove empty sections
-				 */
-				void InternalCleanup(void);
 			};
 		}
 	}

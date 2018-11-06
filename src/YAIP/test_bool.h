@@ -38,8 +38,8 @@ SCENARIO("Processing of datatype [bool]", "[net::derpaul::yaip::YAIP]")
 	GIVEN("An empty instance of the YAIP parser")
 	{
 		net::derpaul::yaip::YAIP sut;
-		REQUIRE(true == sut.SectionListGet().empty());
-		REQUIRE(true == sut.SectionKeyValueSet(S_SECTION_BOOL, S_KEY_BOOL, VALUE_BOOL));
+		REQUIRE(sut.SectionListGet().empty());
+		REQUIRE(sut.SectionKeyValueSet(S_SECTION_BOOL, S_KEY_BOOL, VALUE_BOOL));
 
 		WHEN("Add a new section/key/value")
 		{
@@ -53,11 +53,11 @@ SCENARIO("Processing of datatype [bool]", "[net::derpaul::yaip::YAIP]")
 
 		WHEN("Save ini file")
 		{
-			REQUIRE(true == sut.INIFileSave(S_FILE_INI_BOOL));
+			REQUIRE(sut.INIFileSave(S_FILE_INI_BOOL));
 
 			THEN("File exists")
 			{
-				REQUIRE(true == sut.INIFileExist(S_FILE_INI_BOOL));
+				REQUIRE(sut.INIFileExist(S_FILE_INI_BOOL));
 			}
 		}
 
@@ -67,14 +67,14 @@ SCENARIO("Processing of datatype [bool]", "[net::derpaul::yaip::YAIP]")
 
 			THEN("Section list should be empty")
 			{
-				REQUIRE(true == sut.SectionListGet().empty());
+				REQUIRE(sut.SectionListGet().empty());
 			}
 		}
 
 		WHEN("Reload from ini file")
 		{
-			REQUIRE(true == sut.INIFileExist(S_FILE_INI_BOOL));
-			REQUIRE(true == sut.INIFileLoad(S_FILE_INI_BOOL));
+			REQUIRE(sut.INIFileExist(S_FILE_INI_BOOL));
+			REQUIRE(sut.INIFileLoad(S_FILE_INI_BOOL));
 
 			THEN("What you save is what you get")
 			{
@@ -101,8 +101,8 @@ SCENARIO("Processing of datatype [bool]", "[net::derpaul::yaip::YAIP]")
 
 		WHEN("Cleanup and delete ini file")
 		{
-			REQUIRE(true == sut.INIFileExist(S_FILE_INI_BOOL));
-			REQUIRE(true == sut.INIFileDelete(S_FILE_INI_BOOL));
+			REQUIRE(sut.INIFileExist(S_FILE_INI_BOOL));
+			REQUIRE(sut.INIFileDelete(S_FILE_INI_BOOL));
 
 			THEN("When the ini file is gone")
 			{

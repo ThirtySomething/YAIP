@@ -178,7 +178,7 @@ namespace net
 			void Convert::ConvertTo(const bool &Value, std::string &ValueString)
 			{
 				ValueString = Convert::StringFalse;
-				if (true == Value)
+				if (Value)
 				{
 					ValueString = Convert::StringTrue;
 				}

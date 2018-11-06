@@ -44,21 +44,8 @@ namespace net
 		{
 			// ******************************************************************
 			// ******************************************************************
-			// Regular expression mask parts for matching a key/value pair
-			const std::string YAIP::RegExKeyValueMask1("\\s*([^=]+)\\s*=\\s*([^");
-			const std::string YAIP::RegExKeyValueMask2("]+)");
-			const std::string YAIP::RegExKeyValueMask3("?(.+)?");
-
-			// ******************************************************************
-			// ******************************************************************
-			// Regular expression mask parts for matching a section
-			const std::string YAIP::RegExSectionMask1("\\s*\\[\\s*([^\\]]+)\\]\\s*(");
-			const std::string YAIP::RegExSectionMask2("(.+))?");
-
-			// ******************************************************************
-			// ******************************************************************
 			YAIP::YAIP(const char &commentSeperator)
-				: m_IniData()
+				: m_Sections()
 				, CommentSeperator(commentSeperator)
 			{
 			}
@@ -103,7 +90,7 @@ namespace net
 				/**
 				 * \todo Handle file errors like file does not exist
 				 */
-				if (true == IniFile.is_open())
+				if (IniFile.is_open())
 				{
 					std::string CurrentLine;
 
@@ -119,7 +106,6 @@ namespace net
 
 					// Parse INI file
 					ParseFileContent(FileContent);
-					InternalCleanup();
 					Success = true;
 				}
 
@@ -139,7 +125,7 @@ namespace net
 				/**
 				 * \todo Handle file errors like cannot open file
 				 */
-				if (true == IniFile.is_open())
+				if (IniFile.is_open())
 				{
 					// Get a list of all existing sections
 					tVectorString SectionList = SectionListGet();
@@ -181,7 +167,7 @@ namespace net
 				}
 
 				// If section is empty
-				if (true == SectionEmpty(Section))
+				if (SectionEmpty(Section))
 				{
 					// Remove empty section
 					SectionKill(Section);
@@ -323,6 +309,7 @@ namespace net
 			// ******************************************************************
 			void YAIP::Clear(void)
 			{
+				m_Sections.clear();
 				for (tMapStringMapStringString::iterator Loop = m_IniData.begin(); Loop != m_IniData.end(); ++Loop)
 				{
 					tMapStringString Data = Loop->second;
@@ -330,26 +317,6 @@ namespace net
 					Data.clear();
 				}
 				m_IniData.clear();
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			std::regex YAIP::GetExpressionKeyValue(void) const
-			{
-				std::ostringstream tmpStream;
-				tmpStream << RegExKeyValueMask1 << CommentSeperator << RegExKeyValueMask2 << CommentSeperator << RegExKeyValueMask3;
-				std::regex regexpKeyValue(tmpStream.str());
-				return regexpKeyValue;
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			std::regex YAIP::GetExpressionSection(void) const
-			{
-				std::ostringstream tmpStream;
-				tmpStream << RegExSectionMask1 << CommentSeperator << RegExSectionMask2;
-				std::regex regexpKeyValue(tmpStream.str());
-				return regexpKeyValue;
 			}
 
 			// ******************************************************************
@@ -377,49 +344,6 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			bool YAIP::NewKeyValue(std::string Line, std::string &Key, std::string &Value)
-			{
-				// Assume no new key/value pair
-				bool Success = false;
-				std::smatch RegExpMatch;
-
-				// Check for match
-				if (true == std::regex_search(Line, RegExpMatch, GetExpressionKeyValue()))
-				{
-					// Change new key/value pair only in case of a match.
-					// Unfortunately in C++ there are no named groups possible
-					// so we have to use the index of the group.
-					Key = RegExpMatch[1].str();
-					Value = RegExpMatch[2].str();
-					Success = true;
-				}
-
-				return Success;
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			bool YAIP::NewSection(std::string Line, std::string &Section)
-			{
-				// Assume no new section
-				bool Success = false;
-				std::smatch RegExpMatch;
-
-				// Check for match
-				if (true == std::regex_search(Line, RegExpMatch, GetExpressionSection()))
-				{
-					// Change section only in case of a match.
-					// Unfortunately in C++ there are no named groups possible
-					// so we have to use the index of the group.
-					Section = RegExpMatch[1].str();
-					Success = true;
-				}
-
-				return Success;
-			}
-
-			// ******************************************************************
-			// ******************************************************************
 			void YAIP::ParseFileContent(tVectorString FileContent)
 			{
 				/**
@@ -429,6 +353,7 @@ namespace net
 				std::string CurrentKey = "";
 				std::string CurrentValue = "";
 				tMapStringString CurrentSectionData;
+				IniSection* CurrentSectionPtr = nullptr;
 
 				// Insert default section - some key/value entries might exist without a section
 				m_IniData.insert(std::make_pair(CurrentSection, CurrentSectionData));
@@ -439,41 +364,18 @@ namespace net
 					std::string Line = FileContent.at(Loop);
 
 					// Got a new section?
-					if (true == NewSection(Line, CurrentSection))
+					IniSectionPtr SectionPtr(new IniSection);
+					if (SectionPtr->SectionDataParse(Line))
 					{
-						// Add new internal structures
-						tMapStringString SectionData;
-						m_IniData.insert(std::make_pair(CurrentSection, SectionData));
+						m_Sections.push_back(SectionPtr);
+						CurrentSectionPtr = SectionPtr.get();
+						continue;
 					}
 
-					// Got a new key/value pair?
-					if (true == NewKeyValue(Line, CurrentKey, CurrentValue))
+					if (nullptr != CurrentSectionPtr)
 					{
-						// Add new data
-						m_IniData[CurrentSection].insert(std::make_pair(CurrentKey, CurrentValue));
+						CurrentSectionPtr->AddRawEntry(Line);
 					}
-				}
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void YAIP::InternalCleanup(void)
-			{
-				tVectorString SectionList = SectionListGet();
-				tVectorString SectionsToDelete;
-
-				for (tVectorString::iterator LoopSection = SectionList.begin(); LoopSection != SectionList.end(); ++LoopSection)
-				{
-					tVectorString KeyList = SectionKeyListGet(*LoopSection);
-					if (true == SectionEmpty(*LoopSection))
-					{
-						SectionsToDelete.push_back(*LoopSection);
-					}
-				}
-
-				for (tVectorString::iterator LoopSection = SectionsToDelete.begin(); LoopSection != SectionsToDelete.end(); ++LoopSection)
-				{
-					SectionKill(*LoopSection);
 				}
 			}
 		}

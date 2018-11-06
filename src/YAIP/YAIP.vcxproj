@@ -20,11 +20,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Convert.cpp" />
+    <ClCompile Include="IniEntry.cpp" />
+    <ClCompile Include="IniSection.cpp" />
     <ClCompile Include="test_yaip.cpp" />
     <ClCompile Include="YAIP.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Convert.h" />
+    <ClInclude Include="IniEntry.h" />
+    <ClInclude Include="IniSection.h" />
     <ClInclude Include="test_bool.h" />
     <ClInclude Include="test_char.h" />
     <ClInclude Include="test_double.h" />

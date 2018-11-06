@@ -38,8 +38,8 @@ SCENARIO("Processing of datatype [unsigned short]", "[net::derpaul::yaip::YAIP]"
 	GIVEN("An empty instance of the YAIP parser")
 	{
 		net::derpaul::yaip::YAIP sut;
-		REQUIRE(true == sut.SectionListGet().empty());
-		REQUIRE(true == sut.SectionKeyValueSet(S_SECTION_UNSIGNED_SHORT, S_KEY_UNSIGNED_SHORT, VALUE_UNSIGNED_SHORT));
+		REQUIRE(sut.SectionListGet().empty());
+		REQUIRE(sut.SectionKeyValueSet(S_SECTION_UNSIGNED_SHORT, S_KEY_UNSIGNED_SHORT, VALUE_UNSIGNED_SHORT));
 
 		WHEN("Add a new section/key/value")
 		{
@@ -53,11 +53,11 @@ SCENARIO("Processing of datatype [unsigned short]", "[net::derpaul::yaip::YAIP]"
 
 		WHEN("Save ini file")
 		{
-			REQUIRE(true == sut.INIFileSave(S_FILE_INI_UNSIGNED_SHORT));
+			REQUIRE(sut.INIFileSave(S_FILE_INI_UNSIGNED_SHORT));
 
 			THEN("File exists")
 			{
-				REQUIRE(true == sut.INIFileExist(S_FILE_INI_UNSIGNED_SHORT));
+				REQUIRE(sut.INIFileExist(S_FILE_INI_UNSIGNED_SHORT));
 			}
 		}
 
@@ -67,14 +67,14 @@ SCENARIO("Processing of datatype [unsigned short]", "[net::derpaul::yaip::YAIP]"
 
 			THEN("Section list should be empty")
 			{
-				REQUIRE(true == sut.SectionListGet().empty());
+				REQUIRE(sut.SectionListGet().empty());
 			}
 		}
 
 		WHEN("Reload from ini file")
 		{
-			REQUIRE(true == sut.INIFileExist(S_FILE_INI_UNSIGNED_SHORT));
-			REQUIRE(true == sut.INIFileLoad(S_FILE_INI_UNSIGNED_SHORT));
+			REQUIRE(sut.INIFileExist(S_FILE_INI_UNSIGNED_SHORT));
+			REQUIRE(sut.INIFileLoad(S_FILE_INI_UNSIGNED_SHORT));
 
 			THEN("What you save is what you get")
 			{
@@ -101,8 +101,8 @@ SCENARIO("Processing of datatype [unsigned short]", "[net::derpaul::yaip::YAIP]"
 
 		WHEN("Cleanup and delete ini file")
 		{
-			REQUIRE(true == sut.INIFileExist(S_FILE_INI_UNSIGNED_SHORT));
-			REQUIRE(true == sut.INIFileDelete(S_FILE_INI_UNSIGNED_SHORT));
+			REQUIRE(sut.INIFileExist(S_FILE_INI_UNSIGNED_SHORT));
+			REQUIRE(sut.INIFileDelete(S_FILE_INI_UNSIGNED_SHORT));
 
 			THEN("When the ini file is gone")
 			{
