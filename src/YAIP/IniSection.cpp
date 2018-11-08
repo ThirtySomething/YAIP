@@ -27,9 +27,9 @@
 #include "IniSection.h"
 #include <sstream>
 
- /**
-  * Namespace of YAIP
-  */
+/**
+ * Namespace of YAIP
+ */
 namespace net
 {
 	/**
@@ -49,16 +49,16 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			IniSection::IniSection()
+			IniSection::IniSection(void)
 				: m_SectionName()
 				, m_SectionComment()
-				, m_SectionEntries()
+				, m_Entries()
 			{
 			}
 
 			// ******************************************************************
 			// ******************************************************************
-			IniSection::~IniSection()
+			IniSection::~IniSection(void)
 			{
 			}
 
@@ -92,27 +92,27 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			void IniSection::SectionEntriesSet(const tEntryList &SectionEntries)
+			void IniSection::SectionEntriesSet(const IniEntryList &SectionEntries)
 			{
-				m_SectionEntries = SectionEntries;
+				m_Entries = SectionEntries;
 			}
 
 			// ******************************************************************
 			// ******************************************************************
-			tEntryList IniSection::SectionEntriesGet(void)
+			IniEntryList IniSection::SectionEntriesGet(void)
 			{
-				return m_SectionEntries;
+				return m_Entries;
 			}
 
 			// ******************************************************************
 			// ******************************************************************
-			bool IniSection::SectionDataParse(const std::string &SectionData)
+			bool IniSection::CreateFromRawData(const std::string &RawData)
 			{
 				bool Success = false;
 				std::smatch RegExpMatch;
 
 				// Check for match
-				if (std::regex_search(SectionData, RegExpMatch, RegExSection))
+				if (std::regex_search(RawData, RegExpMatch, RegExSection))
 				{
 					// Change section only in case of a match.
 					// Unfortunately in C++ there are no named groups possible
@@ -132,9 +132,9 @@ namespace net
 				bool Success = false;
 				IniEntryPtr EntryPtr(new IniEntry);
 
-				if (EntryPtr->EntryDataParse(RawEntryData))
+				if (EntryPtr->CreateFromRawData(RawEntryData))
 				{
-					m_SectionEntries.push_back(EntryPtr);
+					m_Entries.EntryAdd(EntryPtr);
 					Success = true;
 				}
 

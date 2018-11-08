@@ -346,17 +346,7 @@ namespace net
 			// ******************************************************************
 			void YAIP::ParseFileContent(tVectorString FileContent)
 			{
-				/**
-				 * \todo Check specification if empty section is allowed
-				 */
-				std::string CurrentSection = "";
-				std::string CurrentKey = "";
-				std::string CurrentValue = "";
-				tMapStringString CurrentSectionData;
 				IniSection* CurrentSectionPtr = nullptr;
-
-				// Insert default section - some key/value entries might exist without a section
-				m_IniData.insert(std::make_pair(CurrentSection, CurrentSectionData));
 
 				// Loop over the INI file
 				for (size_t Loop = 0; Loop < FileContent.size(); Loop++)
@@ -365,9 +355,9 @@ namespace net
 
 					// Got a new section?
 					IniSectionPtr SectionPtr(new IniSection);
-					if (SectionPtr->SectionDataParse(Line))
+					if (SectionPtr->CreateFromRawData(Line))
 					{
-						m_Sections.push_back(SectionPtr);
+						m_Sections.SectionAdd(SectionPtr);
 						CurrentSectionPtr = SectionPtr.get();
 						continue;
 					}

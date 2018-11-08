@@ -27,6 +27,7 @@
 
 #include "Convert.h"
 #include "IniSection.h"
+#include "IniSectionList.h"
 #include <ctype.h>
 #include <functional>
 #include <map>
@@ -102,8 +103,6 @@ namespace net
 			 * Used to represent the content of a INI file, a list of sections or a list of keys.
 			 */
 			typedef std::vector<std::string> tVectorString;
-
-			typedef std::vector<IniSectionPtr> tSectionList;
 
 			/**
 			 * Class to manipulate INI files
@@ -248,7 +247,7 @@ namespace net
 				/**
 				 * List of all sections
 				 */
-				tSectionList m_Sections;
+				IniSectionList m_Sections;
 
 				/**
 				 * Character for signaling of start of comments

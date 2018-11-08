@@ -21,14 +21,20 @@
   <ItemGroup>
     <ClCompile Include="Convert.cpp" />
     <ClCompile Include="IniEntry.cpp" />
+    <ClCompile Include="IniEntryList.cpp" />
     <ClCompile Include="IniSection.cpp" />
+    <ClCompile Include="IniSectionList.cpp" />
     <ClCompile Include="test_yaip.cpp" />
     <ClCompile Include="YAIP.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Convert.h" />
+    <ClInclude Include="IAddFromRaw.h" />
+    <ClInclude Include="IEntryList.h" />
     <ClInclude Include="IniEntry.h" />
+    <ClInclude Include="IniEntryList.h" />
     <ClInclude Include="IniSection.h" />
+    <ClInclude Include="IniSectionList.h" />
     <ClInclude Include="test_bool.h" />
     <ClInclude Include="test_char.h" />
     <ClInclude Include="test_double.h" />

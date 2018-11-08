@@ -18,22 +18,18 @@
 //******************************************************************************
 
 /**
- * \file	IniEntry.h
+ * \file	IEntryList.h
  * \author	ThirtySomething
  * \date	2016-11-06
- * \brief	Definition of IniEntry as class to deal with entries
+ * \brief	Interface for list of INI elements
  */
 #pragma once
 
 #include "IAddFromRaw.h"
-#include <iostream>
-#include <memory>
-#include <regex>
-#include <string>
 
-/**
- * Namespace of YAIP
- */
+ /**
+  * Namespace of YAIP
+  */
 namespace net
 {
 	/**
@@ -46,39 +42,13 @@ namespace net
 		 */
 		namespace yaip
 		{
-			class IniEntry
+			class IEntryList
 			{
 			public:
-				IniEntry(void);
-				virtual ~IniEntry(void);
+				virtual ~IEntryList(void) {};
 
-				void EntryKeySet(const std::string &EntryKey);
-				std::string EntryKeyGet(void);
-
-				void EntryValueSet(const std::string &EntryValue);
-				std::string EntryValueGet(void);
-
-				void EntryCommentSet(const std::string &EntryComment);
-				std::string EntryCommentGet(void);
-
-				virtual bool CreateFromRawData(const std::string &RawData);
-
-				std::string to_string(void);
-
-			private:
-				/**
-				 * Section - Regular expression
-				 */
-				static const std::regex RegExKeyValue;
-
-				std::string m_EntryKey;
-				std::string m_EntryValue;
-				std::string m_EntryComment;
-
-				friend std::ostream& operator<<(std::ostream &OutputStream, const IniEntry &EntryObject);
+				virtual bool ElementAdd(const IAddFromRaw)
 			};
-
-			typedef std::shared_ptr<IniEntry> IniEntryPtr;
 		}
 	}
 }

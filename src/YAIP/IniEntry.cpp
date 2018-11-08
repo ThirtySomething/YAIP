@@ -27,9 +27,9 @@
 #include "IniEntry.h"
 #include <sstream>
 
- /**
-  * Namespace of YAIP
-  */
+/**
+ * Namespace of YAIP
+ */
 namespace net
 {
 	/**
@@ -49,7 +49,7 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			IniEntry::IniEntry()
+			IniEntry::IniEntry(void)
 				: m_EntryKey()
 				, m_EntryValue()
 				, m_EntryComment()
@@ -58,7 +58,7 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			IniEntry::~IniEntry()
+			IniEntry::~IniEntry(void)
 			{
 			}
 
@@ -106,13 +106,13 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			bool IniEntry::EntryDataParse(const std::string &EntryData)
+			bool IniEntry::CreateFromRawData(const std::string &RawData)
 			{
 				bool Success = false;
 				std::smatch RegExpMatch;
 
 				// Check for match
-				if (std::regex_search(EntryData, RegExpMatch, RegExKeyValue))
+				if (std::regex_search(RawData, RegExpMatch, RegExKeyValue))
 				{
 					// Change new key/value pair only in case of a match.
 					// Unfortunately in C++ there are no named groups possible

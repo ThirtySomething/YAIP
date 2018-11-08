@@ -18,19 +18,14 @@
 //******************************************************************************
 
 /**
- * \file	IniSection.h
+ * \file	IniSectionList.h
  * \author	ThirtySomething
  * \date	2016-09-19
- * \brief	Definition of IniSection as class to deal with sections
+ * \brief	List of INI sections
  */
 #pragma once
 
-#include "IAddFromRaw.h"
-#include "IniEntry.h"
-#include "IniEntryList.h"
-#include <iostream>
-#include <memory>
-#include <regex>
+#include "IniSection.h"
 #include <string>
 
 /**
@@ -48,46 +43,26 @@ namespace net
 		 */
 		namespace yaip
 		{
-			class IniSection : public IAddFromRaw
+			typedef std::vector<IniSectionPtr> tSectionList;
+
+			class IniSectionList
 			{
 			public:
-				IniSection(void);
-				virtual ~IniSection(void);
+				IniSectionList(void);
+				virtual ~IniSectionList(void);
 
-				void SectionNameSet(const std::string &SectionName);
-				std::string SectionNameGet(void);
+				void clear(void);
 
-				void SectionCommentSet(const std::string &SectionComment);
-				std::string SectionCommentGet(void);
+				void SectionAdd(const IniSectionPtr &Section);
 
-				void SectionEntriesSet(const IniEntryList &SectionEntries);
-				IniEntryList SectionEntriesGet(void);
+				void SectionDelete(const IniSectionPtr &Section);
 
-				virtual bool CreateFromRawData(const std::string &RawData);
-
-				bool AddRawEntry(const std::string &RawEntryData);
-
-				std::string to_string(void);
+				IniSectionPtr SectionFind(const std::string &SectionName);
 
 			private:
-				/**
-				 * Section - Regular expression
-				 */
-				static const std::regex RegExSection;
-
-				std::string m_SectionName;
-
-				std::string m_SectionComment;
-
-				/**
-				 * All entries to this section
-				 */
-				IniEntryList m_Entries;
-
-				friend std::ostream& operator<<(std::ostream &OutputStream, const IniSection &SectionObject);
+				tSectionList m_Sections;
 			};
-
-			typedef std::shared_ptr<IniSection> IniSectionPtr;
 		}
 	}
 }
+
