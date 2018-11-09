@@ -84,7 +84,7 @@ SCENARIO("Processing of datatype [unsigned long]", "[net::derpaul::yaip::YAIP]")
 				REQUIRE(1 == SectionList.size());
 				REQUIRE(1 == SectionKeyList.size());
 
-				unsigned long ini_value= sut.SectionKeyValueGet(S_SECTION_UNSIGNED_LONG, S_KEY_UNSIGNED_LONG, S_VALUE_DEFAULT_UNSIGNED_LONG);
+				unsigned long ini_value = sut.SectionKeyValueGet(S_SECTION_UNSIGNED_LONG, S_KEY_UNSIGNED_LONG, S_VALUE_DEFAULT_UNSIGNED_LONG);
 				REQUIRE(VALUE_UNSIGNED_LONG == ini_value);
 			}
 		}

@@ -18,14 +18,12 @@
 //******************************************************************************
 
 /**
- * \file	IAddFromRaw.h
+ * \file	IElementValue.h
  * \author	ThirtySomething
- * \date	2016-11-06
- * \brief	Interface for INI elements to add from raw data
+ * \date	2016-09-19
+ * \brief	Interface for getting and setting element values
  */
 #pragma once
-
-#include <string>
 
  /**
   * Namespace of YAIP
@@ -43,17 +41,22 @@ namespace net
 		namespace yaip
 		{
 			/**
-			 * Interface for INI objects to parse data from string
+			 * Interface for common access the value of INI objects
 			 */
-			class IAddFromRaw
+			class IElementValue
 			{
 			public:
 				/**
-				 * Will transform string into internal properties
-				 * \param RawData string from INI file to transform
-				 * \return true on success, otherwise false
+				 * Set the INI object value
+				 * \param ElementValue Value of INI object
 				 */
-				virtual bool CreateFromRawData(const std::string &RawData) = 0;
+				virtual void ElementValueSet(const std::string &ElementValue) = 0;
+
+				/**
+				 * Get the INI object value
+				 * \return Value of INI object
+				 */
+				virtual std::string ElementValueGet(void) = 0;
 			};
 		}
 	}

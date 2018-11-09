@@ -84,7 +84,7 @@ SCENARIO("Processing of datatype [char]", "[net::derpaul::yaip::YAIP]")
 				REQUIRE(1 == SectionList.size());
 				REQUIRE(1 == SectionKeyList.size());
 
-				char ini_value= sut.SectionKeyValueGet(S_SECTION_CHAR, S_KEY_CHAR, S_VALUE_DEFAULT_CHAR);
+				char ini_value = sut.SectionKeyValueGet(S_SECTION_CHAR, S_KEY_CHAR, S_VALUE_DEFAULT_CHAR);
 				REQUIRE(VALUE_CHAR == ini_value);
 			}
 		}

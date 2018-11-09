@@ -84,7 +84,7 @@ SCENARIO("Processing of datatype [unsigned char]", "[net::derpaul::yaip::YAIP]")
 				REQUIRE(1 == SectionList.size());
 				REQUIRE(1 == SectionKeyList.size());
 
-				unsigned char ini_value= sut.SectionKeyValueGet(S_SECTION_UNSIGNED_CHAR, S_KEY_UNSIGNED_CHAR, S_VALUE_DEFAULT_UNSIGNED_CHAR);
+				unsigned char ini_value = sut.SectionKeyValueGet(S_SECTION_UNSIGNED_CHAR, S_KEY_UNSIGNED_CHAR, S_VALUE_DEFAULT_UNSIGNED_CHAR);
 				REQUIRE(VALUE_UNSIGNED_CHAR == ini_value);
 			}
 		}

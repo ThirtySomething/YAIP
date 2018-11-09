@@ -84,7 +84,7 @@ SCENARIO("Processing of datatype [double]", "[net::derpaul::yaip::YAIP]")
 				REQUIRE(1 == SectionList.size());
 				REQUIRE(1 == SectionKeyList.size());
 
-				double ini_value= sut.SectionKeyValueGet(S_SECTION_DOUBLE, S_KEY_DOUBLE, S_VALUE_DEFAULT_DOUBLE);
+				double ini_value = sut.SectionKeyValueGet(S_SECTION_DOUBLE, S_KEY_DOUBLE, S_VALUE_DEFAULT_DOUBLE);
 				REQUIRE(VALUE_DOUBLE == Approx(ini_value));
 			}
 		}

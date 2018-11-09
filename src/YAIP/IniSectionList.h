@@ -26,11 +26,11 @@
 #pragma once
 
 #include "IniSection.h"
-#include <string>
+#include "TIniElementList.h"
 
-/**
- * Namespace of YAIP
- */
+ /**
+  * Namespace of YAIP
+  */
 namespace net
 {
 	/**
@@ -43,24 +43,8 @@ namespace net
 		 */
 		namespace yaip
 		{
-			typedef std::vector<IniSectionPtr> tSectionList;
-
-			class IniSectionList
+			class IniSectionList : public TIniElementList<IniSectionPtr>
 			{
-			public:
-				IniSectionList(void);
-				virtual ~IniSectionList(void);
-
-				void clear(void);
-
-				void SectionAdd(const IniSectionPtr &Section);
-
-				void SectionDelete(const IniSectionPtr &Section);
-
-				IniSectionPtr SectionFind(const std::string &SectionName);
-
-			private:
-				tSectionList m_Sections;
 			};
 		}
 	}

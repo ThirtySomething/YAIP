@@ -84,7 +84,7 @@ SCENARIO("Processing of datatype [short]", "[net::derpaul::yaip::YAIP]")
 				REQUIRE(1 == SectionList.size());
 				REQUIRE(1 == SectionKeyList.size());
 
-				short ini_value= sut.SectionKeyValueGet(S_SECTION_SHORT, S_KEY_SHORT, S_VALUE_DEFAULT_SHORT);
+				short ini_value = sut.SectionKeyValueGet(S_SECTION_SHORT, S_KEY_SHORT, S_VALUE_DEFAULT_SHORT);
 				REQUIRE(VALUE_SHORT == ini_value);
 			}
 		}

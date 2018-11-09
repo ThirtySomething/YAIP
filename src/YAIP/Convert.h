@@ -27,9 +27,9 @@
 
 #include <string>
 
-/**
- * Namespace of YAIP
- */
+ /**
+  * Namespace of YAIP
+  */
 namespace net
 {
 	/**

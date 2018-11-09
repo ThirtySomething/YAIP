@@ -35,9 +35,9 @@
 #include <regex>
 #include <vector>
 
-/**
- * Namespace of YAIP
- */
+ /**
+  * Namespace of YAIP
+  */
 namespace net
 {
 	/**
@@ -83,26 +83,6 @@ namespace net
 					return std::lexicographical_compare(StringLeft.begin(), StringLeft.end(), StringRight.begin(), StringRight.end(), CompareCaseless());
 				}
 			};
-
-			/**
-			 * Convenience typedef for a map of strings.
-			 * Used to represent keys and their corresponding values.
-			 * Map will be sorted caseless.
-			 */
-			typedef std::map<std::string, std::string, StringCompareCaseLess> tMapStringString;
-
-			/**
-			 * Convenience typedef for a map of keys/values.
-			 * Used to represent a section with their corrresponding keys/values storage.
-			 * Map will be sorted caseless.
-			 */
-			typedef std::map<std::string, tMapStringString, StringCompareCaseLess> tMapStringMapStringString;
-
-			/**
-			 * Convenience typedef for a vector of strings.
-			 * Used to represent the content of a INI file, a list of sections or a list of keys.
-			 */
-			typedef std::vector<std::string> tVectorString;
 
 			/**
 			 * Class to manipulate INI files
@@ -161,7 +141,7 @@ namespace net
 				 * \param Section Specified section
 				 * \return Vector with a std::strings for each key
 				 */
-				tVectorString SectionKeyListGet(const std::string &Section) const;
+				tVectorString SectionKeyListGet(const std::string &Section);
 
 				/**
 				 * Method to retrieve a value of the specified section/key combination for std::string
@@ -170,7 +150,7 @@ namespace net
 				 * \param Default Specified default value in case key does not exist
 				 * \return Returns either the default value or the value of the existing section/key combination
 				 */
-				std::string SectionKeyValueGet(const std::string &Section, const std::string &Key, const std::string &Default) const;
+				std::string SectionKeyValueGet(const std::string &Section, const std::string &Key, const std::string &Default);
 
 				/**
 				 * Templated method to retrieve a value of the specified section/key combination
@@ -180,7 +160,7 @@ namespace net
 				 * \return Returns either the default value or the value of the existing section/key combination
 				 */
 				template<typename VariableType>
-				VariableType SectionKeyValueGet(const std::string &Section, const std::string &Key, const VariableType &Default) const
+				VariableType SectionKeyValueGet(const std::string &Section, const std::string &Key, const VariableType &Default)
 				{
 					VariableType ValueReturn;
 					std::string ValueDefault;
@@ -215,23 +195,10 @@ namespace net
 				}
 
 				/**
-				 * Check if section contains data
-				 * \param Section Specified section
-				 * \return true for empty section otherwise false
-				 */
-				bool SectionEmpty(const std::string &Section) const;
-
-				/**
-				 * Remove section completely from internal data structure
-				 * \param Section Specified section
-				 */
-				void SectionKill(const std::string &Section);
-
-				/**
 				 * Get all sections of the INI file
 				 * \return Vector with a std::strings for each section
 				 */
-				tVectorString SectionListGet(void) const;
+				tVectorString SectionListGet(void);
 
 				/**
 				 * Drop all data to get a clean INI
@@ -239,11 +206,6 @@ namespace net
 				void Clear(void);
 
 			protected:
-				/**
-				 * Internal map for all sections, each section represented by a map serving the key/value data
-				 */
-				tMapStringMapStringString m_IniData;
-
 				/**
 				 * List of all sections
 				 */

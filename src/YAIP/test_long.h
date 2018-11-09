@@ -84,7 +84,7 @@ SCENARIO("Processing of datatype [long]", "[net::derpaul::yaip::YAIP]")
 				REQUIRE(1 == SectionList.size());
 				REQUIRE(1 == SectionKeyList.size());
 
-				long ini_value= sut.SectionKeyValueGet(S_SECTION_LONG, S_KEY_LONG, S_VALUE_DEFAULT_LONG);
+				long ini_value = sut.SectionKeyValueGet(S_SECTION_LONG, S_KEY_LONG, S_VALUE_DEFAULT_LONG);
 				REQUIRE(VALUE_LONG == ini_value);
 			}
 		}

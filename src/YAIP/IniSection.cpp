@@ -27,9 +27,9 @@
 #include "IniSection.h"
 #include <sstream>
 
-/**
- * Namespace of YAIP
- */
+ /**
+  * Namespace of YAIP
+  */
 namespace net
 {
 	/**
@@ -64,28 +64,28 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			void IniSection::SectionNameSet(const std::string &SectionName)
+			void IniSection::ElementIdentifierSet(const std::string &ElementIdentifier)
 			{
-				m_SectionName = SectionName;
+				m_SectionName = ElementIdentifier;
 			}
 
 			// ******************************************************************
 			// ******************************************************************
-			std::string IniSection::SectionNameGet(void)
+			std::string IniSection::ElementIdentifierGet(void)
 			{
 				return m_SectionName;
 			}
 
 			// ******************************************************************
 			// ******************************************************************
-			void IniSection::SectionCommentSet(const std::string &SectionComment)
+			void IniSection::ElementCommentSet(const std::string &ElementComment)
 			{
-				m_SectionComment = SectionComment;
+				m_SectionComment = ElementComment;
 			}
 
 			// ******************************************************************
 			// ******************************************************************
-			std::string IniSection::SectionCommentGet(void)
+			std::string IniSection::ElementCommentGet(void)
 			{
 				return m_SectionComment;
 			}
@@ -117,8 +117,8 @@ namespace net
 					// Change section only in case of a match.
 					// Unfortunately in C++ there are no named groups possible
 					// so we have to use the index of the group.
-					SectionNameSet(RegExpMatch[1]);
-					SectionCommentSet(RegExpMatch[3]);
+					ElementIdentifierSet(RegExpMatch[1]);
+					ElementCommentSet(RegExpMatch[3]);
 					Success = true;
 				}
 
@@ -134,11 +134,46 @@ namespace net
 
 				if (EntryPtr->CreateFromRawData(RawEntryData))
 				{
-					m_Entries.EntryAdd(EntryPtr);
+					m_Entries.ElementAdd(EntryPtr);
 					Success = true;
 				}
 
 				return Success;
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			IniEntryPtr IniSection::EntryFind(const std::string &EntryName)
+			{
+				return m_Entries.ElementFind(EntryName);
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			void IniSection::EntryDelete(const IniEntryPtr &Entry)
+			{
+				m_Entries.ElementDelete(Entry);
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			tVectorString IniSection::EntryKeyList(void)
+			{
+				return m_Entries.ElementIdentifierList();
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			bool IniSection::IsEmpty(void)
+			{
+				return (0 == m_Entries.size());
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			void IniSection::EntryAdd(const IniEntryPtr &Entry)
+			{
+				m_Entries.ElementAdd(Entry);
 			}
 
 			// ******************************************************************

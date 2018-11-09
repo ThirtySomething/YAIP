@@ -84,7 +84,7 @@ SCENARIO("Processing of datatype [unsigned short]", "[net::derpaul::yaip::YAIP]"
 				REQUIRE(1 == SectionList.size());
 				REQUIRE(1 == SectionKeyList.size());
 
-				unsigned short ini_value= sut.SectionKeyValueGet(S_SECTION_UNSIGNED_SHORT, S_KEY_UNSIGNED_SHORT, S_VALUE_DEFAULT_UNSIGNED_SHORT);
+				unsigned short ini_value = sut.SectionKeyValueGet(S_SECTION_UNSIGNED_SHORT, S_KEY_UNSIGNED_SHORT, S_VALUE_DEFAULT_UNSIGNED_SHORT);
 				REQUIRE(VALUE_UNSIGNED_SHORT == ini_value);
 			}
 		}

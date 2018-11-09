@@ -27,9 +27,9 @@
 #include "IniEntry.h"
 #include <sstream>
 
-/**
- * Namespace of YAIP
- */
+ /**
+  * Namespace of YAIP
+  */
 namespace net
 {
 	/**
@@ -64,42 +64,42 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			void IniEntry::EntryKeySet(const std::string &EntryKey)
+			void IniEntry::ElementIdentifierSet(const std::string &ElementIdentifier)
 			{
-				m_EntryKey = EntryKey;
+				m_EntryKey = ElementIdentifier;
 			}
 
 			// ******************************************************************
 			// ******************************************************************
-			std::string IniEntry::EntryKeyGet(void)
+			std::string IniEntry::ElementIdentifierGet(void)
 			{
 				return m_EntryKey;
 			}
 
 			// ******************************************************************
 			// ******************************************************************
-			void IniEntry::EntryValueSet(const std::string &EntryValue)
+			void IniEntry::ElementValueSet(const std::string &ElementValue)
 			{
-				m_EntryValue = EntryValue;
+				m_EntryValue = ElementValue;
 			}
 
 			// ******************************************************************
 			// ******************************************************************
-			std::string IniEntry::EntryValueGet(void)
+			std::string IniEntry::ElementValueGet(void)
 			{
 				return m_EntryValue;
 			}
 
 			// ******************************************************************
 			// ******************************************************************
-			void IniEntry::EntryCommentSet(const std::string &EntryComment)
+			void IniEntry::ElementCommentSet(const std::string &ElementComment)
 			{
-				m_EntryComment = EntryComment;
+				m_EntryComment = ElementComment;
 			}
 
 			// ******************************************************************
 			// ******************************************************************
-			std::string IniEntry::EntryCommentGet(void)
+			std::string IniEntry::ElementCommentGet(void)
 			{
 				return m_EntryComment;
 			}
@@ -117,9 +117,9 @@ namespace net
 					// Change new key/value pair only in case of a match.
 					// Unfortunately in C++ there are no named groups possible
 					// so we have to use the index of the group.
-					EntryKeySet(RegExpMatch[1]);
-					EntryValueSet(RegExpMatch[2]);
-					EntryCommentSet(RegExpMatch[3]);
+					ElementIdentifierSet(RegExpMatch[1]);
+					ElementValueSet(RegExpMatch[2]);
+					ElementCommentSet(RegExpMatch[3]);
 					Success = true;
 				}
 

@@ -26,11 +26,11 @@
 #pragma once
 
 #include "IniEntry.h"
-#include <string>
+#include "TIniElementList.h"
 
-/**
- * Namespace of YAIP
- */
+ /**
+  * Namespace of YAIP
+  */
 namespace net
 {
 	/**
@@ -43,24 +43,11 @@ namespace net
 		 */
 		namespace yaip
 		{
-			typedef std::vector<IniEntryPtr> tEntryList;
-
-			class IniEntryList
+			/**
+			 * List of INI entries
+			 */
+			class IniEntryList : public TIniElementList<IniEntryPtr>
 			{
-			public:
-				IniEntryList(void);
-				virtual ~IniEntryList(void);
-
-				void clear(void);
-
-				void EntryAdd(const IniEntryPtr &Section);
-
-				void EntryDelete(const IniEntryPtr &Section);
-
-				IniEntryPtr EntryFind(const std::string &SectionName);
-
-			private:
-				tEntryList m_Entries;
 			};
 		}
 	}

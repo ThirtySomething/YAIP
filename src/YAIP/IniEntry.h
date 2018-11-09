@@ -26,14 +26,17 @@
 #pragma once
 
 #include "IAddFromRaw.h"
+#include "IElementComment.h"
+#include "IElementIdentifier.h"
+#include "IElementValue.h"
 #include <iostream>
 #include <memory>
 #include <regex>
 #include <string>
 
-/**
- * Namespace of YAIP
- */
+ /**
+  * Namespace of YAIP
+  */
 namespace net
 {
 	/**
@@ -46,23 +49,69 @@ namespace net
 		 */
 		namespace yaip
 		{
-			class IniEntry
+			/**
+			 * Represents an INI entry
+			 */
+			class IniEntry : public IAddFromRaw, public IElementComment, public IElementIdentifier, public IElementValue
 			{
 			public:
+				/**
+				 * Default constructor
+				 */
 				IniEntry(void);
+
+				/**
+				 * Default destructor
+				 */
 				virtual ~IniEntry(void);
 
-				void EntryKeySet(const std::string &EntryKey);
-				std::string EntryKeyGet(void);
+				/**
+				 * The unique element identifier is the key of an INI entry
+				 * \param ElementIdentifier The key of the INI entry
+				 */
+				virtual void ElementIdentifierSet(const std::string &ElementIdentifier);
 
-				void EntryValueSet(const std::string &EntryValue);
-				std::string EntryValueGet(void);
+				/**
+				 * Get the unique element identifier aka the key of an INI entry
+				 * \return The key of the INI entry
+				 */
+				virtual std::string ElementIdentifierGet(void);
 
-				void EntryCommentSet(const std::string &EntryComment);
-				std::string EntryCommentGet(void);
+				/**
+				 * Set the INI object value
+				 * \param ElementValue Value of INI object
+				 */
+				virtual void ElementValueSet(const std::string &ElementValue);
 
+				/**
+				 * Get the INI object value
+				 * \return Value of INI object
+				 */
+				virtual std::string ElementValueGet(void);
+
+				/**
+				 * Set the INI object comment
+				 * \param ElementComment Comment of INI object
+				 */
+				virtual void ElementCommentSet(const std::string &ElementComment);
+
+				/**
+				 * Get the INI object comment
+				 * \return Comment of INI object
+				 */
+				virtual std::string ElementCommentGet(void);
+
+				/**
+				 * Will transform string into internal properties
+				 * \param RawData string from INI file to transform
+				 * \return true on success, otherwise false
+				 */
 				virtual bool CreateFromRawData(const std::string &RawData);
 
+				/**
+				 * String representation of an INI entry
+				 * \return String representation of an INI entry
+				 */
 				std::string to_string(void);
 
 			private:
@@ -71,13 +120,33 @@ namespace net
 				 */
 				static const std::regex RegExKeyValue;
 
+				/**
+				 * The key aka unique identifier of the INI entry
+				 */
 				std::string m_EntryKey;
+
+				/**
+				 * The value of the INI entry
+				 */
 				std::string m_EntryValue;
+
+				/**
+				 * The comment of the INI entry
+				 */
 				std::string m_EntryComment;
 
+				/**
+				 * Stream the object content to an output stream
+				 * \param OutputStream The stream to put the content on
+				 * \param EntryObject The object to stream
+				 * \return Reference to the output stream
+				 */
 				friend std::ostream& operator<<(std::ostream &OutputStream, const IniEntry &EntryObject);
 			};
 
+			/**
+			 * Convenience typedef for lazy usage of smart_pointers for IniEntries
+			 */
 			typedef std::shared_ptr<IniEntry> IniEntryPtr;
 		}
 	}

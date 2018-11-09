@@ -84,7 +84,7 @@ SCENARIO("Processing of datatype [bool]", "[net::derpaul::yaip::YAIP]")
 				REQUIRE(1 == SectionList.size());
 				REQUIRE(1 == SectionKeyList.size());
 
-				bool ini_value= sut.SectionKeyValueGet(S_SECTION_BOOL, S_KEY_BOOL, S_VALUE_DEFAULT_BOOL);
+				bool ini_value = sut.SectionKeyValueGet(S_SECTION_BOOL, S_KEY_BOOL, S_VALUE_DEFAULT_BOOL);
 				REQUIRE(VALUE_BOOL == ini_value);
 			}
 		}

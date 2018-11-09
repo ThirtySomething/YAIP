@@ -18,14 +18,12 @@
 //******************************************************************************
 
 /**
- * \file	IEntryList.h
+ * \file	IElementIdentifier.h
  * \author	ThirtySomething
- * \date	2016-11-06
- * \brief	Interface for list of INI elements
+ * \date	2016-09-19
+ * \brief	Interface for getting and setting element identifier
  */
 #pragma once
-
-#include "IAddFromRaw.h"
 
  /**
   * Namespace of YAIP
@@ -42,12 +40,23 @@ namespace net
 		 */
 		namespace yaip
 		{
-			class IEntryList
+			/**
+			 * Interface for common access the unique identifier of INI objects
+			 */
+			class IElementIdentifier
 			{
 			public:
-				virtual ~IEntryList(void) {};
+				/**
+				 * Set the INI object identifier
+				 * \param ElementIdentifier Unique identifier of INI object
+				 */
+				virtual void ElementIdentifierSet(const std::string &ElementIdentifier) = 0;
 
-				virtual bool ElementAdd(const IAddFromRaw)
+				/**
+				 * Get the INI object identifier
+				 * \return Unique identifier of INI object
+				 */
+				virtual std::string ElementIdentifierGet(void) = 0;
 			};
 		}
 	}

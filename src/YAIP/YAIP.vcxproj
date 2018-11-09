@@ -21,16 +21,16 @@
   <ItemGroup>
     <ClCompile Include="Convert.cpp" />
     <ClCompile Include="IniEntry.cpp" />
-    <ClCompile Include="IniEntryList.cpp" />
     <ClCompile Include="IniSection.cpp" />
-    <ClCompile Include="IniSectionList.cpp" />
     <ClCompile Include="test_yaip.cpp" />
     <ClCompile Include="YAIP.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Convert.h" />
     <ClInclude Include="IAddFromRaw.h" />
-    <ClInclude Include="IEntryList.h" />
+    <ClInclude Include="IElementComment.h" />
+    <ClInclude Include="IElementIdentifier.h" />
+    <ClInclude Include="IElementValue.h" />
     <ClInclude Include="IniEntry.h" />
     <ClInclude Include="IniEntryList.h" />
     <ClInclude Include="IniSection.h" />
@@ -47,6 +47,7 @@
     <ClInclude Include="test_unsigned_integer.h" />
     <ClInclude Include="test_unsigned_long.h" />
     <ClInclude Include="test_unsigned_short.h" />
+    <ClInclude Include="TIniElementList.h" />
     <ClInclude Include="YAIP.h" />
   </ItemGroup>
   <ItemGroup>

@@ -18,14 +18,12 @@
 //******************************************************************************
 
 /**
- * \file	IAddFromRaw.h
+ * \file	IElementComment.h
  * \author	ThirtySomething
- * \date	2016-11-06
- * \brief	Interface for INI elements to add from raw data
+ * \date	2016-09-19
+ * \brief	Interface for getting and setting element comments
  */
 #pragma once
-
-#include <string>
 
  /**
   * Namespace of YAIP
@@ -43,17 +41,22 @@ namespace net
 		namespace yaip
 		{
 			/**
-			 * Interface for INI objects to parse data from string
+			 * Interface for common access the comment of INI objects
 			 */
-			class IAddFromRaw
+			class IElementComment
 			{
 			public:
 				/**
-				 * Will transform string into internal properties
-				 * \param RawData string from INI file to transform
-				 * \return true on success, otherwise false
+				 * Set the INI object comment
+				 * \param ElementComment Comment of INI object
 				 */
-				virtual bool CreateFromRawData(const std::string &RawData) = 0;
+				virtual void ElementCommentSet(const std::string &ElementComment) = 0;
+
+				/**
+				 * Get the INI object comment
+				 * \return Comment of INI object
+				 */
+				virtual std::string ElementCommentGet(void) = 0;
 			};
 		}
 	}

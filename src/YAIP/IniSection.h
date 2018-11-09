@@ -26,6 +26,8 @@
 #pragma once
 
 #include "IAddFromRaw.h"
+#include "IElementComment.h"
+#include "IElementIdentifier.h"
 #include "IniEntry.h"
 #include "IniEntryList.h"
 #include <iostream>
@@ -33,9 +35,9 @@
 #include <regex>
 #include <string>
 
-/**
- * Namespace of YAIP
- */
+ /**
+  * Namespace of YAIP
+  */
 namespace net
 {
 	/**
@@ -48,25 +50,108 @@ namespace net
 		 */
 		namespace yaip
 		{
-			class IniSection : public IAddFromRaw
+			/**
+			 * Represents an INI section
+			 */
+			class IniSection : public IAddFromRaw, public IElementComment, public IElementIdentifier
 			{
 			public:
+				/**
+				 * Default constructor
+				 */
 				IniSection(void);
+
+				/**
+				 * Default destructor
+				 */
 				virtual ~IniSection(void);
 
-				void SectionNameSet(const std::string &SectionName);
-				std::string SectionNameGet(void);
+				/**
+				 * The unique element identifier is the key of an INI entry
+				 * \param ElementIdentifier The key of the INI entry
+				 */
+				virtual void ElementIdentifierSet(const std::string &ElementIdentifier);
 
-				void SectionCommentSet(const std::string &SectionComment);
-				std::string SectionCommentGet(void);
+				/**
+				 * Get the unique element identifier aka the key of an INI entry
+				 * \return The key of the INI entry
+				 */
+				virtual std::string ElementIdentifierGet(void);
 
+				/**
+				 * Set the INI object comment
+				 * \param ElementComment Unique comment of INI object
+				 */
+				virtual void ElementCommentSet(const std::string &ElementComment);
+
+				/**
+				 * Get the INI object comment
+				 * \return Comment of INI object
+				 */
+				virtual std::string ElementCommentGet(void);
+
+				/**
+				 * Set list of entries
+				 * \param SectionEntries Vector with entries to set
+				 * \attention This is a replace, not a merge, not an add
+				 */
 				void SectionEntriesSet(const IniEntryList &SectionEntries);
+
+				/**
+				 * Get list of entries
+				 * \return List of entries
+				 */
 				IniEntryList SectionEntriesGet(void);
 
+				/**
+				 * Will transform string into internal properties
+				 * \param RawData string from INI file to transform
+				 * \return true on success, otherwise false
+				 */
 				virtual bool CreateFromRawData(const std::string &RawData);
 
+				/**
+				 * Add a new entry based on raw data
+				 * \param RawEntryData New entry with key, value (and comment) as string
+				 * \return True on success, otherwise false
+				 */
 				bool AddRawEntry(const std::string &RawEntryData);
 
+				/**
+				 * Find and return entry based on the entry name (the key)
+				 * \param EntryName The name (better: the key) of the entry to search
+				 * \return Entry on success, otherwise nullptr
+				 */
+				IniEntryPtr EntryFind(const std::string &EntryName);
+
+				/**
+				 * Delete given entry
+				 * \param Entry Entry to delete
+				 */
+				void EntryDelete(const IniEntryPtr &Entry);
+
+				/**
+				 * Get a list of all keys of this sections
+				 * \return List of keys
+				 */
+				tVectorString EntryKeyList(void);
+
+				/**
+				 * Check if section is empty
+				 * \return True if empty otherwise false
+				 */
+				bool IsEmpty(void);
+
+				/**
+				 * Add an entry to the section
+				 * \param Entry The entry to add.
+				 */
+				void EntryAdd(const IniEntryPtr &Entry);
+
+				/**
+				 * String representation of an INI entry
+				 * \return String representation of an INI entry
+				 */
 				std::string to_string(void);
 
 			private:
@@ -75,8 +160,14 @@ namespace net
 				 */
 				static const std::regex RegExSection;
 
+				/**
+				 * The name of the section
+				 */
 				std::string m_SectionName;
 
+				/**
+				 * The comment of the section
+				 */
 				std::string m_SectionComment;
 
 				/**
@@ -84,9 +175,18 @@ namespace net
 				 */
 				IniEntryList m_Entries;
 
+				/**
+				 * Stream the object content to an output stream
+				 * \param OutputStream The stream to put the content on
+				 * \param SectionObject The object to stream
+				 * \return Reference to the output stream
+				 */
 				friend std::ostream& operator<<(std::ostream &OutputStream, const IniSection &SectionObject);
 			};
 
+			/**
+			 * Convenience typedef for lazy usage of smart_pointers for IniSections
+			 */
 			typedef std::shared_ptr<IniSection> IniSectionPtr;
 		}
 	}
