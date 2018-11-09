@@ -24,7 +24,6 @@ Searching for INI parsers for C++ fires up a lot of them. Most of them come with
 ## Implementation Details
 
 - Convenience typedefs for datatypes in <code>YAIP.h</code>
-- Data containers are STL elements like [*vector*][cpp_vector]  or [*map*][cpp_map]
 - Detection of section and key/value pair is done using [*regular expressions*][cpp_regexp], see also [*regular expression*][wiki_regexp]
 - The major methods are based on [*std::string*][cpp_string]
 - The templated methods using converters from and to [*std::string*][cpp_string]
@@ -174,6 +173,8 @@ void SectionKeyKill(const std::string &Section, const std::string &Key);
 
 - The implementation has to be checked against the inofficial specification at [Wikipedia][wiki_ini] and the tests have to satisfiy the specification.
 - Enhance the usage of comments.
+- Add tests for untested classes.
+- Add sorting to ```TIniElementList```
 
 [catch2]: https://github.com/philsquared/Catch
 [cpp_eleven]: https://en.wikipedia.org/wiki/C%2B%2B11
