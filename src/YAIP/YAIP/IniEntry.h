@@ -66,13 +66,13 @@ namespace net
 				 * The unique element identifier is the key of an INI entry
 				 * \param ElementIdentifier The key of the INI entry
 				 */
-				virtual void ElementIdentifierSet(const std::string &ElementIdentifier);
+				virtual void ElementIdentifierSet(const std::string &ElementIdentifier) override;
 
 				/**
 				 * Get the unique element identifier aka the key of an INI entry
 				 * \return The key of the INI entry
 				 */
-				virtual std::string ElementIdentifierGet(void);
+				virtual std::string ElementIdentifierGet(void) override;
 
 				/**
 				 * Set the INI object value
@@ -90,26 +90,26 @@ namespace net
 				 * Set the INI object comment
 				 * \param ElementComment Comment of INI object
 				 */
-				virtual void ElementCommentSet(const std::string &ElementComment);
+				virtual void ElementCommentSet(const std::string &ElementComment) override;
 
 				/**
 				 * Get the INI object comment
 				 * \return Comment of INI object
 				 */
-				virtual std::string ElementCommentGet(void);
+				virtual std::string ElementCommentGet(void) override;
 
 				/**
 				 * Will transform string into internal properties
 				 * \param RawData string from INI file to transform
 				 * \return true on success, otherwise false
 				 */
-				virtual bool CreateFromRawData(const std::string &RawData);
+				virtual bool CreateFromRawData(const std::string &RawData) override;
 
 				/**
 				 * String representation of an INI entry
 				 * \return String representation of an INI entry
 				 */
-				std::string to_string(void);
+				std::string to_string(void) const;
 
 			private:
 				/**

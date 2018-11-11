@@ -128,7 +128,7 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			std::string IniEntry::to_string(void)
+			std::string IniEntry::to_string(void) const
 			{
 				std::ostringstream tmpStream;
 				tmpStream << m_EntryKey << "=" << m_EntryValue;

@@ -36,3 +36,6 @@
 /doxygen/html
 /src/.vs
 /src/YAIP/YAIP.vcxproj.user
+/src/YAIP/YAIP/YAIP-cppcheck-build-dir
+/src/YAIP/YAIP/YAIP.smproj
+/src/YAIP/YAIP/YAIP.cppcheck

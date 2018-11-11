@@ -105,14 +105,14 @@ namespace net
 				 * \param Filename Full qualified filename of the INI file
 				 * \return true if file is deleted otherwise false
 				 */
-				bool INIFileDelete(const std::string &Filename) const;
+				static bool INIFileDelete(const std::string &Filename);
 
 				/**
 				 * Check if given INI file exists
 				 * \param Filename Full qualified filename of the INI file
 				 * \return true if file exists otherwise false
 				 */
-				bool INIFileExist(const std::string &Filename) const;
+				static bool INIFileExist(const std::string &Filename);
 
 				/**
 				 * Load and parse INI file into internal structures

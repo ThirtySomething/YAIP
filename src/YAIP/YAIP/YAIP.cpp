@@ -58,7 +58,7 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			bool YAIP::INIFileDelete(const std::string &Filename) const
+			bool YAIP::INIFileDelete(const std::string &Filename)
 			{
 				bool deleted = (0 == remove(Filename.c_str()));
 				return deleted;
@@ -66,7 +66,7 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			bool YAIP::INIFileExist(const std::string &Filename) const
+			bool YAIP::INIFileExist(const std::string &Filename)
 			{
 				struct stat buffer;
 				bool exist = (0 == stat(Filename.c_str(), &buffer));
@@ -205,8 +205,6 @@ namespace net
 			// ******************************************************************
 			bool YAIP::SectionKeyValueSet(const std::string &Section, const std::string &Key, const std::string &Value)
 			{
-				std::string Data = Value;
-
 				IniSectionPtr CurrentSection = m_Sections.ElementFind(Section);
 				if (nullptr == CurrentSection)
 				{

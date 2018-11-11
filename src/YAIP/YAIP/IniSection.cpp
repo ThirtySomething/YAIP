@@ -178,7 +178,7 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			std::string IniSection::to_string(void)
+			std::string IniSection::to_string(void) const
 			{
 				std::ostringstream tmpStream;
 				tmpStream << "[" << m_SectionName << "]";
