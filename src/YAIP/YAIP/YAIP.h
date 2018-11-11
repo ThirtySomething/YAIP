@@ -92,9 +92,8 @@ namespace net
 			public:
 				/**
 				 * Default constructor
-				 * \param commentSeperator Seperator character for comments, by default it's a semicolon
 				 */
-				YAIP(const char &commentSeperator = ';');
+				YAIP(void);
 
 				/**
 				 * Default destructor
@@ -210,11 +209,6 @@ namespace net
 				 * List of all sections
 				 */
 				IniSectionList m_Sections;
-
-				/**
-				 * Character for signaling of start of comments
-				 */
-				char CommentSeperator;
 
 				/**
 				 * Save given section into INI file

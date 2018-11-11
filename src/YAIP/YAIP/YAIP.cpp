@@ -44,9 +44,8 @@ namespace net
 		{
 			// ******************************************************************
 			// ******************************************************************
-			YAIP::YAIP(const char &commentSeperator)
+			YAIP::YAIP()
 				: m_Sections()
-				, CommentSeperator(commentSeperator)
 			{
 			}
 

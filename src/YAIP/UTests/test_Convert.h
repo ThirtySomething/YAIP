@@ -83,6 +83,32 @@ void test_unsigned(const std::string &dataType)
 	REQUIRE(1 == value_numeric);
 }
 
+template <typename T>
+void test_characters(const std::string &dataType)
+{
+	INFO("Test conversion of [" + dataType + "]");
+	std::string value_string;
+	T value_char;
+
+	// Character value to string
+	value_char = 'A';
+	net::derpaul::yaip::Convert::ConvertTo(value_char, value_string);
+	REQUIRE("A" == value_string);
+
+	value_char = 'Z';
+	net::derpaul::yaip::Convert::ConvertTo(value_char, value_string);
+	REQUIRE("Z" == value_string);
+
+	// String to character value
+	value_string = "A";
+	net::derpaul::yaip::Convert::ConvertTo(value_string, value_char);
+	REQUIRE('A' == value_char);
+
+	value_string = "Z";
+	net::derpaul::yaip::Convert::ConvertTo(value_string, value_char);
+	REQUIRE('Z' == value_char);
+}
+
 void test_float(void)
 {
 	INFO("Test conversion of [float]");
@@ -173,32 +199,6 @@ void test_bool(void)
 	REQUIRE(false == value_bool);
 }
 
-template <typename T>
-void test_characters(const std::string &dataType)
-{
-	INFO("Test conversion of [" + dataType + "]");
-	std::string value_string;
-	T value_char;
-
-	// Character value to string
-	value_char = 'A';
-	net::derpaul::yaip::Convert::ConvertTo(value_char, value_string);
-	REQUIRE("A" == value_string);
-
-	value_char = 'Z';
-	net::derpaul::yaip::Convert::ConvertTo(value_char, value_string);
-	REQUIRE("Z" == value_string);
-
-	// String to character value
-	value_string = "A";
-	net::derpaul::yaip::Convert::ConvertTo(value_string, value_char);
-	REQUIRE('A' == value_char);
-
-	value_string = "Z";
-	net::derpaul::yaip::Convert::ConvertTo(value_string, value_char);
-	REQUIRE('Z' == value_char);
-}
-
 SCENARIO("Test class [Convert]", "[net::derpaul::yaip::Convert]")
 {
 	// Templated tests for numeric datatypes with no fraction
@@ -220,18 +220,21 @@ SCENARIO("Test class [Convert]", "[net::derpaul::yaip::Convert]")
 	// unsigned long
 	test_unsigned<unsigned long>("unsigned long");
 
+	// Templated tests for character datatypes
+	// char
+	test_characters<char>("char");
+
+	// unsigned char
+	test_characters<unsigned char>("unsigned char");
+
+	// Tests for numeric datatypes with fraction
 	// float
 	test_float();
 
 	// double
 	test_double();
 
+	// Other tests
 	// bool
 	test_bool();
-
-	// char
-	test_characters<char>("char");
-
-	// unsigned char
-	test_characters<unsigned char>("unsigned char");
 }

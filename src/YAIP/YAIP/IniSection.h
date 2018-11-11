@@ -25,9 +25,7 @@
  */
 #pragma once
 
-#include "IAddFromRaw.h"
-#include "IElementComment.h"
-#include "IElementIdentifier.h"
+#include "IElementCommon.h"
 #include "IniEntry.h"
 #include "IniEntryList.h"
 #include <iostream>
@@ -53,7 +51,7 @@ namespace net
 			/**
 			 * Represents an INI section
 			 */
-			class IniSection : public IAddFromRaw, public IElementComment, public IElementIdentifier
+			class IniSection : public IElementCommon
 			{
 			public:
 				/**

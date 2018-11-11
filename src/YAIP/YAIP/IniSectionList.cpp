@@ -18,12 +18,14 @@
 //******************************************************************************
 
 /**
- * \file	IElementIdentifier.h
+ * \file	IniSectionList.cpp
  * \author	ThirtySomething
  * \date	2016-09-19
- * \brief	Interface for getting and setting element identifier
+ * \brief	List of INI sections
  */
 #pragma once
+
+#include "IniSectionList.h"
 
  /**
   * Namespace of YAIP
@@ -40,24 +42,9 @@ namespace net
 		 */
 		namespace yaip
 		{
-			/**
-			 * Interface for common access the unique identifier of INI objects
-			 */
-			class IElementIdentifier
-			{
-			public:
-				/**
-				 * Set the INI object identifier
-				 * \param ElementIdentifier Unique identifier of INI object
-				 */
-				virtual void ElementIdentifierSet(const std::string &ElementIdentifier) = 0;
-
-				/**
-				 * Get the INI object identifier
-				 * \return Unique identifier of INI object
-				 */
-				virtual std::string ElementIdentifierGet(void) = 0;
-			};
+			// ******************************************************************
+			// ******************************************************************
 		}
 	}
 }
+

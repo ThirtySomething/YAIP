@@ -26,6 +26,7 @@
     <ClCompile Include="YAIP\Convert.cpp" />
     <ClCompile Include="YAIP\IniEntry.cpp" />
     <ClCompile Include="YAIP\IniSection.cpp" />
+    <ClCompile Include="YAIP\IniSectionList.cpp" />
     <ClCompile Include="YAIP\YAIP.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -43,10 +44,7 @@
     <ClInclude Include="ITests\test_unsigned_short.h" />
     <ClInclude Include="UTests\test_Convert.h" />
     <ClInclude Include="YAIP\Convert.h" />
-    <ClInclude Include="YAIP\IAddFromRaw.h" />
-    <ClInclude Include="YAIP\IElementComment.h" />
-    <ClInclude Include="YAIP\IElementIdentifier.h" />
-    <ClInclude Include="YAIP\IElementValue.h" />
+    <ClInclude Include="YAIP\IElementCommon.h" />
     <ClInclude Include="YAIP\IniEntry.h" />
     <ClInclude Include="YAIP\IniEntryList.h" />
     <ClInclude Include="YAIP\IniSection.h" />

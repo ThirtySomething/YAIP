@@ -18,10 +18,10 @@
 //******************************************************************************
 
 /**
- * \file	IAddFromRaw.h
+ * \file	IElementCommon.h
  * \author	ThirtySomething
- * \date	2016-11-06
- * \brief	Interface for INI elements to add from raw data
+ * \date	2016-09-19
+ * \brief	Interface for common element properties
  */
 #pragma once
 
@@ -43,11 +43,35 @@ namespace net
 		namespace yaip
 		{
 			/**
-			 * Interface for INI objects to parse data from string
+			 * Interface for common element properties
 			 */
-			class IAddFromRaw
+			class IElementCommon
 			{
 			public:
+				/**
+				 * Set the INI object identifier
+				 * \param ElementIdentifier Unique identifier of INI object
+				 */
+				virtual void ElementIdentifierSet(const std::string &ElementIdentifier) = 0;
+
+				/**
+				 * Get the INI object identifier
+				 * \return Unique identifier of INI object
+				 */
+				virtual std::string ElementIdentifierGet(void) = 0;
+
+				/**
+				 * Set the INI object comment
+				 * \param ElementComment Comment of INI object
+				 */
+				virtual void ElementCommentSet(const std::string &ElementComment) = 0;
+
+				/**
+				 * Get the INI object comment
+				 * \return Comment of INI object
+				 */
+				virtual std::string ElementCommentGet(void) = 0;
+
 				/**
 				 * Will transform string into internal properties
 				 * \param RawData string from INI file to transform
