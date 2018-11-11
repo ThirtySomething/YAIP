@@ -19,27 +19,27 @@
 
 #pragma once
 
-#include "./../../externals/Catch2/single_include/Catch2/catch.hpp"
+#include "catch2\catch.hpp"
 #include "YAIP.h"
 #include <limits>
 
-static const std::string S_FILE_INI_UNSIGNED_CHAR = "unsigned char.ini";
-static const std::string S_SECTION_UNSIGNED_CHAR = "SECTION_UNSIGNED_CHAR";
-static const std::string S_KEY_UNSIGNED_CHAR = "KEY_UNSIGNED_CHAR";
-static const std::string S_KEY_INVALID_UNSIGNED_CHAR = "KEY_INVALID";
-static const unsigned char S_VALUE_DEFAULT_UNSIGNED_CHAR = 'Y';
+static const std::string S_FILE_INI_FLOAT = "float.ini";
+static const std::string S_SECTION_FLOAT = "SECTION_FLOAT";
+static const std::string S_KEY_FLOAT = "KEY_FLOAT";
+static const std::string S_KEY_INVALID_FLOAT = "KEY_INVALID";
+static const float S_VALUE_DEFAULT_FLOAT = 0.0f;
 
-SCENARIO("Processing of datatype [unsigned char]", "[net::derpaul::yaip::YAIP]")
+SCENARIO("Test YAIP with datatype [float]", "[net::derpaul::yaip::YAIP]")
 {
-	auto VALUE_UNSIGNED_CHAR = GENERATE(std::numeric_limits<unsigned char>::min(), std::numeric_limits<unsigned char>::max(), std::numeric_limits<unsigned char>::infinity());
+	auto VALUE_FLOAT = GENERATE(std::numeric_limits<float>::min(), std::numeric_limits<float>::max(), std::numeric_limits<float>::infinity());
 
-	INFO("Current value [" << VALUE_UNSIGNED_CHAR << "]");
+	INFO("Current value [" << VALUE_FLOAT << "]");
 
 	GIVEN("An empty instance of the YAIP parser")
 	{
 		net::derpaul::yaip::YAIP sut;
 		REQUIRE(sut.SectionListGet().empty());
-		REQUIRE(sut.SectionKeyValueSet(S_SECTION_UNSIGNED_CHAR, S_KEY_UNSIGNED_CHAR, VALUE_UNSIGNED_CHAR));
+		REQUIRE(sut.SectionKeyValueSet(S_SECTION_FLOAT, S_KEY_FLOAT, VALUE_FLOAT));
 
 		WHEN("Add a new section/key/value")
 		{
@@ -47,17 +47,17 @@ SCENARIO("Processing of datatype [unsigned char]", "[net::derpaul::yaip::YAIP]")
 			{
 				REQUIRE(false == sut.SectionListGet().empty());
 				REQUIRE(1 == sut.SectionListGet().size());
-				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_UNSIGNED_CHAR).size());
+				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_FLOAT).size());
 			}
 		}
 
 		WHEN("Save ini file")
 		{
-			REQUIRE(sut.INIFileSave(S_FILE_INI_UNSIGNED_CHAR));
+			REQUIRE(sut.INIFileSave(S_FILE_INI_FLOAT));
 
 			THEN("File exists")
 			{
-				REQUIRE(sut.INIFileExist(S_FILE_INI_UNSIGNED_CHAR));
+				REQUIRE(sut.INIFileExist(S_FILE_INI_FLOAT));
 			}
 		}
 
@@ -73,40 +73,40 @@ SCENARIO("Processing of datatype [unsigned char]", "[net::derpaul::yaip::YAIP]")
 
 		WHEN("Reload from ini file")
 		{
-			REQUIRE(sut.INIFileExist(S_FILE_INI_UNSIGNED_CHAR));
-			REQUIRE(sut.INIFileLoad(S_FILE_INI_UNSIGNED_CHAR));
+			REQUIRE(sut.INIFileExist(S_FILE_INI_FLOAT));
+			REQUIRE(sut.INIFileLoad(S_FILE_INI_FLOAT));
 
 			THEN("What you save is what you get")
 			{
 				auto SectionList = sut.SectionListGet();
-				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_UNSIGNED_CHAR);
+				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_FLOAT);
 
 				REQUIRE(1 == SectionList.size());
 				REQUIRE(1 == SectionKeyList.size());
 
-				unsigned char ini_value = sut.SectionKeyValueGet(S_SECTION_UNSIGNED_CHAR, S_KEY_UNSIGNED_CHAR, S_VALUE_DEFAULT_UNSIGNED_CHAR);
-				REQUIRE(VALUE_UNSIGNED_CHAR == ini_value);
+				float ini_value = sut.SectionKeyValueGet(S_SECTION_FLOAT, S_KEY_FLOAT, S_VALUE_DEFAULT_FLOAT);
+				REQUIRE(VALUE_FLOAT == Approx(ini_value));
 			}
 		}
 
 		WHEN("Read from invalid key")
 		{
-			unsigned char ini_value = sut.SectionKeyValueGet(S_SECTION_UNSIGNED_CHAR, S_KEY_INVALID_UNSIGNED_CHAR, S_VALUE_DEFAULT_UNSIGNED_CHAR);
+			float ini_value = sut.SectionKeyValueGet(S_SECTION_FLOAT, S_KEY_INVALID_FLOAT, S_VALUE_DEFAULT_FLOAT);
 
 			THEN("We get the default value")
 			{
-				REQUIRE(S_VALUE_DEFAULT_UNSIGNED_CHAR == ini_value);
+				REQUIRE(S_VALUE_DEFAULT_FLOAT == Approx(ini_value));
 			}
 		}
 
 		WHEN("Cleanup and delete ini file")
 		{
-			REQUIRE(sut.INIFileExist(S_FILE_INI_UNSIGNED_CHAR));
-			REQUIRE(sut.INIFileDelete(S_FILE_INI_UNSIGNED_CHAR));
+			REQUIRE(sut.INIFileExist(S_FILE_INI_FLOAT));
+			REQUIRE(sut.INIFileDelete(S_FILE_INI_FLOAT));
 
 			THEN("When the ini file is gone")
 			{
-				REQUIRE(false == sut.INIFileExist(S_FILE_INI_UNSIGNED_CHAR));
+				REQUIRE(false == sut.INIFileExist(S_FILE_INI_FLOAT));
 			}
 		}
 	}

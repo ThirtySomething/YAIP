@@ -19,45 +19,45 @@
 
 #pragma once
 
-#include "./../../externals/Catch2/single_include/Catch2/catch.hpp"
+#include "catch2\catch.hpp"
 #include "YAIP.h"
 #include <limits>
 
-static const std::string S_FILE_INI_DOUBLE = "double.ini";
-static const std::string S_SECTION_DOUBLE = "SECTION_DOUBLE";
-static const std::string S_KEY_DOUBLE = "KEY_DOUBLE";
-static const std::string S_KEY_INVALID_DOUBLE = "KEY_INVALID";
-static const double S_VALUE_DEFAULT_DOUBLE = 0.0;
+static const std::string S_FILE_INI_LONG = "long.ini";
+static const std::string S_SECTION_LONG = "SECTION_LONG";
+static const std::string S_KEY_LONG = "KEY_LONG";
+static const std::string S_KEY_INVALID_LONG = "KEY_INVALID";
+static const long S_VALUE_DEFAULT_LONG = 0L;
 
-SCENARIO("Processing of datatype [double]", "[net::derpaul::yaip::YAIP]")
+SCENARIO("Test YAIP with datatype [long]", "[net::derpaul::yaip::YAIP]")
 {
-	auto VALUE_DOUBLE = GENERATE(std::numeric_limits<double>::min(), std::numeric_limits<double>::max(), std::numeric_limits<double>::infinity());
+	auto VALUE_LONG = GENERATE(std::numeric_limits<long>::min(), std::numeric_limits<long>::max(), std::numeric_limits<long>::infinity());
 
-	INFO("Current value [" << VALUE_DOUBLE << "]");
+	INFO("Current value [" << VALUE_LONG << "]");
 
 	GIVEN("An empty instance of the YAIP parser")
 	{
 		net::derpaul::yaip::YAIP sut;
 		REQUIRE(sut.SectionListGet().empty());
-		REQUIRE(sut.SectionKeyValueSet(S_SECTION_DOUBLE, S_KEY_DOUBLE, VALUE_DOUBLE));
+		REQUIRE(sut.SectionKeyValueSet(S_SECTION_LONG, S_KEY_LONG, VALUE_LONG));
 
 		WHEN("Add a new section/key/value")
 		{
 			THEN("Count of section should be 1")
 			{
 				REQUIRE(false == sut.SectionListGet().empty());
+				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_LONG).size());
 				REQUIRE(1 == sut.SectionListGet().size());
-				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_DOUBLE).size());
 			}
 		}
 
 		WHEN("Save ini file")
 		{
-			REQUIRE(sut.INIFileSave(S_FILE_INI_DOUBLE));
+			REQUIRE(sut.INIFileSave(S_FILE_INI_LONG));
 
 			THEN("File exists")
 			{
-				REQUIRE(sut.INIFileExist(S_FILE_INI_DOUBLE));
+				REQUIRE(sut.INIFileExist(S_FILE_INI_LONG));
 			}
 		}
 
@@ -73,40 +73,40 @@ SCENARIO("Processing of datatype [double]", "[net::derpaul::yaip::YAIP]")
 
 		WHEN("Reload from ini file")
 		{
-			REQUIRE(sut.INIFileExist(S_FILE_INI_DOUBLE));
-			REQUIRE(sut.INIFileLoad(S_FILE_INI_DOUBLE));
+			REQUIRE(sut.INIFileExist(S_FILE_INI_LONG));
+			REQUIRE(sut.INIFileLoad(S_FILE_INI_LONG));
 
 			THEN("What you save is what you get")
 			{
 				auto SectionList = sut.SectionListGet();
-				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_DOUBLE);
+				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_LONG);
 
 				REQUIRE(1 == SectionList.size());
 				REQUIRE(1 == SectionKeyList.size());
 
-				double ini_value = sut.SectionKeyValueGet(S_SECTION_DOUBLE, S_KEY_DOUBLE, S_VALUE_DEFAULT_DOUBLE);
-				REQUIRE(VALUE_DOUBLE == Approx(ini_value));
+				long ini_value = sut.SectionKeyValueGet(S_SECTION_LONG, S_KEY_LONG, S_VALUE_DEFAULT_LONG);
+				REQUIRE(VALUE_LONG == ini_value);
 			}
 		}
 
 		WHEN("Read from invalid key")
 		{
-			double ini_value = sut.SectionKeyValueGet(S_SECTION_DOUBLE, S_KEY_INVALID_DOUBLE, S_VALUE_DEFAULT_DOUBLE);
+			long ini_value = sut.SectionKeyValueGet(S_SECTION_LONG, S_KEY_INVALID_LONG, S_VALUE_DEFAULT_LONG);
 
 			THEN("We get the default value")
 			{
-				REQUIRE(S_VALUE_DEFAULT_DOUBLE == Approx(ini_value));
+				REQUIRE(S_VALUE_DEFAULT_LONG == ini_value);
 			}
 		}
 
 		WHEN("Cleanup and delete ini file")
 		{
-			REQUIRE(sut.INIFileExist(S_FILE_INI_DOUBLE));
-			REQUIRE(sut.INIFileDelete(S_FILE_INI_DOUBLE));
+			REQUIRE(sut.INIFileExist(S_FILE_INI_LONG));
+			REQUIRE(sut.INIFileDelete(S_FILE_INI_LONG));
 
 			THEN("When the ini file is gone")
 			{
-				REQUIRE(false == sut.INIFileExist(S_FILE_INI_DOUBLE));
+				REQUIRE(false == sut.INIFileExist(S_FILE_INI_LONG));
 			}
 		}
 	}

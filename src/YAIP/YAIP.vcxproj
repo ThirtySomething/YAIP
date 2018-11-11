@@ -19,39 +19,40 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Convert.cpp" />
-    <ClCompile Include="IniEntry.cpp" />
-    <ClCompile Include="IniSection.cpp" />
-    <ClCompile Include="test_yaip.cpp" />
-    <ClCompile Include="YAIP.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Convert.h" />
-    <ClInclude Include="IAddFromRaw.h" />
-    <ClInclude Include="IElementComment.h" />
-    <ClInclude Include="IElementIdentifier.h" />
-    <ClInclude Include="IElementValue.h" />
-    <ClInclude Include="IniEntry.h" />
-    <ClInclude Include="IniEntryList.h" />
-    <ClInclude Include="IniSection.h" />
-    <ClInclude Include="IniSectionList.h" />
-    <ClInclude Include="test_bool.h" />
-    <ClInclude Include="test_char.h" />
-    <ClInclude Include="test_double.h" />
-    <ClInclude Include="test_float.h" />
-    <ClInclude Include="test_integer.h" />
-    <ClInclude Include="test_long.h" />
-    <ClInclude Include="test_short.h" />
-    <ClInclude Include="test_string.h" />
-    <ClInclude Include="test_unsigned_char.h" />
-    <ClInclude Include="test_unsigned_integer.h" />
-    <ClInclude Include="test_unsigned_long.h" />
-    <ClInclude Include="test_unsigned_short.h" />
-    <ClInclude Include="TIniElementList.h" />
-    <ClInclude Include="YAIP.h" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Project.props" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="test_yaip.cpp" />
+    <ClCompile Include="YAIP\Convert.cpp" />
+    <ClCompile Include="YAIP\IniEntry.cpp" />
+    <ClCompile Include="YAIP\IniSection.cpp" />
+    <ClCompile Include="YAIP\YAIP.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ITests\test_bool.h" />
+    <ClInclude Include="ITests\test_char.h" />
+    <ClInclude Include="ITests\test_double.h" />
+    <ClInclude Include="ITests\test_float.h" />
+    <ClInclude Include="ITests\test_integer.h" />
+    <ClInclude Include="ITests\test_long.h" />
+    <ClInclude Include="ITests\test_short.h" />
+    <ClInclude Include="ITests\test_string.h" />
+    <ClInclude Include="ITests\test_unsigned_char.h" />
+    <ClInclude Include="ITests\test_unsigned_integer.h" />
+    <ClInclude Include="ITests\test_unsigned_long.h" />
+    <ClInclude Include="ITests\test_unsigned_short.h" />
+    <ClInclude Include="UTests\test_Convert.h" />
+    <ClInclude Include="YAIP\Convert.h" />
+    <ClInclude Include="YAIP\IAddFromRaw.h" />
+    <ClInclude Include="YAIP\IElementComment.h" />
+    <ClInclude Include="YAIP\IElementIdentifier.h" />
+    <ClInclude Include="YAIP\IElementValue.h" />
+    <ClInclude Include="YAIP\IniEntry.h" />
+    <ClInclude Include="YAIP\IniEntryList.h" />
+    <ClInclude Include="YAIP\IniSection.h" />
+    <ClInclude Include="YAIP\IniSectionList.h" />
+    <ClInclude Include="YAIP\TIniElementList.h" />
+    <ClInclude Include="YAIP\YAIP.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7DFF9533-F233-43AA-BFB9-54BAA442F35F}</ProjectGuid>
@@ -148,6 +149,7 @@
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>
       </PrecompiledHeaderOutputFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)\YAIP\UTests\;$(SolutionDir)\YAIP\ITests\;$(SolutionDir)\YAIP\YAIP\;$(SolutionDir)\..\externals\Catch2\single_include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -170,6 +172,7 @@
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>
       </PrecompiledHeaderOutputFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)\YAIP\UTests\;$(SolutionDir)\YAIP\ITests\;$(SolutionDir)\YAIP\YAIP\;$(SolutionDir)\..\externals\Catch2\single_include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -194,6 +197,7 @@
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>
       </PrecompiledHeaderOutputFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)\YAIP\UTests\;$(SolutionDir)\YAIP\ITests\;$(SolutionDir)\YAIP\YAIP\;$(SolutionDir)\..\externals\Catch2\single_include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -221,6 +225,7 @@
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>
       </PrecompiledHeaderOutputFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)\YAIP\UTests\;$(SolutionDir)\YAIP\ITests\;$(SolutionDir)\YAIP\YAIP\;$(SolutionDir)\..\externals\Catch2\single_include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

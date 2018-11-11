@@ -19,27 +19,27 @@
 
 #pragma once
 
-#include "./../../externals/Catch2/single_include/Catch2/catch.hpp"
+#include "catch2\catch.hpp"
 #include "YAIP.h"
 #include <limits>
 
-static const std::string S_FILE_INI_UNSIGNED_INTEGER = "unsignedinteger.ini";
-static const std::string S_SECTION_UNSIGNED_INTEGER = "SECTION_UNSIGNED_INTEGER";
-static const std::string S_KEY_UNSIGNED_INTEGER = "KEY_UNSIGNED_INT";
-static const std::string S_KEY_INVALID_UNSIGNED_INTEGER = "KEY_INVALID";
-static const unsigned int S_VALUE_DEFAULT_UNSIGNED_INTEGER = 0;
+static const std::string S_FILE_INI_UNSIGNED_LONG = "unsignedlong.ini";
+static const std::string S_SECTION_UNSIGNED_LONG = "SECTION_UNSIGNED_LONG";
+static const std::string S_KEY_UNSIGNED_LONG = "KEY_UNSIGNED_LONG";
+static const std::string S_KEY_INVALID_UNSIGNED_LONG = "KEY_INVALID";
+static const unsigned long S_VALUE_DEFAULT_UNSIGNED_LONG = 0L;
 
-SCENARIO("Processing of datatype [unsigned integer]", "[net::derpaul::yaip::YAIP]")
+SCENARIO("Test YAIP with datatype [unsigned long]", "[net::derpaul::yaip::YAIP]")
 {
-	auto VALUE_UNSIGNED_INTEGER = GENERATE(std::numeric_limits<unsigned int>::min(), std::numeric_limits<unsigned int>::max(), std::numeric_limits<unsigned int>::infinity());
+	auto VALUE_UNSIGNED_LONG = GENERATE(std::numeric_limits<unsigned long>::min(), std::numeric_limits<unsigned long>::max(), std::numeric_limits<unsigned long>::infinity());
 
-	INFO("Current value [" << VALUE_UNSIGNED_INTEGER << "]");
+	INFO("Current value [" << VALUE_UNSIGNED_LONG << "]");
 
 	GIVEN("An empty instance of the YAIP parser")
 	{
 		net::derpaul::yaip::YAIP sut;
 		REQUIRE(sut.SectionListGet().empty());
-		REQUIRE(sut.SectionKeyValueSet(S_SECTION_UNSIGNED_INTEGER, S_KEY_UNSIGNED_INTEGER, VALUE_UNSIGNED_INTEGER));
+		REQUIRE(sut.SectionKeyValueSet(S_SECTION_UNSIGNED_LONG, S_KEY_UNSIGNED_LONG, VALUE_UNSIGNED_LONG));
 
 		WHEN("Add a new section/key/value")
 		{
@@ -47,17 +47,17 @@ SCENARIO("Processing of datatype [unsigned integer]", "[net::derpaul::yaip::YAIP
 			{
 				REQUIRE(false == sut.SectionListGet().empty());
 				REQUIRE(1 == sut.SectionListGet().size());
-				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_UNSIGNED_INTEGER).size());
+				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_UNSIGNED_LONG).size());
 			}
 		}
 
 		WHEN("Save ini file")
 		{
-			REQUIRE(sut.INIFileSave(S_FILE_INI_UNSIGNED_INTEGER));
+			REQUIRE(sut.INIFileSave(S_FILE_INI_UNSIGNED_LONG));
 
 			THEN("File exists")
 			{
-				REQUIRE(sut.INIFileExist(S_FILE_INI_UNSIGNED_INTEGER));
+				REQUIRE(sut.INIFileExist(S_FILE_INI_UNSIGNED_LONG));
 			}
 		}
 
@@ -73,40 +73,40 @@ SCENARIO("Processing of datatype [unsigned integer]", "[net::derpaul::yaip::YAIP
 
 		WHEN("Reload from ini file")
 		{
-			REQUIRE(sut.INIFileExist(S_FILE_INI_UNSIGNED_INTEGER));
-			REQUIRE(sut.INIFileLoad(S_FILE_INI_UNSIGNED_INTEGER));
+			REQUIRE(sut.INIFileExist(S_FILE_INI_UNSIGNED_LONG));
+			REQUIRE(sut.INIFileLoad(S_FILE_INI_UNSIGNED_LONG));
 
 			THEN("What you save is what you get")
 			{
 				auto SectionList = sut.SectionListGet();
-				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_UNSIGNED_INTEGER);
+				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_UNSIGNED_LONG);
 
 				REQUIRE(1 == SectionList.size());
 				REQUIRE(1 == SectionKeyList.size());
 
-				unsigned int ini_value = sut.SectionKeyValueGet(S_SECTION_UNSIGNED_INTEGER, S_KEY_UNSIGNED_INTEGER, S_VALUE_DEFAULT_UNSIGNED_INTEGER);
-				REQUIRE(VALUE_UNSIGNED_INTEGER == ini_value);
+				unsigned long ini_value = sut.SectionKeyValueGet(S_SECTION_UNSIGNED_LONG, S_KEY_UNSIGNED_LONG, S_VALUE_DEFAULT_UNSIGNED_LONG);
+				REQUIRE(VALUE_UNSIGNED_LONG == ini_value);
 			}
 		}
 
 		WHEN("Read from invalid key")
 		{
-			unsigned int ini_value = sut.SectionKeyValueGet(S_SECTION_UNSIGNED_INTEGER, S_KEY_INVALID_UNSIGNED_INTEGER, S_VALUE_DEFAULT_UNSIGNED_INTEGER);
+			unsigned long ini_value = sut.SectionKeyValueGet(S_SECTION_UNSIGNED_LONG, S_KEY_INVALID_UNSIGNED_LONG, S_VALUE_DEFAULT_UNSIGNED_LONG);
 
 			THEN("We get the default value")
 			{
-				REQUIRE(S_VALUE_DEFAULT_UNSIGNED_INTEGER == ini_value);
+				REQUIRE(S_VALUE_DEFAULT_UNSIGNED_LONG == ini_value);
 			}
 		}
 
 		WHEN("Cleanup and delete ini file")
 		{
-			REQUIRE(sut.INIFileExist(S_FILE_INI_UNSIGNED_INTEGER));
-			REQUIRE(sut.INIFileDelete(S_FILE_INI_UNSIGNED_INTEGER));
+			REQUIRE(sut.INIFileExist(S_FILE_INI_UNSIGNED_LONG));
+			REQUIRE(sut.INIFileDelete(S_FILE_INI_UNSIGNED_LONG));
 
 			THEN("When the ini file is gone")
 			{
-				REQUIRE(false == sut.INIFileExist(S_FILE_INI_UNSIGNED_INTEGER));
+				REQUIRE(false == sut.INIFileExist(S_FILE_INI_UNSIGNED_LONG));
 			}
 		}
 	}

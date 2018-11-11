@@ -19,27 +19,30 @@
 
 #pragma once
 
-#include "./../../externals/Catch2/single_include/Catch2/catch.hpp"
+#include "catch2\catch.hpp"
 #include "YAIP.h"
 #include <limits>
+#include <vector>
 
-static const std::string S_FILE_INI_BOOL = "bool.ini";
-static const std::string S_SECTION_BOOL = "SECTION_BOOL";
-static const std::string S_KEY_BOOL = "KEY_BOOL";
-static const std::string S_KEY_INVALID_BOOL = "KEY_INVALID";
-static const bool S_VALUE_DEFAULT_BOOL = true;
+static const std::string S_FILE_INI_STRING = "string.ini";
+static const std::string S_SECTION_STRING = "SECTION_STRING";
+static const std::string S_KEY_STRING = "KEY_STRING";
+static const std::string S_KEY_INVALID_STRING = "KEY_INVALID";
+static const std::string S_VALUE_DEFAULT_STRING = "-=>DEFAULT<=-";
 
-SCENARIO("Processing of datatype [bool]", "[net::derpaul::yaip::YAIP]")
+std::string testString("ABCDEFGHIJKLMNOPQRSTUVXYZ abcdefghijklmnopqrstuvxyz () 0123456789 ., _ +- |");
+
+SCENARIO("Test YAIP with datatype [string]", "[net::derpaul::yaip::YAIP]")
 {
-	auto VALUE_BOOL = GENERATE(std::numeric_limits<bool>::min(), std::numeric_limits<bool>::max(), std::numeric_limits<bool>::infinity());
+	auto VALUE_STRING = testString;
 
-	INFO("Current value [" << VALUE_BOOL << "]");
+	INFO("Current value [" << VALUE_STRING << "]");
 
 	GIVEN("An empty instance of the YAIP parser")
 	{
 		net::derpaul::yaip::YAIP sut;
 		REQUIRE(sut.SectionListGet().empty());
-		REQUIRE(sut.SectionKeyValueSet(S_SECTION_BOOL, S_KEY_BOOL, VALUE_BOOL));
+		REQUIRE(sut.SectionKeyValueSet(S_SECTION_STRING, S_KEY_STRING, VALUE_STRING));
 
 		WHEN("Add a new section/key/value")
 		{
@@ -47,17 +50,17 @@ SCENARIO("Processing of datatype [bool]", "[net::derpaul::yaip::YAIP]")
 			{
 				REQUIRE(false == sut.SectionListGet().empty());
 				REQUIRE(1 == sut.SectionListGet().size());
-				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_BOOL).size());
+				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_STRING).size());
 			}
 		}
 
 		WHEN("Save ini file")
 		{
-			REQUIRE(sut.INIFileSave(S_FILE_INI_BOOL));
+			REQUIRE(sut.INIFileSave(S_FILE_INI_STRING));
 
 			THEN("File exists")
 			{
-				REQUIRE(sut.INIFileExist(S_FILE_INI_BOOL));
+				REQUIRE(sut.INIFileExist(S_FILE_INI_STRING));
 			}
 		}
 
@@ -73,40 +76,40 @@ SCENARIO("Processing of datatype [bool]", "[net::derpaul::yaip::YAIP]")
 
 		WHEN("Reload from ini file")
 		{
-			REQUIRE(sut.INIFileExist(S_FILE_INI_BOOL));
-			REQUIRE(sut.INIFileLoad(S_FILE_INI_BOOL));
+			REQUIRE(sut.INIFileExist(S_FILE_INI_STRING));
+			REQUIRE(sut.INIFileLoad(S_FILE_INI_STRING));
 
 			THEN("What you save is what you get")
 			{
 				auto SectionList = sut.SectionListGet();
-				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_BOOL);
+				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_STRING);
 
 				REQUIRE(1 == SectionList.size());
 				REQUIRE(1 == SectionKeyList.size());
 
-				bool ini_value = sut.SectionKeyValueGet(S_SECTION_BOOL, S_KEY_BOOL, S_VALUE_DEFAULT_BOOL);
-				REQUIRE(VALUE_BOOL == ini_value);
+				std::string ini_value = sut.SectionKeyValueGet(S_SECTION_STRING, S_KEY_STRING, S_VALUE_DEFAULT_STRING);
+				REQUIRE(VALUE_STRING == ini_value);
 			}
 		}
 
 		WHEN("Read from invalid key")
 		{
-			bool ini_value = sut.SectionKeyValueGet(S_SECTION_BOOL, S_KEY_INVALID_BOOL, S_VALUE_DEFAULT_BOOL);
+			std::string ini_value = sut.SectionKeyValueGet(S_SECTION_STRING, S_KEY_INVALID_STRING, S_VALUE_DEFAULT_STRING);
 
 			THEN("We get the default value")
 			{
-				REQUIRE(S_VALUE_DEFAULT_BOOL == ini_value);
+				REQUIRE(S_VALUE_DEFAULT_STRING == ini_value);
 			}
 		}
 
 		WHEN("Cleanup and delete ini file")
 		{
-			REQUIRE(sut.INIFileExist(S_FILE_INI_BOOL));
-			REQUIRE(sut.INIFileDelete(S_FILE_INI_BOOL));
+			REQUIRE(sut.INIFileExist(S_FILE_INI_STRING));
+			REQUIRE(sut.INIFileDelete(S_FILE_INI_STRING));
 
 			THEN("When the ini file is gone")
 			{
-				REQUIRE(false == sut.INIFileExist(S_FILE_INI_BOOL));
+				REQUIRE(false == sut.INIFileExist(S_FILE_INI_STRING));
 			}
 		}
 	}

@@ -18,8 +18,9 @@
 //******************************************************************************
 
 #define CATCH_CONFIG_MAIN
-#include "./../../externals/Catch2/single_include/Catch2/catch.hpp"
+#include "catch2/catch.hpp"
 
+#include "test_Convert.h"
 #include "test_bool.h"
 #include "test_char.h"
 #include "test_double.h"

@@ -19,30 +19,27 @@
 
 #pragma once
 
-#include "./../../externals/Catch2/single_include/Catch2/catch.hpp"
+#include "catch2\catch.hpp"
 #include "YAIP.h"
 #include <limits>
-#include <vector>
 
-static const std::string S_FILE_INI_STRING = "string.ini";
-static const std::string S_SECTION_STRING = "SECTION_STRING";
-static const std::string S_KEY_STRING = "KEY_STRING";
-static const std::string S_KEY_INVALID_STRING = "KEY_INVALID";
-static const std::string S_VALUE_DEFAULT_STRING = "-=>DEFAULT<=-";
+static const std::string S_FILE_INI_INTEGER = "integer.ini";
+static const std::string S_SECTION_INTEGER = "SECTION_INTEGER";
+static const std::string S_KEY_INTEGER = "KEY_INTEGER";
+static const std::string S_KEY_INVALID_INTEGER = "KEY_INVALID";
+static const int S_VALUE_DEFAULT_INTEGER = 0;
 
-std::string testString("ABCDEFGHIJKLMNOPQRSTUVXYZ abcdefghijklmnopqrstuvxyz () 0123456789 ., _ +- |");
-
-SCENARIO("Processing of datatype [string]", "[net::derpaul::yaip::YAIP]")
+SCENARIO("Test YAIP with datatype [integer]", "[net::derpaul::yaip::YAIP]")
 {
-	auto VALUE_STRING = testString;
+	auto VALUE_INTEGER = GENERATE(std::numeric_limits<int>::min(), std::numeric_limits<int>::max(), std::numeric_limits<int>::infinity());
 
-	INFO("Current value [" << VALUE_STRING << "]");
+	INFO("Current value [" << VALUE_INTEGER << "]");
 
 	GIVEN("An empty instance of the YAIP parser")
 	{
 		net::derpaul::yaip::YAIP sut;
 		REQUIRE(sut.SectionListGet().empty());
-		REQUIRE(sut.SectionKeyValueSet(S_SECTION_STRING, S_KEY_STRING, VALUE_STRING));
+		REQUIRE(sut.SectionKeyValueSet(S_SECTION_INTEGER, S_KEY_INTEGER, VALUE_INTEGER));
 
 		WHEN("Add a new section/key/value")
 		{
@@ -50,17 +47,17 @@ SCENARIO("Processing of datatype [string]", "[net::derpaul::yaip::YAIP]")
 			{
 				REQUIRE(false == sut.SectionListGet().empty());
 				REQUIRE(1 == sut.SectionListGet().size());
-				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_STRING).size());
+				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_INTEGER).size());
 			}
 		}
 
 		WHEN("Save ini file")
 		{
-			REQUIRE(sut.INIFileSave(S_FILE_INI_STRING));
+			REQUIRE(sut.INIFileSave(S_FILE_INI_INTEGER));
 
 			THEN("File exists")
 			{
-				REQUIRE(sut.INIFileExist(S_FILE_INI_STRING));
+				REQUIRE(sut.INIFileExist(S_FILE_INI_INTEGER));
 			}
 		}
 
@@ -76,40 +73,40 @@ SCENARIO("Processing of datatype [string]", "[net::derpaul::yaip::YAIP]")
 
 		WHEN("Reload from ini file")
 		{
-			REQUIRE(sut.INIFileExist(S_FILE_INI_STRING));
-			REQUIRE(sut.INIFileLoad(S_FILE_INI_STRING));
+			REQUIRE(sut.INIFileExist(S_FILE_INI_INTEGER));
+			REQUIRE(sut.INIFileLoad(S_FILE_INI_INTEGER));
 
 			THEN("What you save is what you get")
 			{
 				auto SectionList = sut.SectionListGet();
-				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_STRING);
+				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_INTEGER);
 
 				REQUIRE(1 == SectionList.size());
 				REQUIRE(1 == SectionKeyList.size());
 
-				std::string ini_value = sut.SectionKeyValueGet(S_SECTION_STRING, S_KEY_STRING, S_VALUE_DEFAULT_STRING);
-				REQUIRE(VALUE_STRING == ini_value);
+				int ini_value = sut.SectionKeyValueGet(S_SECTION_INTEGER, S_KEY_INTEGER, S_VALUE_DEFAULT_INTEGER);
+				REQUIRE(VALUE_INTEGER == ini_value);
 			}
 		}
 
 		WHEN("Read from invalid key")
 		{
-			std::string ini_value = sut.SectionKeyValueGet(S_SECTION_STRING, S_KEY_INVALID_STRING, S_VALUE_DEFAULT_STRING);
+			int ini_value = sut.SectionKeyValueGet(S_SECTION_INTEGER, S_KEY_INVALID_INTEGER, S_VALUE_DEFAULT_INTEGER);
 
 			THEN("We get the default value")
 			{
-				REQUIRE(S_VALUE_DEFAULT_STRING == ini_value);
+				REQUIRE(S_VALUE_DEFAULT_INTEGER == ini_value);
 			}
 		}
 
 		WHEN("Cleanup and delete ini file")
 		{
-			REQUIRE(sut.INIFileExist(S_FILE_INI_STRING));
-			REQUIRE(sut.INIFileDelete(S_FILE_INI_STRING));
+			REQUIRE(sut.INIFileExist(S_FILE_INI_INTEGER));
+			REQUIRE(sut.INIFileDelete(S_FILE_INI_INTEGER));
 
 			THEN("When the ini file is gone")
 			{
-				REQUIRE(false == sut.INIFileExist(S_FILE_INI_STRING));
+				REQUIRE(false == sut.INIFileExist(S_FILE_INI_INTEGER));
 			}
 		}
 	}
