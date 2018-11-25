@@ -25,6 +25,7 @@
  */
 
 #include "IniSection.h"
+#include "string_extensions.h"
 #include <sstream>
 
  /**
@@ -66,7 +67,7 @@ namespace net
 			// ******************************************************************
 			void IniSection::ElementIdentifierSet(const std::string &ElementIdentifier)
 			{
-				m_SectionName = ElementIdentifier;
+				m_SectionName = std::trim(ElementIdentifier);
 			}
 
 			// ******************************************************************
@@ -80,7 +81,7 @@ namespace net
 			// ******************************************************************
 			void IniSection::ElementCommentSet(const std::string &ElementComment)
 			{
-				m_SectionComment = ElementComment;
+				m_SectionComment = std::trim(ElementComment);
 			}
 
 			// ******************************************************************

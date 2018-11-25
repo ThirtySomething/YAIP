@@ -127,7 +127,7 @@ void test_float(void)
 	value_numeric = 1.0;
 	net::derpaul::yaip::Convert::ConvertTo(value_numeric, value_string);
 	REQUIRE("1.000000000e+00" == value_string);
-	
+
 	// String to numeric value
 	value_string = "-1.000000000e+00";
 	net::derpaul::yaip::Convert::ConvertTo(value_string, value_numeric);
