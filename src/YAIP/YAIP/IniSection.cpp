@@ -99,7 +99,7 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			IniEntryList IniSection::SectionEntriesGet(void)
+			IniEntryList IniSection::SectionEntriesGet(void) const
 			{
 				return m_Entries;
 			}

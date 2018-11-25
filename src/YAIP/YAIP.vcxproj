@@ -27,6 +27,7 @@
     <ClCompile Include="YAIP\IniEntry.cpp" />
     <ClCompile Include="YAIP\IniSection.cpp" />
     <ClCompile Include="YAIP\IniSectionList.cpp" />
+    <ClCompile Include="YAIP\string_extensions.cpp" />
     <ClCompile Include="YAIP\YAIP.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -43,12 +44,14 @@
     <ClInclude Include="ITests\test_unsigned_long.h" />
     <ClInclude Include="ITests\test_unsigned_short.h" />
     <ClInclude Include="UTests\test_Convert.h" />
+    <ClInclude Include="UTests\test_IniEntry.h" />
     <ClInclude Include="YAIP\Convert.h" />
     <ClInclude Include="YAIP\IElementCommon.h" />
     <ClInclude Include="YAIP\IniEntry.h" />
     <ClInclude Include="YAIP\IniEntryList.h" />
     <ClInclude Include="YAIP\IniSection.h" />
     <ClInclude Include="YAIP\IniSectionList.h" />
+    <ClInclude Include="YAIP\string_extensions.h" />
     <ClInclude Include="YAIP\TIniElementList.h" />
     <ClInclude Include="YAIP\YAIP.h" />
   </ItemGroup>

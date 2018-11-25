@@ -99,7 +99,7 @@ namespace net
 				 * Get list of entries
 				 * \return List of entries
 				 */
-				IniEntryList SectionEntriesGet(void);
+				IniEntryList SectionEntriesGet(void) const;
 
 				/**
 				 * Will transform string into internal properties

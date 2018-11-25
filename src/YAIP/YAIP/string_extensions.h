@@ -17,20 +17,44 @@
 // along with YAIP. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************
 
-#define CATCH_CONFIG_MAIN
-#include "catch2/catch.hpp"
+/**
+ * \file	string_extensions.h
+ * \author	ThirtySomething
+ * \date	2016-09-19
+ * \brief	Extensions to std::string
+ */
+#pragma once
 
-#include "test_Convert.h"
-#include "test_IniEntry.h"
-#include "test_bool.h"
-#include "test_char.h"
-#include "test_double.h"
-#include "test_float.h"
-#include "test_integer.h"
-#include "test_long.h"
-#include "test_short.h"
-#include "test_string.h"
-#include "test_unsigned_char.h"
-#include "test_unsigned_integer.h"
-#include "test_unsigned_long.h"
-#include "test_unsigned_short.h"
+#include <string>
+
+ /**
+  * Namespace of string
+  */
+namespace std
+{
+	/**
+	 * Defined whitepaces to trim
+	 */
+	const std::string WHITESPACE = " \n\r\t\f\v";
+
+	/**
+	 * Trim whitespaces from left side of string
+	 * \param in String to trim
+	 * \return Trimmed string
+	 */
+	std::string ltrim(const std::string& in);
+
+	/**
+	 * Trim whitespaces from right side of string
+	 * \param in String to trim
+	 * \return Trimmed string
+	 */
+	std::string rtrim(const std::string& in);
+
+	/**
+	 * Trim whitespaces from both sides of string
+	 * \param in String to trim
+	 * \return Trimmed string
+	 */
+	std::string trim(const std::string& in);
+}

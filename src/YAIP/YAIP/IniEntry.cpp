@@ -25,6 +25,7 @@
  */
 
 #include "IniEntry.h"
+#include "string_extensions.h"
 #include <sstream>
 
  /**
@@ -66,7 +67,7 @@ namespace net
 			// ******************************************************************
 			void IniEntry::ElementIdentifierSet(const std::string &ElementIdentifier)
 			{
-				m_EntryKey = ElementIdentifier;
+				m_EntryKey = std::trim(ElementIdentifier);
 			}
 
 			// ******************************************************************
@@ -80,7 +81,7 @@ namespace net
 			// ******************************************************************
 			void IniEntry::ElementValueSet(const std::string &ElementValue)
 			{
-				m_EntryValue = ElementValue;
+				m_EntryValue = std::trim(ElementValue);
 			}
 
 			// ******************************************************************
@@ -94,7 +95,7 @@ namespace net
 			// ******************************************************************
 			void IniEntry::ElementCommentSet(const std::string &ElementComment)
 			{
-				m_EntryComment = ElementComment;
+				m_EntryComment = std::trim(ElementComment);
 			}
 
 			// ******************************************************************
@@ -131,7 +132,7 @@ namespace net
 			std::string IniEntry::to_string(void) const
 			{
 				std::ostringstream tmpStream;
-				tmpStream << m_EntryKey << "=" << m_EntryValue;
+				tmpStream << m_EntryKey << " = " << m_EntryValue;
 
 				if (!m_EntryComment.empty())
 				{
