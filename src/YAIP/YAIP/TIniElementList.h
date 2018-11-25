@@ -26,7 +26,7 @@
 #pragma once
 
 #include <string>
-#include <vector>
+#include <list>
 
  /**
   * Namespace of YAIP
@@ -46,7 +46,7 @@ namespace net
 			/**
 			 * Convenience typedef for lazy usage of vector of strings
 			 */
-			typedef std::vector<std::string> tVectorString;
+			typedef std::list<std::string> tListString;
 
 			/**
 			 * Templated  class as base for list of sections and list of entries
@@ -134,9 +134,9 @@ namespace net
 				 * Get a list of all element identifiers
 				 * \return Vector of all identifiers
 				 */
-				tVectorString ElementIdentifierList(void)
+				tListString ElementIdentifierList(void)
 				{
-					tVectorString List;
+					tListString List;
 
 					for (auto CurrentElementPtr = m_Elements.begin(); CurrentElementPtr != m_Elements.end(); ++CurrentElementPtr)
 					{

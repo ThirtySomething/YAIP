@@ -78,6 +78,11 @@ namespace net
 				 * \return true on success, otherwise false
 				 */
 				virtual bool CreateFromRawData(const std::string &RawData) = 0;
+
+				/**
+				 * To clear object and reset to empty fields
+				 */
+				virtual void clear(void) = 0;
 			};
 		}
 	}

@@ -111,6 +111,11 @@ namespace net
 				 */
 				std::string to_string(void) const;
 
+				/**
+				 * To clear object and reset to empty fields
+				 */
+				virtual void clear(void) override;
+
 			private:
 				/**
 				 * Section - Regular expression

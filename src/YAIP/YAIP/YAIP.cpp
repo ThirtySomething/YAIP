@@ -94,7 +94,7 @@ namespace net
 					std::string CurrentLine;
 
 					// Temporary storage for all lines of the INI file
-					tVectorString FileContent;
+					tListString FileContent;
 
 					// Read as long as lines exist
 					while (std::getline(IniFile, CurrentLine))
@@ -127,8 +127,8 @@ namespace net
 				if (IniFile.is_open())
 				{
 					// Get a list of all existing sections
-					tVectorString SectionList = SectionListGet();
-					for (tVectorString::iterator LoopSection = SectionList.begin(); LoopSection != SectionList.end(); ++LoopSection)
+					tListString SectionList = SectionListGet();
+					for (tListString::iterator LoopSection = SectionList.begin(); LoopSection != SectionList.end(); ++LoopSection)
 					{
 						// Save section
 						INIFileSaveSection(*LoopSection, IniFile);
@@ -163,9 +163,9 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			tVectorString YAIP::SectionKeyListGet(const std::string &Section)
+			tListString YAIP::SectionKeyListGet(const std::string &Section)
 			{
-				tVectorString KeyList;
+				tListString KeyList;
 
 				IniSectionPtr CurrentSection = m_Sections.ElementFind(Section);
 				if (nullptr != CurrentSection)
@@ -232,7 +232,7 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			tVectorString YAIP::SectionListGet(void)
+			tListString YAIP::SectionListGet(void)
 			{
 				return m_Sections.ElementIdentifierList();
 			}
@@ -249,7 +249,7 @@ namespace net
 			void YAIP::INIFileSaveSection(std::string Section, std::ofstream &IniFile)
 			{
 				// Retrieve list of keys
-				tVectorString KeyList = SectionKeyListGet(Section);
+				tListString KeyList = SectionKeyListGet(Section);
 
 				// Write section marker
 				if (0 != Section.length())
@@ -258,7 +258,7 @@ namespace net
 				}
 
 				// Loop over all keys, retrieve the values and save them
-				for (tVectorString::iterator LoopKey = KeyList.begin(); LoopKey != KeyList.end(); ++LoopKey)
+				for (tListString::iterator LoopKey = KeyList.begin(); LoopKey != KeyList.end(); ++LoopKey)
 				{
 					std::string Default = "";
 					std::string Key = *LoopKey;
@@ -269,14 +269,14 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			void YAIP::ParseFileContent(tVectorString FileContent)
+			void YAIP::ParseFileContent(tListString FileContent)
 			{
 				IniSection* CurrentSectionPtr = nullptr;
 
 				// Loop over the INI file
-				for (size_t Loop = 0; Loop < FileContent.size(); Loop++)
+				for (auto const& Loop : FileContent)
 				{
-					std::string Line = FileContent.at(Loop);
+					std::string Line = Loop;
 
 					// Got a new section?
 					IniSectionPtr SectionPtr(new IniSection);

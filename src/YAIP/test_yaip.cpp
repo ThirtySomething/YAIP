@@ -22,6 +22,7 @@
 
 #include "test_Convert.h"
 #include "test_IniEntry.h"
+#include "test_IniEntryList.h"
 #include "test_bool.h"
 #include "test_char.h"
 #include "test_double.h"

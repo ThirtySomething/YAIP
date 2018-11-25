@@ -26,48 +26,45 @@ SCENARIO("Test class [IniEntry]", "[net::derpaul::yaip::IniEntry]")
 {
 	net::derpaul::yaip::IniEntry sut;
 
-	GIVEN("An empty instance of the IniEntry")
-	{
-		// Set using default setter
-		std::string Identifier = "IniEntryIdentifier";
-		sut.ElementIdentifierSet(Identifier);
-		auto IdentifierRead = sut.ElementIdentifierGet();
-		REQUIRE(Identifier == IdentifierRead);
+	INFO("Test setter");
+	std::string Identifier = "IniEntryIdentifier";
+	sut.ElementIdentifierSet(Identifier);
+	auto IdentifierRead = sut.ElementIdentifierGet();
+	REQUIRE(Identifier == IdentifierRead);
 
-		std::string Value = "IniEntryValue";
-		sut.ElementValueSet(Value);
-		auto ValueRead = sut.ElementValueGet();
-		REQUIRE(Value == ValueRead);
+	std::string Value = "IniEntryValue";
+	sut.ElementValueSet(Value);
+	auto ValueRead = sut.ElementValueGet();
+	REQUIRE(Value == ValueRead);
 
-		std::string Comment = "IniEntryComment";
-		sut.ElementCommentSet(Comment);
-		auto CommentRead = sut.ElementCommentGet();
-		REQUIRE(Comment == CommentRead);
+	std::string Comment = "IniEntryComment";
+	sut.ElementCommentSet(Comment);
+	auto CommentRead = sut.ElementCommentGet();
+	REQUIRE(Comment == CommentRead);
 
-		// Cleanup
-		sut.ElementIdentifierSet("");
-		sut.ElementValueSet("");
-		sut.ElementCommentSet("");
-		IdentifierRead = sut.ElementIdentifierGet();
-		ValueRead = sut.ElementValueGet();
-		CommentRead = sut.ElementCommentGet();
+	INFO("Test cleanup");
+	sut.clear();
+	IdentifierRead = sut.ElementIdentifierGet();
+	ValueRead = sut.ElementValueGet();
+	CommentRead = sut.ElementCommentGet();
 
-		REQUIRE("" == IdentifierRead);
-		REQUIRE("" == ValueRead);
-		REQUIRE("" == CommentRead);
+	REQUIRE("" == IdentifierRead);
+	REQUIRE("" == ValueRead);
+	REQUIRE("" == CommentRead);
 
-		// Set from raw data
-		std::string RawData = Identifier + " = " + Value + " ; " + Comment;
-		sut.CreateFromRawData(RawData);
+	INFO("Test setting from raw data");
+	std::string RawData = Identifier + " = " + Value + " ; " + Comment;
+	auto result = sut.CreateFromRawData(RawData);
+	REQUIRE(true == result);
 
-		IdentifierRead = sut.ElementIdentifierGet();
-		ValueRead = sut.ElementValueGet();
-		CommentRead = sut.ElementCommentGet();
+	IdentifierRead = sut.ElementIdentifierGet();
+	ValueRead = sut.ElementValueGet();
+	CommentRead = sut.ElementCommentGet();
 
-		REQUIRE(Identifier == IdentifierRead);
-		REQUIRE(Value == ValueRead);
-		REQUIRE(Comment == CommentRead);
+	REQUIRE(Identifier == IdentifierRead);
+	REQUIRE(Value == ValueRead);
+	REQUIRE(Comment == CommentRead);
 
-		REQUIRE(RawData == sut.to_string());
-	}
+	INFO("Test to_string");
+	REQUIRE(RawData == sut.to_string());
 }

@@ -132,7 +132,7 @@ namespace net
 				 * Get a list of all keys of this sections
 				 * \return List of keys
 				 */
-				tVectorString EntryKeyList(void);
+				tListString EntryKeyList(void);
 
 				/**
 				 * Check if section is empty
@@ -151,6 +151,11 @@ namespace net
 				 * \return String representation of an INI entry
 				 */
 				std::string to_string(void) const;
+
+				/**
+				 * To clear object and reset to empty fields
+				 */
+				virtual void clear(void) override;
 
 			private:
 				/**

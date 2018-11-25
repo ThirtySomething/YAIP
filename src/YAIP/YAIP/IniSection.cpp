@@ -157,7 +157,7 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			tVectorString IniSection::EntryKeyList(void)
+			tListString IniSection::EntryKeyList(void)
 			{
 				return m_Entries.ElementIdentifierList();
 			}
@@ -189,6 +189,15 @@ namespace net
 				}
 
 				return tmpStream.str();
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			void IniSection::clear(void)
+			{
+				ElementIdentifierSet("");
+				ElementCommentSet("");
+				m_Entries.clear();
 			}
 
 			// ******************************************************************

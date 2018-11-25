@@ -140,7 +140,7 @@ namespace net
 				 * \param Section Specified section
 				 * \return Vector with a std::strings for each key
 				 */
-				tVectorString SectionKeyListGet(const std::string &Section);
+				tListString SectionKeyListGet(const std::string &Section);
 
 				/**
 				 * Method to retrieve a value of the specified section/key combination for std::string
@@ -197,7 +197,7 @@ namespace net
 				 * Get all sections of the INI file
 				 * \return Vector with a std::strings for each section
 				 */
-				tVectorString SectionListGet(void);
+				tListString SectionListGet(void);
 
 				/**
 				 * Drop all data to get a clean INI
@@ -221,7 +221,7 @@ namespace net
 				 * Loop over file content to determine sections and key/values to populate internal storage
 				 * \param FileContent The INI file as a vector of std::strings, each line a string
 				 */
-				void ParseFileContent(tVectorString FileContent);
+				void ParseFileContent(tListString FileContent);
 			};
 		}
 	}

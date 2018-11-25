@@ -45,6 +45,7 @@
     <ClInclude Include="ITests\test_unsigned_short.h" />
     <ClInclude Include="UTests\test_Convert.h" />
     <ClInclude Include="UTests\test_IniEntry.h" />
+    <ClInclude Include="UTests\test_IniEntryList.h" />
     <ClInclude Include="YAIP\Convert.h" />
     <ClInclude Include="YAIP\IElementCommon.h" />
     <ClInclude Include="YAIP\IniEntry.h" />

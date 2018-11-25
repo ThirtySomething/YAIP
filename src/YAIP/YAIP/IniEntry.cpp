@@ -144,6 +144,15 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
+			void IniEntry::clear(void)
+			{
+				ElementIdentifierSet("");
+				ElementCommentSet("");
+				ElementValueSet("");
+			}
+
+			// ******************************************************************
+			// ******************************************************************
 			std::ostream& operator<<(std::ostream &OutputStream, const IniEntry &EntryObject)
 			{
 				return OutputStream;
