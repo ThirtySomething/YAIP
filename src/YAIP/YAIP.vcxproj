@@ -22,7 +22,12 @@
     <None Include="Project.props" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="test_yaip.cpp" />
+    <ClCompile Include="test_yaip.cpp">
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/bigobj</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/bigobj</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/bigobj</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/bigobj</AdditionalOptions>
+    </ClCompile>
     <ClCompile Include="YAIP\Convert.cpp" />
     <ClCompile Include="YAIP\IniEntry.cpp" />
     <ClCompile Include="YAIP\IniSection.cpp" />
