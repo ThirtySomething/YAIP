@@ -27,6 +27,7 @@
 #include "IniSection.h"
 #include "string_extensions.h"
 #include <sstream>
+#include <iostream>
 
  /**
   * Namespace of YAIP
@@ -158,14 +159,14 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			tListString IniSection::EntryKeyList(void)
+			tListString IniSection::EntryKeyList(void) const
 			{
 				return m_Entries.ElementIdentifierList();
 			}
 
 			// ******************************************************************
 			// ******************************************************************
-			bool IniSection::IsEmpty(void)
+			bool IniSection::IsEmpty(void) const
 			{
 				return (0 == m_Entries.size());
 			}
@@ -188,6 +189,10 @@ namespace net
 				{
 					tmpStream << " ; " << m_SectionComment;
 				}
+
+				tmpStream << std::endl;
+
+				tmpStream << m_Entries.to_string();
 
 				return tmpStream.str();
 			}

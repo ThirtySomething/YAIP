@@ -134,7 +134,7 @@ namespace net
 				 * Get a list of all element identifiers
 				 * \return Vector of all identifiers
 				 */
-				tListString ElementIdentifierList(void)
+				tListString ElementIdentifierList(void) const
 				{
 					tListString List;
 
@@ -144,6 +144,22 @@ namespace net
 					}
 
 					return List;
+				}
+
+				/**
+				 * String representation of the list
+				 * \return String representation of the list
+				 */
+				std::string to_string(void) const
+				{
+					std::ostringstream tmpStream;
+
+					for (auto CurrentElementPtr = m_Elements.begin(); CurrentElementPtr != m_Elements.end(); ++CurrentElementPtr)
+					{
+						tmpStream << (*CurrentElementPtr)->to_string();
+					}
+
+					return tmpStream.str();
 				}
 
 			protected:

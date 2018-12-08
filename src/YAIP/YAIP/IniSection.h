@@ -132,13 +132,13 @@ namespace net
 				 * Get a list of all keys of this sections
 				 * \return List of keys
 				 */
-				tListString EntryKeyList(void);
+				tListString EntryKeyList(void) const;
 
 				/**
 				 * Check if section is empty
 				 * \return True if empty otherwise false
 				 */
-				bool IsEmpty(void);
+				bool IsEmpty(void) const;
 
 				/**
 				 * Add an entry to the section

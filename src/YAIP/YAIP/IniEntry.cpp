@@ -27,6 +27,7 @@
 #include "IniEntry.h"
 #include "string_extensions.h"
 #include <sstream>
+#include <iostream>
 
  /**
   * Namespace of YAIP
@@ -138,6 +139,7 @@ namespace net
 				{
 					tmpStream << " ; " << m_EntryComment;
 				}
+				tmpStream << std::endl;
 
 				return tmpStream.str();
 			}
