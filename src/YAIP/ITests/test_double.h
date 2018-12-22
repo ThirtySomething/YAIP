@@ -61,6 +61,17 @@ SCENARIO("Test YAIP with datatype double", "[double]")
 			}
 		}
 
+		WHEN("Set value of key to empty")
+		{
+			REQUIRE(sut.SectionKeyValueClear(S_SECTION_DOUBLE, S_KEY_DOUBLE));
+
+			THEN("Read value should return default")
+			{
+				double ini_value = sut.SectionKeyValueGet(S_SECTION_DOUBLE, S_KEY_DOUBLE, S_VALUE_DEFAULT_DOUBLE);
+				REQUIRE(S_VALUE_DEFAULT_DOUBLE == ini_value);
+			}
+		}
+
 		WHEN("Clear internal data")
 		{
 			sut.Clear();

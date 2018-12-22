@@ -61,6 +61,17 @@ SCENARIO("Test YAIP with datatype bool", "[bool]")
 			}
 		}
 
+		WHEN("Set value of key to empty")
+		{
+			REQUIRE(sut.SectionKeyValueClear(S_SECTION_BOOL, S_KEY_BOOL));
+
+			THEN("Read value should return default")
+			{
+				bool ini_value = sut.SectionKeyValueGet(S_SECTION_BOOL, S_KEY_BOOL, S_VALUE_DEFAULT_BOOL);
+				REQUIRE(S_VALUE_DEFAULT_BOOL == ini_value);
+			}
+		}
+
 		WHEN("Clear internal data")
 		{
 			sut.Clear();

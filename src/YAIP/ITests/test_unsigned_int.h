@@ -61,6 +61,17 @@ SCENARIO("Test YAIP with datatype unsigned int", "[unsigned int]")
 			}
 		}
 
+		WHEN("Set value of key to empty")
+		{
+			REQUIRE(sut.SectionKeyValueClear(S_SECTION_UNSIGNED_INT, S_KEY_UNSIGNED_INT));
+
+			THEN("Read value should return default")
+			{
+				unsigned int ini_value = sut.SectionKeyValueGet(S_SECTION_UNSIGNED_INT, S_KEY_UNSIGNED_INT, S_VALUE_DEFAULT_UNSIGNED_INT);
+				REQUIRE(S_VALUE_DEFAULT_UNSIGNED_INT == ini_value);
+			}
+		}
+
 		WHEN("Clear internal data")
 		{
 			sut.Clear();

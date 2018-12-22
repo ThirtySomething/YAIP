@@ -61,6 +61,17 @@ SCENARIO("Test YAIP with datatype char", "[char]")
 			}
 		}
 
+		WHEN("Set value of key to empty")
+		{
+			REQUIRE(sut.SectionKeyValueClear(S_SECTION_CHAR, S_KEY_CHAR));
+
+			THEN("Read value should return default")
+			{
+				char ini_value = sut.SectionKeyValueGet(S_SECTION_CHAR, S_KEY_CHAR, S_VALUE_DEFAULT_CHAR);
+				REQUIRE(S_VALUE_DEFAULT_CHAR == ini_value);
+			}
+		}
+
 		WHEN("Clear internal data")
 		{
 			sut.Clear();

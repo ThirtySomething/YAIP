@@ -64,6 +64,17 @@ SCENARIO("Test YAIP with datatype string", "[string]")
 			}
 		}
 
+		WHEN("Set value of key to empty")
+		{
+			REQUIRE(sut.SectionKeyValueClear(S_SECTION_STRING, S_KEY_STRING));
+
+			THEN("Read value should return default")
+			{
+				std::string ini_value = sut.SectionKeyValueGet(S_SECTION_STRING, S_KEY_STRING, S_VALUE_DEFAULT_STRING);
+				REQUIRE(S_VALUE_DEFAULT_STRING == ini_value);
+			}
+		}
+
 		WHEN("Clear internal data")
 		{
 			sut.Clear();

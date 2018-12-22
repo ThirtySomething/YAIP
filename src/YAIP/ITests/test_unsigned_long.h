@@ -61,6 +61,17 @@ SCENARIO("Test YAIP with datatype unsigned long", "[unsigned long]")
 			}
 		}
 
+		WHEN("Set value of key to empty")
+		{
+			REQUIRE(sut.SectionKeyValueClear(S_SECTION_UNSIGNED_LONG, S_KEY_UNSIGNED_LONG));
+
+			THEN("Read value should return default")
+			{
+				unsigned long ini_value = sut.SectionKeyValueGet(S_SECTION_UNSIGNED_LONG, S_KEY_UNSIGNED_LONG, S_VALUE_DEFAULT_UNSIGNED_LONG);
+				REQUIRE(S_VALUE_DEFAULT_UNSIGNED_LONG == ini_value);
+			}
+		}
+
 		WHEN("Clear internal data")
 		{
 			sut.Clear();

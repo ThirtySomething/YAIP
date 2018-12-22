@@ -6,8 +6,7 @@
 
 ## General information
 
-- **YAIP** is distributed under the terms of the **GNU LESSER GENERAL PUBLIC LICENSE**, version 3.0. The text of the license is included in the file [<code>LICENSE.TXT</code>][license] in the project root.
-- As testing framework [*Catch2*][catch2] is used.
+**YAIP** is distributed under the terms of the **GNU LESSER GENERAL PUBLIC LICENSE**, version 3.0. The text of the license is included in the file [<code>LICENSE.TXT</code>][license] in the project root.
 
 ## Requirements
 
@@ -19,18 +18,25 @@ Supported platforms are all platforms where the code compiles and the tests run 
 
 ## Motivation
 
-Searching for INI parsers for C++ fires up a lot of them. Most of them come with a lot of stuff/classes around, some of them as library. Only a few of them offers plain classes. Also only a few of them are portable. And I'm missing the usage of modern C++ like own [*templates*][cpp_templates] and the usage of the [*STL*][cpp_stl]. I like to improve my C++ skills so I decided to write my own INI file parser.
+Searching for INI parsers for C++ fires up a lot of them. Most of them come with a lot of stuff/classes around, some of them as library. Only a few of them offers plain classes. Also only a few of them are portable. And I'm missing the usage of modern C++ like own [templates][cpp_templates] and the usage of the [STL][cpp_stl]. I like to improve my C++ skills so I decided to write my own INI file parser.
 
 ## Implementation Details
 
-- Convenience typedefs for datatypes in <code>YAIP.h</code>
-- Detection of section and key/value pair is done using [*regular expressions*][cpp_regexp], see also [*regular expression*][wiki_regexp]
-- The major methods are based on [*std::string*][cpp_string]
-- The templated methods using converters from and to [*std::string*][cpp_string]
+- Convenience typedefs for datatypes are done in their corresponding classes, e. g. the smartpointer <code>net::derpaul::yaip::IniEntryPtr</code> in the class file of <code>net::derpaul::yaip::IniEntry</code>.
+- Detection of section and key/value pair while reading is done using [regular expressions][cpp_regexp], see also [regular expression][wiki_regexp].
+- The internal data storage methods are based on [std::string][cpp_string].
+- Templated methods are used for other datatypes calling converters from and to [std::string][cpp_string].
+
+## Used tools
+
+- As testing framework [Catch2][catch2] is used.
+- For general C++ style [CppCheck][CppCheck] is used.
+- For code metrics [SourceMonitor][SourceMonitor] is used.
+- For code coverage [OpenCppCoverage][OpenCppCoverage] is used.
 
 ## Extension
 
-If any datatype is currently not supported, the extension is very simple. Just extend the class <code>YAIP::Convert</code> with conversion methods from/to your data type.
+To extend the capabilities with currently not supported datatypes, the extension is very simple. Just extend the class <code>net::derpaul::yaip::Convert</code> with conversion methods from/to your data type.
 
 ## Doxygen Documentation
 
@@ -169,6 +175,18 @@ bool SectionKeyValueSet(const std::string &Section, const std::string &Key, cons
 void SectionKeyKill(const std::string &Section, const std::string &Key);
 ```
 
+- Set/Clear a key value and keep an empty key
+
+```C++
+/**
+ * Clear a key value
+ * \param Section Specified section
+ * \param Key Specified key
+ * \return true on success otherwise false
+ */
+bool SectionKeyValueClear(const std::string &Section, const std::string &Key);
+```
+
 ## ToDo's
 
 - The implementation has to be checked against the inofficial specification at [Wikipedia][wiki_ini] and the tests have to satisfiy the specification.
@@ -177,6 +195,7 @@ void SectionKeyKill(const std::string &Section, const std::string &Key);
 - Add sorting to ```TIniElementList```
 
 [catch2]: https://github.com/philsquared/Catch
+[CppCheck]: http://cppcheck.sourceforge.net/
 [cpp_eleven]: https://en.wikipedia.org/wiki/C%2B%2B11
 [cpp_map]: http://en.cppreference.com/w/cpp/container/map
 [cpp_templates]: https://en.wikipedia.org/wiki/Template_(C%2B%2B)
@@ -186,6 +205,8 @@ void SectionKeyKill(const std::string &Section, const std::string &Key);
 [cpp_vector]: http://en.cppreference.com/w/cpp/container/vector
 [license]: https://github.com/ThirtySomething/YAIP/blob/master/LICENSE.TXT
 [msvs]: https://www.visualstudio.com/
+[OpenCppCoverage]: https://github.com/OpenCppCoverage
+[SourceMonitor]: http://www.campwoodsw.com/sourcemonitor.html
 [wiki_ini]: https://en.wikipedia.org/wiki/INI_file#Comments
 [wiki_regexp]: https://en.wikipedia.org/wiki/Regular_expression
 

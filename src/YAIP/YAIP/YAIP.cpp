@@ -232,6 +232,13 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
+			bool YAIP::SectionKeyValueClear(const std::string &Section, const std::string &Key)
+			{
+				return SectionKeyValueSet(Section, Key, ' ');
+			}
+
+			// ******************************************************************
+			// ******************************************************************
 			tListString YAIP::SectionListGet(void)
 			{
 				return m_Sections.ElementIdentifierList();

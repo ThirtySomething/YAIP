@@ -27,6 +27,7 @@
 
 #include <string>
 #include <list>
+#include "string_extensions.h"
 
  /**
   * Namespace of YAIP
@@ -110,9 +111,10 @@ namespace net
 				 */
 				TIniElement ElementFind(const std::string &ElementName)
 				{
+					std::string ElementNameWork = std::trim(ElementName);
 					TIniElement Element = nullptr;
 
-					auto it = std::find_if(m_Elements.begin(), m_Elements.end(), [&ElementName](const TIniElement &obj) {return obj->ElementIdentifierGet() == ElementName; });
+					auto it = std::find_if(m_Elements.begin(), m_Elements.end(), [&ElementNameWork](const TIniElement &obj) {return obj->ElementIdentifierGet() == ElementNameWork; });
 					if (it != m_Elements.end())
 					{
 						Element = *it;

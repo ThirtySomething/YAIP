@@ -194,6 +194,14 @@ namespace net
 				}
 
 				/**
+				 * Clear a key value
+				 * \param Section Specified section
+				 * \param Key Specified key
+				 * \return true on success otherwise false
+				 */
+				bool SectionKeyValueClear(const std::string &Section, const std::string &Key);
+
+				/**
 				 * Get all sections of the INI file
 				 * \return Vector with a std::strings for each section
 				 */
