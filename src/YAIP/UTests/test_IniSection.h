@@ -92,7 +92,7 @@ SCENARIO("Test class IniSection", "[IniSection]")
 
 	tmpStream.str("");
 	tmpStream.clear();
-	tmpStream << IdentifierEntry << " = " + ValueEntry << " ; " << CommentEntry << std::endl;
+	tmpStream << IdentifierEntry << " = " << ValueEntry << " ; " << CommentEntry << std::endl;
 	std::string RawDataEntry = tmpStream.str();
 
 	result = sut.AddRawEntry(RawDataEntry);

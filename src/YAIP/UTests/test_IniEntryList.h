@@ -28,13 +28,16 @@ SCENARIO("Test class IniEntryList", "[IniEntryList]")
 	std::string key = "key";
 	std::string value = "value";
 	std::string comment = "comment";
-	std::string entryraw = key + " = " + value + " ; " + comment;
+
+	std::ostringstream tmpStream;
+	tmpStream << key << " = " + value << " ; " << comment << std::endl;
+	std::string entryraw = tmpStream.str();
 
 	auto size = sut.size();
 	REQUIRE(0 == size);
 
 	net::derpaul::yaip::IniEntryPtr entry(new net::derpaul::yaip::IniEntry);
-	entry->CreateFromRawData("key=value;comment");
+	entry->CreateFromRawData(entryraw);
 
 	sut.ElementAdd(entry);
 	size = sut.size();

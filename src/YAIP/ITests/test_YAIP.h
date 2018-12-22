@@ -30,11 +30,73 @@ static const std::string S_SECTION = "SECTION";
 static const std::string S_KEY = "KEY";
 static const std::string S_KEY_INVALID = "KEY_INVALID";
 
-template <typename T>
-void test_yaip(const std::string &DataType, T Value, T ValueDefault)
-{
-	INFO("Current value [" << DataType << "]");
+template <typename T> T GetDefaultValue(void);
 
+template < > bool GetDefaultValue<bool>(void)
+{
+	return true;
+}
+
+template < > char GetDefaultValue<char>(void)
+{
+	return 'Y';
+}
+
+template < > double GetDefaultValue<double>(void)
+{
+	return 0.0;
+}
+
+template < > float GetDefaultValue<float>(void)
+{
+	return 0.0f;
+}
+
+template < > int GetDefaultValue<int>(void)
+{
+	return 0;
+}
+
+template < > long GetDefaultValue<long>(void)
+{
+	return 0L;
+}
+
+template < > short GetDefaultValue<short>(void)
+{
+	return 0;
+}
+
+template < > std::string GetDefaultValue<std::string>(void)
+{
+	std::string DefaultString = "-=>DEFAULT<=-";
+	return DefaultString;
+}
+
+template < > unsigned char GetDefaultValue<unsigned char>(void)
+{
+	return 'Y';
+}
+
+template < > unsigned int GetDefaultValue<unsigned int>(void)
+{
+	return 0;
+}
+
+template < > unsigned long GetDefaultValue<unsigned long>(void)
+{
+	return 0L;
+}
+
+template < > unsigned short GetDefaultValue<unsigned short>(void)
+{
+	return 0;
+}
+
+template <typename T>
+void test_yaip(T Value)
+{
+	T ValueDefault = GetDefaultValue<T>();
 	GIVEN("An empty instance of the YAIP parser")
 	{
 		net::derpaul::yaip::YAIP sut;
@@ -110,6 +172,23 @@ void test_yaip(const std::string &DataType, T Value, T ValueDefault)
 			}
 		}
 
+		WHEN("Delete key")
+		{
+			REQUIRE(sut.SectionKeyKill(S_SECTION, S_KEY));
+
+			THEN("No entries, no section")
+			{
+				auto SectionList = sut.SectionListGet();
+				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION);
+
+				REQUIRE(0 == SectionList.size());
+				REQUIRE(0 == SectionKeyList.size());
+
+				T ini_value = sut.SectionKeyValueGet(S_SECTION, S_KEY, ValueDefault);
+				REQUIRE(ValueDefault == ini_value);
+			}
+		}
+
 		WHEN("Cleanup and delete ini file")
 		{
 			REQUIRE(sut.INIFileExist(S_FILE_INI));
@@ -123,23 +202,15 @@ void test_yaip(const std::string &DataType, T Value, T ValueDefault)
 	}
 }
 
-SCENARIO("Test YAIP with datatype [string]", "[net::derpaul::yaip::YAIP]")
+TEMPLATE_TEST_CASE("Test YAIP with datatypes except string", "[YAIP]", bool, char, double, float, int, long, short, unsigned char, unsigned int, unsigned long, unsigned short)
 {
-	// Test with std::string
-	std::string DataTypeString = "std::string";
-	std::string DataTypeStringValue = "ABCDEFGHIJKLMNOPQRSTUVXYZ abcdefghijklmnopqrstuvxyz () 0123456789 ., _ +- |";
-	std::string DataTypeStringDefault = "-=>DEFAULT<=-";
-	test_yaip<std::string>(DataTypeString, DataTypeStringValue, DataTypeStringDefault);
+	auto VALUE = GENERATE(std::numeric_limits<TestType>::min(), std::numeric_limits<TestType>::max(), std::numeric_limits<TestType>::infinity());
 
-	// Test with bool
-	std::string DataTypeBool = "bool";
-	test_yaip<bool>(DataTypeBool, std::numeric_limits<bool>::min(), true);
-	test_yaip<bool>(DataTypeBool, std::numeric_limits<bool>::max(), true);
-	test_yaip<bool>(DataTypeBool, std::numeric_limits<bool>::infinity(), true);
+	test_yaip<TestType>(VALUE);
+}
 
-	// Test with char
-	std::string DataTypeChar = "char";
-	test_yaip<char>(DataTypeChar, std::numeric_limits<char>::min(), 'Y');
-	test_yaip<char>(DataTypeChar, std::numeric_limits<char>::max(), 'Y');
-	test_yaip<char>(DataTypeChar, std::numeric_limits<char>::infinity(), 'Y');
+TEST_CASE("Test YAIP with datatype string", "[YAIP]")
+{
+	std::string testString("ABCDEFGHIJKLMNOPQRSTUVXYZ abcdefghijklmnopqrstuvxyz () 0123456789 ., _ +- |");
+	test_yaip<std::string>(testString);
 }

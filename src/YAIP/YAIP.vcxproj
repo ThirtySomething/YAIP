@@ -33,18 +33,8 @@
     <ClCompile Include="YAIP\YAIP.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ITests\test_bool.h" />
-    <ClInclude Include="ITests\test_char.h" />
     <ClInclude Include="ITests\test_double.h" />
-    <ClInclude Include="ITests\test_float.h" />
-    <ClInclude Include="ITests\test_int.h" />
-    <ClInclude Include="ITests\test_long.h" />
-    <ClInclude Include="ITests\test_short.h" />
-    <ClInclude Include="ITests\test_string.h" />
-    <ClInclude Include="ITests\test_unsigned_char.h" />
-    <ClInclude Include="ITests\test_unsigned_int.h" />
-    <ClInclude Include="ITests\test_unsigned_long.h" />
-    <ClInclude Include="ITests\test_unsigned_short.h" />
+    <ClInclude Include="ITests\test_YAIP.h" />
     <ClInclude Include="UTests\test_Convert.h" />
     <ClInclude Include="UTests\test_IniEntry.h" />
     <ClInclude Include="UTests\test_IniEntryList.h" />
