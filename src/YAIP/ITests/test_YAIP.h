@@ -94,6 +94,22 @@ template < > unsigned short GetDefaultValue<unsigned short>(void)
 }
 
 template <typename T>
+void CompareForEqual(const T &ValueLeft, const T &ValueRight)
+{
+	REQUIRE(ValueLeft == ValueRight);
+}
+
+template < > void CompareForEqual<double>(const double &ValueLeft, const double &ValueRight)
+{
+	REQUIRE(ValueLeft == Approx(ValueRight));
+}
+
+template < > void CompareForEqual<float>(const float &ValueLeft, const float &ValueRight)
+{
+	REQUIRE(ValueLeft == Approx(ValueRight));
+}
+
+template <typename T>
 void test_yaip(T Value)
 {
 	T ValueDefault = GetDefaultValue<T>();
@@ -130,7 +146,7 @@ void test_yaip(T Value)
 			THEN("Read value should return default")
 			{
 				T ini_value = sut.SectionKeyValueGet(S_SECTION, S_KEY, ValueDefault);
-				REQUIRE(ValueDefault == ini_value);
+				CompareForEqual(ValueDefault, ini_value);
 			}
 		}
 
@@ -158,7 +174,7 @@ void test_yaip(T Value)
 				REQUIRE(1 == SectionKeyList.size());
 
 				T ini_value = sut.SectionKeyValueGet(S_SECTION, S_KEY, ValueDefault);
-				REQUIRE(Value == ini_value);
+				CompareForEqual(Value, ini_value);
 			}
 		}
 
@@ -168,7 +184,7 @@ void test_yaip(T Value)
 
 			THEN("We get the default value")
 			{
-				REQUIRE(ValueDefault == ini_value);
+				CompareForEqual(ValueDefault, ini_value);
 			}
 		}
 
@@ -185,7 +201,7 @@ void test_yaip(T Value)
 				REQUIRE(0 == SectionKeyList.size());
 
 				T ini_value = sut.SectionKeyValueGet(S_SECTION, S_KEY, ValueDefault);
-				REQUIRE(ValueDefault == ini_value);
+				CompareForEqual(ValueDefault, ini_value);
 			}
 		}
 
