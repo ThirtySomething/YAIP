@@ -110,6 +110,23 @@ SCENARIO("Test YAIP with datatype short", "[short]")
 			}
 		}
 
+		WHEN("Delete key")
+		{
+			REQUIRE(sut.SectionKeyKill(S_SECTION_SHORT, S_KEY_SHORT));
+
+			THEN("No entries, no section")
+			{
+				auto SectionList = sut.SectionListGet();
+				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_SHORT);
+
+				REQUIRE(0 == SectionList.size());
+				REQUIRE(0 == SectionKeyList.size());
+
+				short ini_value = sut.SectionKeyValueGet(S_SECTION_SHORT, S_KEY_SHORT, S_VALUE_DEFAULT_SHORT);
+				REQUIRE(S_VALUE_DEFAULT_SHORT == ini_value);
+			}
+		}
+
 		WHEN("Cleanup and delete ini file")
 		{
 			REQUIRE(sut.INIFileExist(S_FILE_INI_SHORT));

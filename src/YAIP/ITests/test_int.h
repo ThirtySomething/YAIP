@@ -110,6 +110,23 @@ SCENARIO("Test YAIP with datatype int", "[int]")
 			}
 		}
 
+		WHEN("Delete key")
+		{
+			REQUIRE(sut.SectionKeyKill(S_SECTION_INT, S_KEY_INT));
+
+			THEN("No entries, no section")
+			{
+				auto SectionList = sut.SectionListGet();
+				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_INT);
+
+				REQUIRE(0 == SectionList.size());
+				REQUIRE(0 == SectionKeyList.size());
+
+				int ini_value = sut.SectionKeyValueGet(S_SECTION_INT, S_KEY_INT, S_VALUE_DEFAULT_INT);
+				REQUIRE(S_VALUE_DEFAULT_INT == ini_value);
+			}
+		}
+
 		WHEN("Cleanup and delete ini file")
 		{
 			REQUIRE(sut.INIFileExist(S_FILE_INI_INT));

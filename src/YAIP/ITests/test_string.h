@@ -113,6 +113,23 @@ SCENARIO("Test YAIP with datatype string", "[string]")
 			}
 		}
 
+		WHEN("Delete key")
+		{
+			REQUIRE(sut.SectionKeyKill(S_SECTION_STRING, S_KEY_STRING));
+
+			THEN("No entries, no section")
+			{
+				auto SectionList = sut.SectionListGet();
+				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_STRING);
+
+				REQUIRE(0 == SectionList.size());
+				REQUIRE(0 == SectionKeyList.size());
+
+				std::string ini_value = sut.SectionKeyValueGet(S_SECTION_STRING, S_KEY_STRING, S_VALUE_DEFAULT_STRING);
+				REQUIRE(S_VALUE_DEFAULT_STRING == ini_value);
+			}
+		}
+
 		WHEN("Cleanup and delete ini file")
 		{
 			REQUIRE(sut.INIFileExist(S_FILE_INI_STRING));

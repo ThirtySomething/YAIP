@@ -168,7 +168,7 @@ namespace net
 				/**
 				 * Vector of elements
 				 */
-				std::vector<TIniElement> m_Elements;
+				std::list<TIniElement> m_Elements;
 			};
 		}
 	}

@@ -110,6 +110,23 @@ SCENARIO("Test YAIP with datatype unsigned short", "[unsigned short]")
 			}
 		}
 
+		WHEN("Delete key")
+		{
+			REQUIRE(sut.SectionKeyKill(S_SECTION_UNSIGNED_SHORT, S_KEY_UNSIGNED_SHORT));
+
+			THEN("No entries, no section")
+			{
+				auto SectionList = sut.SectionListGet();
+				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_UNSIGNED_SHORT);
+
+				REQUIRE(0 == SectionList.size());
+				REQUIRE(0 == SectionKeyList.size());
+
+				unsigned short ini_value = sut.SectionKeyValueGet(S_SECTION_UNSIGNED_SHORT, S_KEY_UNSIGNED_SHORT, S_VALUE_DEFAULT_UNSIGNED_SHORT);
+				REQUIRE(S_VALUE_DEFAULT_UNSIGNED_SHORT == ini_value);
+			}
+		}
+
 		WHEN("Cleanup and delete ini file")
 		{
 			REQUIRE(sut.INIFileExist(S_FILE_INI_UNSIGNED_SHORT));

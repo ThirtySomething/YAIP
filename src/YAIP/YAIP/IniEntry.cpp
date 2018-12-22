@@ -152,13 +152,6 @@ namespace net
 				ElementCommentSet("");
 				ElementValueSet("");
 			}
-
-			// ******************************************************************
-			// ******************************************************************
-			std::ostream& operator<<(std::ostream &OutputStream, const IniEntry &EntryObject)
-			{
-				return OutputStream;
-			}
 		}
 	}
 }

@@ -130,8 +130,8 @@ namespace net
 					tListString SectionList = SectionListGet();
 					for (tListString::iterator LoopSection = SectionList.begin(); LoopSection != SectionList.end(); ++LoopSection)
 					{
-						// Save section
-						INIFileSaveSection(*LoopSection, IniFile);
+						auto SectionPtr = m_Sections.ElementFind(*LoopSection);
+						IniFile << (*SectionPtr);
 					}
 
 					IniFile.close();
@@ -143,8 +143,10 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			void YAIP::SectionKeyKill(const std::string &Section, const std::string &Key)
+			bool YAIP::SectionKeyKill(const std::string &Section, const std::string &Key)
 			{
+				bool Success = false;
+
 				IniSectionPtr CurrentSection = m_Sections.ElementFind(Section);
 				if (nullptr != CurrentSection)
 				{
@@ -152,6 +154,7 @@ namespace net
 					if (nullptr != CurrentEntry)
 					{
 						CurrentSection->EntryDelete(CurrentEntry);
+						Success = true;
 					}
 
 					if (CurrentSection->IsEmpty())
@@ -159,6 +162,8 @@ namespace net
 						m_Sections.ElementDelete(CurrentSection);
 					}
 				}
+
+				return Success;
 			}
 
 			// ******************************************************************
@@ -249,29 +254,6 @@ namespace net
 			void YAIP::Clear(void)
 			{
 				m_Sections.clear();
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void YAIP::INIFileSaveSection(std::string Section, std::ofstream &IniFile)
-			{
-				// Retrieve list of keys
-				tListString KeyList = SectionKeyListGet(Section);
-
-				// Write section marker
-				if (0 != Section.length())
-				{
-					IniFile << "[" << Section << "]" << std::endl;
-				}
-
-				// Loop over all keys, retrieve the values and save them
-				for (tListString::iterator LoopKey = KeyList.begin(); LoopKey != KeyList.end(); ++LoopKey)
-				{
-					std::string Default = "";
-					std::string Key = *LoopKey;
-					std::string Value = SectionKeyValueGet(Section, Key, Default);
-					IniFile << Key << "=" << Value << std::endl;
-				}
 			}
 
 			// ******************************************************************

@@ -99,6 +99,23 @@ SCENARIO("Test YAIP with datatype long", "[long]")
 			}
 		}
 
+		WHEN("Delete key")
+		{
+			REQUIRE(sut.SectionKeyKill(S_SECTION_LONG, S_KEY_LONG));
+
+			THEN("No entries, no section")
+			{
+				auto SectionList = sut.SectionListGet();
+				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_LONG);
+
+				REQUIRE(0 == SectionList.size());
+				REQUIRE(0 == SectionKeyList.size());
+
+				long ini_value = sut.SectionKeyValueGet(S_SECTION_LONG, S_KEY_LONG, S_VALUE_DEFAULT_LONG);
+				REQUIRE(S_VALUE_DEFAULT_LONG == ini_value);
+			}
+		}
+
 		WHEN("Cleanup and delete ini file")
 		{
 			REQUIRE(sut.INIFileExist(S_FILE_INI_LONG));

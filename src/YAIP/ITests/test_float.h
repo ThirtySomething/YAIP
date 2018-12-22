@@ -110,6 +110,23 @@ SCENARIO("Test YAIP with datatype float", "[float]")
 			}
 		}
 
+		WHEN("Delete key")
+		{
+			REQUIRE(sut.SectionKeyKill(S_SECTION_FLOAT, S_KEY_FLOAT));
+
+			THEN("No entries, no section")
+			{
+				auto SectionList = sut.SectionListGet();
+				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_FLOAT);
+
+				REQUIRE(0 == SectionList.size());
+				REQUIRE(0 == SectionKeyList.size());
+
+				float ini_value = sut.SectionKeyValueGet(S_SECTION_FLOAT, S_KEY_FLOAT, S_VALUE_DEFAULT_FLOAT);
+				REQUIRE(S_VALUE_DEFAULT_FLOAT == ini_value);
+			}
+		}
+
 		WHEN("Cleanup and delete ini file")
 		{
 			REQUIRE(sut.INIFileExist(S_FILE_INI_FLOAT));

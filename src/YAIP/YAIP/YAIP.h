@@ -132,8 +132,9 @@ namespace net
 				 * Remove key completely from section of internal data structure
 				 * \param Section Specified section
 				 * \param Key Specified key
+				 * \return true on success otherwise false
 				 */
-				void SectionKeyKill(const std::string &Section, const std::string &Key);
+				bool SectionKeyKill(const std::string &Section, const std::string &Key);
 
 				/**
 				 * Get all keys of a section of the INI file
@@ -217,13 +218,6 @@ namespace net
 				 * List of all sections
 				 */
 				IniSectionList m_Sections;
-
-				/**
-				 * Save given section into INI file
-				 * \param Section Section to write
-				 * \param IniFile INI file to read section to
-				 */
-				void INIFileSaveSection(std::string Section, std::ofstream &IniFile);
 
 				/**
 				 * Loop over file content to determine sections and key/values to populate internal storage

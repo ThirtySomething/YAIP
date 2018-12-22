@@ -110,6 +110,23 @@ SCENARIO("Test YAIP with datatype char", "[char]")
 			}
 		}
 
+		WHEN("Delete key")
+		{
+			REQUIRE(sut.SectionKeyKill(S_SECTION_CHAR, S_KEY_CHAR));
+
+			THEN("No entries, no section")
+			{
+				auto SectionList = sut.SectionListGet();
+				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_CHAR);
+
+				REQUIRE(0 == SectionList.size());
+				REQUIRE(0 == SectionKeyList.size());
+
+				char ini_value = sut.SectionKeyValueGet(S_SECTION_CHAR, S_KEY_CHAR, S_VALUE_DEFAULT_CHAR);
+				REQUIRE(S_VALUE_DEFAULT_CHAR == ini_value);
+			}
+		}
+
 		WHEN("Cleanup and delete ini file")
 		{
 			REQUIRE(sut.INIFileExist(S_FILE_INI_CHAR));

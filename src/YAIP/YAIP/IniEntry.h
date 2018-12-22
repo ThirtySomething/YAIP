@@ -136,14 +136,6 @@ namespace net
 				 * The comment of the INI entry
 				 */
 				std::string m_EntryComment;
-
-				/**
-				 * Stream the object content to an output stream
-				 * \param OutputStream The stream to put the content on
-				 * \param EntryObject The object to stream
-				 * \return Reference to the output stream
-				 */
-				friend std::ostream& operator<<(std::ostream &OutputStream, const IniEntry &EntryObject);
 			};
 
 			/**

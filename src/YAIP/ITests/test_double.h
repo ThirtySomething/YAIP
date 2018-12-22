@@ -110,6 +110,23 @@ SCENARIO("Test YAIP with datatype double", "[double]")
 			}
 		}
 
+		WHEN("Delete key")
+		{
+			REQUIRE(sut.SectionKeyKill(S_SECTION_DOUBLE, S_KEY_DOUBLE));
+
+			THEN("No entries, no section")
+			{
+				auto SectionList = sut.SectionListGet();
+				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_DOUBLE);
+
+				REQUIRE(0 == SectionList.size());
+				REQUIRE(0 == SectionKeyList.size());
+
+				double ini_value = sut.SectionKeyValueGet(S_SECTION_DOUBLE, S_KEY_DOUBLE, S_VALUE_DEFAULT_DOUBLE);
+				REQUIRE(S_VALUE_DEFAULT_DOUBLE == ini_value);
+			}
+		}
+
 		WHEN("Cleanup and delete ini file")
 		{
 			REQUIRE(sut.INIFileExist(S_FILE_INI_DOUBLE));
