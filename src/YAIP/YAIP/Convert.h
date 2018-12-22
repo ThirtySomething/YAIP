@@ -76,14 +76,14 @@ namespace net
 				static const std::string StringFalse;
 
 				/**
-				 * Convert integer to std::string
+				 * Convert int to std::string
 				 * \param Value Value to convert from
 				 * \param ValueString Value to convert to
 				 */
 				static void ConvertTo(const int &Value, std::string &ValueString);
 
 				/**
-				 * Convert unsigned integer to std::string
+				 * Convert unsigned int to std::string
 				 * \param Value Value to convert from
 				 * \param ValueString Value to convert to
 				 */
@@ -97,7 +97,7 @@ namespace net
 				static void ConvertTo(const short &Value, std::string &ValueString);
 
 				/**
-				 * Convert unsigned integer to std::string
+				 * Convert unsigned int to std::string
 				 * \param Value Value to convert from
 				 * \param ValueString Value to convert to
 				 */

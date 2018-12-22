@@ -199,7 +199,7 @@ void test_bool(void)
 	REQUIRE(false == value_bool);
 }
 
-SCENARIO("Test class [Convert]", "[net::derpaul::yaip::Convert]")
+SCENARIO("Test class Convert", "[Convert]")
 {
 	// Templated tests for numeric datatypes with no fraction
 	// int

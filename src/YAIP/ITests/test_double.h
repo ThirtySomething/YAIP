@@ -29,7 +29,7 @@ static const std::string S_KEY_DOUBLE = "KEY_DOUBLE";
 static const std::string S_KEY_INVALID_DOUBLE = "KEY_INVALID";
 static const double S_VALUE_DEFAULT_DOUBLE = 0.0;
 
-SCENARIO("Test YAIP with datatype [double]", "[net::derpaul::yaip::YAIP]")
+SCENARIO("Test YAIP with datatype double", "[double]")
 {
 	auto VALUE_DOUBLE = GENERATE(std::numeric_limits<double>::min(), std::numeric_limits<double>::max(), std::numeric_limits<double>::infinity());
 

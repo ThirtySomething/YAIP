@@ -32,7 +32,7 @@ static const std::string S_VALUE_DEFAULT_STRING = "-=>DEFAULT<=-";
 
 std::string testString("ABCDEFGHIJKLMNOPQRSTUVXYZ abcdefghijklmnopqrstuvxyz () 0123456789 ., _ +- |");
 
-SCENARIO("Test YAIP with datatype [string]", "[net::derpaul::yaip::YAIP]")
+SCENARIO("Test YAIP with datatype string", "[string]")
 {
 	auto VALUE_STRING = testString;
 

@@ -23,23 +23,23 @@
 #include "YAIP.h"
 #include <limits>
 
-static const std::string S_FILE_INI_INTEGER = "integer.ini";
-static const std::string S_SECTION_INTEGER = "SECTION_INTEGER";
-static const std::string S_KEY_INTEGER = "KEY_INTEGER";
-static const std::string S_KEY_INVALID_INTEGER = "KEY_INVALID";
-static const int S_VALUE_DEFAULT_INTEGER = 0;
+static const std::string S_FILE_INI_UNSIGNED_INT = "unsignedint.ini";
+static const std::string S_SECTION_UNSIGNED_INT = "SECTION_UNSIGNED_INT";
+static const std::string S_KEY_UNSIGNED_INT = "KEY_UNSIGNED_INT";
+static const std::string S_KEY_INVALID_UNSIGNED_INT = "KEY_INVALID";
+static const unsigned int S_VALUE_DEFAULT_UNSIGNED_INT = 0;
 
-SCENARIO("Test YAIP with datatype [integer]", "[net::derpaul::yaip::YAIP]")
+SCENARIO("Test YAIP with datatype unsigned int", "[unsigned int]")
 {
-	auto VALUE_INTEGER = GENERATE(std::numeric_limits<int>::min(), std::numeric_limits<int>::max(), std::numeric_limits<int>::infinity());
+	auto VALUE_UNSIGNED_INT = GENERATE(std::numeric_limits<unsigned int>::min(), std::numeric_limits<unsigned int>::max(), std::numeric_limits<unsigned int>::infinity());
 
-	INFO("Current value [" << VALUE_INTEGER << "]");
+	INFO("Current value [" << VALUE_UNSIGNED_INT << "]");
 
 	GIVEN("An empty instance of the YAIP parser")
 	{
 		net::derpaul::yaip::YAIP sut;
 		REQUIRE(sut.SectionListGet().empty());
-		REQUIRE(sut.SectionKeyValueSet(S_SECTION_INTEGER, S_KEY_INTEGER, VALUE_INTEGER));
+		REQUIRE(sut.SectionKeyValueSet(S_SECTION_UNSIGNED_INT, S_KEY_UNSIGNED_INT, VALUE_UNSIGNED_INT));
 
 		WHEN("Add a new section/key/value")
 		{
@@ -47,17 +47,17 @@ SCENARIO("Test YAIP with datatype [integer]", "[net::derpaul::yaip::YAIP]")
 			{
 				REQUIRE(false == sut.SectionListGet().empty());
 				REQUIRE(1 == sut.SectionListGet().size());
-				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_INTEGER).size());
+				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION_UNSIGNED_INT).size());
 			}
 		}
 
 		WHEN("Save ini file")
 		{
-			REQUIRE(sut.INIFileSave(S_FILE_INI_INTEGER));
+			REQUIRE(sut.INIFileSave(S_FILE_INI_UNSIGNED_INT));
 
 			THEN("File exists")
 			{
-				REQUIRE(sut.INIFileExist(S_FILE_INI_INTEGER));
+				REQUIRE(sut.INIFileExist(S_FILE_INI_UNSIGNED_INT));
 			}
 		}
 
@@ -73,40 +73,40 @@ SCENARIO("Test YAIP with datatype [integer]", "[net::derpaul::yaip::YAIP]")
 
 		WHEN("Reload from ini file")
 		{
-			REQUIRE(sut.INIFileExist(S_FILE_INI_INTEGER));
-			REQUIRE(sut.INIFileLoad(S_FILE_INI_INTEGER));
+			REQUIRE(sut.INIFileExist(S_FILE_INI_UNSIGNED_INT));
+			REQUIRE(sut.INIFileLoad(S_FILE_INI_UNSIGNED_INT));
 
 			THEN("What you save is what you get")
 			{
 				auto SectionList = sut.SectionListGet();
-				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_INTEGER);
+				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION_UNSIGNED_INT);
 
 				REQUIRE(1 == SectionList.size());
 				REQUIRE(1 == SectionKeyList.size());
 
-				int ini_value = sut.SectionKeyValueGet(S_SECTION_INTEGER, S_KEY_INTEGER, S_VALUE_DEFAULT_INTEGER);
-				REQUIRE(VALUE_INTEGER == ini_value);
+				unsigned int ini_value = sut.SectionKeyValueGet(S_SECTION_UNSIGNED_INT, S_KEY_UNSIGNED_INT, S_VALUE_DEFAULT_UNSIGNED_INT);
+				REQUIRE(VALUE_UNSIGNED_INT == ini_value);
 			}
 		}
 
 		WHEN("Read from invalid key")
 		{
-			int ini_value = sut.SectionKeyValueGet(S_SECTION_INTEGER, S_KEY_INVALID_INTEGER, S_VALUE_DEFAULT_INTEGER);
+			unsigned int ini_value = sut.SectionKeyValueGet(S_SECTION_UNSIGNED_INT, S_KEY_INVALID_UNSIGNED_INT, S_VALUE_DEFAULT_UNSIGNED_INT);
 
 			THEN("We get the default value")
 			{
-				REQUIRE(S_VALUE_DEFAULT_INTEGER == ini_value);
+				REQUIRE(S_VALUE_DEFAULT_UNSIGNED_INT == ini_value);
 			}
 		}
 
 		WHEN("Cleanup and delete ini file")
 		{
-			REQUIRE(sut.INIFileExist(S_FILE_INI_INTEGER));
-			REQUIRE(sut.INIFileDelete(S_FILE_INI_INTEGER));
+			REQUIRE(sut.INIFileExist(S_FILE_INI_UNSIGNED_INT));
+			REQUIRE(sut.INIFileDelete(S_FILE_INI_UNSIGNED_INT));
 
 			THEN("When the ini file is gone")
 			{
-				REQUIRE(false == sut.INIFileExist(S_FILE_INI_INTEGER));
+				REQUIRE(false == sut.INIFileExist(S_FILE_INI_UNSIGNED_INT));
 			}
 		}
 	}

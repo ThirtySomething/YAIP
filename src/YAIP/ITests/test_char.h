@@ -29,7 +29,7 @@ static const std::string S_KEY_CHAR = "KEY_CHAR";
 static const std::string S_KEY_INVALID_CHAR = "KEY_INVALID";
 static const char S_VALUE_DEFAULT_CHAR = 'Y';
 
-SCENARIO("Test YAIP with datatype [char]", "[net::derpaul::yaip::YAIP]")
+SCENARIO("Test YAIP with datatype char", "[char]")
 {
 	auto VALUE_CHAR = GENERATE(std::numeric_limits<char>::min(), std::numeric_limits<char>::max(), std::numeric_limits<char>::infinity());
 

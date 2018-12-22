@@ -43,7 +43,7 @@ void testEntry(const net::derpaul::yaip::IniSection &sut, const std::string &Ide
 	REQUIRE(IdentifierEntry == IniEntryList.front());
 }
 
-SCENARIO("Test class [IniSection]", "[net::derpaul::yaip::IniSection]")
+SCENARIO("Test class IniSection", "[IniSection]")
 {
 	net::derpaul::yaip::IniSection sut;
 	net::derpaul::yaip::IniEntryList EntryList;

@@ -29,7 +29,7 @@ static const std::string S_KEY_FLOAT = "KEY_FLOAT";
 static const std::string S_KEY_INVALID_FLOAT = "KEY_INVALID";
 static const float S_VALUE_DEFAULT_FLOAT = 0.0f;
 
-SCENARIO("Test YAIP with datatype [float]", "[net::derpaul::yaip::YAIP]")
+SCENARIO("Test YAIP with datatype float", "[float]")
 {
 	auto VALUE_FLOAT = GENERATE(std::numeric_limits<float>::min(), std::numeric_limits<float>::max(), std::numeric_limits<float>::infinity());
 

@@ -22,7 +22,7 @@
 #include "catch2\catch.hpp"
 #include "IniEntry.h"
 
-SCENARIO("Test class [IniEntry]", "[net::derpaul::yaip::IniEntry]")
+SCENARIO("Test class IniEntry", "[IniEntry]")
 {
 	net::derpaul::yaip::IniEntry sut;
 

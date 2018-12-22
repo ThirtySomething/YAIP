@@ -22,7 +22,7 @@
 #include "catch2\catch.hpp"
 #include "IniEntryList.h"
 
-SCENARIO("Test class [IniEntryList]", "[net::derpaul::yaip::IniEntryList]")
+SCENARIO("Test class IniEntryList", "[IniEntryList]")
 {
 	net::derpaul::yaip::IniEntryList sut;
 	std::string key = "key";

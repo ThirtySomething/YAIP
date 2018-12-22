@@ -29,7 +29,7 @@ static const std::string S_KEY_UNSIGNED_CHAR = "KEY_UNSIGNED_CHAR";
 static const std::string S_KEY_INVALID_UNSIGNED_CHAR = "KEY_INVALID";
 static const unsigned char S_VALUE_DEFAULT_UNSIGNED_CHAR = 'Y';
 
-SCENARIO("Test YAIP with datatype [unsigned char]", "[net::derpaul::yaip::YAIP]")
+SCENARIO("Test YAIP with datatype unsigned char", "[unsigned char]")
 {
 	auto VALUE_UNSIGNED_CHAR = GENERATE(std::numeric_limits<unsigned char>::min(), std::numeric_limits<unsigned char>::max(), std::numeric_limits<unsigned char>::infinity());
 

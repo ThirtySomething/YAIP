@@ -29,7 +29,7 @@ static const std::string S_KEY_UNSIGNED_SHORT = "KEY_UNSIGNED_SHORT";
 static const std::string S_KEY_INVALID_UNSIGNED_SHORT = "KEY_INVALID";
 static const unsigned short S_VALUE_DEFAULT_UNSIGNED_SHORT = 0;
 
-SCENARIO("Test YAIP with datatype [unsigned short]", "[net::derpaul::yaip::YAIP]")
+SCENARIO("Test YAIP with datatype unsigned short", "[unsigned short]")
 {
 	auto VALUE_UNSIGNED_SHORT = GENERATE(std::numeric_limits<unsigned short>::min(), std::numeric_limits<unsigned short>::max(), std::numeric_limits<unsigned short>::infinity());
 

@@ -29,7 +29,7 @@ static const std::string S_KEY_BOOL = "KEY_BOOL";
 static const std::string S_KEY_INVALID_BOOL = "KEY_INVALID";
 static const bool S_VALUE_DEFAULT_BOOL = true;
 
-SCENARIO("Test YAIP with datatype [bool]", "[net::derpaul::yaip::YAIP]")
+SCENARIO("Test YAIP with datatype bool", "[bool]")
 {
 	auto VALUE_BOOL = GENERATE(std::numeric_limits<bool>::min(), std::numeric_limits<bool>::max(), std::numeric_limits<bool>::infinity());
 

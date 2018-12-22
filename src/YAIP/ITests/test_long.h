@@ -29,7 +29,7 @@ static const std::string S_KEY_LONG = "KEY_LONG";
 static const std::string S_KEY_INVALID_LONG = "KEY_INVALID";
 static const long S_VALUE_DEFAULT_LONG = 0L;
 
-SCENARIO("Test YAIP with datatype [long]", "[net::derpaul::yaip::YAIP]")
+SCENARIO("Test YAIP with datatype long", "[long]")
 {
 	auto VALUE_LONG = GENERATE(std::numeric_limits<long>::min(), std::numeric_limits<long>::max(), std::numeric_limits<long>::infinity());
 

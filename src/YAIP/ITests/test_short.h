@@ -29,7 +29,7 @@ static const std::string S_KEY_SHORT = "KEY_SHORT";
 static const std::string S_KEY_INVALID_SHORT = "KEY_INVALID";
 static const short S_VALUE_DEFAULT_SHORT = 0;
 
-SCENARIO("Test YAIP with datatype [short]", "[net::derpaul::yaip::YAIP]")
+SCENARIO("Test YAIP with datatype short", "[short]")
 {
 	auto VALUE_SHORT = GENERATE(std::numeric_limits<short>::min(), std::numeric_limits<short>::max(), std::numeric_limits<short>::infinity());
 
