@@ -27,13 +27,13 @@
     </ClCompile>
     <ClCompile Include="YAIP\Convert.cpp" />
     <ClCompile Include="YAIP\IniEntry.cpp" />
+    <ClCompile Include="YAIP\IniEntryList.cpp" />
     <ClCompile Include="YAIP\IniSection.cpp" />
     <ClCompile Include="YAIP\IniSectionList.cpp" />
     <ClCompile Include="YAIP\string_extensions.cpp" />
     <ClCompile Include="YAIP\YAIP.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ITests\test_double.h" />
     <ClInclude Include="ITests\test_YAIP.h" />
     <ClInclude Include="UTests\test_Convert.h" />
     <ClInclude Include="UTests\test_IniEntry.h" />

@@ -25,9 +25,11 @@
  */
 #pragma once
 
-#include <string>
-#include <list>
 #include "string_extensions.h"
+#include <algorithm>
+#include <list>
+#include <string>
+#include <vector>
 
  /**
   * Namespace of YAIP
@@ -164,11 +166,13 @@ namespace net
 					return tmpStream.str();
 				}
 
+				virtual void sort(void) = 0;
+
 			protected:
 				/**
 				 * Vector of elements
 				 */
-				std::list<TIniElement> m_Elements;
+				std::vector<TIniElement> m_Elements;
 			};
 		}
 	}

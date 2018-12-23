@@ -73,7 +73,7 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			std::string IniEntry::ElementIdentifierGet(void)
+			std::string IniEntry::ElementIdentifierGet(void) const
 			{
 				return m_EntryKey;
 			}
@@ -87,7 +87,7 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			std::string IniEntry::ElementValueGet(void)
+			std::string IniEntry::ElementValueGet(void) const
 			{
 				return m_EntryValue;
 			}
@@ -101,7 +101,7 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			std::string IniEntry::ElementCommentGet(void)
+			std::string IniEntry::ElementCommentGet(void) const
 			{
 				return m_EntryComment;
 			}

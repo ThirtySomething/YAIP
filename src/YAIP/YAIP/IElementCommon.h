@@ -26,6 +26,7 @@
 #pragma once
 
 #include <string>
+#include "string_extensions.h"
 
  /**
   * Namespace of YAIP
@@ -58,7 +59,7 @@ namespace net
 				 * Get the INI object identifier
 				 * \return Unique identifier of INI object
 				 */
-				virtual std::string ElementIdentifierGet(void) = 0;
+				virtual std::string ElementIdentifierGet(void) const = 0;
 
 				/**
 				 * Set the INI object comment
@@ -70,7 +71,7 @@ namespace net
 				 * Get the INI object comment
 				 * \return Comment of INI object
 				 */
-				virtual std::string ElementCommentGet(void) = 0;
+				virtual std::string ElementCommentGet(void) const = 0;
 
 				/**
 				 * Will transform string into internal properties
@@ -83,6 +84,19 @@ namespace net
 				 * To clear object and reset to empty fields
 				 */
 				virtual void clear(void) = 0;
+
+				/**
+				 * Required for sorting elements
+				 * \param a Left side element
+				 * \param b Right side element
+				 * \return true on equal, otherwise false
+				 */
+				bool operator<(const IElementCommon &b)
+				{
+					std::string MyIdentifier = ElementIdentifierGet();
+					std::string TheirIdentifier = b.ElementIdentifierGet();
+					return std::strcmpcaseless(MyIdentifier, TheirIdentifier);
+				}
 			};
 		}
 	}

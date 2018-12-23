@@ -74,7 +74,7 @@ namespace net
 				 * Get the unique element identifier aka the key of an INI entry
 				 * \return The key of the INI entry
 				 */
-				virtual std::string ElementIdentifierGet(void) override;
+				virtual std::string ElementIdentifierGet(void) const override;
 
 				/**
 				 * Set the INI object comment
@@ -86,7 +86,7 @@ namespace net
 				 * Get the INI object comment
 				 * \return Comment of INI object
 				 */
-				virtual std::string ElementCommentGet(void) override;
+				virtual std::string ElementCommentGet(void) const override;
 
 				/**
 				 * Set list of entries
@@ -156,6 +156,11 @@ namespace net
 				 * To clear object and reset to empty fields
 				 */
 				virtual void clear(void) override;
+
+				void sort(void)
+				{
+					m_Entries.sort();
+				}
 
 			private:
 				/**

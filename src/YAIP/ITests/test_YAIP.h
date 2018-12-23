@@ -118,6 +118,11 @@ void test_yaip(T Value)
 		net::derpaul::yaip::YAIP sut;
 		REQUIRE(sut.SectionListGet().empty());
 		REQUIRE(sut.SectionKeyValueSet(S_SECTION, S_KEY, Value));
+		// REQUIRE(sut.SectionKeyValueSet(S_SECTION, S_KEY_INVALID, ValueDefault));
+		// REQUIRE(sut.SectionKeyValueSet(S_SECTION, "trallalla", Value));
+		// REQUIRE(sut.SectionKeyValueSet(S_SECTION, "karl-heinz", Value));
+		// REQUIRE(sut.SectionKeyValueSet(S_SECTION, "karlotto", Value));
+		// REQUIRE(sut.INIFileSave(S_FILE_INI));
 
 		WHEN("Add a new section/key/value")
 		{

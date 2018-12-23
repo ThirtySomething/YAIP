@@ -126,6 +126,8 @@ namespace net
 				 */
 				if (IniFile.is_open())
 				{
+					m_Sections.sort();
+
 					// Get a list of all existing sections
 					tListString SectionList = SectionListGet();
 					for (tListString::iterator LoopSection = SectionList.begin(); LoopSection != SectionList.end(); ++LoopSection)

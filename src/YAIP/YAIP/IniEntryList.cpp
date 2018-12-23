@@ -18,15 +18,14 @@
 //******************************************************************************
 
 /**
- * \file	IniEntryList.h
+ * \file	IniEntryList.cpp
  * \author	ThirtySomething
  * \date	2016-09-19
- * \brief	List of INI entries
+ * \brief	List of INI sections
  */
 #pragma once
 
-#include "IniEntry.h"
-#include "TIniElementList.h"
+#include "IniEntryList.h"
 
  /**
   * Namespace of YAIP
@@ -43,14 +42,16 @@ namespace net
 		 */
 		namespace yaip
 		{
-			/**
-			 * List of INI entries
-			 */
-			class IniEntryList : public TIniElementList<IniEntryPtr>
+			// ******************************************************************
+			// ******************************************************************
+			void IniEntryList::sort(void)
 			{
-			public:
-				virtual void sort(void) override;
-			};
+				std::sort(m_Elements.begin(), m_Elements.end());
+				for (auto CurrentElementPtr = m_Elements.begin(); CurrentElementPtr != m_Elements.end(); ++CurrentElementPtr)
+				{
+					(*CurrentElementPtr)->sort();
+				}
+			}
 		}
 	}
 }

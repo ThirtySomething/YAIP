@@ -45,6 +45,8 @@ namespace net
 		{
 			class IniSectionList : public TIniElementList<IniSectionPtr>
 			{
+			public:
+				virtual void sort(void) override;
 			};
 		}
 	}

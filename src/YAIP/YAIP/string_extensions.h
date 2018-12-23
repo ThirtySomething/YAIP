@@ -57,4 +57,12 @@ namespace std
 	 * \return Trimmed string
 	 */
 	std::string trim(const std::string& in);
+
+	/**
+	 * Compare two strings case insensitive
+	 * \param left Left string
+	 * \param right Right string
+	 * \return True on equal, otherwise false
+	 */
+	bool strcmpcaseless(const std::string& left, const std::string& right);
 }

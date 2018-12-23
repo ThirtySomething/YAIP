@@ -27,14 +27,24 @@
 
 #include "string_extensions.h"
 #include <iostream>
-#include <string>
 #include <algorithm>
+#include <cstring>
 
  /**
   * Namespace of string
   */
 namespace std
 {
+	// ******************************************************************
+	// ******************************************************************
+	struct caselesscompare
+	{
+		bool operator()(int c1, int c2) const
+		{
+			return tolower(c1) == tolower(c2);
+		}
+	};
+
 	// ******************************************************************
 	// ******************************************************************
 	std::string ltrim(const std::string& in)
@@ -58,4 +68,10 @@ namespace std
 		return rtrim(ltrim(in));
 	}
 
+	// ******************************************************************
+	// ******************************************************************
+	bool std::strcmpcaseless(const std::string& left, const std::string& right)
+	{
+		return std::equal(left.begin(), left.end(), right.begin(), caselesscompare());
+	}
 }

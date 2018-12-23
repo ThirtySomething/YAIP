@@ -72,7 +72,7 @@ namespace net
 				 * Get the unique element identifier aka the key of an INI entry
 				 * \return The key of the INI entry
 				 */
-				virtual std::string ElementIdentifierGet(void) override;
+				virtual std::string ElementIdentifierGet(void) const override;
 
 				/**
 				 * Set the INI object value
@@ -84,7 +84,7 @@ namespace net
 				 * Get the INI object value
 				 * \return Value of INI object
 				 */
-				virtual std::string ElementValueGet(void);
+				virtual std::string ElementValueGet(void) const;
 
 				/**
 				 * Set the INI object comment
@@ -96,7 +96,7 @@ namespace net
 				 * Get the INI object comment
 				 * \return Comment of INI object
 				 */
-				virtual std::string ElementCommentGet(void) override;
+				virtual std::string ElementCommentGet(void) const override;
 
 				/**
 				 * Will transform string into internal properties
@@ -115,6 +115,10 @@ namespace net
 				 * To clear object and reset to empty fields
 				 */
 				virtual void clear(void) override;
+
+				void sort(void)
+				{
+				}
 
 			private:
 				/**

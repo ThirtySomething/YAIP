@@ -73,7 +73,7 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			std::string IniSection::ElementIdentifierGet(void)
+			std::string IniSection::ElementIdentifierGet(void) const
 			{
 				return m_SectionName;
 			}
@@ -87,7 +87,7 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			std::string IniSection::ElementCommentGet(void)
+			std::string IniSection::ElementCommentGet(void) const
 			{
 				return m_SectionComment;
 			}
