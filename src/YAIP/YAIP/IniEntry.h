@@ -63,40 +63,9 @@ namespace net
 				virtual ~IniEntry(void);
 
 				/**
-				 * The unique element identifier is the key of an INI entry
-				 * \param ElementIdentifier The key of the INI entry
+				 * To clear object and reset to empty fields
 				 */
-				virtual void ElementIdentifierSet(const std::string &ElementIdentifier) override;
-
-				/**
-				 * Get the unique element identifier aka the key of an INI entry
-				 * \return The key of the INI entry
-				 */
-				virtual std::string ElementIdentifierGet(void) const override;
-
-				/**
-				 * Set the INI object value
-				 * \param ElementValue Value of INI object
-				 */
-				virtual void ElementValueSet(const std::string &ElementValue);
-
-				/**
-				 * Get the INI object value
-				 * \return Value of INI object
-				 */
-				virtual std::string ElementValueGet(void) const;
-
-				/**
-				 * Set the INI object comment
-				 * \param ElementComment Comment of INI object
-				 */
-				virtual void ElementCommentSet(const std::string &ElementComment) override;
-
-				/**
-				 * Get the INI object comment
-				 * \return Comment of INI object
-				 */
-				virtual std::string ElementCommentGet(void) const override;
+				virtual void clear(void) override;
 
 				/**
 				 * Will transform string into internal properties
@@ -106,26 +75,77 @@ namespace net
 				virtual bool CreateFromRawData(const std::string &RawData) override;
 
 				/**
-				 * String representation of an INI entry
-				 * \return String representation of an INI entry
+				 * Get the INI object comment
+				 * \return Comment of INI object
 				 */
-				std::string to_string(void) const;
+				virtual std::string ElementCommentGet(void) const override;
 
 				/**
-				 * To clear object and reset to empty fields
+				 * Set the INI object comment
+				 * \param ElementComment Comment of INI object
 				 */
-				virtual void clear(void) override;
+				virtual void ElementCommentSet(const std::string &ElementComment) override;
+
+				/**
+				 * Get the unique element identifier aka the key of an INI entry
+				 * \return The key of the INI entry
+				 */
+				virtual std::string ElementIdentifierGet(void) const override;
+
+				/**
+				 * The unique element identifier is the key of an INI entry
+				 * \param ElementIdentifier The key of the INI entry
+				 */
+				virtual void ElementIdentifierSet(const std::string &ElementIdentifier) override;
+
+				/**
+				 * Get the INI object value
+				 * \return Value of INI object
+				 */
+				virtual std::string ElementValueGet(void) const;
+
+				/**
+				 * Set the INI object value
+				 * \param ElementValue Value of INI object
+				 */
+				virtual void ElementValueSet(const std::string &ElementValue);
 
 				/**
 				 * Required by interface, but for entries there is no sort
 				 */
 				virtual void sort(void) override;
 
+				/**
+				 * String representation of an INI entry
+				 * \return String representation of an INI entry
+				 */
+				std::string to_string(void) const;
+
 			private:
 				/**
 				 * Section - Regular expression
 				 */
 				static const std::regex RegExKeyValue;
+
+				/**
+				 * Index of entry comment in regular expression
+				 */
+				static const int IndexEntryComment;
+
+				/**
+				 * Index of entry key in regular expression
+				 */
+				static const int IndexEntryKey;
+
+				/**
+				 * Index of entry value in regular expression
+				 */
+				static const int IndexEntryValue;
+
+				/**
+				 * The comment of the INI entry
+				 */
+				std::string m_EntryComment;
 
 				/**
 				 * The key aka unique identifier of the INI entry
@@ -136,11 +156,6 @@ namespace net
 				 * The value of the INI entry
 				 */
 				std::string m_EntryValue;
-
-				/**
-				 * The comment of the INI entry
-				 */
-				std::string m_EntryComment;
 			};
 
 			/**

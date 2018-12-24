@@ -67,6 +67,11 @@ namespace net
 				virtual ~YAIP(void);
 
 				/**
+				 * Drop all data to get a clean INI
+				 */
+				void Clear(void);
+
+				/**
 				 * Delete given INI file
 				 * \param Filename Full qualified filename of the INI file
 				 * \return true if file is deleted otherwise false
@@ -108,6 +113,14 @@ namespace net
 				 * \return Vector with a std::strings for each key
 				 */
 				tListString SectionKeyListGet(const std::string &Section);
+
+				/**
+				 * Clear a key value
+				 * \param Section Specified section
+				 * \param Key Specified key
+				 * \return true on success otherwise false
+				 */
+				bool SectionKeyValueClear(const std::string &Section, const std::string &Key);
 
 				/**
 				 * Method to retrieve a value of the specified section/key combination for std::string
@@ -161,23 +174,10 @@ namespace net
 				}
 
 				/**
-				 * Clear a key value
-				 * \param Section Specified section
-				 * \param Key Specified key
-				 * \return true on success otherwise false
-				 */
-				bool SectionKeyValueClear(const std::string &Section, const std::string &Key);
-
-				/**
 				 * Get all sections of the INI file
-				 * \return Vector with a std::strings for each section
+				 * \return Vector with std::strings of section names
 				 */
 				tListString SectionListGet(void);
-
-				/**
-				 * Drop all data to get a clean INI
-				 */
-				void Clear(void);
 
 			protected:
 				/**

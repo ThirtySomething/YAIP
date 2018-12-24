@@ -58,6 +58,13 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
+			void YAIP::Clear(void)
+			{
+				m_Sections.clear();
+			}
+
+			// ******************************************************************
+			// ******************************************************************
 			bool YAIP::INIFileDelete(const std::string &Filename)
 			{
 				bool deleted = (0 == remove(Filename.c_str()));
@@ -185,6 +192,13 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
+			bool YAIP::SectionKeyValueClear(const std::string &Section, const std::string &Key)
+			{
+				return SectionKeyValueSet(Section, Key, ' ');
+			}
+
+			// ******************************************************************
+			// ******************************************************************
 			std::string YAIP::SectionKeyValueGet(const std::string &Section, const std::string &Key, const std::string &Default)
 			{
 				// Ensure default return value
@@ -239,23 +253,9 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			bool YAIP::SectionKeyValueClear(const std::string &Section, const std::string &Key)
-			{
-				return SectionKeyValueSet(Section, Key, ' ');
-			}
-
-			// ******************************************************************
-			// ******************************************************************
 			tListString YAIP::SectionListGet(void)
 			{
 				return m_Sections.ElementIdentifierList();
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void YAIP::Clear(void)
-			{
-				m_Sections.clear();
 			}
 
 			// ******************************************************************

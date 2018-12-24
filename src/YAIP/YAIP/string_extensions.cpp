@@ -63,19 +63,19 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			std::string trim(const std::string& in)
-			{
-				return rtrim(ltrim(in));
-			}
-
-			// ******************************************************************
-			// ******************************************************************
 			bool strcmpcaseless(const std::string& left, const std::string& right)
 			{
 				return std::lexicographical_compare(left.begin(), left.end(), right.begin(), right.end(), [](char first, char second)
 					{
 						return tolower(first) < tolower(second);
 					});
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			std::string trim(const std::string& in)
+			{
+				return rtrim(ltrim(in));
 			}
 		}
 	}

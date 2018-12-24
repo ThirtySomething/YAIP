@@ -65,41 +65,16 @@ namespace net
 				virtual ~IniSection(void);
 
 				/**
-				 * The unique element identifier is the key of an INI entry
-				 * \param ElementIdentifier The key of the INI entry
+				 * Add a new entry based on raw data
+				 * \param RawEntryData New entry with key, value (and comment) as string
+				 * \return True on success, otherwise false
 				 */
-				virtual void ElementIdentifierSet(const std::string &ElementIdentifier) override;
+				bool AddRawEntry(const std::string &RawEntryData);
 
 				/**
-				 * Get the unique element identifier aka the key of an INI entry
-				 * \return The key of the INI entry
+				 * To clear object and reset to empty fields
 				 */
-				virtual std::string ElementIdentifierGet(void) const override;
-
-				/**
-				 * Set the INI object comment
-				 * \param ElementComment Unique comment of INI object
-				 */
-				virtual void ElementCommentSet(const std::string &ElementComment) override;
-
-				/**
-				 * Get the INI object comment
-				 * \return Comment of INI object
-				 */
-				virtual std::string ElementCommentGet(void) const override;
-
-				/**
-				 * Set list of entries
-				 * \param SectionEntries Vector with entries to set
-				 * \attention This is a replace, not a merge, not an add
-				 */
-				void SectionEntriesSet(const IniEntryList &SectionEntries);
-
-				/**
-				 * Get list of entries
-				 * \return List of entries
-				 */
-				IniEntryList SectionEntriesGet(void) const;
+				virtual void clear(void) override;
 
 				/**
 				 * Will transform string into internal properties
@@ -109,11 +84,40 @@ namespace net
 				virtual bool CreateFromRawData(const std::string &RawData) override;
 
 				/**
-				 * Add a new entry based on raw data
-				 * \param RawEntryData New entry with key, value (and comment) as string
-				 * \return True on success, otherwise false
+				 * Get the INI object comment
+				 * \return Comment of INI object
 				 */
-				bool AddRawEntry(const std::string &RawEntryData);
+				virtual std::string ElementCommentGet(void) const override;
+
+				/**
+				 * Set the INI object comment
+				 * \param ElementComment Unique comment of INI object
+				 */
+				virtual void ElementCommentSet(const std::string &ElementComment) override;
+
+				/**
+				 * Get the unique element identifier aka the key of an INI entry
+				 * \return The key of the INI entry
+				 */
+				virtual std::string ElementIdentifierGet(void) const override;
+
+				/**
+				 * The unique element identifier is the key of an INI entry
+				 * \param ElementIdentifier The key of the INI entry
+				 */
+				virtual void ElementIdentifierSet(const std::string &ElementIdentifier) override;
+
+				/**
+				 * Add an entry to the section
+				 * \param Entry The entry to add.
+				 */
+				void EntryAdd(const IniEntryPtr &Entry);
+
+				/**
+				 * Delete given entry
+				 * \param Entry Entry to delete
+				 */
+				void EntryDelete(const IniEntryPtr &Entry);
 
 				/**
 				 * Find and return entry based on the entry name (the key)
@@ -121,12 +125,6 @@ namespace net
 				 * \return Entry on success, otherwise nullptr
 				 */
 				IniEntryPtr EntryFind(const std::string &EntryName);
-
-				/**
-				 * Delete given entry
-				 * \param Entry Entry to delete
-				 */
-				void EntryDelete(const IniEntryPtr &Entry);
 
 				/**
 				 * Get a list of all keys of this sections
@@ -141,26 +139,36 @@ namespace net
 				bool IsEmpty(void) const;
 
 				/**
-				 * Add an entry to the section
-				 * \param Entry The entry to add.
+				 * Stream the object content to an output stream
+				 * \param OutputStream The stream to put the content on
+				 * \param SectionObject The object to stream
+				 * \return Reference to the output stream
 				 */
-				void EntryAdd(const IniEntryPtr &Entry);
+				friend std::ostream& operator<<(std::ostream &OutputStream, const IniSection &SectionObject);
+
+				/**
+				 * Get list of entries
+				 * \return List of entries
+				 */
+				IniEntryList SectionEntriesGet(void) const;
+
+				/**
+				 * Set list of entries
+				 * \param SectionEntries Vector with entries to set
+				 * \attention This is a replace, not a merge, not an add
+				 */
+				void SectionEntriesSet(const IniEntryList &SectionEntries);
+
+				/**
+				 * Required by interface to sort entries alphabetically by their key
+				 */
+				virtual void sort(void) override;
 
 				/**
 				 * String representation of an INI entry
 				 * \return String representation of an INI entry
 				 */
 				std::string to_string(void) const;
-
-				/**
-				 * To clear object and reset to empty fields
-				 */
-				virtual void clear(void) override;
-
-				/**
-				 * Required by interface to sort entries alphabetically by their key
-				 */
-				virtual void sort(void) override;
 
 			private:
 				/**
@@ -169,14 +177,14 @@ namespace net
 				static const std::regex RegExSection;
 
 				/**
-				 * The name of the section
+				 * Index of section comment in regular expression
 				 */
-				std::string m_SectionName;
+				static const int IndexSectionComment;
 
 				/**
-				 * The comment of the section
+				 * Index of section key in regular expression
 				 */
-				std::string m_SectionComment;
+				static const int IndexSectionKey;
 
 				/**
 				 * All entries to this section
@@ -184,12 +192,14 @@ namespace net
 				IniEntryList m_Entries;
 
 				/**
-				 * Stream the object content to an output stream
-				 * \param OutputStream The stream to put the content on
-				 * \param SectionObject The object to stream
-				 * \return Reference to the output stream
+				 * The comment of the section
 				 */
-				friend std::ostream& operator<<(std::ostream &OutputStream, const IniSection &SectionObject);
+				std::string m_SectionComment;
+
+				/**
+				 * The name of the section
+				 */
+				std::string m_SectionName;
 			};
 
 			/**

@@ -43,6 +43,9 @@ namespace net
 		 */
 		namespace yaip
 		{
+			/**
+			 * List of INI sections
+			 */
 			class IniSectionList : public TIniElementList<IniSectionPtr>
 			{
 			public:

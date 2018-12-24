@@ -69,7 +69,7 @@ SCENARIO("Test class IniSection", "[IniSection]")
 
 	INFO("Set information from raw data");
 	std::ostringstream tmpStream;
-	tmpStream <<  "[" << IdentifierSection << "] ; " << CommentSection << std::endl;
+	tmpStream << "[" << IdentifierSection << "] ; " << CommentSection << std::endl;
 	std::string RawData = tmpStream.str();
 	auto result = sut.CreateFromRawData(RawData);
 	REQUIRE(true == result);

@@ -126,15 +126,6 @@ namespace net
 				}
 
 				/**
-				 * Determine size of list
-				 * \return Size of list
-				 */
-				int size(void) const
-				{
-					return static_cast<int>(m_Elements.size());
-				}
-
-				/**
 				 * Get a list of all element identifiers
 				 * \return Vector of all identifiers
 				 */
@@ -151,6 +142,26 @@ namespace net
 				}
 
 				/**
+				 * Determine size of list
+				 * \return Size of list
+				 */
+				int size(void) const
+				{
+					return static_cast<int>(m_Elements.size());
+				}
+
+				/**
+				 * Sort entries in list alphabetically
+				 */
+				virtual void sort(void)
+				{
+					std::sort(m_Elements.begin(), m_Elements.end(), [](const auto First, const auto Second)
+						{
+							return strcmpcaseless(First->ElementIdentifierGet(), Second->ElementIdentifierGet());
+						});
+				}
+
+				/**
 				 * String representation of the list
 				 * \return String representation of the list
 				 */
@@ -164,17 +175,6 @@ namespace net
 					}
 
 					return tmpStream.str();
-				}
-
-				/**
-				 * Sort entries in list alphabetically
-				 */
-				virtual void sort(void)
-				{
-					std::sort(m_Elements.begin(), m_Elements.end(), [](const auto First, const auto Second)
-						{
-							return strcmpcaseless(First->ElementIdentifierGet(), Second->ElementIdentifierGet());
-						});
 				}
 
 			protected:

@@ -49,6 +49,12 @@ namespace net
 			// Regular expression mask for matching a section
 			const std::regex IniSection::RegExSection("\\s*\\[\\s*([^\\]]+)\\]\\s*(;(.+))?");
 
+			// Index of section comment in regular expression
+			const int IniSection::IndexSectionComment = 3;
+
+			// Index of section key in regular expression
+			const int IniSection::IndexSectionKey = 1;
+
 			// ******************************************************************
 			// ******************************************************************
 			IniSection::IniSection(void)
@@ -62,69 +68,6 @@ namespace net
 			// ******************************************************************
 			IniSection::~IniSection(void)
 			{
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void IniSection::ElementIdentifierSet(const std::string &ElementIdentifier)
-			{
-				m_SectionName = trim(ElementIdentifier);
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			std::string IniSection::ElementIdentifierGet(void) const
-			{
-				return m_SectionName;
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void IniSection::ElementCommentSet(const std::string &ElementComment)
-			{
-				m_SectionComment = trim(ElementComment);
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			std::string IniSection::ElementCommentGet(void) const
-			{
-				return m_SectionComment;
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void IniSection::SectionEntriesSet(const IniEntryList &SectionEntries)
-			{
-				m_Entries = SectionEntries;
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			IniEntryList IniSection::SectionEntriesGet(void) const
-			{
-				return m_Entries;
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			bool IniSection::CreateFromRawData(const std::string &RawData)
-			{
-				bool Success = false;
-				std::smatch RegExpMatch;
-
-				// Check for match
-				if (std::regex_search(RawData, RegExpMatch, RegExSection))
-				{
-					// Change section only in case of a match.
-					// Unfortunately in C++ there are no named groups possible
-					// so we have to use the index of the group.
-					ElementIdentifierSet(RegExpMatch[1]);
-					ElementCommentSet(RegExpMatch[3]);
-					Success = true;
-				}
-
-				return Success;
 			}
 
 			// ******************************************************************
@@ -145,9 +88,67 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			IniEntryPtr IniSection::EntryFind(const std::string &EntryName)
+			void IniSection::clear(void)
 			{
-				return m_Entries.ElementFind(EntryName);
+				ElementIdentifierSet("");
+				ElementCommentSet("");
+				m_Entries.clear();
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			bool IniSection::CreateFromRawData(const std::string &RawData)
+			{
+				bool Success = false;
+				std::smatch RegExpMatch;
+
+				// Check for match
+				if (std::regex_search(RawData, RegExpMatch, RegExSection))
+				{
+					// Change section only in case of a match.
+					// Unfortunately in C++ there are no named groups possible
+					// so we have to use the index of the group.
+					ElementIdentifierSet(RegExpMatch[IndexSectionKey]);
+					ElementCommentSet(RegExpMatch[IndexSectionComment]);
+					Success = true;
+				}
+
+				return Success;
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			std::string IniSection::ElementCommentGet(void) const
+			{
+				return m_SectionComment;
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			void IniSection::ElementCommentSet(const std::string &ElementComment)
+			{
+				m_SectionComment = trim(ElementComment);
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			std::string IniSection::ElementIdentifierGet(void) const
+			{
+				return m_SectionName;
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			void IniSection::ElementIdentifierSet(const std::string &ElementIdentifier)
+			{
+				m_SectionName = trim(ElementIdentifier);
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			void IniSection::EntryAdd(const IniEntryPtr &Entry)
+			{
+				m_Entries.ElementAdd(Entry);
 			}
 
 			// ******************************************************************
@@ -155,6 +156,13 @@ namespace net
 			void IniSection::EntryDelete(const IniEntryPtr &Entry)
 			{
 				m_Entries.ElementDelete(Entry);
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			IniEntryPtr IniSection::EntryFind(const std::string &EntryName)
+			{
+				return m_Entries.ElementFind(EntryName);
 			}
 
 			// ******************************************************************
@@ -173,44 +181,35 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			void IniSection::EntryAdd(const IniEntryPtr &Entry)
+			IniEntryList IniSection::SectionEntriesGet(void) const
 			{
-				m_Entries.ElementAdd(Entry);
+				return m_Entries;
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			void IniSection::SectionEntriesSet(const IniEntryList &SectionEntries)
+			{
+				m_Entries = SectionEntries;
 			}
 
 			// ******************************************************************
 			// ******************************************************************
 			std::string IniSection::to_string(void) const
 			{
-				std::ostringstream tmpStream;
-				tmpStream << "[" << m_SectionName << "]";
+				std::ostringstream DataStream;
+				DataStream << "[" << m_SectionName << "]";
 
 				if (!m_SectionComment.empty())
 				{
-					tmpStream << " ; " << m_SectionComment;
+					DataStream << " ; " << m_SectionComment;
 				}
 
-				tmpStream << std::endl;
+				DataStream << std::endl;
 
-				tmpStream << m_Entries.to_string();
+				DataStream << m_Entries.to_string();
 
-				return tmpStream.str();
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void IniSection::clear(void)
-			{
-				ElementIdentifierSet("");
-				ElementCommentSet("");
-				m_Entries.clear();
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void IniSection::sort(void)
-			{
-				m_Entries.sort();
+				return DataStream.str();
 			}
 
 			// ******************************************************************
@@ -219,6 +218,13 @@ namespace net
 			{
 				OutputStream << SectionObject.to_string();
 				return OutputStream;
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			void IniSection::sort(void)
+			{
+				m_Entries.sort();
 			}
 		}
 	}

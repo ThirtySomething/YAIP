@@ -50,28 +50,9 @@ namespace net
 			{
 			public:
 				/**
-				 * Set the INI object identifier
-				 * \param ElementIdentifier Unique identifier of INI object
+				 * To clear object and reset to empty fields
 				 */
-				virtual void ElementIdentifierSet(const std::string &ElementIdentifier) = 0;
-
-				/**
-				 * Get the INI object identifier
-				 * \return Unique identifier of INI object
-				 */
-				virtual std::string ElementIdentifierGet(void) const = 0;
-
-				/**
-				 * Set the INI object comment
-				 * \param ElementComment Comment of INI object
-				 */
-				virtual void ElementCommentSet(const std::string &ElementComment) = 0;
-
-				/**
-				 * Get the INI object comment
-				 * \return Comment of INI object
-				 */
-				virtual std::string ElementCommentGet(void) const = 0;
+				virtual void clear(void) = 0;
 
 				/**
 				 * Will transform string into internal properties
@@ -81,14 +62,39 @@ namespace net
 				virtual bool CreateFromRawData(const std::string &RawData) = 0;
 
 				/**
-				 * To clear object and reset to empty fields
+				 * Get the INI object comment
+				 * \return Comment of INI object
 				 */
-				virtual void clear(void) = 0;
+				virtual std::string ElementCommentGet(void) const = 0;
+
+				/**
+				 * Set the INI object comment
+				 * \param ElementComment Comment of INI object
+				 */
+				virtual void ElementCommentSet(const std::string &ElementComment) = 0;
+
+				/**
+				 * Get the INI object identifier
+				 * \return Unique identifier of INI object
+				 */
+				virtual std::string ElementIdentifierGet(void) const = 0;
+
+				/**
+				 * Set the INI object identifier
+				 * \param ElementIdentifier Unique identifier of INI object
+				 */
+				virtual void ElementIdentifierSet(const std::string &ElementIdentifier) = 0;
 
 				/**
 				 * Required for sorting elements
 				 */
 				virtual void sort(void) = 0;
+
+				/**
+				 * String representation of an INI entry
+				 * \return String representation of an INI entry
+				 */
+				virtual std::string to_string(void) const = 0;
 			};
 		}
 	}
