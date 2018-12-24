@@ -118,11 +118,6 @@ void test_yaip(T Value)
 		net::derpaul::yaip::YAIP sut;
 		REQUIRE(sut.SectionListGet().empty());
 		REQUIRE(sut.SectionKeyValueSet(S_SECTION, S_KEY, Value));
-		//REQUIRE(sut.SectionKeyValueSet(S_SECTION, S_KEY_INVALID, ValueDefault));
-		//REQUIRE(sut.SectionKeyValueSet(S_SECTION, "trallalla", Value));
-		//REQUIRE(sut.SectionKeyValueSet(S_SECTION, "karl-heinz", Value));
-		//REQUIRE(sut.SectionKeyValueSet(S_SECTION, "karlotto", Value));
-		//REQUIRE(sut.INIFileSave(S_FILE_INI));
 
 		WHEN("Add a new section/key/value")
 		{
@@ -234,4 +229,47 @@ TEST_CASE("Test YAIP with datatype string", "[YAIP]")
 {
 	std::string testString("ABCDEFGHIJKLMNOPQRSTUVXYZ abcdefghijklmnopqrstuvxyz () 0123456789 ., _ +- |");
 	test_yaip<std::string>(testString);
+}
+
+TEST_CASE("Test sorting of INI file", "[YAIP]")
+{
+	net::derpaul::yaip::YAIP sut;
+
+	sut.Clear();
+
+	sut.SectionKeyValueSet("Section005", "key02", "kadabra");
+	sut.SectionKeyValueSet("Section005", "key03", "trois");
+	sut.SectionKeyValueSet("Section005", "key01", "abra");
+
+	sut.SectionKeyValueSet("Section001", "entry02", "kadabra");
+	sut.SectionKeyValueSet("Section001", "entry01", "trois");
+	sut.SectionKeyValueSet("Section001", "entry03", "abra");
+
+	sut.SectionKeyValueSet("Section003", "name01", "blubb");
+	sut.SectionKeyValueSet("Section003", "name05", "value");
+	sut.SectionKeyValueSet("Section003", "name02", "test");
+	sut.SectionKeyValueSet("Section003", "name04", "text");
+	sut.SectionKeyValueSet("Section003", "name03", "secret");
+
+	sut.SectionKeyValueSet("Section002", "foo", "foo");
+	sut.SectionKeyValueSet("Section002", "baz", "baz");
+	sut.SectionKeyValueSet("Section002", "wtf", "ftw");
+	sut.SectionKeyValueSet("Section002", "bar", "bar");
+
+	sut.SectionKeyValueSet("Section004", "yellow", "color");
+	sut.SectionKeyValueSet("Section004", "bird", "blackbird");
+	sut.SectionKeyValueSet("Section004", "porsche", "kind of sportswagon");
+
+	std::string INIUnsorted = sut.to_string();
+	std::string INIExpectedUnSorted = "[Section005]\nkey02 = true\nkey03 = true\nkey01 = true\n\n[Section001]\nentry02 = true\nentry01 = true\nentry03 = true\n\n[Section003]\nname01 = true\nname05 = true\nname02 = true\nname04 = true\nname03 = true\n\n[Section002]\nfoo = true\nbaz = true\nwtf = true\nbar = true\n\n[Section004]\nyellow = true\nbird = true\nporsche = true\n\n";
+
+	REQUIRE(sut.INIFileSave(S_FILE_INI));
+	REQUIRE(0 == INIUnsorted.compare(INIExpectedUnSorted));
+
+	std::string INISorted = sut.to_string();
+	std::string INIExpectedSorted = "[Section001]\nentry01 = true\nentry02 = true\nentry03 = true\n\n[Section002]\nbar = true\nbaz = true\nfoo = true\nwtf = true\n\n[Section003]\nname01 = true\nname02 = true\nname03 = true\nname04 = true\nname05 = true\n\n[Section004]\nbird = true\nporsche = true\nyellow = true\n\n[Section005]\nkey01 = true\nkey02 = true\nkey03 = true\n\n";
+	REQUIRE(0 != INIUnsorted.compare(INISorted));
+	REQUIRE(0 == INISorted.compare(INIExpectedSorted));
+
+	sut.INIFileDelete(S_FILE_INI);
 }

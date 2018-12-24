@@ -198,16 +198,15 @@ namespace net
 			std::string IniSection::to_string(void) const
 			{
 				std::ostringstream DataStream;
-				DataStream << "[" << m_SectionName << "]";
 
+				DataStream << "[" << m_SectionName << "]";
 				if (!m_SectionComment.empty())
 				{
 					DataStream << " ; " << m_SectionComment;
 				}
-
 				DataStream << std::endl;
-
 				DataStream << m_Entries.to_string();
+				DataStream << std::endl;
 
 				return DataStream.str();
 			}

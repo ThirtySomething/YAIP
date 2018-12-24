@@ -152,9 +152,9 @@ namespace net
 				void SectionEntriesSet(const IniEntryList &SectionEntries);
 
 				/**
-				 * Required by interface to sort entries alphabetically by their key
+				 * To sort entries alphabetically by their key
 				 */
-				virtual void sort(void) override;
+				void sort(void);
 
 				/**
 				 * String representation of an INI entry

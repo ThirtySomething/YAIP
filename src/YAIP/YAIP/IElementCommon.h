@@ -86,11 +86,6 @@ namespace net
 				virtual void ElementIdentifierSet(const std::string &ElementIdentifier) = 0;
 
 				/**
-				 * Required for sorting elements
-				 */
-				virtual void sort(void) = 0;
-
-				/**
 				 * String representation of an INI entry
 				 * \return String representation of an INI entry
 				 */

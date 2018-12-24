@@ -252,6 +252,13 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
+			std::string YAIP::to_string(void) const
+			{
+				return m_Sections.to_string();
+			}
+
+			// ******************************************************************
+			// ******************************************************************
 			void YAIP::ParseFileContent(tListString FileContent)
 			{
 				IniSection* CurrentSectionPtr = nullptr;

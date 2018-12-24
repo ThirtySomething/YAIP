@@ -69,7 +69,7 @@ SCENARIO("Test class IniSection", "[IniSection]")
 
 	INFO("Set information from raw data");
 	std::ostringstream tmpStream;
-	tmpStream << "[" << IdentifierSection << "] ; " << CommentSection << std::endl;
+	tmpStream << "[" << IdentifierSection << "] ; " << CommentSection << std::endl << std::endl;
 	std::string RawData = tmpStream.str();
 	auto result = sut.CreateFromRawData(RawData);
 	REQUIRE(true == result);
@@ -92,7 +92,7 @@ SCENARIO("Test class IniSection", "[IniSection]")
 
 	tmpStream.str("");
 	tmpStream.clear();
-	tmpStream << IdentifierEntry << " = " << ValueEntry << " ; " << CommentEntry << std::endl;
+	tmpStream << IdentifierEntry << " = " << ValueEntry << " ; " << CommentEntry << std::endl << std::endl;
 	std::string RawDataEntry = tmpStream.str();
 
 	result = sut.AddRawEntry(RawDataEntry);
@@ -103,7 +103,7 @@ SCENARIO("Test class IniSection", "[IniSection]")
 	INFO("Check string representation");
 	tmpStream.str("");
 	tmpStream.clear();
-	tmpStream << RawData << RawDataEntry;
+	tmpStream << "[" << IdentifierSection << "] ; " << CommentSection << std::endl << RawDataEntry;
 	std::string SectionFull = tmpStream.str();
 	REQUIRE(SectionFull == sut.to_string());
 

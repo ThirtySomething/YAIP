@@ -111,11 +111,6 @@ namespace net
 				virtual void ElementValueSet(const std::string &ElementValue);
 
 				/**
-				 * Required by interface, but for entries there is no sort
-				 */
-				virtual void sort(void) override;
-
-				/**
 				 * String representation of an INI entry
 				 * \return String representation of an INI entry
 				 */

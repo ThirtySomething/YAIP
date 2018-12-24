@@ -179,6 +179,12 @@ namespace net
 				 */
 				tListString SectionListGet(void);
 
+				/**
+				 * String representation of whole INI file
+				 * \return String representation of an INI entry
+				 */
+				std::string to_string(void) const;
+
 			protected:
 				/**
 				 * List of all sections
