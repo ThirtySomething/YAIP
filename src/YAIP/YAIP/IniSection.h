@@ -139,14 +139,6 @@ namespace net
 				bool IsEmpty(void) const;
 
 				/**
-				 * Stream the object content to an output stream
-				 * \param OutputStream The stream to put the content on
-				 * \param SectionObject The object to stream
-				 * \return Reference to the output stream
-				 */
-				friend std::ostream& operator<<(std::ostream &OutputStream, const IniSection &SectionObject);
-
-				/**
 				 * Get list of entries
 				 * \return List of entries
 				 */
@@ -168,7 +160,7 @@ namespace net
 				 * String representation of an INI entry
 				 * \return String representation of an INI entry
 				 */
-				std::string to_string(void) const;
+				std::string to_string(void) const override;
 
 			private:
 				/**

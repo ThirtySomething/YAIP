@@ -214,14 +214,6 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			std::ostream& operator<<(std::ostream &OutputStream, const IniSection &SectionObject)
-			{
-				OutputStream << SectionObject.to_string();
-				return OutputStream;
-			}
-
-			// ******************************************************************
-			// ******************************************************************
 			void IniSection::sort(void)
 			{
 				m_Entries.sort();

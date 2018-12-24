@@ -119,7 +119,7 @@ namespace net
 				 * String representation of an INI entry
 				 * \return String representation of an INI entry
 				 */
-				std::string to_string(void) const;
+				std::string to_string(void) const override;
 
 			private:
 				/**
