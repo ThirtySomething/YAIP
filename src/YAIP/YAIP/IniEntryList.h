@@ -48,8 +48,6 @@ namespace net
 			 */
 			class IniEntryList : public TIniElementList<IniEntryPtr>
 			{
-			public:
-				virtual void sort(void) override;
 			};
 		}
 	}

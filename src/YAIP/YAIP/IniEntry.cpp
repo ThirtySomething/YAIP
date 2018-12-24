@@ -68,7 +68,7 @@ namespace net
 			// ******************************************************************
 			void IniEntry::ElementIdentifierSet(const std::string &ElementIdentifier)
 			{
-				m_EntryKey = std::trim(ElementIdentifier);
+				m_EntryKey = trim(ElementIdentifier);
 			}
 
 			// ******************************************************************
@@ -82,7 +82,7 @@ namespace net
 			// ******************************************************************
 			void IniEntry::ElementValueSet(const std::string &ElementValue)
 			{
-				m_EntryValue = std::trim(ElementValue);
+				m_EntryValue = trim(ElementValue);
 			}
 
 			// ******************************************************************
@@ -96,7 +96,7 @@ namespace net
 			// ******************************************************************
 			void IniEntry::ElementCommentSet(const std::string &ElementComment)
 			{
-				m_EntryComment = std::trim(ElementComment);
+				m_EntryComment = trim(ElementComment);
 			}
 
 			// ******************************************************************
@@ -151,6 +151,12 @@ namespace net
 				ElementIdentifierSet("");
 				ElementCommentSet("");
 				ElementValueSet("");
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			void IniEntry::sort(void)
+			{
 			}
 		}
 	}

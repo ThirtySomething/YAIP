@@ -68,7 +68,7 @@ namespace net
 			// ******************************************************************
 			void IniSection::ElementIdentifierSet(const std::string &ElementIdentifier)
 			{
-				m_SectionName = std::trim(ElementIdentifier);
+				m_SectionName = trim(ElementIdentifier);
 			}
 
 			// ******************************************************************
@@ -82,7 +82,7 @@ namespace net
 			// ******************************************************************
 			void IniSection::ElementCommentSet(const std::string &ElementComment)
 			{
-				m_SectionComment = std::trim(ElementComment);
+				m_SectionComment = trim(ElementComment);
 			}
 
 			// ******************************************************************
@@ -204,6 +204,13 @@ namespace net
 				ElementIdentifierSet("");
 				ElementCommentSet("");
 				m_Entries.clear();
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			void IniSection::sort(void)
+			{
+				m_Entries.sort();
 			}
 
 			// ******************************************************************

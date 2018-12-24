@@ -31,47 +31,52 @@
 #include <cstring>
 
  /**
-  * Namespace of string
+  * Namespace of YAIP
   */
-namespace std
+namespace net
 {
-	// ******************************************************************
-	// ******************************************************************
-	struct caselesscompare
+	/**
+	 * Namespace of YAIP
+	 */
+	namespace derpaul
 	{
-		bool operator()(int c1, int c2) const
+		/**
+		 * Namespace of YAIP
+		 */
+		namespace yaip
 		{
-			return tolower(c1) == tolower(c2);
+			// ******************************************************************
+			// ******************************************************************
+			std::string ltrim(const std::string& in)
+			{
+				size_t start = in.find_first_not_of(WHITESPACE);
+				return (start == std::string::npos) ? "" : in.substr(start);
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			std::string rtrim(const std::string& in)
+			{
+				size_t end = in.find_last_not_of(WHITESPACE);
+				return (end == std::string::npos) ? "" : in.substr(0, end + 1);
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			std::string trim(const std::string& in)
+			{
+				return rtrim(ltrim(in));
+			}
+
+			// ******************************************************************
+			// ******************************************************************
+			bool strcmpcaseless(const std::string& left, const std::string& right)
+			{
+				return std::lexicographical_compare(left.begin(), left.end(), right.begin(), right.end(), [](char first, char second)
+					{
+						return tolower(first) < tolower(second);
+					});
+			}
 		}
-	};
-
-	// ******************************************************************
-	// ******************************************************************
-	std::string ltrim(const std::string& in)
-	{
-		size_t start = in.find_first_not_of(WHITESPACE);
-		return (start == std::string::npos) ? "" : in.substr(start);
-	}
-
-	// ******************************************************************
-	// ******************************************************************
-	std::string rtrim(const std::string& in)
-	{
-		size_t end = in.find_last_not_of(WHITESPACE);
-		return (end == std::string::npos) ? "" : in.substr(0, end + 1);
-	}
-
-	// ******************************************************************
-	// ******************************************************************
-	std::string trim(const std::string& in)
-	{
-		return rtrim(ltrim(in));
-	}
-
-	// ******************************************************************
-	// ******************************************************************
-	bool std::strcmpcaseless(const std::string& left, const std::string& right)
-	{
-		return std::equal(left.begin(), left.end(), right.begin(), caselesscompare());
 	}
 }

@@ -51,40 +51,6 @@ namespace net
 		namespace yaip
 		{
 			/**
-			 * This struct will be passed to each map and will ensure an alphabetical order of all keys
-			 */
-			struct StringCompareCaseLess : std::binary_function<std::string, std::string, bool>
-			{
-				/**
-				 * Comparison of two strings represented by unsigned chars
-				 */
-				struct CompareCaseless : public std::binary_function<unsigned char, unsigned char, bool>
-				{
-					/**
-					 * Operator for usage in string compare
-					 * \param CharLeft Left character to check
-					 * \param CharRight Right character to check
-					 * \return true in case the left character is less than the right character
-					 */
-					bool operator() (const unsigned char& CharLeft, const unsigned char& CharRight) const
-					{
-						return (tolower(CharLeft) < tolower(CharRight));
-					}
-				};
-
-				/**
-				 * Operator for usage in string compare
-				 * \param StringLeft Left string to check
-				 * \param StringRight Right string to check
-				 * \return true in case the left string is less than the right string
-				 */
-				bool operator() (const std::string & StringLeft, const std::string & StringRight) const
-				{
-					return std::lexicographical_compare(StringLeft.begin(), StringLeft.end(), StringRight.begin(), StringRight.end(), CompareCaseless());
-				}
-			};
-
-			/**
 			 * Class to manipulate INI files
 			 */
 			class YAIP

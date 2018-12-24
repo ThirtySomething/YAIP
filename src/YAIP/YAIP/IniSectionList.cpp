@@ -46,7 +46,7 @@ namespace net
 			// ******************************************************************
 			void IniSectionList::sort(void)
 			{
-				std::sort(m_Elements.begin(), m_Elements.end());
+				TIniElementList::sort();
 				for (auto CurrentElementPtr = m_Elements.begin(); CurrentElementPtr != m_Elements.end(); ++CurrentElementPtr)
 				{
 					(*CurrentElementPtr)->sort();

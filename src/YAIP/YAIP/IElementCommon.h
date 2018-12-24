@@ -87,16 +87,8 @@ namespace net
 
 				/**
 				 * Required for sorting elements
-				 * \param a Left side element
-				 * \param b Right side element
-				 * \return true on equal, otherwise false
 				 */
-				bool operator<(const IElementCommon &b)
-				{
-					std::string MyIdentifier = ElementIdentifierGet();
-					std::string TheirIdentifier = b.ElementIdentifierGet();
-					return std::strcmpcaseless(MyIdentifier, TheirIdentifier);
-				}
+				virtual void sort(void) = 0;
 			};
 		}
 	}

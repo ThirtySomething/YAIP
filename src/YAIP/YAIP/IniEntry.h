@@ -116,9 +116,10 @@ namespace net
 				 */
 				virtual void clear(void) override;
 
-				void sort(void)
-				{
-				}
+				/**
+				 * Required by interface, but for entries there is no sort
+				 */
+				virtual void sort(void) override;
 
 			private:
 				/**

@@ -46,6 +46,9 @@ namespace net
 			class IniSectionList : public TIniElementList<IniSectionPtr>
 			{
 			public:
+				/**
+				 * We need to sort the own list and also all childs
+				 */
 				virtual void sort(void) override;
 			};
 		}

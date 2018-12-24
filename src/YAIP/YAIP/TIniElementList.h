@@ -113,7 +113,7 @@ namespace net
 				 */
 				TIniElement ElementFind(const std::string &ElementName)
 				{
-					std::string ElementNameWork = std::trim(ElementName);
+					std::string ElementNameWork = trim(ElementName);
 					TIniElement Element = nullptr;
 
 					auto it = std::find_if(m_Elements.begin(), m_Elements.end(), [&ElementNameWork](const TIniElement &obj) {return obj->ElementIdentifierGet() == ElementNameWork; });
@@ -166,7 +166,16 @@ namespace net
 					return tmpStream.str();
 				}
 
-				virtual void sort(void) = 0;
+				/**
+				 * Sort entries in list alphabetically
+				 */
+				virtual void sort(void)
+				{
+					std::sort(m_Elements.begin(), m_Elements.end(), [](const auto First, const auto Second)
+						{
+							return strcmpcaseless(First->ElementIdentifierGet(), Second->ElementIdentifierGet());
+						});
+				}
 
 			protected:
 				/**

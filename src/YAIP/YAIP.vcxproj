@@ -27,7 +27,6 @@
     </ClCompile>
     <ClCompile Include="YAIP\Convert.cpp" />
     <ClCompile Include="YAIP\IniEntry.cpp" />
-    <ClCompile Include="YAIP\IniEntryList.cpp" />
     <ClCompile Include="YAIP\IniSection.cpp" />
     <ClCompile Include="YAIP\IniSectionList.cpp" />
     <ClCompile Include="YAIP\string_extensions.cpp" />

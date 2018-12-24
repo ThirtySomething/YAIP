@@ -157,10 +157,10 @@ namespace net
 				 */
 				virtual void clear(void) override;
 
-				void sort(void)
-				{
-					m_Entries.sort();
-				}
+				/**
+				 * Required by interface to sort entries alphabetically by their key
+				 */
+				virtual void sort(void) override;
 
 			private:
 				/**
