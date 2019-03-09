@@ -20,8 +20,8 @@
 #define CATCH_CONFIG_MAIN
 #include "catch2/catch.hpp"
 
-#include "test_Convert.h"
-#include "test_IniEntry.h"
-#include "test_IniEntryList.h"
-#include "test_IniSection.h"
-#include "test_YAIP.h"
+#include "UTests\test_Convert.h"
+#include "UTests\test_IniEntry.h"
+#include "UTests\test_IniEntryList.h"
+#include "UTests\test_IniSection.h"
+#include "ITests\test_YAIP.h"

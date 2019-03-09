@@ -41,3 +41,7 @@
 /src/YAIP/YAIP/YAIP.cppcheck
 src/YAIP/LastCoverageResults.log
 /YAIP-cppcheck-build-dir
+/src/testlib/testlib.vcxproj.filters
+/src/testlib/testlib.vcxproj.user
+/src/lib/YAIP.vcxproj.filters
+/src/lib/YAIP.vcxproj.user
