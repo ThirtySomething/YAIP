@@ -162,5 +162,5 @@ namespace net
 	}
 }
 
-#endif _INIENTRY_H_
+#endif // _INIENTRY_H_
 

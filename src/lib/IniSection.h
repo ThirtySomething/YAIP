@@ -203,4 +203,4 @@ namespace net
 	}
 }
 
-#endif _INISECTION_H_
+#endif // _INISECTION_H_

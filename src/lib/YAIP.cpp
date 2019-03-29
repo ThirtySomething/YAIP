@@ -27,6 +27,12 @@
 #include <fstream>
 #include <sstream>
 
+#ifndef _WIN32
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#endif
+
  /**
   * Namespace of YAIP
   */
@@ -75,9 +81,14 @@ namespace net
 			// ******************************************************************
 			bool YAIP::INIFileExist(const std::string &Filename)
 			{
-				struct stat buffer;
-				bool exist = (0 == stat(Filename.c_str(), &buffer));
-				return exist;
+#ifdef _WIN32
+				struct _stat tmpbuffer;
+				int result = _stat(Filename.c_str(), &tmpbuffer);
+#else
+				struct stat tmpbuffer;
+				int result = stat(Filename.c_str(), &tmpbuffer);
+#endif
+				return result == 0;
 			}
 
 			// ******************************************************************

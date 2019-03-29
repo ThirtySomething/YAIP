@@ -275,4 +275,4 @@ TEST_CASE("Test sorting of INI file", "[YAIP]")
 	sut.INIFileDelete(S_FILE_INI);
 }
 
-#endif _TEST_YAIP_H_
+#endif // _TEST_YAIP_H_

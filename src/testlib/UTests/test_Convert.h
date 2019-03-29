@@ -240,4 +240,4 @@ SCENARIO("Test class Convert", "[Convert]")
 	test_bool();
 }
 
-#endif _TEST_CONVERT_H_
+#endif // _TEST_CONVERT_H_

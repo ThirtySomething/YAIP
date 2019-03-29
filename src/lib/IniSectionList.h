@@ -59,5 +59,5 @@ namespace net
 	}
 }
 
-#endif _INISECTIONLIST_H_
+#endif // _INISECTIONLIST_H_
 

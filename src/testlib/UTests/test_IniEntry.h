@@ -72,4 +72,4 @@ SCENARIO("Test class IniEntry", "[IniEntry]")
 	REQUIRE(RawData == sut.to_string());
 }
 
-#endif _TEST_INIENTRY_H_
+#endif // _TEST_INIENTRY_H_

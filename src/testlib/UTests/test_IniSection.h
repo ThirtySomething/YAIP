@@ -138,4 +138,4 @@ SCENARIO("Test class IniSection", "[IniSection]")
 	testEmpty(sut);
 }
 
-#endif _TEST_INISECTION_H_
+#endif // _TEST_INISECTION_H_
