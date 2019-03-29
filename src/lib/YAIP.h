@@ -202,4 +202,4 @@ namespace net
 	}
 }
 
-#endif // _YAIP_H_
+#endif

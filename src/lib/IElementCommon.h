@@ -96,4 +96,5 @@ namespace net
 	}
 }
 
-#endif  _IELEMENTCOMMON_H_
+#endif
+

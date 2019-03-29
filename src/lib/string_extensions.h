@@ -80,4 +80,4 @@ namespace net
 	}
 }
 
-#endif // _STRING_EXTENSIONS_H_
+#endif

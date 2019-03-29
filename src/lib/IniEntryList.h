@@ -54,4 +54,4 @@ namespace net
 	}
 }
 
-#endif // _INIENTRYLIST_H_
+#endif

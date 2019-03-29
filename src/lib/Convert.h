@@ -234,4 +234,4 @@ namespace net
 	}
 }
 
-#endif // _CONVERT_H_
+#endif

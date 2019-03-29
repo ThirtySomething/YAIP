@@ -189,4 +189,4 @@ namespace net
 	}
 }
 
-#endif // _TINIELEMENTLIST_H_
+#endif
