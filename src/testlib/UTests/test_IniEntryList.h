@@ -17,7 +17,8 @@
 // along with YAIP. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************
 
-#pragma once
+#ifndef _TEST_INIENTRYLIST_H_
+#define _TEST_INIENTRYLIST_H_
 
 #include "catch2\catch.hpp"
 #include "IniEntryList.h"
@@ -65,3 +66,5 @@ SCENARIO("Test class IniEntryList", "[IniEntryList]")
 	size = sut.size();
 	REQUIRE(0 == size);
 }
+
+#endif _TEST_INIENTRYLIST_H_

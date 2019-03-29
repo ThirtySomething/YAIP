@@ -17,7 +17,8 @@
 // along with YAIP. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************
 
-#pragma once
+#ifndef _TEST_INISECTION_H_
+#define _TEST_INISECTION_H_
 
 #include "catch2\catch.hpp"
 #include "IniSection.h"
@@ -136,3 +137,5 @@ SCENARIO("Test class IniSection", "[IniSection]")
 
 	testEmpty(sut);
 }
+
+#endif _TEST_INISECTION_H_

@@ -23,7 +23,8 @@
  * \date	2016-09-19
  * \brief	Converter between different datatypes and std::string
  */
-#pragma once
+#ifndef _CONVERT_H_
+#define _CONVERT_H_
 
 #include <string>
 
@@ -232,3 +233,5 @@ namespace net
 		}
 	}
 }
+
+#endif _CONVERT_H_

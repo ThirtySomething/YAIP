@@ -17,7 +17,8 @@
 // along with YAIP. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************
 
-#pragma once
+#ifndef _TEST_YAIP_H_
+#define _TEST_YAIP_H_
 
 #include "catch2\catch.hpp"
 #include "YAIP.h"
@@ -273,3 +274,5 @@ TEST_CASE("Test sorting of INI file", "[YAIP]")
 
 	sut.INIFileDelete(S_FILE_INI);
 }
+
+#endif _TEST_YAIP_H_

@@ -23,7 +23,8 @@
  * \date	2016-09-19
  * \brief	List of INI sections
  */
-#pragma once
+#ifndef _INISECTIONLIST_H_
+#define _INISECTIONLIST_H_
 
 #include "IniSection.h"
 #include "TIniElementList.h"
@@ -57,4 +58,6 @@ namespace net
 		}
 	}
 }
+
+#endif _INISECTIONLIST_H_
 

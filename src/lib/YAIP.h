@@ -23,7 +23,8 @@
  * \date	2016-09-19
  * \brief	Header of Yet Another INI Parser
  */
-#pragma once
+#ifndef _YAIP_H_
+#define _YAIP_H_
 
 #include "Convert.h"
 #include "IniSection.h"
@@ -200,3 +201,5 @@ namespace net
 		}
 	}
 }
+
+#endif _YAIP_H_

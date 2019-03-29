@@ -23,7 +23,8 @@
  * \date	2016-09-19
  * \brief	List of INI entries
  */
-#pragma once
+#ifndef _INIENTRYLIST_H_
+#define _INIENTRYLIST_H_
 
 #include "IniEntry.h"
 #include "TIniElementList.h"
@@ -53,3 +54,4 @@ namespace net
 	}
 }
 
+#endif _INIENTRYLIST_H_

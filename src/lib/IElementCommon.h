@@ -23,7 +23,8 @@
  * \date	2016-09-19
  * \brief	Interface for common element properties
  */
-#pragma once
+#ifndef _IELEMENTCOMMON_H_
+#define _IELEMENTCOMMON_H_
 
 #include <string>
 #include "string_extensions.h"
@@ -94,3 +95,5 @@ namespace net
 		}
 	}
 }
+
+#endif  _IELEMENTCOMMON_H_

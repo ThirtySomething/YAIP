@@ -23,7 +23,8 @@
  * \date	2016-11-06
  * \brief	Definition of IniEntry as class to deal with entries
  */
-#pragma once
+#ifndef _INIENTRY_H_
+#define _INIENTRY_H_
 
 #include "IElementCommon.h"
 #include <iostream>
@@ -160,3 +161,6 @@ namespace net
 		}
 	}
 }
+
+#endif _INIENTRY_H_
+

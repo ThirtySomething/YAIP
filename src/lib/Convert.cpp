@@ -26,6 +26,7 @@
 #include "Convert.h"
 #include <sstream>
 #include <iomanip>
+#include <limits>
 
 /**
  * Namespace of YAIP

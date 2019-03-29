@@ -17,7 +17,8 @@
 // along with YAIP. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************
 
-#pragma once
+#ifndef _TEST_INIENTRY_H_
+#define _TEST_INIENTRY_H_
 
 #include "catch2\catch.hpp"
 #include "IniEntry.h"
@@ -70,3 +71,5 @@ SCENARIO("Test class IniEntry", "[IniEntry]")
 	INFO("Test to_string");
 	REQUIRE(RawData == sut.to_string());
 }
+
+#endif _TEST_INIENTRY_H_

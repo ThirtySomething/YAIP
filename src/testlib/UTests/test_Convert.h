@@ -17,7 +17,8 @@
 // along with YAIP. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************
 
-#pragma once
+#ifndef _TEST_CONVERT_H_
+#define _TEST_CONVERT_H_
 
 #include "catch2\catch.hpp"
 #include "Convert.h"
@@ -238,3 +239,5 @@ SCENARIO("Test class Convert", "[Convert]")
 	// bool
 	test_bool();
 }
+
+#endif _TEST_CONVERT_H_

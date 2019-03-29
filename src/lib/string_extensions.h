@@ -23,7 +23,8 @@
  * \date	2016-09-19
  * \brief	Extensions to std::string
  */
-#pragma once
+#ifndef _STRING_EXTENSIONS_H_
+#define _STRING_EXTENSIONS_H_
 
 #include <string>
 
@@ -78,3 +79,5 @@ namespace net
 		}
 	}
 }
+
+#endif _STRING_EXTENSIONS_H_

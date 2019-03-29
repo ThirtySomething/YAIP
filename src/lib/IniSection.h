@@ -23,7 +23,8 @@
  * \date	2016-09-19
  * \brief	Definition of IniSection as class to deal with sections
  */
-#pragma once
+#ifndef _INISECTION_H_
+#define _INISECTION_H_
 
 #include "IElementCommon.h"
 #include "IniEntry.h"
@@ -201,3 +202,5 @@ namespace net
 		}
 	}
 }
+
+#endif _INISECTION_H_

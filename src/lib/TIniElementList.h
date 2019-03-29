@@ -23,7 +23,8 @@
  * \date	2016-09-19
  * \brief	Template for list of elements
  */
-#pragma once
+#ifndef _TINIELEMENTLIST_H_
+#define _TINIELEMENTLIST_H_
 
 #include "string_extensions.h"
 #include <algorithm>
@@ -188,3 +189,4 @@ namespace net
 	}
 }
 
+#endif _TINIELEMENTLIST_H_
