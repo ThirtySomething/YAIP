@@ -23,8 +23,6 @@
  * \date	2016-09-19
  * \brief	Extensions to std::string
  */
-#pragma once
-
 #include "string_extensions.h"
 #include <iostream>
 #include <algorithm>

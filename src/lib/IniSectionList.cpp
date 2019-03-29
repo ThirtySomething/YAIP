@@ -23,8 +23,6 @@
  * \date	2016-09-19
  * \brief	List of INI sections
  */
-#pragma once
-
 #include "IniSectionList.h"
 
  /**
