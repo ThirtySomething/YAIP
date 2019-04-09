@@ -20,7 +20,7 @@
 #ifndef _TEST_YAIP_H_
 #define _TEST_YAIP_H_
 
-#include "catch2\catch.hpp"
+#include "catch2/catch.hpp"
 #include "YAIP.h"
 #include <string>
 #include <limits>

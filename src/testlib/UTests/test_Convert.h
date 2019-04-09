@@ -20,7 +20,7 @@
 #ifndef _TEST_CONVERT_H_
 #define _TEST_CONVERT_H_
 
-#include "catch2\catch.hpp"
+#include "catch2/catch.hpp"
 #include "Convert.h"
 #include <limits>
 

@@ -20,7 +20,7 @@
 #ifndef _TEST_INIENTRYLIST_H_
 #define _TEST_INIENTRYLIST_H_
 
-#include "catch2\catch.hpp"
+#include "catch2/catch.hpp"
 #include "IniEntryList.h"
 
 SCENARIO("Test class IniEntryList", "[IniEntryList]")

@@ -20,7 +20,7 @@
 #ifndef _TEST_INISECTION_H_
 #define _TEST_INISECTION_H_
 
-#include "catch2\catch.hpp"
+#include "catch2/catch.hpp"
 #include "IniSection.h"
 
 void testEmpty(const net::derpaul::yaip::IniSection &sut)

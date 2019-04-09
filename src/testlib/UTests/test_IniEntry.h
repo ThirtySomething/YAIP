@@ -20,7 +20,7 @@
 #ifndef _TEST_INIENTRY_H_
 #define _TEST_INIENTRY_H_
 
-#include "catch2\catch.hpp"
+#include "catch2/catch.hpp"
 #include "IniEntry.h"
 
 SCENARIO("Test class IniEntry", "[IniEntry]")
