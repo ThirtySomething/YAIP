@@ -158,6 +158,12 @@ namespace net
 			 * Convenience typedef for lazy usage of smart_pointers for IniEntries
 			 */
 			typedef std::shared_ptr<IniEntry> IniEntryPtr;
+
+			/**
+			 * Compare two entries
+			 * \return True on equal identifiers, otherwise false
+			 */
+			bool IniEntryCompare(const IniEntryPtr Left, const IniEntryPtr Right);
 		}
 	}
 }

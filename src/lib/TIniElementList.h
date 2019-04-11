@@ -153,17 +153,6 @@ namespace net
 				}
 
 				/**
-				 * Sort entries in list alphabetically
-				 */
-				virtual void sort(void)
-				{
-					std::sort(m_Elements.begin(), m_Elements.end(), [](const auto First, const auto Second)
-						{
-							return strcmpcaseless(First->ElementIdentifierGet(), Second->ElementIdentifierGet());
-						});
-				}
-
-				/**
 				 * String representation of the list
 				 * \return String representation of the list
 				 */
@@ -178,6 +167,11 @@ namespace net
 
 					return tmpStream.str();
 				}
+
+				/**
+				 * Each list has to implement it's own sorting mechanism if required
+				 */
+				virtual void sort(void) = 0;
 
 			protected:
 				/**

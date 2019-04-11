@@ -217,6 +217,13 @@ namespace net
 			{
 				m_Entries.sort();
 			}
+
+			// ******************************************************************
+			// ******************************************************************
+			bool IniSectionCompare(const IniSectionPtr Left, const IniSectionPtr Right)
+			{
+				return strcmpcaseless(Left->ElementIdentifierGet(), Right->ElementIdentifierGet());
+			}
 		}
 	}
 }

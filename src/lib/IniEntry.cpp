@@ -161,6 +161,13 @@ namespace net
 
 				return DataStream.str();
 			}
+
+			// ******************************************************************
+			// ******************************************************************
+			bool IniEntryCompare(const IniEntryPtr Left, const IniEntryPtr Right)
+			{
+				return strcmpcaseless(Left->ElementIdentifierGet(), Right->ElementIdentifierGet());
+			}
 		}
 	}
 }

@@ -18,13 +18,14 @@
 //******************************************************************************
 
 /**
- * \file	IniSectionList.cpp
+ * \file	IniEntryList.cpp
  * \author	ThirtySomething
  * \date	2016-09-19
  * \brief	List of INI sections
  */
-#include "IniSectionList.h"
+#include "IniEntryList.h"
 #include <algorithm>
+
  /**
   * Namespace of YAIP
   */
@@ -42,13 +43,9 @@ namespace net
 		{
 			// ******************************************************************
 			// ******************************************************************
-			void IniSectionList::sort(void)
+			void IniEntryList::sort(void)
 			{
-				std::sort(m_Elements.begin(), m_Elements.end(), net::derpaul::yaip::IniSectionCompare);
-				for (auto CurrentElementPtr = m_Elements.begin(); CurrentElementPtr != m_Elements.end(); ++CurrentElementPtr)
-				{
-					(*CurrentElementPtr)->sort();
-				}
+				std::sort(m_Elements.begin(), m_Elements.end(), net::derpaul::yaip::IniEntryCompare);
 			}
 		}
 	}

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Convert.cpp" />
     <ClCompile Include="IniEntry.cpp" />
+    <ClCompile Include="IniEntryList.cpp" />
     <ClCompile Include="IniSection.cpp" />
     <ClCompile Include="IniSectionList.cpp" />
     <ClCompile Include="string_extensions.cpp" />

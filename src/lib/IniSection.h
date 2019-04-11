@@ -199,6 +199,12 @@ namespace net
 			 * Convenience typedef for lazy usage of smart_pointers for IniSections
 			 */
 			typedef std::shared_ptr<IniSection> IniSectionPtr;
+
+			/**
+			 * Compare two sections
+			 * \return True on equal identifiers, otherwise false
+			 */
+			bool IniSectionCompare(const IniSectionPtr Left, const IniSectionPtr Right);
 		}
 	}
 }
