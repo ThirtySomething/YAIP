@@ -29,7 +29,9 @@
 *.app
 
 # Ignore user defined files and folders
+*.ilk
 *.ini
+*.pdb
 /Bin
 /Build
 /YAIP-cppcheck-build-dir
