@@ -58,7 +58,7 @@ SCENARIO("Test class IniEntry", "[IniEntry]")
 	tmpStream << IdentifierEntry << " = " + ValueEntry << " ; " << CommentEntry << std::endl;
 	std::string RawData = tmpStream.str();
 	auto result = sut.CreateFromRawData(RawData);
-	REQUIRE(true == result);
+	REQUIRE(result);
 
 	IdentifierEntryRead = sut.ElementIdentifierGet();
 	ValueEntryRead = sut.ElementValueGet();

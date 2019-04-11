@@ -2,27 +2,38 @@
 
 ## Badges
 
-[![License: LGPL v3][yaip_license_badge]][yaip_license] [![Version][yaip_release_badge]][yaip_release] [![GitHub forks](https://img.shields.io/github/forks/ThirtySomething/YAIP.svg?style=social&label=Fork&maxAge=2592000)](https://GitHub.com/ThirtySomething/YAIP/network/) [![GitHub issues][yaip_issues_badge]][yaip_issues] [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/) [![Language][lang_cpp_badge]][lang_cpp_badge]
+[![License: LGPL v3][yaip_license_badge]][yaip_license] [![Version][yaip_release_badge]][yaip_release]
+[![GitHub forks](https://img.shields.io/github/forks/ThirtySomething/YAIP.svg?style=social&label=Fork&maxAge=2592000)](https://GitHub.com/ThirtySomething/YAIP/network/)
+[![GitHub issues][yaip_issues_badge]][yaip_issues] [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
+[![Language][lang_cpp_badge]][lang_cpp_badge]
 
 ## General information
 
-**YAIP** is distributed under the terms of the **GNU LESSER GENERAL PUBLIC LICENSE**, version 3.0. The text of the license is included in the file [<code>LICENSE.TXT</code>][license] in the project root.
+**YAIP** is distributed under the terms of the **GNU LESSER GENERAL PUBLIC LICENSE**, version 3.0. The text of the license is included in the file
+[```LICENSE.TXT```][license] in the project root.
 
 ## Requirements
 
-To use **YAIP** you need to have an modern [C++11][cpp_eleven] compiler. See the used parts at the section **Implementation Details**. Tested with [Visual Studio 2017][msvs].
+To use **YAIP** you need to have an modern [C++11][cpp_eleven] compiler. See the used parts at the section **Implementation Details**. Tested with
+[Visual Studio 2019][msvs].
 
 ## Supported Platforms
 
-Supported platforms are all platforms where the code compiles and the tests run without any error.
+Supported platforms are all platforms where the code compiles and the tests run without any error. A raw [CMake] configuration exists and is working for
+
+- ```nmake``` - the command line make system of Microsoft
+- ```make``` - the default Unix make system
 
 ## Motivation
 
-Searching for INI parsers for C++ fires up a lot of them. Most of them come with a lot of stuff/classes around, some of them as library. Only a few of them offers plain classes. Also only a few of them are portable. And I'm missing the usage of modern C++ like own [templates][cpp_templates] and the usage of the [STL][cpp_stl]. I like to improve my C++ skills so I decided to write my own INI file parser.
+Searching for INI parsers for C++ fires up a lot of them. Most of them come with a lot of stuff/classes around, some of them as library. Only a few of them
+offers plain classes. Also only a few of them are portable. And I'm missing the usage of modern C++ like own [templates][cpp_templates] and the usage of the
+[STL][cpp_stl]. I like to improve my C++ skills so I decided to write my own INI file parser.
 
 ## Implementation Details
 
-- Convenience typedefs for datatypes are done in their corresponding classes, e. g. the smartpointer <code>net::derpaul::yaip::IniEntryPtr</code> in the class file of <code>net::derpaul::yaip::IniEntry</code>.
+- Convenience typedefs for datatypes are done in their corresponding classes, e. g. the smartpointer ```net::derpaul::yaip::IniEntryPtr``` in the class
+   file of ```net::derpaul::yaip::IniEntry```.
 - Detection of section and key/value pair while reading is done using [regular expressions][cpp_regexp], see also [regular expression][wiki_regexp].
 - The internal data storage methods are based on [std::string][cpp_string].
 - Templated methods are used for other datatypes calling converters from and to [std::string][cpp_string].
@@ -36,7 +47,8 @@ Searching for INI parsers for C++ fires up a lot of them. Most of them come with
 
 ## Extension
 
-To extend the capabilities with currently not supported datatypes, the extension is very simple. Just extend the class <code>net::derpaul::yaip::Convert</code> with conversion methods from/to your data type.
+To extend the capabilities with currently not supported datatypes, the extension is very simple. Just extend the class ```net::derpaul::yaip::Convert``` with
+conversion methods from/to your data type.
 
 ## Doxygen Documentation
 
@@ -190,11 +202,10 @@ bool SectionKeyValueClear(const std::string &Section, const std::string &Key);
 ## ToDo's
 
 - The implementation has to be checked against the inofficial specification at [Wikipedia][wiki_ini] and the tests have to satisfiy the specification.
-- Enhance the usage of comments.
 - Add tests for untested classes.
-- Add sorting to ```TIniElementList```
 
 [catch2]: https://github.com/philsquared/Catch
+[CMake]: https://cmake.org/
 [CppCheck]: http://cppcheck.sourceforge.net/
 [cpp_eleven]: https://en.wikipedia.org/wiki/C%2B%2B11
 [cpp_map]: http://en.cppreference.com/w/cpp/container/map

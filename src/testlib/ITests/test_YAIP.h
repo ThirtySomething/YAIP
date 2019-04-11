@@ -124,7 +124,7 @@ void test_yaip(T Value)
 		{
 			THEN("Count of section should be 1")
 			{
-				REQUIRE(false == sut.SectionListGet().empty());
+				REQUIRE(!sut.SectionListGet().empty());
 				REQUIRE(1 == sut.SectionListGet().size());
 				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION).size());
 			}
@@ -213,7 +213,7 @@ void test_yaip(T Value)
 
 			THEN("When the ini file is gone")
 			{
-				REQUIRE(false == sut.INIFileExist(S_FILE_INI));
+				REQUIRE(!sut.INIFileExist(S_FILE_INI));
 			}
 		}
 	}
@@ -264,7 +264,9 @@ TEST_CASE("Test sorting of INI file", "[YAIP]")
 	std::string INIUnsorted = sut.to_string();
 	std::string INIExpectedUnSorted = "[Section005]\nkey02 = true\nkey03 = true\nkey01 = true\n\n[Section001]\nentry02 = true\nentry01 = true\nentry03 = true\n\n[Section003]\nname01 = true\nname05 = true\nname02 = true\nname04 = true\nname03 = true\n\n[Section002]\nfoo = true\nbaz = true\nwtf = true\nbar = true\n\n[Section004]\nyellow = true\nbird = true\nporsche = true\n\n";
 
+	REQUIRE(!sut.INIFileExist(S_FILE_INI));
 	REQUIRE(sut.INIFileSave(S_FILE_INI));
+	REQUIRE(sut.INIFileExist(S_FILE_INI));
 	REQUIRE(0 == INIUnsorted.compare(INIExpectedUnSorted));
 
 	std::string INISorted = sut.to_string();
@@ -273,6 +275,7 @@ TEST_CASE("Test sorting of INI file", "[YAIP]")
 	REQUIRE(0 == INISorted.compare(INIExpectedSorted));
 
 	sut.INIFileDelete(S_FILE_INI);
+	REQUIRE(!sut.INIFileExist(S_FILE_INI));
 }
 
 #endif // _TEST_YAIP_H_

@@ -197,7 +197,7 @@ void test_bool(void)
 
 	value_string = net::derpaul::yaip::Convert::StringFalse;
 	net::derpaul::yaip::Convert::ConvertTo(value_string, value_bool);
-	REQUIRE(false == value_bool);
+	REQUIRE(!value_bool);
 }
 
 SCENARIO("Test class Convert", "[Convert]")

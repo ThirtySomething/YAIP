@@ -28,13 +28,13 @@ void testEmpty(const net::derpaul::yaip::IniSection &sut)
 	INFO("No entries");
 	auto EntryList = sut.SectionEntriesGet();
 	REQUIRE(0 == EntryList.size());
-	REQUIRE(true == sut.IsEmpty());
+	REQUIRE(sut.IsEmpty());
 }
 
 void testEntry(const net::derpaul::yaip::IniSection &sut, const std::string &IdentifierEntry)
 {
 	INFO("Check for entries");
-	REQUIRE(false == sut.IsEmpty());
+	REQUIRE(!sut.IsEmpty());
 	auto EntryList = sut.SectionEntriesGet();
 	REQUIRE(1 == EntryList.size());
 
@@ -73,7 +73,7 @@ SCENARIO("Test class IniSection", "[IniSection]")
 	tmpStream << "[" << IdentifierSection << "] ; " << CommentSection << std::endl << std::endl;
 	std::string RawData = tmpStream.str();
 	auto result = sut.CreateFromRawData(RawData);
-	REQUIRE(true == result);
+	REQUIRE(result);
 
 	IdentifierSectionRead = sut.ElementIdentifierGet();
 	CommentSectionRead = sut.ElementCommentGet();
@@ -97,7 +97,7 @@ SCENARIO("Test class IniSection", "[IniSection]")
 	std::string RawDataEntry = tmpStream.str();
 
 	result = sut.AddRawEntry(RawDataEntry);
-	REQUIRE(true == result);
+	REQUIRE(result);
 
 	testEntry(sut, IdentifierEntry);
 
