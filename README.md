@@ -31,6 +31,14 @@ Based on the experience with the previous versions of the INI parser I descovere
   - Build a release version of the `antlr4_static` project
   - Copy the runtime from `./dist/release/antlr4-runtime-static.lib` to `./vendor/antlr4-runtime/antlr4-runtime-static.lib`
   - Git cleanup of the [ANTLR4][antlr4] submodule
+- Prepare [Windows][w10] environment based on the description [here][setup_env_w]
+  - Installed [Java 1.8][java_p_18] from Oracle and [OpenJDK 11][java_o_11] as alternative
+  - Created batch `base.bat` to extend `CLASSPATH` with `antlr-4.10.1-complete.jar` in vendor path
+  - Create batch `antlr4.bat` to call [ANTLR4][antlr4]
+    **NOTE:** In the batch the destination language is set to C++
+  - Create batch `grun.bat` to call [ANTLR4][antlr4] TestRig
+  - Create batch `compile.bat` to call Java compiler with [ANTLR4][antlr4] in classpath
+  - Created initial grammar file `grammar\IniFile.g4`
 
 ## Used tools
 
@@ -43,6 +51,7 @@ Based on the experience with the previous versions of the INI parser I descovere
 ## ToDo's
 
 - ~~Compile the [ANTLR4][antlr4] C++ runtime.~~
+- Setup [Windows][w10] environment
 - Define a grammar based on the inofficial specification at [Wikipedia][wiki_ini].
 - Generate code using [ANTLR4][antlr4].
 - Create a [Visual Studio][msvs] C++ project using the generated code and the runtime.
@@ -53,9 +62,12 @@ Based on the experience with the previous versions of the INI parser I descovere
 [cmake]: https://cmake.org/
 [cpp_eleven]: https://en.wikipedia.org/wiki/C%2B%2B11
 [cppcheck]: http://cppcheck.sourceforge.net/
+[java_o_11]: https://openjdk.org/projects/jdk/11/
+[java_p_18]: https://www.oracle.com/de/java/technologies/javase/javase8u211-later-archive-downloads.html
 [license]: LICENSE.TXT
 [msvs]: https://www.visualstudio.com/
 [plog]: https://github.com/SergiusTheBest/plog
+[setup_env_w]: https://github.com/antlr/antlr4/blob/master/doc/getting-started.md#windows
 [sourcemonitor]: https://www.derpaul.net/SourceMonitor/
 [w10]: https://www.microsoft.com/en-us/software-download/windows10
 [wiki_ini]: https://en.wikipedia.org/wiki/INI_file#Comments
