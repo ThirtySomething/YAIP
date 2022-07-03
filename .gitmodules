@@ -1,3 +1,9 @@
-[submodule "externals/Catch2"]
-	path = externals/Catch2
+[submodule "vendor/plog"]
+	path = vendor/plog
+	url = https://github.com/SergiusTheBest/plog
+[submodule "vendor/antlr4"]
+	path = vendor/antlr4
+	url = https://github.com/antlr/antlr4
+[submodule "vendor/Catch2"]
+	path = vendor/Catch2
 	url = https://github.com/catchorg/Catch2
