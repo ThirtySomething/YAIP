@@ -34,15 +34,14 @@ Based on the experience with the previous versions of the INI parser I descovere
 - Prepare [Windows][w10] environment based on the description [here][setup_env_w]
   - Installed [Java 1.8][java_p_18] from Oracle and [OpenJDK 11][java_o_11] as alternative
   - Created batch `base.bat` to extend `CLASSPATH` with `antlr-4.10.1-complete.jar` in vendor path
-  - Create batch `antlr4.bat` to call [ANTLR4][antlr4]
+  - Create batch `antlr4.bat` to call [ANTLR4][antlr4] -
     **NOTE:** In the batch the destination language is set to C++
   - Create batch `grun.bat` to call [ANTLR4][antlr4] TestRig
   - Create batch `compile.bat` to call Java compiler with [ANTLR4][antlr4] in classpath
-  - Created initial grammar file `grammar\IniFile.g4`
+  - Created test grammar file `grammar\Hello.g4`
 
 ## Used tools
 
-- For general C++ style [CppCheck][cppcheck] is used.
 - As testing framework [Catch2][catch2] is used.
 - For general C++ style [CppCheck][cppcheck] is used.
 - For code metrics [SourceMonitor][sourcemonitor] is used.
@@ -51,7 +50,8 @@ Based on the experience with the previous versions of the INI parser I descovere
 ## ToDo's
 
 - ~~Compile the [ANTLR4][antlr4] C++ runtime.~~
-- Setup [Windows][w10] environment
+- ~~Setup [Windows][w10] environment~~
+- Create [C++ project][msvs] using demo grammar and C++ runtime
 - Define a grammar based on the inofficial specification at [Wikipedia][wiki_ini].
 - Generate code using [ANTLR4][antlr4].
 - Create a [Visual Studio][msvs] C++ project using the generated code and the runtime.

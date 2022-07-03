@@ -1,23 +1,23 @@
 
-// Generated from IniFile.g4 by ANTLR 4.10.1
+// Generated from Hello.g4 by ANTLR 4.10.1
 
 #pragma once
 
 
 #include "antlr4-runtime.h"
-#include "IniFileListener.h"
+#include "HelloListener.h"
 
 
 /**
- * This class provides an empty implementation of IniFileListener,
+ * This class provides an empty implementation of HelloListener,
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
-class  IniFileBaseListener : public IniFileListener {
+class  HelloBaseListener : public HelloListener {
 public:
 
-  virtual void enterR(IniFileParser::RContext * /*ctx*/) override { }
-  virtual void exitR(IniFileParser::RContext * /*ctx*/) override { }
+  virtual void enterR(HelloParser::RContext * /*ctx*/) override { }
+  virtual void exitR(HelloParser::RContext * /*ctx*/) override { }
 
 
   virtual void enterEveryRule(antlr4::ParserRuleContext * /*ctx*/) override { }

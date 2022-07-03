@@ -1,5 +1,5 @@
 
-// Generated from IniFile.g4 by ANTLR 4.10.1
+// Generated from Hello.g4 by ANTLR 4.10.1
 
 #pragma once
 
@@ -9,7 +9,7 @@
 
 
 
-class  IniFileParser : public antlr4::Parser {
+class  HelloParser : public antlr4::Parser {
 public:
   enum {
     T__0 = 1, ID = 2, WS = 3
@@ -19,11 +19,11 @@ public:
     RuleR = 0
   };
 
-  explicit IniFileParser(antlr4::TokenStream *input);
+  explicit HelloParser(antlr4::TokenStream *input);
 
-  IniFileParser(antlr4::TokenStream *input, const antlr4::atn::ParserATNSimulatorOptions &options);
+  HelloParser(antlr4::TokenStream *input, const antlr4::atn::ParserATNSimulatorOptions &options);
 
-  ~IniFileParser() override;
+  ~HelloParser() override;
 
   std::string getGrammarFileName() const override;
 

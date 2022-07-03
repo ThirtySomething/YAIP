@@ -1,5 +1,5 @@
 
-// Generated from IniFile.g4 by ANTLR 4.10.1
+// Generated from Hello.g4 by ANTLR 4.10.1
 
 #pragma once
 
@@ -9,15 +9,15 @@
 
 
 
-class  IniFileLexer : public antlr4::Lexer {
+class  HelloLexer : public antlr4::Lexer {
 public:
   enum {
     T__0 = 1, ID = 2, WS = 3
   };
 
-  explicit IniFileLexer(antlr4::CharStream *input);
+  explicit HelloLexer(antlr4::CharStream *input);
 
-  ~IniFileLexer() override;
+  ~HelloLexer() override;
 
 
   std::string getGrammarFileName() const override;

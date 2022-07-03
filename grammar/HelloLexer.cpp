@@ -1,8 +1,8 @@
 
-// Generated from IniFile.g4 by ANTLR 4.10.1
+// Generated from Hello.g4 by ANTLR 4.10.1
 
 
-#include "IniFileLexer.h"
+#include "HelloLexer.h"
 
 
 using namespace antlr4;
@@ -13,8 +13,8 @@ using namespace antlr4;
 
 namespace {
 
-struct IniFileLexerStaticData final {
-  IniFileLexerStaticData(std::vector<std::string> ruleNames,
+struct HelloLexerStaticData final {
+  HelloLexerStaticData(std::vector<std::string> ruleNames,
                           std::vector<std::string> channelNames,
                           std::vector<std::string> modeNames,
                           std::vector<std::string> literalNames,
@@ -24,10 +24,10 @@ struct IniFileLexerStaticData final {
         symbolicNames(std::move(symbolicNames)),
         vocabulary(this->literalNames, this->symbolicNames) {}
 
-  IniFileLexerStaticData(const IniFileLexerStaticData&) = delete;
-  IniFileLexerStaticData(IniFileLexerStaticData&&) = delete;
-  IniFileLexerStaticData& operator=(const IniFileLexerStaticData&) = delete;
-  IniFileLexerStaticData& operator=(IniFileLexerStaticData&&) = delete;
+  HelloLexerStaticData(const HelloLexerStaticData&) = delete;
+  HelloLexerStaticData(HelloLexerStaticData&&) = delete;
+  HelloLexerStaticData& operator=(const HelloLexerStaticData&) = delete;
+  HelloLexerStaticData& operator=(HelloLexerStaticData&&) = delete;
 
   std::vector<antlr4::dfa::DFA> decisionToDFA;
   antlr4::atn::PredictionContextCache sharedContextCache;
@@ -41,12 +41,12 @@ struct IniFileLexerStaticData final {
   std::unique_ptr<antlr4::atn::ATN> atn;
 };
 
-std::once_flag inifilelexerLexerOnceFlag;
-IniFileLexerStaticData *inifilelexerLexerStaticData = nullptr;
+std::once_flag hellolexerLexerOnceFlag;
+HelloLexerStaticData *hellolexerLexerStaticData = nullptr;
 
-void inifilelexerLexerInitialize() {
-  assert(inifilelexerLexerStaticData == nullptr);
-  auto staticData = std::make_unique<IniFileLexerStaticData>(
+void hellolexerLexerInitialize() {
+  assert(hellolexerLexerStaticData == nullptr);
+  auto staticData = std::make_unique<HelloLexerStaticData>(
     std::vector<std::string>{
       "T__0", "ID", "WS"
     },
@@ -83,51 +83,51 @@ void inifilelexerLexerInitialize() {
   for (size_t i = 0; i < count; i++) { 
     staticData->decisionToDFA.emplace_back(staticData->atn->getDecisionState(i), i);
   }
-  inifilelexerLexerStaticData = staticData.release();
+  hellolexerLexerStaticData = staticData.release();
 }
 
 }
 
-IniFileLexer::IniFileLexer(CharStream *input) : Lexer(input) {
-  IniFileLexer::initialize();
-  _interpreter = new atn::LexerATNSimulator(this, *inifilelexerLexerStaticData->atn, inifilelexerLexerStaticData->decisionToDFA, inifilelexerLexerStaticData->sharedContextCache);
+HelloLexer::HelloLexer(CharStream *input) : Lexer(input) {
+  HelloLexer::initialize();
+  _interpreter = new atn::LexerATNSimulator(this, *hellolexerLexerStaticData->atn, hellolexerLexerStaticData->decisionToDFA, hellolexerLexerStaticData->sharedContextCache);
 }
 
-IniFileLexer::~IniFileLexer() {
+HelloLexer::~HelloLexer() {
   delete _interpreter;
 }
 
-std::string IniFileLexer::getGrammarFileName() const {
-  return "IniFile.g4";
+std::string HelloLexer::getGrammarFileName() const {
+  return "Hello.g4";
 }
 
-const std::vector<std::string>& IniFileLexer::getRuleNames() const {
-  return inifilelexerLexerStaticData->ruleNames;
+const std::vector<std::string>& HelloLexer::getRuleNames() const {
+  return hellolexerLexerStaticData->ruleNames;
 }
 
-const std::vector<std::string>& IniFileLexer::getChannelNames() const {
-  return inifilelexerLexerStaticData->channelNames;
+const std::vector<std::string>& HelloLexer::getChannelNames() const {
+  return hellolexerLexerStaticData->channelNames;
 }
 
-const std::vector<std::string>& IniFileLexer::getModeNames() const {
-  return inifilelexerLexerStaticData->modeNames;
+const std::vector<std::string>& HelloLexer::getModeNames() const {
+  return hellolexerLexerStaticData->modeNames;
 }
 
-const dfa::Vocabulary& IniFileLexer::getVocabulary() const {
-  return inifilelexerLexerStaticData->vocabulary;
+const dfa::Vocabulary& HelloLexer::getVocabulary() const {
+  return hellolexerLexerStaticData->vocabulary;
 }
 
-antlr4::atn::SerializedATNView IniFileLexer::getSerializedATN() const {
-  return inifilelexerLexerStaticData->serializedATN;
+antlr4::atn::SerializedATNView HelloLexer::getSerializedATN() const {
+  return hellolexerLexerStaticData->serializedATN;
 }
 
-const atn::ATN& IniFileLexer::getATN() const {
-  return *inifilelexerLexerStaticData->atn;
+const atn::ATN& HelloLexer::getATN() const {
+  return *hellolexerLexerStaticData->atn;
 }
 
 
 
 
-void IniFileLexer::initialize() {
-  std::call_once(inifilelexerLexerOnceFlag, inifilelexerLexerInitialize);
+void HelloLexer::initialize() {
+  std::call_once(hellolexerLexerOnceFlag, hellolexerLexerInitialize);
 }
