@@ -32,7 +32,10 @@
 *.ilk
 *.ini
 *.pdb
+
+# YAIP settings by ThirtySomething
 /.vs
 /Bin
 /Build
 /src/YAIP.vcxproj.user
+/obj

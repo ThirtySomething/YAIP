@@ -19,26 +19,25 @@ Based on the experience with the previous versions of the INI parser I descovere
 ## Steps
 
 - [ANTLR4][antlr4] runtime
-  - First of all download the latest `antlr4.jar` file to `./vendor/antlr4.jar/antlr-4.10.1-complete.jar`
-  - Create [Visual Studio project files][msvs] using [CMake][cmake]
-
-    ```bat
-    cd ./vendor/antlr4/runtime/Cpp
-    cmake -DCMAKE_BUILD_TYPE=Release -DWITH_DEMO=True -DANTLR_JAR_LOCATION=..\..\..\antlr4.jar\antlr-4.10.1-complete.jar .
-    ```
-
-  - Open the [Visual Studio][msvs] solution `LIBANTLR4.sln`
-  - Build a release version of the `antlr4_static` project
-  - Copy the runtime from `./dist/release/antlr4-runtime-static.lib` to `./vendor/antlr4-runtime/antlr4-runtime-static.lib`
-  - Git cleanup of the [ANTLR4][antlr4] submodule
+  - In the submodule switch to the dev branch as of 02.07.2022 the master branch is not useable.
+  - The runtime will be part of the YAIP project and compiled there
 - Prepare [Windows][w10] environment based on the description [here][setup_env_w]
   - Installed [Java 1.8][java_p_18] from Oracle and [OpenJDK 11][java_o_11] as alternative
-  - Created batch `base.bat` to extend `CLASSPATH` with `antlr-4.10.1-complete.jar` in vendor path
-  - Create batch `antlr4.bat` to call [ANTLR4][antlr4] -
-    **NOTE:** In the batch the destination language is set to C++
+  - Create batch `git_init.bat` to init the submodules
+  - Create batch `git_update.bat` to update the submodules
+  - Created batch `base.bat` to extend `CLASSPATH` with `antlr-4.10.1-complete.jar` found at vendor path, base of all batches using [ANTLR4][antlr4]
+  - Create batch `antlr4.bat` to call [ANTLR4][antlr4]
   - Create batch `grun.bat` to call [ANTLR4][antlr4] TestRig
   - Create batch `compile.bat` to call Java compiler with [ANTLR4][antlr4] in classpath
-  - Created test grammar file `grammar\Hello.g4`
+  - Created test grammar file `Hello.g4`
+  - Create batch `generate.bat` to create CPP files from previous grammar
+- Setup
+  - Adjust paths in `base.bat` to satisfy your environment
+- YAIP project
+  - Run `generate.bat`
+  - Open solution file
+  - Select YAIP as start project
+  - Compile
 
 ## Used tools
 

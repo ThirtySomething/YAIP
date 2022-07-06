@@ -1,8 +1,9 @@
 
-// Generated from Hello.g4 by ANTLR 4.10.1
+// Generated from D:\Workspaces\GitHub\YAIP\Hello.g4 by ANTLR 4.10.1
 
 
 #include "HelloListener.h"
+#include "HelloVisitor.h"
 
 #include "HelloParser.h"
 
@@ -128,6 +129,14 @@ void HelloParser::RContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<HelloListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitR(this);
+}
+
+
+std::any HelloParser::RContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<HelloVisitor*>(visitor))
+    return parserVisitor->visitR(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 HelloParser::RContext* HelloParser::r() {
