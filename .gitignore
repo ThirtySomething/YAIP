@@ -37,5 +37,6 @@
 /.vs
 /Bin
 /Build
-/src/YAIP.vcxproj.user
 /obj
+/src/YAIP.vcxproj.user
+/src/generated/

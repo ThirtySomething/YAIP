@@ -6,7 +6,7 @@
 
 ## Requirements
 
-To use **YAIP** you need to have a [C++11][cpp_eleven] compiler. Developed and tested with [Visual Studio 2019][msvs] on [Windows 10][w10].
+To use **YAIP** you need to have a [C++17][cpp_seventeen] compiler. Developed and tested with [Visual Studio 2019][msvs] on [Windows 10][w10].
 
 ## Supported Platforms
 
@@ -31,10 +31,9 @@ Based on the experience with the previous versions of the INI parser I descovere
   - Create batch `compile.bat` to call Java compiler with [ANTLR4][antlr4] in classpath
   - Created test grammar file `Hello.g4`
   - Create batch `generate.bat` to create CPP files from previous grammar
-- Setup
+- **Setup**
   - Adjust paths in `base.bat` to satisfy your environment
 - YAIP project
-  - Run `generate.bat`
   - Open solution file
   - Select YAIP as start project
   - Compile
@@ -45,21 +44,23 @@ Based on the experience with the previous versions of the INI parser I descovere
 - For general C++ style [CppCheck][cppcheck] is used.
 - For code metrics [SourceMonitor][sourcemonitor] is used.
 - For logging [plog][plog] is used.
+- For [ANTLR4][antlr4] the tutorials [here][antlr4-tut] and [here][antlr4-tut-cpp] were used.
 
 ## ToDo's
 
 - ~~Compile the [ANTLR4][antlr4] C++ runtime.~~
 - ~~Setup [Windows][w10] environment~~
-- Create [C++ project][msvs] using demo grammar and C++ runtime
+- ~~Create a [Visual Studio][msvs] C++ project~~ using the generated code and the runtime.
 - Define a grammar based on the inofficial specification at [Wikipedia][wiki_ini].
-- Generate code using [ANTLR4][antlr4].
-- Create a [Visual Studio][msvs] C++ project using the generated code and the runtime.
+- ~~Generate code using [ANTLR4][antlr4].~~
 - Create tests using [Catch2][catch2]
 
+[antlr4-tut-cpp]: https://tomassetti.me/getting-started-antlr-cpp/
+[antlr4-tut]: https://tomassetti.me/antlr-mega-tutorial/
 [antlr4]: https://www.antlr.org/
 [catch2]: https://github.com/philsquared/Catch
 [cmake]: https://cmake.org/
-[cpp_eleven]: https://en.wikipedia.org/wiki/C%2B%2B11
+[cpp_seventeen]: https://en.wikipedia.org/wiki/C%2B%2B17
 [cppcheck]: http://cppcheck.sourceforge.net/
 [java_o_11]: https://openjdk.org/projects/jdk/11/
 [java_p_18]: https://www.oracle.com/de/java/technologies/javase/javase8u211-later-archive-downloads.html
