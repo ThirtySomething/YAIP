@@ -31,7 +31,7 @@ Based on the experience with the previous versions of the INI parser I descovere
   - Create batch `compile.bat` to call Java compiler with [ANTLR4][antlr4] in classpath
   - Created test grammar file `Hello.g4`
   - Create batch `generate.bat` to create CPP files from previous grammar
-- **Setup**
+- Prerequisites
   - Adjust paths in `base.bat` to satisfy your environment
 - YAIP project
   - Open solution file

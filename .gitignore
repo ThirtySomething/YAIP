@@ -34,6 +34,7 @@
 *.pdb
 
 # YAIP settings by ThirtySomething
+/.antlr
 /.vs
 /Bin
 /Build

@@ -120,10 +120,8 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="generated\INIFileBaseListener.cpp" />
     <ClCompile Include="generated\INIFileBaseVisitor.cpp" />
     <ClCompile Include="generated\INIFileLexer.cpp" />
-    <ClCompile Include="generated\INIFileListener.cpp" />
     <ClCompile Include="generated\INIFileParser.cpp" />
     <ClCompile Include="generated\INIFileVisitor.cpp" />
     <ClCompile Include="YAIPTest.cpp" />
@@ -134,18 +132,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="generated\INIFileBaseListener.h" />
-    <ClInclude Include="generated\INIFileBaseVisitor.h" />
-    <ClInclude Include="generated\INIFileLexer.h" />
-    <ClInclude Include="generated\INIFileListener.h" />
-    <ClInclude Include="generated\INIFileParser.h" />
-    <ClInclude Include="generated\INIFileVisitor.h" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\base.bat" />
     <None Include="..\INIFile.g4" />
     <None Include="..\README.md" />
     <None Include="..\YAIP.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="generated\INIFileBaseVisitor.h" />
+    <ClInclude Include="generated\INIFileLexer.h" />
+    <ClInclude Include="generated\INIFileParser.h" />
+    <ClInclude Include="generated\INIFileVisitor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
