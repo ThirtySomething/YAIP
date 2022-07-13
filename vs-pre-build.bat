@@ -16,4 +16,8 @@ echo.------------------------------
 @rem echo."%SOLUTIONDIR%generate.bat" "%GRAMMAR%"
 call "%SOLUTIONDIR%generate.bat" "%GRAMMAR%"
 echo.------------------------------
+echo.Copying INI file
+@rem echo.xcopy /y /v /c /f "%SOLUTIONDIR%YAIP.ini" "%SOLUTIONDIR%bin\%CONFIGURATION%\"
+xcopy /y /v /c /f "%SOLUTIONDIR%YAIP.ini" "%SOLUTIONDIR%bin\%CONFIGURATION%\"
+echo.------------------------------
 endlocal
