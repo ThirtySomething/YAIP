@@ -41,3 +41,4 @@
 /obj
 /src/YAIP.vcxproj.user
 /src/generated/
+/antlr4-runtime

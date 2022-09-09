@@ -2,9 +2,9 @@
 #include <string>
 
 #include "antlr4-runtime.h"
-#include "INIFileLexer.h"
-#include "INIFileParser.h"
-#include "INIFileVisitor.h"
+#include "INILexer.h"
+#include "INIParser.h"
+#include "INIParserVisitor.h"
 
 using namespace std;
 using namespace antlr4;
@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
     stream.open(argv[1]);
 
     ANTLRInputStream input(stream);
-    INIFileLexer lexer(&input);
+    INILexer lexer(&input);
     CommonTokenStream tokens(&lexer);
 
     cout << "Tokens:" << endl;
@@ -29,6 +29,8 @@ int main(int argc, char* argv[])
     {
         std::cout << token->toString() << std::endl;
     }
+
+    system("pause");
 
     return 0;
 }
