@@ -21,7 +21,7 @@ VALUE_MODE_SPACES: [ \t]+ -> skip;
 
 VALUE: ~[ \t\r\n]+;
 
-VALUE_MODE_COMMENT: ';' ~[\r\n]* -> type(COMMENT);
+VALUE_MODE_COMMENT: (SEMICOLON | HASH) ~[\r\n]* -> type(COMMENT);
 
 VALUE_MODE_NL: [\r\n]+ -> skip, popMode;
 

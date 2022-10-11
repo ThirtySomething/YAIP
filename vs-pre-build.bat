@@ -16,8 +16,8 @@ xcopy /y /v /c /f "%SOLUTIONDIR%bin\vs-2019\%PLATFORM%\%CONFIGURATION% DLL\antlr
 echo.------------------------------
 @rem echo."%SOLUTIONDIR%generate.bat" "%GRAMMAR%"
 @rem call "%SOLUTIONDIR%generate.bat" "%GRAMMAR%"
-call "%SOLUTIONDIR%generate.bat" "C:\Projects\_Other\temp\YAIP\INILexer.g4"
-call "%SOLUTIONDIR%generate.bat" "C:\Projects\_Other\temp\YAIP\INIParser.g4"
+call "%SOLUTIONDIR%generate.bat" "%SOLUTIONDIR%\INILexer.g4"
+call "%SOLUTIONDIR%generate.bat" "%SOLUTIONDIR%\INIParser.g4"
 echo.------------------------------
 echo.Copying INI file
 @rem echo.xcopy /y /v /c /f "%SOLUTIONDIR%YAIP.ini" "%SOLUTIONDIR%bin\%CONFIGURATION%\"
