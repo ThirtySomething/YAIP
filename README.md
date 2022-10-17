@@ -19,20 +19,21 @@ Based on the experience with the previous versions of the INI parser I descovere
 ## Steps
 
 - [ANTLR4][antlr4] runtime
-  - In the submodule switch to the dev branch as of 02.07.2022 the master branch is not useable.
   - The runtime will be part of the YAIP project and compiled there
-- Prepare [Windows][w10] environment based on the description [here][setup_env_w]
+- Prepare environment based on the description [here][setup_env_w]
   - Installed [Java 1.8][java_p_18] from Oracle and [OpenJDK 11][java_o_11] as alternative
-  - Create batch `git_init.bat` to init the submodules
-  - Create batch `git_update.bat` to update the submodules
-  - Created batch `base.bat` to extend `CLASSPATH` with `antlr-4.10.1-complete.jar` found at vendor path, base of all batches using [ANTLR4][antlr4]
-  - Create batch `antlr4.bat` to call [ANTLR4][antlr4]
-  - Create batch `grun.bat` to call [ANTLR4][antlr4] TestRig
-  - Create batch `compile.bat` to call Java compiler with [ANTLR4][antlr4] in classpath
-  - Created test grammar file `Hello.g4`
-  - Create batch `generate.bat` to create CPP files from previous grammar
+  - Installed [CMake][cmake]
+  - Create script `git_init.bat/.sh` to init the submodules
+  - Create script `git_update.bat/.sh` to update the submodules
+  - Created script `base.bat/.sh` to extend `CLASSPATH` with `antlr-4.10.1-complete.jar` found at vendor path, base of all batches using [ANTLR4][antlr4]
+  - Create script `antlr4.bat/.sh` to call [ANTLR4][antlr4]
+  - Create script `grun.bat/.sh` to call [ANTLR4][antlr4] TestRig
+  - Create script `compile.bat/.sh` to call Java compiler with [ANTLR4][antlr4] in classpath
+  - Created test grammar file `INILexer.g4`
+  - Created test grammar file `INIParser.g4`
+  - Create script `generate.bat/.sh` to create CPP files from previous grammar
 - Prerequisites
-  - Adjust paths in `base.bat` to satisfy your environment
+  - Adjust paths in `base.bat/.sh` to satisfy your environment
 - YAIP project
   - Open solution file
   - Select YAIP as start project
@@ -48,12 +49,12 @@ Based on the experience with the previous versions of the INI parser I descovere
 
 ## ToDo's
 
+- Define a grammar based on the inofficial specification at [Wikipedia][wiki_ini].
+- Create tests using [Catch2][catch2]
 - ~~Compile the [ANTLR4][antlr4] C++ runtime.~~
 - ~~Setup [Windows][w10] environment~~
 - ~~Create a [Visual Studio][msvs] C++ project~~ using the generated code and the runtime.
-- Define a grammar based on the inofficial specification at [Wikipedia][wiki_ini].
 - ~~Generate code using [ANTLR4][antlr4].~~
-- Create tests using [Catch2][catch2]
 
 [antlr4-tut-cpp]: https://tomassetti.me/getting-started-antlr-cpp/
 [antlr4-tut]: https://tomassetti.me/antlr-mega-tutorial/
