@@ -48,3 +48,7 @@
 /CMakeCache.txt
 /ZERO_CHECK.vcxproj
 /ZERO_CHECK.vcxproj.filters
+/src/CMakeFiles
+/_deps
+/CPackConfig.cmake
+/CPackSourceConfig.cmake
