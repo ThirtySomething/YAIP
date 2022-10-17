@@ -1,0 +1,7 @@
+"antlr4.generation": {
+    "mode": "external",
+    "outputDir": "./src/generated",
+    "language": "Cpp",
+    "listeners": false,
+    "visitors": true
+},
