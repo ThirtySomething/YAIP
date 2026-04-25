@@ -24,6 +24,7 @@
  * \brief	Implementation of Yet Another INI Parser
  */
 #include "YAIP.h"
+#include "IniAntlrParser.h"
 #include <fstream>
 #include <sstream>
 
@@ -122,8 +123,7 @@ namespace net
                     IniFile.close();
 
                     // Parse INI file
-                    ParseFileContent(FileContent);
-                    Success = true;
+                    Success = ParseFileContent(FileContent);
                 }
 
                 return Success;
@@ -283,29 +283,15 @@ namespace net
 
             // ******************************************************************
             // ******************************************************************
-            void YAIP::ParseFileContent(tListString FileContent)
+            bool YAIP::ParseFileContent(tListString FileContent)
             {
-                IniSection *CurrentSectionPtr = nullptr;
-
-                // Loop over the INI file
+                std::ostringstream FileStream;
                 for (auto const &Loop : FileContent)
                 {
-                    std::string Line = Loop;
-
-                    // Got a new section?
-                    IniSectionPtr SectionPtr(new IniSection);
-                    if (SectionPtr->CreateFromRawData(Line))
-                    {
-                        m_Sections.ElementAdd(SectionPtr);
-                        CurrentSectionPtr = SectionPtr.get();
-                        continue;
-                    }
-
-                    if (nullptr != CurrentSectionPtr)
-                    {
-                        CurrentSectionPtr->AddRawEntry(Line);
-                    }
+                    FileStream << Loop << '\n';
                 }
+
+                return IniAntlrParser::Parse(FileStream.str(), m_Sections);
             }
         }
     }

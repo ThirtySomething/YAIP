@@ -205,7 +205,7 @@ namespace net
                  * Loop over file content to determine sections and key/values to populate internal storage
                  * \param FileContent The INI file as a vector of std::strings, each line a string
                  */
-                void ParseFileContent(tListString FileContent);
+                bool ParseFileContent(tListString FileContent);
             };
         }
     }

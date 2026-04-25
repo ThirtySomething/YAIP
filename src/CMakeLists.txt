@@ -4,6 +4,19 @@ PROJECT(YAIP VERSION 1.0.0 LANGUAGES CXX)
 include(CTest)
 include(FetchContent)
 
+set(ANTLR4_INSTALL OFF CACHE BOOL "" FORCE)
+set(WITH_DEMO OFF CACHE BOOL "" FORCE)
+set(WITH_LIBCXX OFF CACHE BOOL "" FORCE)
+set(WITH_STATIC_CRT OFF CACHE BOOL "" FORCE)
+
+FetchContent_Declare(
+    antlr4_runtime
+    GIT_REPOSITORY https://github.com/antlr/antlr4.git
+    GIT_TAG 4.13.2
+    SOURCE_SUBDIR runtime/Cpp
+)
+FetchContent_MakeAvailable(antlr4_runtime)
+
 FetchContent_Declare(
     Catch2
     GIT_REPOSITORY https://github.com/catchorg/Catch2.git
