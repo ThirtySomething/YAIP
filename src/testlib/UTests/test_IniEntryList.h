@@ -22,6 +22,7 @@
 
 #include "IniEntryList.h"
 #include "catch2/catch_all.hpp"
+#include <memory>
 
 SCENARIO("Test class IniEntryList", "[IniEntryList]")
 {
@@ -31,24 +32,24 @@ SCENARIO("Test class IniEntryList", "[IniEntryList]")
     std::string comment = "comment";
 
     auto size = sut.size();
-    REQUIRE(0 == size);
+    REQUIRE(sut.size() == 0);
 
-    net::derpaul::yaip::IniEntryPtr entry(new net::derpaul::yaip::IniEntry);
+    auto entry = std::make_shared<net::derpaul::yaip::IniEntry>();
     entry->ElementIdentifierSet(key);
     entry->ElementValueSet(value);
     entry->ElementCommentSet(comment);
 
     sut.ElementAdd(entry);
     size = sut.size();
-    REQUIRE(1 == size);
+    REQUIRE(size == 1);
 
     sut.clear();
     size = sut.size();
-    REQUIRE(0 == size);
+    REQUIRE(size == 0);
 
     sut.ElementAdd(entry);
     size = sut.size();
-    REQUIRE(1 == size);
+    REQUIRE(size == 1);
 
     auto result = sut.ElementFind(key);
     REQUIRE(nullptr != result);
@@ -57,12 +58,12 @@ SCENARIO("Test class IniEntryList", "[IniEntryList]")
     REQUIRE(comment == result->ElementCommentGet());
 
     auto elementList = sut.ElementIdentifierList();
-    REQUIRE(1 == elementList.size());
+    REQUIRE(elementList.size() == 1);
     REQUIRE(key == elementList.front());
 
     sut.ElementDelete(entry);
     size = sut.size();
-    REQUIRE(0 == size);
+    REQUIRE(size == 0);
 }
 
 #endif // _TEST_INIENTRYLIST_H_

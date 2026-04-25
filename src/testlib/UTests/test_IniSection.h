@@ -22,12 +22,13 @@
 
 #include "IniSection.h"
 #include "catch2/catch_all.hpp"
+#include <memory>
 
 void testEmpty(const net::derpaul::yaip::IniSection &sut)
 {
     INFO("No entries");
     auto EntryList = sut.SectionEntriesGet();
-    REQUIRE(0 == EntryList.size());
+    REQUIRE(EntryList.size() == 0);
     REQUIRE(sut.IsEmpty());
 }
 
@@ -36,11 +37,11 @@ void testEntry(const net::derpaul::yaip::IniSection &sut, const std::string &Ide
     INFO("Check for entries");
     REQUIRE(!sut.IsEmpty());
     auto EntryList = sut.SectionEntriesGet();
-    REQUIRE(1 == EntryList.size());
+    REQUIRE(EntryList.size() == 1);
 
     INFO("Check size of list of entries");
     auto IniEntryList = sut.EntryKeyList();
-    REQUIRE(1 == IniEntryList.size());
+    REQUIRE(IniEntryList.size() == 1);
     REQUIRE(IdentifierEntry == IniEntryList.front());
 }
 
@@ -91,7 +92,7 @@ SCENARIO("Test class IniSection", "[IniSection]")
     std::string ValueEntry = "IniEntryValue";
     std::string CommentEntry = "IniEntryComment";
 
-    net::derpaul::yaip::IniEntryPtr Entry(new net::derpaul::yaip::IniEntry);
+    auto Entry = std::make_shared<net::derpaul::yaip::IniEntry>();
     Entry->ElementIdentifierSet(IdentifierEntry);
     Entry->ElementValueSet(ValueEntry);
     Entry->ElementCommentSet(CommentEntry);

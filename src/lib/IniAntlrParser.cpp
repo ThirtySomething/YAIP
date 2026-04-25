@@ -11,6 +11,7 @@
 #include "antlr/generated/IniParser.h"
 #include "antlr4-runtime.h"
 #include "string_extensions.h"
+#include <memory>
 
 namespace
 {
@@ -117,7 +118,7 @@ namespace net
                     {
                         IniParser::SectionStatementContext *sectionCtx = statement->sectionStatement();
 
-                        IniSectionPtr sectionPtr(new IniSection);
+                        auto sectionPtr = std::make_shared<IniSection>();
                         sectionPtr->ElementIdentifierSet(textFrom(sectionCtx->name));
                         if (sectionCtx->comment())
                         {
@@ -133,7 +134,7 @@ namespace net
                     {
                         IniParser::PairStatementContext *pairCtx = statement->pairStatement();
 
-                        IniEntryPtr entryPtr(new IniEntry);
+                        auto entryPtr = std::make_shared<IniEntry>();
                         entryPtr->ElementIdentifierSet(textFrom(pairCtx->key));
                         entryPtr->ElementValueSet(textFrom(pairCtx->value));
                         if (pairCtx->comment())

@@ -26,6 +26,7 @@
 #include "YAIP.h"
 #include "IniAntlrParser.h"
 #include <fstream>
+#include <memory>
 #include <sstream>
 
 #ifndef _WIN32
@@ -207,17 +208,15 @@ namespace net
                 // Ensure default return value
                 std::string ReturnValue = Default;
 
-                IniSectionPtr CurrentSection = m_Sections.ElementFind(Section);
-                if (nullptr != CurrentSection)
+                if (auto CurrentSection = m_Sections.ElementFind(Section); nullptr != CurrentSection)
                 {
-                    IniEntryPtr CurrentEntry = CurrentSection->EntryFind(Key);
-                    if (nullptr != CurrentEntry)
+                    if (auto CurrentEntry = CurrentSection->EntryFind(Key); nullptr != CurrentEntry)
                     {
                         ReturnValue = CurrentEntry->ElementValueGet();
                     }
                 }
 
-                if (0 == ReturnValue.length())
+                if (ReturnValue.empty())
                 {
                     ReturnValue = Default;
                 }
@@ -229,22 +228,22 @@ namespace net
             // ******************************************************************
             bool YAIP::SectionKeyValueSet(const std::string &Section, const std::string &Key, const std::string &Value)
             {
-                IniSectionPtr CurrentSection = m_Sections.ElementFind(Section);
+                auto CurrentSection = m_Sections.ElementFind(Section);
                 if (nullptr == CurrentSection)
                 {
-                    CurrentSection.reset(new IniSection);
+                    CurrentSection = std::make_shared<IniSection>();
                     CurrentSection->ElementIdentifierSet(Section);
                     m_Sections.ElementAdd(CurrentSection);
                 }
 
-                IniEntryPtr CurrentEntry = CurrentSection->EntryFind(Key);
+                auto CurrentEntry = CurrentSection->EntryFind(Key);
                 if (nullptr != CurrentEntry)
                 {
                     CurrentSection->EntryDelete(CurrentEntry);
                 }
                 else
                 {
-                    CurrentEntry.reset(new IniEntry);
+                    CurrentEntry = std::make_shared<IniEntry>();
                 }
 
                 CurrentEntry->ElementIdentifierSet(Key);

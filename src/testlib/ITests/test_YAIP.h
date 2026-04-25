@@ -79,8 +79,7 @@ short GetDefaultValue<short>(void)
 template <>
 std::string GetDefaultValue<std::string>(void)
 {
-    std::string DefaultString = "-=>DEFAULT<=-";
-    return DefaultString;
+    return "-=>DEFAULT<=-";
 }
 
 template <>

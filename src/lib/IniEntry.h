@@ -129,7 +129,7 @@ namespace net
             /**
              * Convenience typedef for lazy usage of smart_pointers for IniEntries
              */
-            typedef std::shared_ptr<IniEntry> IniEntryPtr;
+            using IniEntryPtr = std::shared_ptr<IniEntry>;
 
             /**
              * Compare two entries
