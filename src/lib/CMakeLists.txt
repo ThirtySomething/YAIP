@@ -100,6 +100,8 @@ ADD_LIBRARY(yaip STATIC
     IElementCommon.h
     IniAntlrParser.cpp
     IniAntlrParser.h
+    IniDocumentBuilder.cpp
+    IniDocumentBuilder.h
     IniEntry.cpp
     IniEntry.h
     IniEntryList.cpp
