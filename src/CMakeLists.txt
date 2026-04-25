@@ -22,18 +22,8 @@ set(YAIP_ANTLR4_PARSER_GRAMMAR "IniParser")
 set(YAIP_CATCH2_VERSION "v3.14.0")
 set(YAIP_DISTRI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../distri)
 
-function(yaip_add_post_build_copy target_name)
-    add_custom_command(TARGET ${target_name} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E make_directory
-        ${YAIP_DISTRI_DIR}/$<IF:$<CONFIG:Debug>,debug,release>
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        $<TARGET_FILE:${target_name}>
-        ${YAIP_DISTRI_DIR}/$<IF:$<CONFIG:Debug>,debug,release>/$<TARGET_FILE_NAME:${target_name}>
-        VERBATIM
-    )
-endfunction()
-
 include(CTest)
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/yaip_post_build.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/yaip_grammar_2_code.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/yaip_antlr4_runtime.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/yaip_catch2.cmake)

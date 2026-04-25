@@ -66,4 +66,4 @@ target_include_directories(yaip PUBLIC
 
 target_link_libraries(yaip PRIVATE antlr4_static)
 
-yaip_add_post_build_copy(yaip)
+yaip_post_build(yaip)
