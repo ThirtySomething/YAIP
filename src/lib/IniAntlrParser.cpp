@@ -114,8 +114,8 @@ namespace net
                 antlr4::CommonTokenStream tokens(&lexer);
                 IniParser parser(&tokens);
 
-                detail::ParseErrorListener lexerErrorListener;
-                detail::ParseErrorListener parserErrorListener;
+                ParseErrorListener lexerErrorListener;
+                ParseErrorListener parserErrorListener;
 
                 lexer.removeErrorListeners();
                 parser.removeErrorListeners();

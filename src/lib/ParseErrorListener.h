@@ -28,26 +28,23 @@ namespace net
     {
         namespace yaip
         {
-            namespace detail
+            class ParseErrorListener : public antlr4::BaseErrorListener
             {
-                class ParseErrorListener : public antlr4::BaseErrorListener
-                {
-                public:
-                    ParseErrorListener();
+            public:
+                ParseErrorListener();
 
-                    void syntaxError(antlr4::Recognizer *recognizer,
-                                     antlr4::Token *offendingSymbol,
-                                     size_t line,
-                                     size_t charPositionInLine,
-                                     const std::string &msg,
-                                     std::exception_ptr e) override;
+                void syntaxError(antlr4::Recognizer *recognizer,
+                                 antlr4::Token *offendingSymbol,
+                                 size_t line,
+                                 size_t charPositionInLine,
+                                 const std::string &msg,
+                                 std::exception_ptr e) override;
 
-                    bool HadError() const;
+                bool HadError() const;
 
-                private:
-                    bool m_HadError;
-                };
-            }
+            private:
+                bool m_HadError;
+            };
         }
     }
 }
