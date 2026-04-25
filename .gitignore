@@ -1,65 +1,19 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+# Build directories
+/build/
+/Bin/
+/YAIP-cppcheck-build-dir/
 
-# Precompiled Headers
-*.gch
-*.pch
+# CMake-generated files
+**/CMakeFiles/
+**/CMakeCache.txt
+**/cmake_install.cmake
+**/Makefile
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-# Ignore user defined files and folders
-*.ilk
-*.ini
-*.pdb
-/Bin
-/build
-/YAIP-cppcheck-build-dir
+# Generated documentation
 /doxygen/YAIP.log
-/doxygen/html
-/src/.vs
-/src/CMakeCache.txt
-/src/CMakeFiles
-/src/Makefile
-/src/YAIP/LastCoverageResults.log
-/src/YAIP/YAIP.vcxproj.user
-/src/YAIP/YAIP/YAIP-cppcheck-build-dir
-/src/YAIP/YAIP/YAIP.cppcheck
-/src/YAIP/YAIP/YAIP.smproj
-/src/cmake_install.cmake
-/src/lib/CMakeCache.txt
-/src/lib/CMakeFiles
-/src/lib/Makefile
-/src/lib/YAIP.vcxproj.filters
-/src/lib/YAIP.vcxproj.user
-/src/lib/cmake_install.cmake
-/src/testlib/CMakeCache.txt
-/src/testlib/CMakeFiles
-/src/testlib/Makefile
-/src/testlib/cmake_install.cmake
-/src/testlib/testlib.vcxproj.filters
-/src/testlib/testlib.vcxproj.user
+/doxygen/html/
 
-build
-.vscode
-.antlr
+# Tooling scratch files
+/.antlr/
+/src/.vs/
+/.vscode/
