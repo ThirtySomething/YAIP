@@ -1,6 +1,5 @@
 # Build directories
-/build/
-/Bin/
+build
 /YAIP-cppcheck-build-dir/
 
 # CMake-generated files
@@ -15,5 +14,4 @@
 
 # Tooling scratch files
 .antlr
-/src/.vs/
-/.vscode/
+.vscode

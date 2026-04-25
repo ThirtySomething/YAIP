@@ -26,6 +26,9 @@
 #define _INIDIAGNOSTICSVISITOR_H_
 
 #include "IIniVisitor.h"
+#include "IniDiagnostic.h"
+#include "IniDiagnosticCode.h"
+#include "IniDiagnosticSeverity.h"
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -36,31 +39,6 @@ namespace net
     {
         namespace yaip
         {
-            enum class IniDiagnosticSeverity
-            {
-                Warning,
-                Error
-            };
-
-            enum class IniDiagnosticCode
-            {
-                EmptySectionName,
-                DuplicateKey,
-                EmptyEntryValue
-            };
-
-            struct IniDiagnostic
-            {
-                IniDiagnosticSeverity Severity;
-                IniDiagnosticCode Code;
-                std::string Section;
-                std::string Key;
-                std::size_t SectionIndex;
-                std::size_t EntryIndex;
-                std::size_t KeyOccurrenceInSection;
-                std::string Message;
-            };
-
             class IniDiagnosticsVisitor : public IIniVisitor
             {
             public:

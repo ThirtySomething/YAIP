@@ -6,6 +6,7 @@
 #define _INIPARSERFACTORY_H_
 
 #include "IIniParserStrategy.h"
+#include "IniParserBackend.h"
 #include <memory>
 
 namespace net
@@ -14,11 +15,6 @@ namespace net
     {
         namespace yaip
         {
-            enum class IniParserBackend
-            {
-                Antlr
-            };
-
             class IniParserFactory
             {
             public:

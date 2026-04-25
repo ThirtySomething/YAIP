@@ -21,8 +21,11 @@ add_library(yaip STATIC
     IElementCommon.h
     IniAntlrParser.cpp
     IniAntlrParser.h
+    IniDiagnostic.h
+    IniDiagnosticCode.h
     IniDiagnosticsVisitor.cpp
     IniDiagnosticsVisitor.h
+    IniDiagnosticSeverity.h
     IniDocumentBuilder.cpp
     IniDocumentBuilder.h
     IniEntry.cpp
@@ -33,6 +36,7 @@ add_library(yaip STATIC
     IniSection.h
     IniSectionList.cpp
     IniSectionList.h
+    IniParserBackend.h
     IniParserFactory.cpp
     IniParserFactory.h
     JsonIniExporterVisitor.cpp

@@ -29,32 +29,38 @@
 
 using namespace net::derpaul::yaip;
 
-namespace
+namespace net
 {
-    int DiagnosticCount(const std::vector<IniDiagnostic> &diagnostics, const IniDiagnosticCode code)
+    namespace derpaul
     {
-        int count = 0;
-        for (const auto &diagnostic : diagnostics)
+        namespace yaip
         {
-            if (diagnostic.Code == code)
+            int DiagnosticCount(const std::vector<IniDiagnostic> &diagnostics, const IniDiagnosticCode code)
             {
-                ++count;
+                int count = 0;
+                for (const auto &diagnostic : diagnostics)
+                {
+                    if (diagnostic.Code == code)
+                    {
+                        ++count;
+                    }
+                }
+                return count;
+            }
+
+            const IniDiagnostic *FindDiagnostic(const std::vector<IniDiagnostic> &diagnostics, const IniDiagnosticCode code)
+            {
+                for (const auto &diagnostic : diagnostics)
+                {
+                    if (diagnostic.Code == code)
+                    {
+                        return &diagnostic;
+                    }
+                }
+
+                return nullptr;
             }
         }
-        return count;
-    }
-
-    const IniDiagnostic *FindDiagnostic(const std::vector<IniDiagnostic> &diagnostics, const IniDiagnosticCode code)
-    {
-        for (const auto &diagnostic : diagnostics)
-        {
-            if (diagnostic.Code == code)
-            {
-                return &diagnostic;
-            }
-        }
-
-        return nullptr;
     }
 }
 
