@@ -44,7 +44,7 @@ namespace net
             template <typename T>
             std::string FloatingToString(const T &Value)
             {
-                typedef std::numeric_limits<T> Limits;
+                using Limits = std::numeric_limits<T>;
                 std::ostringstream StringStream;
                 StringStream << std::setprecision(Limits::max_digits10) << std::scientific << Value;
                 return StringStream.str();

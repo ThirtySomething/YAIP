@@ -33,7 +33,7 @@ namespace net
     {
         namespace yaip
         {
-            typedef std::list<std::string> tListString;
+            using tListString = std::list<std::string>;
 
             template <typename TIniElement>
             class TIniElementList

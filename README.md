@@ -30,8 +30,6 @@ Searching for INI parsers for C++ fires up a lot of them. Most of them come with
 
 ## Implementation Details
 
-- Convenience typedefs for datatypes are done in their corresponding classes, e. g. the smartpointer `net::derpaul::yaip::IniEntryPtr` in the class
-  file of `net::derpaul::yaip::IniEntry`.
 - Detection of sections, keys, values, and comments is done with an [ANTLR4][antlr4]-based parser generated from INI grammar files.
 - The internal data storage methods are based on [std::string][cpp_string].
 - Templated methods are used for other datatypes calling converters from and to [std::string][cpp_string].
