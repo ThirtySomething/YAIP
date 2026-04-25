@@ -1,7 +1,4 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.25)
-PROJECT(yaiptest VERSION 1.0.0 LANGUAGES CXX)
-
-ADD_EXECUTABLE(yaiptest
+add_executable(yaiptest
     testlib.cpp
     ITests/test_YAIP.h
     UTests/test_Convert.h
@@ -12,32 +9,20 @@ ADD_EXECUTABLE(yaiptest
 )
 
 # TARGET_COMPILE_OPTIONS(yaiptest PRIVATE -Werror)
-SET(CMAKE_CXX_STANDARD 17)
+target_compile_features(yaiptest PRIVATE cxx_std_17)
 
-TARGET_INCLUDE_DIRECTORIES(yaiptest PUBLIC
+target_include_directories(yaiptest PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../lib>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/ITests>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/UTests>
 )
 
-LINK_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../lib)
-TARGET_LINK_LIBRARIES(yaiptest PRIVATE yaip Catch2::Catch2WithMain)
+target_link_libraries(yaiptest PRIVATE yaip Catch2::Catch2WithMain)
 
 if(UNIX AND NOT APPLE)
-    TARGET_COMPILE_DEFINITIONS(yaiptest PRIVATE CATCH_CONFIG_NO_POSIX_SIGNALS)
+    target_compile_definitions(yaiptest PRIVATE CATCH_CONFIG_NO_POSIX_SIGNALS)
 endif()
 
 if(BUILD_TESTING)
     add_test(NAME yaiptest COMMAND yaiptest)
 endif()
-
-SET(dir ${CMAKE_CURRENT_SOURCE_DIR}/../../build/)
-SET(EXECUTABLE_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
-SET(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
-SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${dir})
-SET(CMAKE_BUILD_FILES_DIRECTORY ${dir})
-SET(CMAKE_BUILD_DIRECTORY ${dir})
-SET(CMAKE_BINARY_DIR ${dir})
-SET(EXECUTABLE_OUTPUT_PATH ${dir})
-SET(LIBRARY_OUTPUT_PATH ${dir}lib)
-SET(CMAKE_CACHEFILE_DIR ${dir})

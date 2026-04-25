@@ -1,11 +1,8 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.25)
-PROJECT(yaip VERSION 1.0.0 LANGUAGES CXX)
+set(ANTLR_GRAMMAR_DIR ${CMAKE_CURRENT_SOURCE_DIR}/antlr)
+set(ANTLR_GENERATED_DIR ${CMAKE_CURRENT_BINARY_DIR}/antlr/generated)
+set(ANTLR_FALLBACK_DIR ${CMAKE_CURRENT_SOURCE_DIR}/antlr/generated)
 
-SET(ANTLR_GRAMMAR_DIR ${CMAKE_CURRENT_SOURCE_DIR}/antlr)
-SET(ANTLR_GENERATED_DIR ${CMAKE_CURRENT_BINARY_DIR}/antlr/generated)
-SET(ANTLR_FALLBACK_DIR ${CMAKE_CURRENT_SOURCE_DIR}/antlr/generated)
-
-SET(ANTLR_GENERATED_SOURCES
+set(ANTLR_GENERATED_SOURCES
     ${ANTLR_GENERATED_DIR}/IniLexer.cpp
     ${ANTLR_GENERATED_DIR}/IniLexer.h
     ${ANTLR_GENERATED_DIR}/IniParser.cpp
@@ -16,20 +13,20 @@ SET(ANTLR_GENERATED_SOURCES
     ${ANTLR_GENERATED_DIR}/IniParserVisitor.h
 )
 
-OPTION(YAIP_GENERATE_ANTLR "Generate ANTLR parser code from grammar files." ON)
-SET(ANTLR4_VERSION 4.13.2)
-SET(ANTLR4_JAR "" CACHE FILEPATH "Path to antlr-4.x-complete.jar used for parser generation")
+option(YAIP_GENERATE_ANTLR "Generate ANTLR parser code from grammar files." ON)
+set(ANTLR4_VERSION 4.13.2)
+set(ANTLR4_JAR "" CACHE FILEPATH "Path to antlr-4.x-complete.jar used for parser generation")
 
-IF(YAIP_GENERATE_ANTLR)
-    FIND_PACKAGE(Java COMPONENTS Runtime QUIET)
+if(YAIP_GENERATE_ANTLR)
+    find_package(Java COMPONENTS Runtime QUIET)
 
-    IF(Java_Runtime_FOUND)
-        IF(NOT ANTLR4_JAR)
-            SET(ANTLR4_JAR ${CMAKE_BINARY_DIR}/antlr-${ANTLR4_VERSION}-complete.jar)
-        ENDIF()
+    if(Java_Runtime_FOUND)
+        if(NOT ANTLR4_JAR)
+            set(ANTLR4_JAR ${CMAKE_BINARY_DIR}/antlr-${ANTLR4_VERSION}-complete.jar)
+        endif()
 
-        IF(NOT EXISTS ${ANTLR4_JAR})
-            FILE(DOWNLOAD
+        if(NOT EXISTS ${ANTLR4_JAR})
+            file(DOWNLOAD
                 https://www.antlr.org/download/antlr-${ANTLR4_VERSION}-complete.jar
                 ${ANTLR4_JAR}
                 STATUS _ANTLR_DOWNLOAD_STATUS
@@ -37,20 +34,20 @@ IF(YAIP_GENERATE_ANTLR)
                 TLS_VERIFY ON
             )
 
-            LIST(GET _ANTLR_DOWNLOAD_STATUS 0 _ANTLR_DOWNLOAD_CODE)
+            list(GET _ANTLR_DOWNLOAD_STATUS 0 _ANTLR_DOWNLOAD_CODE)
 
-            IF(NOT _ANTLR_DOWNLOAD_CODE EQUAL 0)
-                MESSAGE(WARNING "Failed to download ANTLR tool JAR (${_ANTLR_DOWNLOAD_STATUS}). Falling back to checked-in generated parser sources.")
-                SET(YAIP_GENERATE_ANTLR OFF)
-            ENDIF()
-        ENDIF()
-    ELSE()
-        MESSAGE(WARNING "ANTLR code generation requires a Java runtime. Falling back to checked-in generated parser sources.")
-        SET(YAIP_GENERATE_ANTLR OFF)
-    ENDIF()
+            if(NOT _ANTLR_DOWNLOAD_CODE EQUAL 0)
+                message(WARNING "Failed to download ANTLR tool JAR (${_ANTLR_DOWNLOAD_STATUS}). Falling back to checked-in generated parser sources.")
+                set(YAIP_GENERATE_ANTLR OFF)
+            endif()
+        endif()
+    else()
+        message(WARNING "ANTLR code generation requires a Java runtime. Falling back to checked-in generated parser sources.")
+        set(YAIP_GENERATE_ANTLR OFF)
+    endif()
 
-    IF(YAIP_GENERATE_ANTLR)
-        SET(_ANTLR_GENERATOR_COMMAND
+    if(YAIP_GENERATE_ANTLR)
+        set(_ANTLR_GENERATOR_COMMAND
             ${Java_JAVA_EXECUTABLE}
             -jar
             ${ANTLR4_JAR}
@@ -62,11 +59,11 @@ IF(YAIP_GENERATE_ANTLR)
             ${ANTLR_GRAMMAR_DIR}/IniLexer.g4
             ${ANTLR_GRAMMAR_DIR}/IniParser.g4
         )
-    ENDIF()
-ENDIF()
+    endif()
+endif()
 
-IF(YAIP_GENERATE_ANTLR)
-    ADD_CUSTOM_COMMAND(
+if(YAIP_GENERATE_ANTLR)
+    add_custom_command(
         OUTPUT ${ANTLR_GENERATED_SOURCES}
         COMMAND ${CMAKE_COMMAND} -E make_directory ${ANTLR_GENERATED_DIR}
         COMMAND ${_ANTLR_GENERATOR_COMMAND}
@@ -75,13 +72,13 @@ IF(YAIP_GENERATE_ANTLR)
         VERBATIM
     )
 
-    ADD_CUSTOM_TARGET(yaip_generate_antlr
+    add_custom_target(yaip_generate_antlr
         DEPENDS ${ANTLR_GENERATED_SOURCES}
     )
 
-    SET(YAIP_ANTLR_FILES ${ANTLR_GENERATED_SOURCES})
-ELSE()
-    SET(YAIP_ANTLR_FILES
+    set(YAIP_ANTLR_FILES ${ANTLR_GENERATED_SOURCES})
+else()
+    set(YAIP_ANTLR_FILES
         ${ANTLR_FALLBACK_DIR}/IniLexer.cpp
         ${ANTLR_FALLBACK_DIR}/IniLexer.h
         ${ANTLR_FALLBACK_DIR}/IniParser.cpp
@@ -91,9 +88,9 @@ ELSE()
         ${ANTLR_FALLBACK_DIR}/IniParserVisitor.cpp
         ${ANTLR_FALLBACK_DIR}/IniParserVisitor.h
     )
-ENDIF()
+endif()
 
-ADD_LIBRARY(yaip STATIC
+add_library(yaip STATIC
     Convert.cpp
     Convert.h
     IIniParserStrategy.h
@@ -127,28 +124,17 @@ ADD_LIBRARY(yaip STATIC
     ${YAIP_ANTLR_FILES}
 )
 
-IF(TARGET yaip_generate_antlr)
-    ADD_DEPENDENCIES(yaip yaip_generate_antlr)
-ENDIF()
+if(TARGET yaip_generate_antlr)
+    add_dependencies(yaip yaip_generate_antlr)
+endif()
 
-SET(CMAKE_CXX_STANDARD 17)
+target_compile_features(yaip PUBLIC cxx_std_17)
 
-TARGET_INCLUDE_DIRECTORIES(yaip PUBLIC
+target_include_directories(yaip PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/antlr/generated>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
     $<BUILD_INTERFACE:${ANTLR_GENERATED_DIR}>
 )
 
-TARGET_LINK_LIBRARIES(yaip PRIVATE antlr4_static)
-
-SET(dir ${CMAKE_CURRENT_SOURCE_DIR}/../../build/)
-SET(EXECUTABLE_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
-SET(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
-SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${dir})
-SET(CMAKE_BUILD_FILES_DIRECTORY ${dir})
-SET(CMAKE_BUILD_DIRECTORY ${dir})
-SET(CMAKE_BINARY_DIR ${dir})
-SET(EXECUTABLE_OUTPUT_PATH ${dir})
-SET(LIBRARY_OUTPUT_PATH ${dir}lib)
-SET(CMAKE_CACHEFILE_DIR ${dir})
+target_link_libraries(yaip PRIVATE antlr4_static)
