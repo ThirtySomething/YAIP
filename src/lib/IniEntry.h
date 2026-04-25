@@ -29,144 +29,115 @@
 #include "IElementCommon.h"
 #include <iostream>
 #include <memory>
-#include <regex>
 #include <string>
 
- /**
-  * Namespace of YAIP
-  */
+/**
+ * Namespace of YAIP
+ */
 namespace net
 {
-	/**
-	 * Namespace of YAIP
-	 */
-	namespace derpaul
-	{
-		/**
-		 * Namespace of YAIP
-		 */
-		namespace yaip
-		{
-			/**
-			 * Represents an INI entry
-			 */
-			class IniEntry : public IElementCommon
-			{
-			public:
-				/**
-				 * Default constructor
-				 */
-				IniEntry(void);
+    /**
+     * Namespace of YAIP
+     */
+    namespace derpaul
+    {
+        /**
+         * Namespace of YAIP
+         */
+        namespace yaip
+        {
+            /**
+             * Represents an INI entry
+             */
+            class IniEntry : public IElementCommon
+            {
+            public:
+                /**
+                 * Default constructor
+                 */
+                IniEntry(void);
 
-				/**
-				 * Default destructor
-				 */
-				virtual ~IniEntry(void);
+                /**
+                 * Default destructor
+                 */
+                virtual ~IniEntry(void);
 
-				/**
-				 * To clear object and reset to empty fields
-				 */
-				virtual void clear(void) override;
+                /**
+                 * To clear object and reset to empty fields
+                 */
+                virtual void clear(void) override;
 
-				/**
-				 * Will transform string into internal properties
-				 * \param RawData string from INI file to transform
-				 * \return true on success, otherwise false
-				 */
-				virtual bool CreateFromRawData(const std::string &RawData) override;
+                /**
+                 * Get the INI object comment
+                 * \return Comment of INI object
+                 */
+                virtual std::string ElementCommentGet(void) const override;
 
-				/**
-				 * Get the INI object comment
-				 * \return Comment of INI object
-				 */
-				virtual std::string ElementCommentGet(void) const override;
+                /**
+                 * Set the INI object comment
+                 * \param ElementComment Comment of INI object
+                 */
+                virtual void ElementCommentSet(const std::string &ElementComment) override;
 
-				/**
-				 * Set the INI object comment
-				 * \param ElementComment Comment of INI object
-				 */
-				virtual void ElementCommentSet(const std::string &ElementComment) override;
+                /**
+                 * Get the unique element identifier aka the key of an INI entry
+                 * \return The key of the INI entry
+                 */
+                virtual std::string ElementIdentifierGet(void) const override;
 
-				/**
-				 * Get the unique element identifier aka the key of an INI entry
-				 * \return The key of the INI entry
-				 */
-				virtual std::string ElementIdentifierGet(void) const override;
+                /**
+                 * The unique element identifier is the key of an INI entry
+                 * \param ElementIdentifier The key of the INI entry
+                 */
+                virtual void ElementIdentifierSet(const std::string &ElementIdentifier) override;
 
-				/**
-				 * The unique element identifier is the key of an INI entry
-				 * \param ElementIdentifier The key of the INI entry
-				 */
-				virtual void ElementIdentifierSet(const std::string &ElementIdentifier) override;
+                /**
+                 * Get the INI object value
+                 * \return Value of INI object
+                 */
+                virtual std::string ElementValueGet(void) const;
 
-				/**
-				 * Get the INI object value
-				 * \return Value of INI object
-				 */
-				virtual std::string ElementValueGet(void) const;
+                /**
+                 * Set the INI object value
+                 * \param ElementValue Value of INI object
+                 */
+                virtual void ElementValueSet(const std::string &ElementValue);
 
-				/**
-				 * Set the INI object value
-				 * \param ElementValue Value of INI object
-				 */
-				virtual void ElementValueSet(const std::string &ElementValue);
+                /**
+                 * String representation of an INI entry
+                 * \return String representation of an INI entry
+                 */
+                std::string to_string(void) const override;
 
-				/**
-				 * String representation of an INI entry
-				 * \return String representation of an INI entry
-				 */
-				std::string to_string(void) const override;
+            private:
+                /**
+                 * The comment of the INI entry
+                 */
+                std::string m_EntryComment;
 
-			private:
-				/**
-				 * Section - Regular expression
-				 */
-				static const std::regex RegExKeyValue;
+                /**
+                 * The key aka unique identifier of the INI entry
+                 */
+                std::string m_EntryKey;
 
-				/**
-				 * Index of entry comment in regular expression
-				 */
-				static const int IndexEntryComment;
+                /**
+                 * The value of the INI entry
+                 */
+                std::string m_EntryValue;
+            };
 
-				/**
-				 * Index of entry key in regular expression
-				 */
-				static const int IndexEntryKey;
+            /**
+             * Convenience typedef for lazy usage of smart_pointers for IniEntries
+             */
+            typedef std::shared_ptr<IniEntry> IniEntryPtr;
 
-				/**
-				 * Index of entry value in regular expression
-				 */
-				static const int IndexEntryValue;
-
-				/**
-				 * The comment of the INI entry
-				 */
-				std::string m_EntryComment;
-
-				/**
-				 * The key aka unique identifier of the INI entry
-				 */
-				std::string m_EntryKey;
-
-				/**
-				 * The value of the INI entry
-				 */
-				std::string m_EntryValue;
-			};
-
-			/**
-			 * Convenience typedef for lazy usage of smart_pointers for IniEntries
-			 */
-			typedef std::shared_ptr<IniEntry> IniEntryPtr;
-
-			/**
-			 * Compare two entries
-			 * \return True on equal identifiers, otherwise false
-			 */
-			bool IniEntryCompare(const IniEntryPtr Left, const IniEntryPtr Right);
-		}
-	}
+            /**
+             * Compare two entries
+             * \return True on equal identifiers, otherwise false
+             */
+            bool IniEntryCompare(const IniEntryPtr Left, const IniEntryPtr Right);
+        }
+    }
 }
 
 #endif
-

@@ -31,182 +31,152 @@
 #include "IniEntryList.h"
 #include <iostream>
 #include <memory>
-#include <regex>
 #include <string>
 
- /**
-  * Namespace of YAIP
-  */
+/**
+ * Namespace of YAIP
+ */
 namespace net
 {
-	/**
-	 * Namespace of YAIP
-	 */
-	namespace derpaul
-	{
-		/**
-		 * Namespace of YAIP
-		 */
-		namespace yaip
-		{
-			/**
-			 * Represents an INI section
-			 */
-			class IniSection : public IElementCommon
-			{
-			public:
-				/**
-				 * Default constructor
-				 */
-				IniSection(void);
+    /**
+     * Namespace of YAIP
+     */
+    namespace derpaul
+    {
+        /**
+         * Namespace of YAIP
+         */
+        namespace yaip
+        {
+            /**
+             * Represents an INI section
+             */
+            class IniSection : public IElementCommon
+            {
+            public:
+                /**
+                 * Default constructor
+                 */
+                IniSection(void);
 
-				/**
-				 * Default destructor
-				 */
-				virtual ~IniSection(void);
+                /**
+                 * Default destructor
+                 */
+                virtual ~IniSection(void);
 
-				/**
-				 * Add a new entry based on raw data
-				 * \param RawEntryData New entry with key, value (and comment) as string
-				 * \return True on success, otherwise false
-				 */
-				bool AddRawEntry(const std::string &RawEntryData);
+                /**
+                 * To clear object and reset to empty fields
+                 */
+                virtual void clear(void) override;
 
-				/**
-				 * To clear object and reset to empty fields
-				 */
-				virtual void clear(void) override;
+                /**
+                 * Get the INI object comment
+                 * \return Comment of INI object
+                 */
+                virtual std::string ElementCommentGet(void) const override;
 
-				/**
-				 * Will transform string into internal properties
-				 * \param RawData string from INI file to transform
-				 * \return true on success, otherwise false
-				 */
-				virtual bool CreateFromRawData(const std::string &RawData) override;
+                /**
+                 * Set the INI object comment
+                 * \param ElementComment Unique comment of INI object
+                 */
+                virtual void ElementCommentSet(const std::string &ElementComment) override;
 
-				/**
-				 * Get the INI object comment
-				 * \return Comment of INI object
-				 */
-				virtual std::string ElementCommentGet(void) const override;
+                /**
+                 * Get the unique element identifier aka the key of an INI entry
+                 * \return The key of the INI entry
+                 */
+                virtual std::string ElementIdentifierGet(void) const override;
 
-				/**
-				 * Set the INI object comment
-				 * \param ElementComment Unique comment of INI object
-				 */
-				virtual void ElementCommentSet(const std::string &ElementComment) override;
+                /**
+                 * The unique element identifier is the key of an INI entry
+                 * \param ElementIdentifier The key of the INI entry
+                 */
+                virtual void ElementIdentifierSet(const std::string &ElementIdentifier) override;
 
-				/**
-				 * Get the unique element identifier aka the key of an INI entry
-				 * \return The key of the INI entry
-				 */
-				virtual std::string ElementIdentifierGet(void) const override;
+                /**
+                 * Add an entry to the section
+                 * \param Entry The entry to add.
+                 */
+                void EntryAdd(const IniEntryPtr &Entry);
 
-				/**
-				 * The unique element identifier is the key of an INI entry
-				 * \param ElementIdentifier The key of the INI entry
-				 */
-				virtual void ElementIdentifierSet(const std::string &ElementIdentifier) override;
+                /**
+                 * Delete given entry
+                 * \param Entry Entry to delete
+                 */
+                void EntryDelete(const IniEntryPtr &Entry);
 
-				/**
-				 * Add an entry to the section
-				 * \param Entry The entry to add.
-				 */
-				void EntryAdd(const IniEntryPtr &Entry);
+                /**
+                 * Find and return entry based on the entry name (the key)
+                 * \param EntryName The name (better: the key) of the entry to search
+                 * \return Entry on success, otherwise nullptr
+                 */
+                IniEntryPtr EntryFind(const std::string &EntryName);
 
-				/**
-				 * Delete given entry
-				 * \param Entry Entry to delete
-				 */
-				void EntryDelete(const IniEntryPtr &Entry);
+                /**
+                 * Get a list of all keys of this sections
+                 * \return List of keys
+                 */
+                tListString EntryKeyList(void) const;
 
-				/**
-				 * Find and return entry based on the entry name (the key)
-				 * \param EntryName The name (better: the key) of the entry to search
-				 * \return Entry on success, otherwise nullptr
-				 */
-				IniEntryPtr EntryFind(const std::string &EntryName);
+                /**
+                 * Check if section is empty
+                 * \return True if empty otherwise false
+                 */
+                bool IsEmpty(void) const;
 
-				/**
-				 * Get a list of all keys of this sections
-				 * \return List of keys
-				 */
-				tListString EntryKeyList(void) const;
+                /**
+                 * Get list of entries
+                 * \return List of entries
+                 */
+                IniEntryList SectionEntriesGet(void) const;
 
-				/**
-				 * Check if section is empty
-				 * \return True if empty otherwise false
-				 */
-				bool IsEmpty(void) const;
+                /**
+                 * Set list of entries
+                 * \param SectionEntries Vector with entries to set
+                 * \attention This is a replace, not a merge, not an add
+                 */
+                void SectionEntriesSet(const IniEntryList &SectionEntries);
 
-				/**
-				 * Get list of entries
-				 * \return List of entries
-				 */
-				IniEntryList SectionEntriesGet(void) const;
+                /**
+                 * To sort entries alphabetically by their key
+                 */
+                void sort(void);
 
-				/**
-				 * Set list of entries
-				 * \param SectionEntries Vector with entries to set
-				 * \attention This is a replace, not a merge, not an add
-				 */
-				void SectionEntriesSet(const IniEntryList &SectionEntries);
+                /**
+                 * String representation of an INI entry
+                 * \return String representation of an INI entry
+                 */
+                std::string to_string(void) const override;
 
-				/**
-				 * To sort entries alphabetically by their key
-				 */
-				void sort(void);
+            private:
+                /**
+                 * All entries to this section
+                 */
+                IniEntryList m_Entries;
 
-				/**
-				 * String representation of an INI entry
-				 * \return String representation of an INI entry
-				 */
-				std::string to_string(void) const override;
+                /**
+                 * The comment of the section
+                 */
+                std::string m_SectionComment;
 
-			private:
-				/**
-				 * Section - Regular expression
-				 */
-				static const std::regex RegExSection;
+                /**
+                 * The name of the section
+                 */
+                std::string m_SectionName;
+            };
 
-				/**
-				 * Index of section comment in regular expression
-				 */
-				static const int IndexSectionComment;
+            /**
+             * Convenience typedef for lazy usage of smart_pointers for IniSections
+             */
+            typedef std::shared_ptr<IniSection> IniSectionPtr;
 
-				/**
-				 * Index of section key in regular expression
-				 */
-				static const int IndexSectionKey;
-
-				/**
-				 * All entries to this section
-				 */
-				IniEntryList m_Entries;
-
-				/**
-				 * The comment of the section
-				 */
-				std::string m_SectionComment;
-
-				/**
-				 * The name of the section
-				 */
-				std::string m_SectionName;
-			};
-
-			/**
-			 * Convenience typedef for lazy usage of smart_pointers for IniSections
-			 */
-			typedef std::shared_ptr<IniSection> IniSectionPtr;
-
-			/**
-			 * Compare two sections
-			 * \return True on equal identifiers, otherwise false
-			 */
-			bool IniSectionCompare(const IniSectionPtr Left, const IniSectionPtr Right);
-		}
-	}
+            /**
+             * Compare two sections
+             * \return True on equal identifiers, otherwise false
+             */
+            bool IniSectionCompare(const IniSectionPtr Left, const IniSectionPtr Right);
+        }
+    }
 }
 
 #endif

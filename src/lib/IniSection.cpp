@@ -26,204 +26,154 @@
 
 #include "IniSection.h"
 #include "string_extensions.h"
-#include <sstream>
 #include <iostream>
+#include <sstream>
 
- /**
-  * Namespace of YAIP
-  */
+/**
+ * Namespace of YAIP
+ */
 namespace net
 {
-	/**
-	 * Namespace of YAIP
-	 */
-	namespace derpaul
-	{
-		/**
-		 * Namespace of YAIP
-		 */
-		namespace yaip
-		{
-			// ******************************************************************
-			// ******************************************************************
-			// Regular expression mask for matching a section
-			const std::regex IniSection::RegExSection("\\s*\\[\\s*([^\\]]+)\\]\\s*(;(.+))?");
+    /**
+     * Namespace of YAIP
+     */
+    namespace derpaul
+    {
+        /**
+         * Namespace of YAIP
+         */
+        namespace yaip
+        {
+            // ******************************************************************
+            // ******************************************************************
+            IniSection::IniSection(void)
+                : m_SectionName(), m_SectionComment(), m_Entries()
+            {
+            }
 
-			// Index of section comment in regular expression
-			const int IniSection::IndexSectionComment = 3;
+            // ******************************************************************
+            // ******************************************************************
+            IniSection::~IniSection(void)
+            {
+            }
 
-			// Index of section key in regular expression
-			const int IniSection::IndexSectionKey = 1;
+            // ******************************************************************
+            // ******************************************************************
+            void IniSection::clear(void)
+            {
+                ElementIdentifierSet("");
+                ElementCommentSet("");
+                m_Entries.clear();
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			IniSection::IniSection(void)
-				: m_SectionName()
-				, m_SectionComment()
-				, m_Entries()
-			{
-			}
+            // ******************************************************************
+            // ******************************************************************
+            std::string IniSection::ElementCommentGet(void) const
+            {
+                return m_SectionComment;
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			IniSection::~IniSection(void)
-			{
-			}
+            // ******************************************************************
+            // ******************************************************************
+            void IniSection::ElementCommentSet(const std::string &ElementComment)
+            {
+                m_SectionComment = trim(ElementComment);
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			bool IniSection::AddRawEntry(const std::string &RawEntryData)
-			{
-				bool Success = false;
-				IniEntryPtr EntryPtr(new IniEntry);
+            // ******************************************************************
+            // ******************************************************************
+            std::string IniSection::ElementIdentifierGet(void) const
+            {
+                return m_SectionName;
+            }
 
-				if (EntryPtr->CreateFromRawData(RawEntryData))
-				{
-					m_Entries.ElementAdd(EntryPtr);
-					Success = true;
-				}
+            // ******************************************************************
+            // ******************************************************************
+            void IniSection::ElementIdentifierSet(const std::string &ElementIdentifier)
+            {
+                m_SectionName = trim(ElementIdentifier);
+            }
 
-				return Success;
-			}
+            // ******************************************************************
+            // ******************************************************************
+            void IniSection::EntryAdd(const IniEntryPtr &Entry)
+            {
+                m_Entries.ElementAdd(Entry);
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			void IniSection::clear(void)
-			{
-				ElementIdentifierSet("");
-				ElementCommentSet("");
-				m_Entries.clear();
-			}
+            // ******************************************************************
+            // ******************************************************************
+            void IniSection::EntryDelete(const IniEntryPtr &Entry)
+            {
+                m_Entries.ElementDelete(Entry);
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			bool IniSection::CreateFromRawData(const std::string &RawData)
-			{
-				bool Success = false;
-				std::smatch RegExpMatch;
+            // ******************************************************************
+            // ******************************************************************
+            IniEntryPtr IniSection::EntryFind(const std::string &EntryName)
+            {
+                return m_Entries.ElementFind(EntryName);
+            }
 
-				// Check for match
-				if (std::regex_search(RawData, RegExpMatch, RegExSection))
-				{
-					// Change section only in case of a match.
-					// Unfortunately in C++ there are no named groups possible
-					// so we have to use the index of the group.
-					ElementIdentifierSet(RegExpMatch[IndexSectionKey]);
-					ElementCommentSet(RegExpMatch[IndexSectionComment]);
-					Success = true;
-				}
+            // ******************************************************************
+            // ******************************************************************
+            tListString IniSection::EntryKeyList(void) const
+            {
+                return m_Entries.ElementIdentifierList();
+            }
 
-				return Success;
-			}
+            // ******************************************************************
+            // ******************************************************************
+            bool IniSection::IsEmpty(void) const
+            {
+                return (0 == m_Entries.size());
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			std::string IniSection::ElementCommentGet(void) const
-			{
-				return m_SectionComment;
-			}
+            // ******************************************************************
+            // ******************************************************************
+            IniEntryList IniSection::SectionEntriesGet(void) const
+            {
+                return m_Entries;
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			void IniSection::ElementCommentSet(const std::string &ElementComment)
-			{
-				m_SectionComment = trim(ElementComment);
-			}
+            // ******************************************************************
+            // ******************************************************************
+            void IniSection::SectionEntriesSet(const IniEntryList &SectionEntries)
+            {
+                m_Entries = SectionEntries;
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			std::string IniSection::ElementIdentifierGet(void) const
-			{
-				return m_SectionName;
-			}
+            // ******************************************************************
+            // ******************************************************************
+            std::string IniSection::to_string(void) const
+            {
+                std::ostringstream DataStream;
 
-			// ******************************************************************
-			// ******************************************************************
-			void IniSection::ElementIdentifierSet(const std::string &ElementIdentifier)
-			{
-				m_SectionName = trim(ElementIdentifier);
-			}
+                DataStream << "[" << m_SectionName << "]";
+                if (!m_SectionComment.empty())
+                {
+                    DataStream << " ; " << m_SectionComment;
+                }
+                DataStream << std::endl;
+                DataStream << m_Entries.to_string();
+                DataStream << std::endl;
 
-			// ******************************************************************
-			// ******************************************************************
-			void IniSection::EntryAdd(const IniEntryPtr &Entry)
-			{
-				m_Entries.ElementAdd(Entry);
-			}
+                return DataStream.str();
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			void IniSection::EntryDelete(const IniEntryPtr &Entry)
-			{
-				m_Entries.ElementDelete(Entry);
-			}
+            // ******************************************************************
+            // ******************************************************************
+            void IniSection::sort(void)
+            {
+                m_Entries.sort();
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			IniEntryPtr IniSection::EntryFind(const std::string &EntryName)
-			{
-				return m_Entries.ElementFind(EntryName);
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			tListString IniSection::EntryKeyList(void) const
-			{
-				return m_Entries.ElementIdentifierList();
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			bool IniSection::IsEmpty(void) const
-			{
-				return (0 == m_Entries.size());
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			IniEntryList IniSection::SectionEntriesGet(void) const
-			{
-				return m_Entries;
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void IniSection::SectionEntriesSet(const IniEntryList &SectionEntries)
-			{
-				m_Entries = SectionEntries;
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			std::string IniSection::to_string(void) const
-			{
-				std::ostringstream DataStream;
-
-				DataStream << "[" << m_SectionName << "]";
-				if (!m_SectionComment.empty())
-				{
-					DataStream << " ; " << m_SectionComment;
-				}
-				DataStream << std::endl;
-				DataStream << m_Entries.to_string();
-				DataStream << std::endl;
-
-				return DataStream.str();
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void IniSection::sort(void)
-			{
-				m_Entries.sort();
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			bool IniSectionCompare(const IniSectionPtr Left, const IniSectionPtr Right)
-			{
-				return strcmpcaseless(Left->ElementIdentifierGet(), Right->ElementIdentifierGet());
-			}
-		}
-	}
+            // ******************************************************************
+            // ******************************************************************
+            bool IniSectionCompare(const IniSectionPtr Left, const IniSectionPtr Right)
+            {
+                return strcmpcaseless(Left->ElementIdentifierGet(), Right->ElementIdentifierGet());
+            }
+        }
+    }
 }

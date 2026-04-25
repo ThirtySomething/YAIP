@@ -68,13 +68,9 @@ SCENARIO("Test class IniSection", "[IniSection]")
     REQUIRE("" == IdentifierSectionRead);
     REQUIRE("" == CommentSectionRead);
 
-    INFO("Set information from raw data");
-    std::ostringstream tmpStream;
-    tmpStream << "[" << IdentifierSection << "] ; " << CommentSection << std::endl
-              << std::endl;
-    std::string RawData = tmpStream.str();
-    auto result = sut.CreateFromRawData(RawData);
-    REQUIRE(result);
+    INFO("Set information with object API");
+    sut.ElementIdentifierSet(IdentifierSection);
+    sut.ElementCommentSet(CommentSection);
 
     IdentifierSectionRead = sut.ElementIdentifierGet();
     CommentSectionRead = sut.ElementCommentGet();
@@ -83,14 +79,22 @@ SCENARIO("Test class IniSection", "[IniSection]")
     REQUIRE(CommentSection == CommentSectionRead);
 
     INFO("Check string representation");
-    REQUIRE(RawData == sut.to_string());
+    std::ostringstream tmpStream;
+    tmpStream << "[" << IdentifierSection << "] ; " << CommentSection << std::endl
+              << std::endl;
+    REQUIRE(tmpStream.str() == sut.to_string());
 
     testEmpty(sut);
 
-    INFO("Add an entry from raw data");
+    INFO("Add an entry from object API");
     std::string IdentifierEntry = "IniEntryIdentifier";
     std::string ValueEntry = "IniEntryValue";
     std::string CommentEntry = "IniEntryComment";
+
+    net::derpaul::yaip::IniEntryPtr Entry(new net::derpaul::yaip::IniEntry);
+    Entry->ElementIdentifierSet(IdentifierEntry);
+    Entry->ElementValueSet(ValueEntry);
+    Entry->ElementCommentSet(CommentEntry);
 
     tmpStream.str("");
     tmpStream.clear();
@@ -98,8 +102,7 @@ SCENARIO("Test class IniSection", "[IniSection]")
               << std::endl;
     std::string RawDataEntry = tmpStream.str();
 
-    result = sut.AddRawEntry(RawDataEntry);
-    REQUIRE(result);
+    sut.EntryAdd(Entry);
 
     testEntry(sut, IdentifierEntry);
 
@@ -113,7 +116,7 @@ SCENARIO("Test class IniSection", "[IniSection]")
 
     INFO("Check for correct entry");
     auto IniEntryList = sut.EntryKeyList();
-    net::derpaul::yaip::IniEntryPtr Entry = sut.EntryFind(IniEntryList.front());
+    Entry = sut.EntryFind(IniEntryList.front());
     REQUIRE(Entry != nullptr);
 
     std::string IdentifierEntryRead = Entry->ElementIdentifierGet();

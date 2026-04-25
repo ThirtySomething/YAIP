@@ -53,12 +53,10 @@ SCENARIO("Test class IniEntry", "[IniEntry]")
     REQUIRE("" == ValueEntryRead);
     REQUIRE("" == CommentEntryRead);
 
-    INFO("Test setting from raw data");
-    std::ostringstream tmpStream;
-    tmpStream << IdentifierEntry << " = " + ValueEntry << " ; " << CommentEntry << std::endl;
-    std::string RawData = tmpStream.str();
-    auto result = sut.CreateFromRawData(RawData);
-    REQUIRE(result);
+    INFO("Test setting with object API");
+    sut.ElementIdentifierSet(IdentifierEntry);
+    sut.ElementValueSet(ValueEntry);
+    sut.ElementCommentSet(CommentEntry);
 
     IdentifierEntryRead = sut.ElementIdentifierGet();
     ValueEntryRead = sut.ElementValueGet();
@@ -69,7 +67,9 @@ SCENARIO("Test class IniEntry", "[IniEntry]")
     REQUIRE(CommentEntry == CommentEntryRead);
 
     INFO("Test to_string");
-    REQUIRE(RawData == sut.to_string());
+    std::ostringstream tmpStream;
+    tmpStream << IdentifierEntry << " = " + ValueEntry << " ; " << CommentEntry << std::endl;
+    REQUIRE(tmpStream.str() == sut.to_string());
 }
 
 #endif // _TEST_INIENTRY_H_
