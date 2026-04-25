@@ -18,71 +18,50 @@ SET(ANTLR_GENERATED_SOURCES
 
 OPTION(YAIP_GENERATE_ANTLR "Generate ANTLR parser code from grammar files." ON)
 SET(ANTLR4_VERSION 4.13.2)
-OPTION(YAIP_USE_SYSTEM_ANTLR_TOOL "Use antlr4 executable from PATH instead of version-pinned JAR." OFF)
 SET(ANTLR4_JAR "" CACHE FILEPATH "Path to antlr-4.x-complete.jar used for parser generation")
 
 IF(YAIP_GENERATE_ANTLR)
-    IF(YAIP_USE_SYSTEM_ANTLR_TOOL)
-        FIND_PROGRAM(ANTLR4_COMMAND antlr4)
+    FIND_PACKAGE(Java COMPONENTS Runtime QUIET)
 
-        IF(ANTLR4_COMMAND)
-            SET(_ANTLR_GENERATOR_COMMAND
-                ${ANTLR4_COMMAND}
-                -Dlanguage=Cpp
-                -visitor
-                -no-listener
-                -o
-                ${ANTLR_GENERATED_DIR}
-                ${ANTLR_GRAMMAR_DIR}/IniLexer.g4
-                ${ANTLR_GRAMMAR_DIR}/IniParser.g4
+    IF(Java_Runtime_FOUND)
+        IF(NOT ANTLR4_JAR)
+            SET(ANTLR4_JAR ${CMAKE_BINARY_DIR}/antlr-${ANTLR4_VERSION}-complete.jar)
+        ENDIF()
+
+        IF(NOT EXISTS ${ANTLR4_JAR})
+            FILE(DOWNLOAD
+                https://www.antlr.org/download/antlr-${ANTLR4_VERSION}-complete.jar
+                ${ANTLR4_JAR}
+                STATUS _ANTLR_DOWNLOAD_STATUS
+                SHOW_PROGRESS
+                TLS_VERIFY ON
             )
-        ELSE()
-            MESSAGE(WARNING "YAIP_USE_SYSTEM_ANTLR_TOOL is ON but no antlr4 executable was found. Falling back to checked-in generated parser sources.")
-            SET(YAIP_GENERATE_ANTLR OFF)
+
+            LIST(GET _ANTLR_DOWNLOAD_STATUS 0 _ANTLR_DOWNLOAD_CODE)
+
+            IF(NOT _ANTLR_DOWNLOAD_CODE EQUAL 0)
+                MESSAGE(WARNING "Failed to download ANTLR tool JAR (${_ANTLR_DOWNLOAD_STATUS}). Falling back to checked-in generated parser sources.")
+                SET(YAIP_GENERATE_ANTLR OFF)
+            ENDIF()
         ENDIF()
     ELSE()
-        FIND_PACKAGE(Java COMPONENTS Runtime QUIET)
+        MESSAGE(WARNING "ANTLR code generation requires a Java runtime. Falling back to checked-in generated parser sources.")
+        SET(YAIP_GENERATE_ANTLR OFF)
+    ENDIF()
 
-        IF(Java_Runtime_FOUND)
-            IF(NOT ANTLR4_JAR)
-                SET(ANTLR4_JAR ${CMAKE_BINARY_DIR}/antlr-${ANTLR4_VERSION}-complete.jar)
-            ENDIF()
-
-            IF(NOT EXISTS ${ANTLR4_JAR})
-                FILE(DOWNLOAD
-                    https://www.antlr.org/download/antlr-${ANTLR4_VERSION}-complete.jar
-                    ${ANTLR4_JAR}
-                    STATUS _ANTLR_DOWNLOAD_STATUS
-                    SHOW_PROGRESS
-                    TLS_VERIFY ON
-                )
-
-                LIST(GET _ANTLR_DOWNLOAD_STATUS 0 _ANTLR_DOWNLOAD_CODE)
-
-                IF(NOT _ANTLR_DOWNLOAD_CODE EQUAL 0)
-                    MESSAGE(WARNING "Failed to download ANTLR tool JAR (${_ANTLR_DOWNLOAD_STATUS}). Falling back to checked-in generated parser sources.")
-                    SET(YAIP_GENERATE_ANTLR OFF)
-                ENDIF()
-            ENDIF()
-        ELSE()
-            MESSAGE(WARNING "ANTLR code generation requires a Java runtime. Falling back to checked-in generated parser sources.")
-            SET(YAIP_GENERATE_ANTLR OFF)
-        ENDIF()
-
-        IF(YAIP_GENERATE_ANTLR)
-            SET(_ANTLR_GENERATOR_COMMAND
-                ${Java_JAVA_EXECUTABLE}
-                -jar
-                ${ANTLR4_JAR}
-                -Dlanguage=Cpp
-                -visitor
-                -no-listener
-                -o
-                ${ANTLR_GENERATED_DIR}
-                ${ANTLR_GRAMMAR_DIR}/IniLexer.g4
-                ${ANTLR_GRAMMAR_DIR}/IniParser.g4
-            )
-        ENDIF()
+    IF(YAIP_GENERATE_ANTLR)
+        SET(_ANTLR_GENERATOR_COMMAND
+            ${Java_JAVA_EXECUTABLE}
+            -jar
+            ${ANTLR4_JAR}
+            -Dlanguage=Cpp
+            -visitor
+            -no-listener
+            -o
+            ${ANTLR_GENERATED_DIR}
+            ${ANTLR_GRAMMAR_DIR}/IniLexer.g4
+            ${ANTLR_GRAMMAR_DIR}/IniParser.g4
+        )
     ENDIF()
 ENDIF()
 
