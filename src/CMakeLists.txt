@@ -20,6 +20,7 @@ set(CMAKE_CACHEFILE_DIR ${YAIP_BUILD_DIR})
 
 include(CTest)
 include(FetchContent)
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/YaipAntlr.cmake)
 
 set(ANTLR4_INSTALL OFF CACHE BOOL "" FORCE)
 set(WITH_DEMO OFF CACHE BOOL "" FORCE)
