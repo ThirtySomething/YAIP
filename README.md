@@ -34,7 +34,7 @@ offers plain classes. Also only a few of them are portable. And I'm missing the 
 
 - Convenience typedefs for datatypes are done in their corresponding classes, e. g. the smartpointer `net::derpaul::yaip::IniEntryPtr` in the class
   file of `net::derpaul::yaip::IniEntry`.
-- Detection of section and key/value pair while reading is done using [regular expressions][cpp_regexp], see also [regular expression][wiki_regexp].
+- Detection of sections, keys, values, and comments is done with an [ANTLR4][antlr4]-based parser generated from INI grammar files.
 - The internal data storage methods are based on [std::string][cpp_string].
 - Templated methods are used for other datatypes calling converters from and to [std::string][cpp_string].
 
@@ -42,9 +42,47 @@ offers plain classes. Also only a few of them are portable. And I'm missing the 
 
 - As testing framework [Catch2][catch2] is used.
 - Catch2 is fetched automatically from GitHub during CMake configure (no git submodule required).
+- The parser is generated with [ANTLR4][antlr4] during CMake build.
 - For general C++ style [CppCheck][CppCheck] is used.
 - For code metrics [SourceMonitor][SourceMonitor] is used.
 - For code coverage [OpenCppCoverage][OpenCppCoverage] is used.
+
+## ANTLR Parser Generation
+
+The CMake build can generate parser sources from the grammar files in `src/lib/antlr`.
+
+Available options:
+
+- `YAIP_GENERATE_ANTLR` (default: `ON`): enable grammar to C++ generation.
+- `YAIP_USE_SYSTEM_ANTLR_TOOL` (default: `OFF`): use `antlr4` from `PATH` instead of the pinned JAR.
+- `ANTLR4_JAR` (default: empty): optional path to a specific `antlr-4.x-complete.jar`.
+
+Default behavior:
+
+- Uses Java with a pinned ANTLR tool version `4.13.2`.
+- Downloads the ANTLR JAR automatically if it does not exist.
+- Falls back to checked-in generated files if generation prerequisites are not available.
+
+Examples:
+
+```bash
+cmake -S src -B build
+cmake --build build
+```
+
+Use system `antlr4` instead of the pinned JAR:
+
+```bash
+cmake -S src -B build -DYAIP_USE_SYSTEM_ANTLR_TOOL=ON
+cmake --build build
+```
+
+Use a local ANTLR JAR explicitly:
+
+```bash
+cmake -S src -B build -DANTLR4_JAR=/path/to/antlr-4.13.2-complete.jar
+cmake --build build
+```
 
 ## Extension
 
@@ -206,12 +244,12 @@ bool SectionKeyValueClear(const std::string &Section, const std::string &Key);
 - Add tests for untested classes.
 
 [catch2]: https://github.com/catchorg/Catch2
+[antlr4]: https://www.antlr.org/
 [CMake]: https://cmake.org/
 [CppCheck]: http://cppcheck.sourceforge.net/
 [cpp_eleven]: https://en.wikipedia.org/wiki/C%2B%2B11
 [cpp_map]: http://en.cppreference.com/w/cpp/container/map
 [cpp_templates]: https://en.wikipedia.org/wiki/Template_(C%2B%2B)
-[cpp_regexp]: http://en.cppreference.com/w/cpp/regex
 [cpp_stl]: https://de.wikipedia.org/wiki/Standard_Template_Library
 [cpp_string]: http://en.cppreference.com/w/cpp/string/basic_string
 [cpp_vector]: http://en.cppreference.com/w/cpp/container/vector
@@ -220,7 +258,6 @@ bool SectionKeyValueClear(const std::string &Section, const std::string &Key);
 [OpenCppCoverage]: https://github.com/OpenCppCoverage
 [SourceMonitor]: http://www.campwoodsw.com/sourcemonitor.html
 [wiki_ini]: https://en.wikipedia.org/wiki/INI_file#Comments
-[wiki_regexp]: https://en.wikipedia.org/wiki/Regular_expression
 [lang_cpp]: https://isocpp.org/
 [lang_cpp_badge]: https://img.shields.io/badge/language-C++-blue.svg
 [yaip_issues]: # "Open Issues"

@@ -33,7 +33,7 @@
 *.ini
 *.pdb
 /Bin
-/Build
+/build
 /YAIP-cppcheck-build-dir
 /doxygen/YAIP.log
 /doxygen/html
@@ -62,3 +62,4 @@
 
 build
 .vscode
+.antlr

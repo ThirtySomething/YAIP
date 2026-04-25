@@ -30,7 +30,7 @@ if(BUILD_TESTING)
     add_test(NAME yaiptest COMMAND yaiptest)
 endif()
 
-SET(dir ${CMAKE_CURRENT_SOURCE_DIR}/../../Build/)
+SET(dir ${CMAKE_CURRENT_SOURCE_DIR}/../../build/)
 SET(EXECUTABLE_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
 SET(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${dir})
