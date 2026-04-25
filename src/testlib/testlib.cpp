@@ -17,12 +17,6 @@
 // along with YAIP. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************
 
-#ifdef __linux__
-#define CATCH_CONFIG_NO_POSIX_SIGNALS
-#endif
-#define CATCH_CONFIG_MAIN
-#include "catch2/catch.hpp"
-
 #include "ITests/test_YAIP.h"
 #include "UTests/test_Convert.h"
 #include "UTests/test_IniEntry.h"

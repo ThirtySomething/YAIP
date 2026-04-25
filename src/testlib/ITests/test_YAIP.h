@@ -21,7 +21,7 @@
 #define _TEST_YAIP_H_
 
 #include "YAIP.h"
-#include "catch2/catch.hpp"
+#include "catch2/catch_all.hpp"
 #include <limits>
 #include <string>
 #include <vector>
@@ -116,13 +116,13 @@ void CompareForEqual(const T &ValueLeft, const T &ValueRight)
 template <>
 void CompareForEqual<double>(const double &ValueLeft, const double &ValueRight)
 {
-    REQUIRE(ValueLeft == Approx(ValueRight));
+    REQUIRE(ValueLeft == Catch::Approx(ValueRight));
 }
 
 template <>
 void CompareForEqual<float>(const float &ValueLeft, const float &ValueRight)
 {
-    REQUIRE(ValueLeft == Approx(ValueRight));
+    REQUIRE(ValueLeft == Catch::Approx(ValueRight));
 }
 
 template <typename T>

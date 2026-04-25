@@ -20,51 +20,51 @@
 #ifndef _TEST_INIENTRYLIST_H_
 #define _TEST_INIENTRYLIST_H_
 
-#include "catch2/catch.hpp"
 #include "IniEntryList.h"
+#include "catch2/catch_all.hpp"
 
 SCENARIO("Test class IniEntryList", "[IniEntryList]")
 {
-	net::derpaul::yaip::IniEntryList sut;
-	std::string key = "key";
-	std::string value = "value";
-	std::string comment = "comment";
+    net::derpaul::yaip::IniEntryList sut;
+    std::string key = "key";
+    std::string value = "value";
+    std::string comment = "comment";
 
-	std::ostringstream tmpStream;
-	tmpStream << key << " = " + value << " ; " << comment << std::endl;
-	std::string entryraw = tmpStream.str();
+    std::ostringstream tmpStream;
+    tmpStream << key << " = " + value << " ; " << comment << std::endl;
+    std::string entryraw = tmpStream.str();
 
-	auto size = sut.size();
-	REQUIRE(0 == size);
+    auto size = sut.size();
+    REQUIRE(0 == size);
 
-	net::derpaul::yaip::IniEntryPtr entry(new net::derpaul::yaip::IniEntry);
-	entry->CreateFromRawData(entryraw);
+    net::derpaul::yaip::IniEntryPtr entry(new net::derpaul::yaip::IniEntry);
+    entry->CreateFromRawData(entryraw);
 
-	sut.ElementAdd(entry);
-	size = sut.size();
-	REQUIRE(1 == size);
+    sut.ElementAdd(entry);
+    size = sut.size();
+    REQUIRE(1 == size);
 
-	sut.clear();
-	size = sut.size();
-	REQUIRE(0 == size);
+    sut.clear();
+    size = sut.size();
+    REQUIRE(0 == size);
 
-	sut.ElementAdd(entry);
-	size = sut.size();
-	REQUIRE(1 == size);
+    sut.ElementAdd(entry);
+    size = sut.size();
+    REQUIRE(1 == size);
 
-	auto result = sut.ElementFind(key);
-	REQUIRE(nullptr != result);
-	REQUIRE(key == result->ElementIdentifierGet());
-	REQUIRE(value == result->ElementValueGet());
-	REQUIRE(comment == result->ElementCommentGet());
+    auto result = sut.ElementFind(key);
+    REQUIRE(nullptr != result);
+    REQUIRE(key == result->ElementIdentifierGet());
+    REQUIRE(value == result->ElementValueGet());
+    REQUIRE(comment == result->ElementCommentGet());
 
-	auto elementList = sut.ElementIdentifierList();
-	REQUIRE(1 == elementList.size());
-	REQUIRE(key == elementList.front());
+    auto elementList = sut.ElementIdentifierList();
+    REQUIRE(1 == elementList.size());
+    REQUIRE(key == elementList.front());
 
-	sut.ElementDelete(entry);
-	size = sut.size();
-	REQUIRE(0 == size);
+    sut.ElementDelete(entry);
+    size = sut.size();
+    REQUIRE(0 == size);
 }
 
 #endif // _TEST_INIENTRYLIST_H_

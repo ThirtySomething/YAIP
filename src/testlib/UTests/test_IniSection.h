@@ -20,122 +20,125 @@
 #ifndef _TEST_INISECTION_H_
 #define _TEST_INISECTION_H_
 
-#include "catch2/catch.hpp"
 #include "IniSection.h"
+#include "catch2/catch_all.hpp"
 
 void testEmpty(const net::derpaul::yaip::IniSection &sut)
 {
-	INFO("No entries");
-	auto EntryList = sut.SectionEntriesGet();
-	REQUIRE(0 == EntryList.size());
-	REQUIRE(sut.IsEmpty());
+    INFO("No entries");
+    auto EntryList = sut.SectionEntriesGet();
+    REQUIRE(0 == EntryList.size());
+    REQUIRE(sut.IsEmpty());
 }
 
 void testEntry(const net::derpaul::yaip::IniSection &sut, const std::string &IdentifierEntry)
 {
-	INFO("Check for entries");
-	REQUIRE(!sut.IsEmpty());
-	auto EntryList = sut.SectionEntriesGet();
-	REQUIRE(1 == EntryList.size());
+    INFO("Check for entries");
+    REQUIRE(!sut.IsEmpty());
+    auto EntryList = sut.SectionEntriesGet();
+    REQUIRE(1 == EntryList.size());
 
-	INFO("Check size of list of entries");
-	auto IniEntryList = sut.EntryKeyList();
-	REQUIRE(1 == IniEntryList.size());
-	REQUIRE(IdentifierEntry == IniEntryList.front());
+    INFO("Check size of list of entries");
+    auto IniEntryList = sut.EntryKeyList();
+    REQUIRE(1 == IniEntryList.size());
+    REQUIRE(IdentifierEntry == IniEntryList.front());
 }
 
 SCENARIO("Test class IniSection", "[IniSection]")
 {
-	net::derpaul::yaip::IniSection sut;
-	net::derpaul::yaip::IniEntryList EntryList;
+    net::derpaul::yaip::IniSection sut;
+    net::derpaul::yaip::IniEntryList EntryList;
 
-	INFO("Set section information");
-	std::string IdentifierSection = "IniSectionIdentifier";
-	sut.ElementIdentifierSet(IdentifierSection);
-	auto IdentifierSectionRead = sut.ElementIdentifierGet();
-	REQUIRE(IdentifierSection == IdentifierSectionRead);
+    INFO("Set section information");
+    std::string IdentifierSection = "IniSectionIdentifier";
+    sut.ElementIdentifierSet(IdentifierSection);
+    auto IdentifierSectionRead = sut.ElementIdentifierGet();
+    REQUIRE(IdentifierSection == IdentifierSectionRead);
 
-	std::string CommentSection = "IniSectionComment";
-	sut.ElementCommentSet(CommentSection);
-	auto CommentSectionRead = sut.ElementCommentGet();
-	REQUIRE(CommentSection == CommentSectionRead);
+    std::string CommentSection = "IniSectionComment";
+    sut.ElementCommentSet(CommentSection);
+    auto CommentSectionRead = sut.ElementCommentGet();
+    REQUIRE(CommentSection == CommentSectionRead);
 
-	INFO("Cleanup information");
-	sut.clear();
-	IdentifierSectionRead = sut.ElementIdentifierGet();
-	CommentSectionRead = sut.ElementCommentGet();
+    INFO("Cleanup information");
+    sut.clear();
+    IdentifierSectionRead = sut.ElementIdentifierGet();
+    CommentSectionRead = sut.ElementCommentGet();
 
-	REQUIRE("" == IdentifierSectionRead);
-	REQUIRE("" == CommentSectionRead);
+    REQUIRE("" == IdentifierSectionRead);
+    REQUIRE("" == CommentSectionRead);
 
-	INFO("Set information from raw data");
-	std::ostringstream tmpStream;
-	tmpStream << "[" << IdentifierSection << "] ; " << CommentSection << std::endl << std::endl;
-	std::string RawData = tmpStream.str();
-	auto result = sut.CreateFromRawData(RawData);
-	REQUIRE(result);
+    INFO("Set information from raw data");
+    std::ostringstream tmpStream;
+    tmpStream << "[" << IdentifierSection << "] ; " << CommentSection << std::endl
+              << std::endl;
+    std::string RawData = tmpStream.str();
+    auto result = sut.CreateFromRawData(RawData);
+    REQUIRE(result);
 
-	IdentifierSectionRead = sut.ElementIdentifierGet();
-	CommentSectionRead = sut.ElementCommentGet();
+    IdentifierSectionRead = sut.ElementIdentifierGet();
+    CommentSectionRead = sut.ElementCommentGet();
 
-	REQUIRE(IdentifierSection == IdentifierSectionRead);
-	REQUIRE(CommentSection == CommentSectionRead);
+    REQUIRE(IdentifierSection == IdentifierSectionRead);
+    REQUIRE(CommentSection == CommentSectionRead);
 
-	INFO("Check string representation");
-	REQUIRE(RawData == sut.to_string());
+    INFO("Check string representation");
+    REQUIRE(RawData == sut.to_string());
 
-	testEmpty(sut);
+    testEmpty(sut);
 
-	INFO("Add an entry from raw data");
-	std::string IdentifierEntry = "IniEntryIdentifier";
-	std::string ValueEntry = "IniEntryValue";
-	std::string CommentEntry = "IniEntryComment";
+    INFO("Add an entry from raw data");
+    std::string IdentifierEntry = "IniEntryIdentifier";
+    std::string ValueEntry = "IniEntryValue";
+    std::string CommentEntry = "IniEntryComment";
 
-	tmpStream.str("");
-	tmpStream.clear();
-	tmpStream << IdentifierEntry << " = " << ValueEntry << " ; " << CommentEntry << std::endl << std::endl;
-	std::string RawDataEntry = tmpStream.str();
+    tmpStream.str("");
+    tmpStream.clear();
+    tmpStream << IdentifierEntry << " = " << ValueEntry << " ; " << CommentEntry << std::endl
+              << std::endl;
+    std::string RawDataEntry = tmpStream.str();
 
-	result = sut.AddRawEntry(RawDataEntry);
-	REQUIRE(result);
+    result = sut.AddRawEntry(RawDataEntry);
+    REQUIRE(result);
 
-	testEntry(sut, IdentifierEntry);
+    testEntry(sut, IdentifierEntry);
 
-	INFO("Check string representation");
-	tmpStream.str("");
-	tmpStream.clear();
-	tmpStream << "[" << IdentifierSection << "] ; " << CommentSection << std::endl << RawDataEntry;
-	std::string SectionFull = tmpStream.str();
-	REQUIRE(SectionFull == sut.to_string());
+    INFO("Check string representation");
+    tmpStream.str("");
+    tmpStream.clear();
+    tmpStream << "[" << IdentifierSection << "] ; " << CommentSection << std::endl
+              << RawDataEntry;
+    std::string SectionFull = tmpStream.str();
+    REQUIRE(SectionFull == sut.to_string());
 
-	INFO("Check for correct entry");
-	auto IniEntryList = sut.EntryKeyList();
-	net::derpaul::yaip::IniEntryPtr Entry = sut.EntryFind(IniEntryList.front());
-	REQUIRE(Entry != nullptr);
+    INFO("Check for correct entry");
+    auto IniEntryList = sut.EntryKeyList();
+    net::derpaul::yaip::IniEntryPtr Entry = sut.EntryFind(IniEntryList.front());
+    REQUIRE(Entry != nullptr);
 
-	std::string IdentifierEntryRead = Entry->ElementIdentifierGet();
-	std::string ValueEntryRead = Entry->ElementValueGet();
-	std::string CommentEntryRead = Entry->ElementCommentGet();
+    std::string IdentifierEntryRead = Entry->ElementIdentifierGet();
+    std::string ValueEntryRead = Entry->ElementValueGet();
+    std::string CommentEntryRead = Entry->ElementCommentGet();
 
-	REQUIRE(IdentifierEntry == IdentifierEntryRead);
-	REQUIRE(ValueEntry == ValueEntryRead);
-	REQUIRE(CommentEntry == CommentEntryRead);
+    REQUIRE(IdentifierEntry == IdentifierEntryRead);
+    REQUIRE(ValueEntry == ValueEntryRead);
+    REQUIRE(CommentEntry == CommentEntryRead);
 
-	INFO("Delete found entry");
-	sut.EntryDelete(Entry);
+    INFO("Delete found entry");
+    sut.EntryDelete(Entry);
 
-	testEmpty(sut);
+    testEmpty(sut);
 
-	INFO("Add entry");
-	sut.EntryAdd(Entry);
+    INFO("Add entry");
+    sut.EntryAdd(Entry);
 
-	testEntry(sut, IdentifierEntry);
+    testEntry(sut, IdentifierEntry);
 
-	INFO("Set empty list");
-	EntryList.clear();
-	sut.SectionEntriesSet(EntryList);
+    INFO("Set empty list");
+    EntryList.clear();
+    sut.SectionEntriesSet(EntryList);
 
-	testEmpty(sut);
+    testEmpty(sut);
 }
 
 #endif // _TEST_INISECTION_H_

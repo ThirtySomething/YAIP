@@ -20,56 +20,56 @@
 #ifndef _TEST_INIENTRY_H_
 #define _TEST_INIENTRY_H_
 
-#include "catch2/catch.hpp"
 #include "IniEntry.h"
+#include "catch2/catch_all.hpp"
 
 SCENARIO("Test class IniEntry", "[IniEntry]")
 {
-	net::derpaul::yaip::IniEntry sut;
+    net::derpaul::yaip::IniEntry sut;
 
-	INFO("Test setter");
-	std::string IdentifierEntry = "IniEntryIdentifier";
-	sut.ElementIdentifierSet(IdentifierEntry);
-	auto IdentifierEntryRead = sut.ElementIdentifierGet();
-	REQUIRE(IdentifierEntry == IdentifierEntryRead);
+    INFO("Test setter");
+    std::string IdentifierEntry = "IniEntryIdentifier";
+    sut.ElementIdentifierSet(IdentifierEntry);
+    auto IdentifierEntryRead = sut.ElementIdentifierGet();
+    REQUIRE(IdentifierEntry == IdentifierEntryRead);
 
-	std::string ValueEntry = "IniEntryValue";
-	sut.ElementValueSet(ValueEntry);
-	auto ValueEntryRead = sut.ElementValueGet();
-	REQUIRE(ValueEntry == ValueEntryRead);
+    std::string ValueEntry = "IniEntryValue";
+    sut.ElementValueSet(ValueEntry);
+    auto ValueEntryRead = sut.ElementValueGet();
+    REQUIRE(ValueEntry == ValueEntryRead);
 
-	std::string CommentEntry = "IniEntryComment";
-	sut.ElementCommentSet(CommentEntry);
-	auto CommentEntryRead = sut.ElementCommentGet();
-	REQUIRE(CommentEntry == CommentEntryRead);
+    std::string CommentEntry = "IniEntryComment";
+    sut.ElementCommentSet(CommentEntry);
+    auto CommentEntryRead = sut.ElementCommentGet();
+    REQUIRE(CommentEntry == CommentEntryRead);
 
-	INFO("Test cleanup");
-	sut.clear();
-	IdentifierEntryRead = sut.ElementIdentifierGet();
-	ValueEntryRead = sut.ElementValueGet();
-	CommentEntryRead = sut.ElementCommentGet();
+    INFO("Test cleanup");
+    sut.clear();
+    IdentifierEntryRead = sut.ElementIdentifierGet();
+    ValueEntryRead = sut.ElementValueGet();
+    CommentEntryRead = sut.ElementCommentGet();
 
-	REQUIRE("" == IdentifierEntryRead);
-	REQUIRE("" == ValueEntryRead);
-	REQUIRE("" == CommentEntryRead);
+    REQUIRE("" == IdentifierEntryRead);
+    REQUIRE("" == ValueEntryRead);
+    REQUIRE("" == CommentEntryRead);
 
-	INFO("Test setting from raw data");
-	std::ostringstream tmpStream;
-	tmpStream << IdentifierEntry << " = " + ValueEntry << " ; " << CommentEntry << std::endl;
-	std::string RawData = tmpStream.str();
-	auto result = sut.CreateFromRawData(RawData);
-	REQUIRE(result);
+    INFO("Test setting from raw data");
+    std::ostringstream tmpStream;
+    tmpStream << IdentifierEntry << " = " + ValueEntry << " ; " << CommentEntry << std::endl;
+    std::string RawData = tmpStream.str();
+    auto result = sut.CreateFromRawData(RawData);
+    REQUIRE(result);
 
-	IdentifierEntryRead = sut.ElementIdentifierGet();
-	ValueEntryRead = sut.ElementValueGet();
-	CommentEntryRead = sut.ElementCommentGet();
+    IdentifierEntryRead = sut.ElementIdentifierGet();
+    ValueEntryRead = sut.ElementValueGet();
+    CommentEntryRead = sut.ElementCommentGet();
 
-	REQUIRE(IdentifierEntry == IdentifierEntryRead);
-	REQUIRE(ValueEntry == ValueEntryRead);
-	REQUIRE(CommentEntry == CommentEntryRead);
+    REQUIRE(IdentifierEntry == IdentifierEntryRead);
+    REQUIRE(ValueEntry == ValueEntryRead);
+    REQUIRE(CommentEntry == CommentEntryRead);
 
-	INFO("Test to_string");
-	REQUIRE(RawData == sut.to_string());
+    INFO("Test to_string");
+    REQUIRE(RawData == sut.to_string());
 }
 
 #endif // _TEST_INIENTRY_H_

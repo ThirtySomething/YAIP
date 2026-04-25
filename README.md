@@ -10,7 +10,7 @@
 ## General information
 
 **YAIP** is distributed under the terms of the **GNU LESSER GENERAL PUBLIC LICENSE**, version 3.0. The text of the license is included in the file
-[```LICENSE.TXT```][license] in the project root.
+[`LICENSE.TXT`][license] in the project root.
 
 ## Requirements
 
@@ -21,8 +21,8 @@ To use **YAIP** you need to have an modern [C++11][cpp_eleven] compiler. See the
 
 Supported platforms are all platforms where the code compiles and the tests run without any error. A raw [CMake] configuration exists and is working for
 
-- ```nmake``` - the command line make system of Microsoft
-- ```make``` - the default Unix make system
+- `nmake` - the command line make system of Microsoft
+- `make` - the default Unix make system
 
 ## Motivation
 
@@ -32,8 +32,8 @@ offers plain classes. Also only a few of them are portable. And I'm missing the 
 
 ## Implementation Details
 
-- Convenience typedefs for datatypes are done in their corresponding classes, e. g. the smartpointer ```net::derpaul::yaip::IniEntryPtr``` in the class
-   file of ```net::derpaul::yaip::IniEntry```.
+- Convenience typedefs for datatypes are done in their corresponding classes, e. g. the smartpointer `net::derpaul::yaip::IniEntryPtr` in the class
+  file of `net::derpaul::yaip::IniEntry`.
 - Detection of section and key/value pair while reading is done using [regular expressions][cpp_regexp], see also [regular expression][wiki_regexp].
 - The internal data storage methods are based on [std::string][cpp_string].
 - Templated methods are used for other datatypes calling converters from and to [std::string][cpp_string].
@@ -41,13 +41,14 @@ offers plain classes. Also only a few of them are portable. And I'm missing the 
 ## Used tools
 
 - As testing framework [Catch2][catch2] is used.
+- Catch2 is fetched automatically from GitHub during CMake configure (no git submodule required).
 - For general C++ style [CppCheck][CppCheck] is used.
 - For code metrics [SourceMonitor][SourceMonitor] is used.
 - For code coverage [OpenCppCoverage][OpenCppCoverage] is used.
 
 ## Extension
 
-To extend the capabilities with currently not supported datatypes, the extension is very simple. Just extend the class ```net::derpaul::yaip::Convert``` with
+To extend the capabilities with currently not supported datatypes, the extension is very simple. Just extend the class `net::derpaul::yaip::Convert` with
 conversion methods from/to your data type.
 
 ## Doxygen Documentation
@@ -148,7 +149,7 @@ bool SectionEmpty(const std::string &Section) const;
 tVectorString SectionKeyListGet(const std::string &Section) const;
 ```
 
-- Get a value of a section/key combination - *Note: This is a templated method and requires in any case a default value.*
+- Get a value of a section/key combination - _Note: This is a templated method and requires in any case a default value._
 
 ```C++
 /**
@@ -162,7 +163,7 @@ template<typename VariableType>
 VariableType SectionKeyValueGet(const std::string &Section, const std::string &Key, const VariableType &Default);
 ```
 
-- Set a value of a section/key combination - *Note: This is a templated method and may require a cast.*
+- Set a value of a section/key combination - _Note: This is a templated method and may require a cast._
 
 ```C++
 /**
@@ -204,7 +205,7 @@ bool SectionKeyValueClear(const std::string &Section, const std::string &Key);
 - The implementation has to be checked against the inofficial specification at [Wikipedia][wiki_ini] and the tests have to satisfiy the specification.
 - Add tests for untested classes.
 
-[catch2]: https://github.com/philsquared/Catch
+[catch2]: https://github.com/catchorg/Catch2
 [CMake]: https://cmake.org/
 [CppCheck]: http://cppcheck.sourceforge.net/
 [cpp_eleven]: https://en.wikipedia.org/wiki/C%2B%2B11
@@ -220,7 +221,6 @@ bool SectionKeyValueClear(const std::string &Section, const std::string &Key);
 [SourceMonitor]: http://www.campwoodsw.com/sourcemonitor.html
 [wiki_ini]: https://en.wikipedia.org/wiki/INI_file#Comments
 [wiki_regexp]: https://en.wikipedia.org/wiki/Regular_expression
-
 [lang_cpp]: https://isocpp.org/
 [lang_cpp_badge]: https://img.shields.io/badge/language-C++-blue.svg
 [yaip_issues]: # "Open Issues"

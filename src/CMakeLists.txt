@@ -2,6 +2,14 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.6)
 PROJECT(YAIP VERSION 1.0.0 LANGUAGES CXX)
 
 include(CTest)
+include(FetchContent)
+
+FetchContent_Declare(
+    Catch2
+    GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+    GIT_TAG v3.14.0
+)
+FetchContent_MakeAvailable(Catch2)
 
 ADD_SUBDIRECTORY(lib)
 ADD_SUBDIRECTORY(testlib)
