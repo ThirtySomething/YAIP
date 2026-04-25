@@ -30,16 +30,24 @@ function(yaip_grammar_2_code TARGET_NAME GRAMMAR_DIR GENERATED_DIR FALLBACK_DIR 
         message(FATAL_ERROR "yaip_grammar_2_code: YAIP_ANTLR4_VERSION must be defined before calling this macro.")
     endif()
 
-    set(_ANTLR_GENERATED_SOURCES
-        ${GENERATED_DIR}/${LEXER_GRAMMAR_NAME}.cpp
-        ${GENERATED_DIR}/${LEXER_GRAMMAR_NAME}.h
-        ${GENERATED_DIR}/${PARSER_GRAMMAR_NAME}.cpp
-        ${GENERATED_DIR}/${PARSER_GRAMMAR_NAME}.h
-        ${GENERATED_DIR}/${PARSER_GRAMMAR_NAME}BaseVisitor.cpp
-        ${GENERATED_DIR}/${PARSER_GRAMMAR_NAME}BaseVisitor.h
-        ${GENERATED_DIR}/${PARSER_GRAMMAR_NAME}Visitor.cpp
-        ${GENERATED_DIR}/${PARSER_GRAMMAR_NAME}Visitor.h
+    set(_ANTLR_GENERATED_FILE_SUFFIXES
+        ${LEXER_GRAMMAR_NAME}.cpp
+        ${LEXER_GRAMMAR_NAME}.h
+        ${PARSER_GRAMMAR_NAME}.cpp
+        ${PARSER_GRAMMAR_NAME}.h
+        ${PARSER_GRAMMAR_NAME}BaseVisitor.cpp
+        ${PARSER_GRAMMAR_NAME}BaseVisitor.h
+        ${PARSER_GRAMMAR_NAME}Visitor.cpp
+        ${PARSER_GRAMMAR_NAME}Visitor.h
     )
+
+    set(_ANTLR_GENERATED_SOURCES)
+    set(_ANTLR_FALLBACK_SOURCES)
+
+    foreach(_antlr_suffix IN LISTS _ANTLR_GENERATED_FILE_SUFFIXES)
+        list(APPEND _ANTLR_GENERATED_SOURCES ${GENERATED_DIR}/${_antlr_suffix})
+        list(APPEND _ANTLR_FALLBACK_SOURCES ${FALLBACK_DIR}/${_antlr_suffix})
+    endforeach()
 
     option(YAIP_GENERATE_ANTLR "Generate ANTLR parser code from grammar files." ON)
 
@@ -87,17 +95,7 @@ function(yaip_grammar_2_code TARGET_NAME GRAMMAR_DIR GENERATED_DIR FALLBACK_DIR 
     endif()
 
     if(NOT _ANTLR_GENERATION_ENABLED)
-        set(${OUT_FILES_VAR}
-            ${FALLBACK_DIR}/${LEXER_GRAMMAR_NAME}.cpp
-            ${FALLBACK_DIR}/${LEXER_GRAMMAR_NAME}.h
-            ${FALLBACK_DIR}/${PARSER_GRAMMAR_NAME}.cpp
-            ${FALLBACK_DIR}/${PARSER_GRAMMAR_NAME}.h
-            ${FALLBACK_DIR}/${PARSER_GRAMMAR_NAME}BaseVisitor.cpp
-            ${FALLBACK_DIR}/${PARSER_GRAMMAR_NAME}BaseVisitor.h
-            ${FALLBACK_DIR}/${PARSER_GRAMMAR_NAME}Visitor.cpp
-            ${FALLBACK_DIR}/${PARSER_GRAMMAR_NAME}Visitor.h
-            PARENT_SCOPE
-        )
+        set(${OUT_FILES_VAR} ${_ANTLR_FALLBACK_SOURCES} PARENT_SCOPE)
     endif()
 
     set(${OUT_TARGET_VAR} ${_ANTLR_TARGET_NAME} PARENT_SCOPE)

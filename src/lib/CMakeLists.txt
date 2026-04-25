@@ -13,21 +13,18 @@ yaip_grammar_2_code(
     YAIP_ANTLR_TARGET
 )
 
-add_library(yaip STATIC
+set(YAIP_BASE_FILES
     Convert.cpp
     Convert.h
     IIniParserStrategy.h
     IIniVisitor.h
     IElementCommon.h
-    IniAntlrParser.cpp
-    IniAntlrParser.h
-    IniDiagnostic.h
-    IniDiagnosticCode.h
-    IniDiagnosticsVisitor.cpp
-    IniDiagnosticsVisitor.h
-    IniDiagnosticSeverity.h
-    IniDocumentBuilder.cpp
-    IniDocumentBuilder.h
+    string_extensions.cpp
+    string_extensions.h
+    TIniElementList.h
+)
+
+set(YAIP_DOCUMENT_FILES
     IniEntry.cpp
     IniEntry.h
     IniEntryList.cpp
@@ -36,18 +33,45 @@ add_library(yaip STATIC
     IniSection.h
     IniSectionList.cpp
     IniSectionList.h
+)
+
+set(YAIP_PARSER_FILES
+    IniAntlrParser.cpp
+    IniAntlrParser.h
+    ParseErrorListener.cpp
+    ParseErrorListener.h
     IniParserBackend.h
     IniParserFactory.cpp
     IniParserFactory.h
+)
+
+set(YAIP_DIAGNOSTICS_FILES
+    IniDiagnostic.h
+    IniDiagnosticCode.h
+    IniDiagnosticsVisitor.cpp
+    IniDiagnosticsVisitor.h
+    IniDiagnosticSeverity.h
+)
+
+set(YAIP_VISITOR_FILES
+    IniDocumentBuilder.cpp
+    IniDocumentBuilder.h
     JsonIniExporterVisitor.cpp
     JsonIniExporterVisitor.h
-    ParseErrorListener.cpp
-    ParseErrorListener.h
-    string_extensions.cpp
-    string_extensions.h
-    TIniElementList.h
+)
+
+set(YAIP_PUBLIC_API_FILES
     YAIP.cpp
     YAIP.h
+)
+
+add_library(yaip STATIC
+    ${YAIP_BASE_FILES}
+    ${YAIP_DOCUMENT_FILES}
+    ${YAIP_PARSER_FILES}
+    ${YAIP_DIAGNOSTICS_FILES}
+    ${YAIP_VISITOR_FILES}
+    ${YAIP_PUBLIC_API_FILES}
     ${YAIP_ANTLR_FILES}
 )
 

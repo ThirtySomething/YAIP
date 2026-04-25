@@ -7,14 +7,10 @@ endif()
 
 project(YAIP VERSION 1.0.0 LANGUAGES CXX)
 
-set(YAIP_BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../build/)
-set(EXECUTABLE_OUTPUT_PATH ${YAIP_BUILD_DIR} CACHE PATH "Build directory" FORCE)
-set(LIBRARY_OUTPUT_PATH ${YAIP_BUILD_DIR} CACHE PATH "Build directory" FORCE)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${YAIP_BUILD_DIR})
-set(CMAKE_BUILD_FILES_DIRECTORY ${YAIP_BUILD_DIR})
-set(CMAKE_BUILD_DIRECTORY ${YAIP_BUILD_DIR})
-set(CMAKE_BINARY_DIR ${YAIP_BUILD_DIR})
-set(CMAKE_CACHEFILE_DIR ${YAIP_BUILD_DIR})
+# Keep artifacts in the selected build tree root (e.g. build/).
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 set(YAIP_ANTLR4_VERSION "4.13.2")
 set(YAIP_ANTLR4_LEXER_GRAMMAR "IniLexer")
@@ -23,10 +19,14 @@ set(YAIP_CATCH2_VERSION "v3.14.0")
 set(YAIP_DISTRI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../distri)
 
 include(CTest)
-include(${CMAKE_CURRENT_LIST_DIR}/cmake/yaip_post_build.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/cmake/yaip_grammar_2_code.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/cmake/yaip_antlr4_runtime.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/cmake/yaip_catch2.cmake)
+
+foreach(_yaip_module
+    yaip_post_build
+    yaip_grammar_2_code
+    yaip_antlr4_runtime
+    yaip_catch2)
+    include(${CMAKE_CURRENT_LIST_DIR}/cmake/${_yaip_module}.cmake)
+endforeach()
 
 yaip_antlr4_runtime(${YAIP_ANTLR4_VERSION})
 yaip_catch2(${YAIP_CATCH2_VERSION})
