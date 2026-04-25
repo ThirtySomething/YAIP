@@ -19,6 +19,8 @@ target_include_directories(yaiptest PUBLIC
 
 target_link_libraries(yaiptest PRIVATE yaip Catch2::Catch2WithMain)
 
+yaip_add_post_build_copy(yaiptest)
+
 if(UNIX AND NOT APPLE)
     target_compile_definitions(yaiptest PRIVATE CATCH_CONFIG_NO_POSIX_SIGNALS)
 endif()

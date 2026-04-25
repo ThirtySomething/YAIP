@@ -2,6 +2,9 @@
 build
 /YAIP-cppcheck-build-dir/
 
+# Distribution directories
+distri
+
 # CMake-generated files
 **/CMakeFiles/
 **/CMakeCache.txt
