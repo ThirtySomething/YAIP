@@ -27,6 +27,7 @@
 #include <sstream>
 #include <iomanip>
 #include <limits>
+#include <type_traits>
 
 /**
  * Namespace of YAIP
@@ -43,6 +44,87 @@ namespace net
 		 */
 		namespace yaip
 		{
+			namespace
+			{
+				template <typename T>
+				std::string NumericToString(const T &Value)
+				{
+					std::ostringstream StringStream;
+					StringStream << Value;
+					return StringStream.str();
+				}
+
+				template <typename T>
+				std::string FloatingToString(const T &Value)
+				{
+					typedef std::numeric_limits<T> Limits;
+					std::ostringstream StringStream;
+					StringStream << std::setprecision(Limits::max_digits10) << std::scientific << Value;
+					return StringStream.str();
+				}
+
+				template <typename T>
+				T ParseFromString(const std::string &ValueString)
+				{
+					if constexpr (std::is_same_v<T, bool>)
+					{
+						return (0 == ValueString.compare(Convert::StringTrue));
+					}
+					else if constexpr (std::is_same_v<T, char>)
+					{
+						if (0 < ValueString.length())
+						{
+							return ValueString[0];
+						}
+						return T{};
+					}
+					else if constexpr (std::is_same_v<T, unsigned char>)
+					{
+						if (0 < ValueString.length())
+						{
+							return static_cast<unsigned char>(ValueString[0]);
+						}
+						return T{};
+					}
+					else if constexpr (std::is_same_v<T, double>)
+					{
+						return std::stod(ValueString);
+					}
+					else if constexpr (std::is_same_v<T, float>)
+					{
+						return std::stof(ValueString);
+					}
+					else if constexpr (std::is_same_v<T, int>)
+					{
+						return static_cast<int>(std::stoll(ValueString));
+					}
+					else if constexpr (std::is_same_v<T, long>)
+					{
+						return static_cast<long>(std::stoll(ValueString));
+					}
+					else if constexpr (std::is_same_v<T, short>)
+					{
+						return static_cast<short>(std::stoll(ValueString));
+					}
+					else if constexpr (std::is_same_v<T, unsigned int>)
+					{
+						return static_cast<unsigned int>(std::stoul(ValueString));
+					}
+					else if constexpr (std::is_same_v<T, unsigned long>)
+					{
+						return static_cast<unsigned long>(std::stoul(ValueString));
+					}
+					else if constexpr (std::is_same_v<T, unsigned short>)
+					{
+						return static_cast<unsigned short>(std::stoul(ValueString));
+					}
+					else
+					{
+						return ValueString;
+					}
+				}
+			}
+
 			// ******************************************************************
 			// ******************************************************************
 			const std::string Convert::StringTrue = "true";
@@ -50,188 +132,45 @@ namespace net
 
 			// ******************************************************************
 			// ******************************************************************
-			void Convert::ConvertTo(const bool &Value, std::string &ValueString)
+			void Convert::ConvertTo(const ConvertValue &Value, std::string &ValueString)
 			{
-				ValueString = Convert::StringFalse;
-				if (Value)
-				{
-					ValueString = Convert::StringTrue;
-				}
+				ValueString = std::visit([](const auto &TypedValue) -> std::string {
+					using T = std::decay_t<decltype(TypedValue)>;
+					if constexpr (std::is_same_v<T, bool>)
+					{
+						return TypedValue ? Convert::StringTrue : Convert::StringFalse;
+					}
+					else if constexpr (std::is_same_v<T, char>)
+					{
+						return std::string(1, TypedValue);
+					}
+					else if constexpr (std::is_same_v<T, unsigned char>)
+					{
+						return std::string(1, static_cast<char>(TypedValue));
+					}
+					else if constexpr (std::is_same_v<T, float> || std::is_same_v<T, double>)
+					{
+						return FloatingToString(TypedValue);
+					}
+					else if constexpr (std::is_same_v<T, std::string>)
+					{
+						return TypedValue;
+					}
+					else
+					{
+						return NumericToString(TypedValue);
+					}
+				}, Value);
 			}
 
 			// ******************************************************************
 			// ******************************************************************
-			void Convert::ConvertTo(const std::string &ValueString, bool &Value)
+			void Convert::ConvertTo(const std::string &ValueString, ConvertValue &Value)
 			{
-				Value = false;
-				if (0 == ValueString.compare(Convert::StringTrue))
-				{
-					Value = true;
-				}
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(const char &Value, std::string &ValueString)
-			{
-				ValueString = Value;
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(const std::string &ValueString, char &Value)
-			{
-				if (0 < ValueString.length())
-				{
-					Value = ValueString[0];
-				}
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(const double &Value, std::string &ValueString)
-			{
-				typedef std::numeric_limits<double> Limits;
-				std::ostringstream StringStream;
-				StringStream << std::setprecision(Limits::max_digits10) << std::scientific << Value;
-				ValueString = StringStream.str();
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(const std::string &ValueString, double &Value)
-			{
-				Value = std::stod(ValueString);
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(const float &Value, std::string &ValueString)
-			{
-				typedef std::numeric_limits<float> Limits;
-				std::ostringstream StringStream;
-				StringStream << std::setprecision(Limits::max_digits10) << std::scientific << Value;
-				ValueString = StringStream.str();
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(const std::string &ValueString, float &Value)
-			{
-				Value = std::stof(ValueString);
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(const int &Value, std::string &ValueString)
-			{
-				std::ostringstream StringStream;
-				StringStream << std::scientific << Value;
-				ValueString = StringStream.str();
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(const std::string &ValueString, int &Value)
-			{
-				Value = static_cast<int>(std::stoll(ValueString));
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(const long &Value, std::string &ValueString)
-			{
-				std::ostringstream StringStream;
-				StringStream << std::scientific << Value;
-				ValueString = StringStream.str();
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(const std::string &ValueString, long &Value)
-			{
-				Value = static_cast<long>(std::stoll(ValueString));
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(const short &Value, std::string &ValueString)
-			{
-				std::ostringstream StringStream;
-				StringStream << std::scientific << Value;
-				ValueString = StringStream.str();
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(const std::string &ValueString, short &Value)
-			{
-				Value = static_cast<short>(std::stoll(ValueString));
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(const unsigned char &Value, std::string &ValueString)
-			{
-				ValueString = Value;
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(const std::string &ValueString, unsigned char &Value)
-			{
-				if (0 < ValueString.length())
-				{
-					Value = ValueString[0];
-				}
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(const unsigned int &Value, std::string &ValueString)
-			{
-				std::ostringstream StringStream;
-				StringStream << std::scientific << Value;
-				ValueString = StringStream.str();
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(const std::string &ValueString, unsigned int &Value)
-			{
-				Value = static_cast<unsigned int>(std::stoul(ValueString));
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(const unsigned long &Value, std::string &ValueString)
-			{
-				std::ostringstream StringStream;
-				StringStream << std::scientific << Value;
-				ValueString = StringStream.str();
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(const std::string &ValueString, unsigned long &Value)
-			{
-				Value = static_cast<unsigned long>(std::stoul(ValueString));
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(const unsigned short &Value, std::string &ValueString)
-			{
-				std::ostringstream StringStream;
-				StringStream << std::scientific << Value;
-				ValueString = StringStream.str();
-			}
-
-			// ******************************************************************
-			// ******************************************************************
-			void Convert::ConvertTo(const std::string &ValueString, unsigned short &Value)
-			{
-				Value = static_cast<unsigned short>(std::stoul(ValueString));
+				std::visit([&ValueString](auto &TypedValue) {
+					using T = std::decay_t<decltype(TypedValue)>;
+					TypedValue = ParseFromString<T>(ValueString);
+				}, Value);
 			}
 		}
 	}

@@ -27,6 +27,7 @@
 #define _CONVERT_H_
 
 #include <string>
+#include <variant>
 
  /**
   * Namespace of YAIP
@@ -43,8 +44,21 @@ namespace net
 		 */
 		namespace yaip
 		{
+			using ConvertValue = std::variant<bool,
+				char,
+				double,
+				float,
+				int,
+				long,
+				short,
+				std::string,
+				unsigned char,
+				unsigned int,
+				unsigned long,
+				unsigned short>;
+
 			/**
-			 * Class to convert data from and to std::string
+			 * Class to convert data from and to std::string using std::variant
 			 * \see http://en.cppreference.com/w/cpp/language/types
 			 * <table>
 			 * <caption id="multi_row">Fundamental types</caption>
@@ -77,158 +91,33 @@ namespace net
 				static const std::string StringFalse;
 
 				/**
-				 * Convert bool to std::string
+				 * Convert a variant value to std::string.
 				 * \param Value Value to convert from
 				 * \param ValueString Value to convert to
 				 */
-				static void ConvertTo(const bool &Value, std::string &ValueString);
+				static void ConvertTo(const ConvertValue &Value, std::string &ValueString);
 
 				/**
-				 * Convert std::string to bool
+				 * Convert std::string to the active type stored in the variant.
 				 * \param ValueString Value to convert from
-				 * \param Value Value to convert to
+				 * \param Value Variant with target type as active alternative
 				 */
-				static void ConvertTo(const std::string &ValueString, bool &Value);
+				static void ConvertTo(const std::string &ValueString, ConvertValue &Value);
 
-				/**
-				 * Convert char to std::string
-				 * \param Value Value to convert from
-				 * \param ValueString Value to convert to
-				 */
-				static void ConvertTo(const char &Value, std::string &ValueString);
+				template <typename T>
+				static void ConvertTo(const T &Value, std::string &ValueString)
+				{
+					ConvertValue VariantValue = Value;
+					ConvertTo(VariantValue, ValueString);
+				}
 
-				/**
-				 * Convert std::string to char
-				 * \param ValueString Value to convert from
-				 * \param Value Value to convert to
-				 */
-				static void ConvertTo(const std::string &ValueString, char &Value);
-
-				/**
-				 * Convert double to std::string
-				 * \param Value Value to convert from
-				 * \param ValueString Value to convert to
-				 */
-				static void ConvertTo(const double &Value, std::string &ValueString);
-
-				/**
-				 * Convert std::string to double
-				 * \param ValueString Value to convert from
-				 * \param Value Value to convert to
-				 */
-				static void ConvertTo(const std::string &ValueString, double &Value);
-
-				/**
-				 * Convert float to std::string
-				 * \param Value Value to convert from
-				 * \param ValueString Value to convert to
-				 */
-				static void ConvertTo(const float &Value, std::string &ValueString);
-
-				/**
-				 * Convert std::string to float
-				 * \param ValueString Value to convert from
-				 * \param Value Value to convert to
-				 */
-				static void ConvertTo(const std::string &ValueString, float &Value);
-
-				/**
-				 * Convert int to std::string
-				 * \param Value Value to convert from
-				 * \param ValueString Value to convert to
-				 */
-				static void ConvertTo(const int &Value, std::string &ValueString);
-
-				/**
-				 * Convert std::string to int
-				 * \param ValueString Value to convert from
-				 * \param Value Value to convert to
-				 */
-				static void ConvertTo(const std::string &ValueString, int &Value);
-
-				/**
-				 * Convert long to std::string
-				 * \param Value Value to convert from
-				 * \param ValueString Value to convert to
-				 */
-				static void ConvertTo(const long &Value, std::string &ValueString);
-
-				/**
-				 * Convert std::string to long
-				 * \param ValueString Value to convert from
-				 * \param Value Value to convert to
-				 */
-				static void ConvertTo(const std::string &ValueString, long &Value);
-
-				/**
-				 * Convert short to std::string
-				 * \param Value Value to convert from
-				 * \param ValueString Value to convert to
-				 */
-				static void ConvertTo(const short &Value, std::string &ValueString);
-
-				/**
-				 * Convert std::string to short
-				 * \param ValueString Value to convert from
-				 * \param Value Value to convert to
-				 */
-				static void ConvertTo(const std::string &ValueString, short &Value);
-
-				/**
-				 * Convert unsigned char to std::string
-				 * \param Value Value to convert from
-				 * \param ValueString Value to convert to
-				 */
-				static void ConvertTo(const unsigned char &Value, std::string &ValueString);
-
-				/**
-				 * Convert std::string to unsigned char
-				 * \param ValueString Value to convert from
-				 * \param Value Value to convert to
-				 */
-				static void ConvertTo(const std::string &ValueString, unsigned char &Value);
-
-				/**
-				 * Convert unsigned int to std::string
-				 * \param Value Value to convert from
-				 * \param ValueString Value to convert to
-				 */
-				static void ConvertTo(const unsigned int &Value, std::string &ValueString);
-
-				/**
-				 * Convert std::string to unsigned int
-				 * \param ValueString Value to convert from
-				 * \param Value Value to convert to
-				 */
-				static void ConvertTo(const std::string &ValueString, unsigned int &Value);
-
-				/**
-				 * Convert unsigned long to std::string
-				 * \param Value Value to convert from
-				 * \param ValueString Value to convert to
-				 */
-				static void ConvertTo(const unsigned long &Value, std::string &ValueString);
-
-				/**
-				 * Convert std::string to unsigned long
-				 * \param ValueString Value to convert from
-				 * \param Value Value to convert to
-				 */
-				static void ConvertTo(const std::string &ValueString, unsigned long &Value);
-
-				/**
-				 * Convert unsigned int to std::string
-				 * \param Value Value to convert from
-				 * \param ValueString Value to convert to
-				 */
-				static void ConvertTo(const unsigned short &Value, std::string &ValueString);
-
-				/**
-				 * Convert std::string to unsigned short
-				 * \param ValueString Value to convert from
-				 * \param Value Value to convert to
-				 */
-				static void ConvertTo(const std::string &ValueString, unsigned short &Value);
+				template <typename T>
+				static void ConvertTo(const std::string &ValueString, T &Value)
+				{
+					ConvertValue VariantValue = T{};
+					ConvertTo(ValueString, VariantValue);
+					Value = std::get<T>(VariantValue);
+				}
 			};
 		}
 	}
