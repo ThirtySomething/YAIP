@@ -1,14 +1,22 @@
-# Helper function to configure ANTLR4 C++ code generation with fallback to checked-in sources.
+# ******************************************************************************
+# Copyright 2016 ThirtySomething
+# ******************************************************************************
+# This file is part of YAIP.
 #
-# Parameters:
-# TARGET_NAME          - CMake target name for the library
-# GRAMMAR_DIR          - Directory containing the .g4 grammar files
-# GENERATED_DIR        - Directory where ANTLR will write generated sources
-# FALLBACK_DIR         - Directory with checked-in generated sources (used when Java/JAR unavailable)
-# LEXER_GRAMMAR_NAME   - Base name of the lexer grammar (without .g4), e.g. IniLexer
-# PARSER_GRAMMAR_NAME  - Base name of the parser grammar (without .g4), e.g. IniParser
-# OUT_FILES_VAR        - Output variable receiving the list of generated/fallback source files
-# OUT_TARGET_VAR       - Output variable receiving the name of the code-generation custom target
+# YAIP is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Lesser General Public License as published by the Free
+# Software Foundation, either version 3 of the License, or (at your option)
+# any later version.
+#
+# YAIP is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
+# more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with YAIP. If not, see <http://www.gnu.org/licenses/>.
+# ******************************************************************************
+
 include_guard(GLOBAL)
 
 include(${CMAKE_CURRENT_LIST_DIR}/yaip_antlr4_generator.cmake)

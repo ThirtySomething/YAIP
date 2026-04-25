@@ -17,72 +17,31 @@
 // along with YAIP. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************
 
-/**
- * \file    IElementCommon.h
- * \author  ThirtySomething
- * \date    2016-09-19
- * \brief   Interface for common element properties
- */
 #ifndef _IELEMENTCOMMON_H_
 #define _IELEMENTCOMMON_H_
 
 #include "string_extensions.h"
 #include <string>
 
-/**
- * Namespace of YAIP
- */
 namespace net
 {
-    /**
-     * Namespace of YAIP
-     */
     namespace derpaul
     {
-        /**
-         * Namespace of YAIP
-         */
         namespace yaip
         {
-            /**
-             * Interface for common element properties
-             */
             class IElementCommon
             {
             public:
-                /**
-                 * To clear object and reset to empty fields
-                 */
                 virtual void clear(void) = 0;
 
-                /**
-                 * Get the INI object comment
-                 * \return Comment of INI object
-                 */
                 virtual std::string ElementCommentGet(void) const = 0;
 
-                /**
-                 * Set the INI object comment
-                 * \param ElementComment Comment of INI object
-                 */
                 virtual void ElementCommentSet(const std::string &ElementComment) = 0;
 
-                /**
-                 * Get the INI object identifier
-                 * \return Unique identifier of INI object
-                 */
                 virtual std::string ElementIdentifierGet(void) const = 0;
 
-                /**
-                 * Set the INI object identifier
-                 * \param ElementIdentifier Unique identifier of INI object
-                 */
                 virtual void ElementIdentifierSet(const std::string &ElementIdentifier) = 0;
 
-                /**
-                 * String representation of an INI entry
-                 * \return String representation of an INI entry
-                 */
                 virtual std::string to_string(void) const = 0;
             };
         }

@@ -17,31 +17,16 @@
 // along with YAIP. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************
 
-/**
- * \file    Convert.cpp
- * \author  ThirtySomething
- * \date    2016-09-19
- * \brief   Converter between different datatypes and std::string
- */
 #include "Convert.h"
-#include <sstream>
 #include <iomanip>
 #include <limits>
+#include <sstream>
 #include <type_traits>
 
-/**
- * Namespace of YAIP
- */
 namespace net
 {
-    /**
-     * Namespace of YAIP
-     */
     namespace derpaul
     {
-        /**
-         * Namespace of YAIP
-         */
         namespace yaip
         {
             namespace
@@ -125,16 +110,13 @@ namespace net
                 }
             }
 
-            // ******************************************************************
-            // ******************************************************************
             const std::string Convert::StringTrue = "true";
             const std::string Convert::StringFalse = "false";
 
-            // ******************************************************************
-            // ******************************************************************
             void Convert::ConvertTo(const ConvertValue &Value, std::string &ValueString)
             {
-                ValueString = std::visit([](const auto &TypedValue) -> std::string {
+                ValueString = std::visit([](const auto &TypedValue) -> std::string
+                                         {
                     using T = std::decay_t<decltype(TypedValue)>;
                     if constexpr (std::is_same_v<T, bool>)
                     {
@@ -159,18 +141,15 @@ namespace net
                     else
                     {
                         return NumericToString(TypedValue);
-                    }
-                }, Value);
+                    } }, Value);
             }
 
-            // ******************************************************************
-            // ******************************************************************
             void Convert::ConvertTo(const std::string &ValueString, ConvertValue &Value)
             {
-                std::visit([&ValueString](auto &TypedValue) {
+                std::visit([&ValueString](auto &TypedValue)
+                           {
                     using T = std::decay_t<decltype(TypedValue)>;
-                    TypedValue = ParseFromString<T>(ValueString);
-                }, Value);
+                    TypedValue = ParseFromString<T>(ValueString); }, Value);
             }
         }
     }

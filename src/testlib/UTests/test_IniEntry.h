@@ -72,4 +72,4 @@ SCENARIO("Test class IniEntry", "[IniEntry]")
     REQUIRE(tmpStream.str() == sut.to_string());
 }
 
-#endif // _TEST_INIENTRY_H_
+#endif

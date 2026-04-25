@@ -17,11 +17,6 @@
 // along with YAIP. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************
 
-/**
- * \file    IniDiagnosticSeverity.h
- * \author  ThirtySomething
- * \brief   Severity levels for INI document diagnostics
- */
 #ifndef _INIDIAGNOSTICSEVERITY_H_
 #define _INIDIAGNOSTICSEVERITY_H_
 

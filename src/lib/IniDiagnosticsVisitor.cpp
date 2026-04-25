@@ -17,11 +17,6 @@
 // along with YAIP. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************
 
-/**
- * \file    IniDiagnosticsVisitor.cpp
- * \author  ThirtySomething
- * \brief   Visitor implementation collecting document diagnostics
- */
 #include "IniDiagnosticsVisitor.h"
 
 #include "IniEntry.h"

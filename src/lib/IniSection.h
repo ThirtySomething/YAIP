@@ -17,12 +17,6 @@
 // along with YAIP. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************
 
-/**
- * \file    IniSection.h
- * \author  ThirtySomething
- * \date    2016-09-19
- * \brief   Definition of IniSection as class to deal with sections
- */
 #ifndef _INISECTION_H_
 #define _INISECTION_H_
 
@@ -33,176 +27,67 @@
 #include <memory>
 #include <string>
 
-/**
- * Namespace of YAIP
- */
 namespace net
 {
-    /**
-     * Namespace of YAIP
-     */
     namespace derpaul
     {
-        /**
-         * Namespace of YAIP
-         */
         namespace yaip
         {
             class IIniVisitor;
 
-            /**
-             * Represents an INI section
-             */
             class IniSection : public IElementCommon
             {
             public:
-                /**
-                 * Default constructor
-                 */
                 IniSection(void);
 
-                /**
-                 * Default destructor
-                 */
                 virtual ~IniSection(void);
 
-                /**
-                 * To clear object and reset to empty fields
-                 */
                 virtual void clear(void) override;
 
-                /**
-                 * Get the INI object comment
-                 * \return Comment of INI object
-                 */
                 virtual std::string ElementCommentGet(void) const override;
 
-                /**
-                 * Set the INI object comment
-                 * \param ElementComment Unique comment of INI object
-                 */
                 virtual void ElementCommentSet(const std::string &ElementComment) override;
 
-                /**
-                 * Get the unique element identifier aka the key of an INI entry
-                 * \return The key of the INI entry
-                 */
                 virtual std::string ElementIdentifierGet(void) const override;
 
-                /**
-                 * The unique element identifier is the key of an INI entry
-                 * \param ElementIdentifier The key of the INI entry
-                 */
                 virtual void ElementIdentifierSet(const std::string &ElementIdentifier) override;
 
-                /**
-                 * Add an entry to the section
-                 * \param Entry The entry to add.
-                 */
                 void EntryAdd(const IniEntryPtr &Entry);
 
-                /**
-                 * Delete given entry
-                 * \param Entry Entry to delete
-                 */
                 void EntryDelete(const IniEntryPtr &Entry);
 
-                /**
-                 * Find and return entry based on the entry name (the key)
-                 * \param EntryName The name (better: the key) of the entry to search
-                 * \return Entry on success, otherwise nullptr
-                 */
                 IniEntryPtr EntryFind(const std::string &EntryName);
 
-                /**
-                 * Get a list of all keys of this sections
-                 * \return List of keys
-                 */
                 tListString EntryKeyList(void) const;
 
-                /**
-                 * Check if section is empty
-                 * \return True if empty otherwise false
-                 */
                 bool IsEmpty(void) const;
 
-                /**
-                 * Get list of entries
-                 * \return List of entries
-                 */
                 IniEntryList SectionEntriesGet(void) const;
 
-                /**
-                 * Set list of entries
-                 * \param SectionEntries Vector with entries to set
-                 * \attention This is a replace, not a merge, not an add
-                 */
                 void SectionEntriesSet(const IniEntryList &SectionEntries);
 
-                /**
-                 * To sort entries alphabetically by their key
-                 */
                 void sort(void);
 
-                /**
-                 * String representation of an INI entry
-                 * \return String representation of an INI entry
-                 */
                 std::string to_string(void) const override;
 
-                /**
-                 * Accept a visitor and traverse all entries.
-                 * \param visitor Visitor instance
-                 */
                 void Accept(IIniVisitor &visitor) const;
 
-                /**
-                 * Marks this section as the implicit global section used for
-                 * top-level entries without an explicit [section] header.
-                 *
-                 * \param IsImplicitGlobal True if this section is the implicit global section
-                 */
                 void ImplicitGlobalSet(const bool IsImplicitGlobal);
 
-                /**
-                 * Indicates whether this section is the implicit global section.
-                 *
-                 * \return True if this section represents top-level entries
-                 */
                 bool IsImplicitGlobal(void) const;
 
             private:
-                /**
-                 * All entries to this section
-                 */
                 IniEntryList m_Entries;
 
-                /**
-                 * The comment of the section
-                 */
                 std::string m_SectionComment;
 
-                /**
-                 * The name of the section
-                 */
                 std::string m_SectionName;
 
-                /**
-                 * True when this section represents top-level entries without
-                 * an explicit [section] header.
-                 */
                 bool m_IsImplicitGlobal;
             };
 
-            /**
-             * Convenience typedef for lazy usage of smart_pointers for IniSections
-             */
             using IniSectionPtr = std::shared_ptr<IniSection>;
 
-            /**
-             * Compare two sections
-             * \return True on equal identifiers, otherwise false
-             */
             bool IniSectionCompare(const IniSectionPtr Left, const IniSectionPtr Right);
         }
     }

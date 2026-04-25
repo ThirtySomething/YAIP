@@ -17,11 +17,6 @@
 // along with YAIP. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************
 
-/**
- * \file    JsonIniExporterVisitor.h
- * \author  ThirtySomething
- * \brief   Visitor implementation exporting a YAIP document to JSON
- */
 #ifndef _JSONINIEXPORTERVISITOR_H_
 #define _JSONINIEXPORTERVISITOR_H_
 

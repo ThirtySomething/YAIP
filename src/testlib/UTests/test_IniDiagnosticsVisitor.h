@@ -27,53 +27,42 @@
 #include <fstream>
 #include <string>
 
-using namespace net::derpaul::yaip;
-
-namespace net
+int DiagnosticCount(const std::vector<net::derpaul::yaip::IniDiagnostic> &diagnostics, const net::derpaul::yaip::IniDiagnosticCode code)
 {
-    namespace derpaul
+    int count = 0;
+    for (const auto &diagnostic : diagnostics)
     {
-        namespace yaip
+        if (diagnostic.Code == code)
         {
-            int DiagnosticCount(const std::vector<IniDiagnostic> &diagnostics, const IniDiagnosticCode code)
-            {
-                int count = 0;
-                for (const auto &diagnostic : diagnostics)
-                {
-                    if (diagnostic.Code == code)
-                    {
-                        ++count;
-                    }
-                }
-                return count;
-            }
-
-            const IniDiagnostic *FindDiagnostic(const std::vector<IniDiagnostic> &diagnostics, const IniDiagnosticCode code)
-            {
-                for (const auto &diagnostic : diagnostics)
-                {
-                    if (diagnostic.Code == code)
-                    {
-                        return &diagnostic;
-                    }
-                }
-
-                return nullptr;
-            }
+            ++count;
         }
     }
+    return count;
+}
+
+const net::derpaul::yaip::IniDiagnostic *FindDiagnostic(const std::vector<net::derpaul::yaip::IniDiagnostic> &diagnostics, const net::derpaul::yaip::IniDiagnosticCode code)
+{
+    for (const auto &diagnostic : diagnostics)
+    {
+        if (diagnostic.Code == code)
+        {
+            return &diagnostic;
+        }
+    }
+
+    return nullptr;
 }
 
 TEST_CASE("IniDiagnosticsVisitor - clean document has no diagnostics", "[IniDiagnosticsVisitor]")
 {
-    YAIP ini;
-    IniDocumentBuilder{}
+    net::derpaul::yaip::YAIP ini;
+    net::derpaul::yaip::IniDocumentBuilder{}
         .section("Network")
         .entry("host", "localhost")
         .entry("port", "8080")
         .build(ini);
 
-    IniDiagnosticsVisitor diagnostics;
+    net::derpaul::yaip::IniDiagnosticsVisitor diagnostics;
     diagnostics.Analyze(ini);
 
     REQUIRE(!diagnostics.HasDiagnostics());
@@ -82,29 +71,29 @@ TEST_CASE("IniDiagnosticsVisitor - clean document has no diagnostics", "[IniDiag
 
 TEST_CASE("IniDiagnosticsVisitor - empty section and empty value diagnostics", "[IniDiagnosticsVisitor]")
 {
-    YAIP ini;
-    IniDocumentBuilder{}
+    net::derpaul::yaip::YAIP ini;
+    net::derpaul::yaip::IniDocumentBuilder{}
         .section("")
         .entry("key", "")
         .build(ini);
 
-    IniDiagnosticsVisitor diagnostics;
+    net::derpaul::yaip::IniDiagnosticsVisitor diagnostics;
     diagnostics.Analyze(ini);
 
     const auto &issues = diagnostics.DiagnosticsGet();
     REQUIRE(diagnostics.HasDiagnostics());
-    REQUIRE(DiagnosticCount(issues, IniDiagnosticCode::EmptySectionName) == 1);
-    REQUIRE(DiagnosticCount(issues, IniDiagnosticCode::EmptyEntryValue) == 1);
+    REQUIRE(DiagnosticCount(issues, net::derpaul::yaip::IniDiagnosticCode::EmptySectionName) == 1);
+    REQUIRE(DiagnosticCount(issues, net::derpaul::yaip::IniDiagnosticCode::EmptyEntryValue) == 1);
 
-    const IniDiagnostic *emptySection = FindDiagnostic(issues, IniDiagnosticCode::EmptySectionName);
+    const net::derpaul::yaip::IniDiagnostic *emptySection = FindDiagnostic(issues, net::derpaul::yaip::IniDiagnosticCode::EmptySectionName);
     REQUIRE(emptySection != nullptr);
-    REQUIRE(emptySection->Severity == IniDiagnosticSeverity::Error);
+    REQUIRE(emptySection->Severity == net::derpaul::yaip::IniDiagnosticSeverity::Error);
     REQUIRE(emptySection->SectionIndex == 0);
     REQUIRE(emptySection->EntryIndex == 0);
 
-    const IniDiagnostic *emptyValue = FindDiagnostic(issues, IniDiagnosticCode::EmptyEntryValue);
+    const net::derpaul::yaip::IniDiagnostic *emptyValue = FindDiagnostic(issues, net::derpaul::yaip::IniDiagnosticCode::EmptyEntryValue);
     REQUIRE(emptyValue != nullptr);
-    REQUIRE(emptyValue->Severity == IniDiagnosticSeverity::Warning);
+    REQUIRE(emptyValue->Severity == net::derpaul::yaip::IniDiagnosticSeverity::Warning);
     REQUIRE(emptyValue->SectionIndex == 0);
     REQUIRE(emptyValue->EntryIndex == 0);
 }
@@ -120,19 +109,19 @@ TEST_CASE("IniDiagnosticsVisitor - duplicate keys loaded from file", "[IniDiagno
         out << "dup = second" << std::endl;
     }
 
-    YAIP ini;
+    net::derpaul::yaip::YAIP ini;
     REQUIRE(ini.INIFileLoad(iniFile));
 
-    IniDiagnosticsVisitor diagnostics;
+    net::derpaul::yaip::IniDiagnosticsVisitor diagnostics;
     diagnostics.Analyze(ini);
 
     const auto &issues = diagnostics.DiagnosticsGet();
     REQUIRE(diagnostics.HasDiagnostics());
-    REQUIRE(DiagnosticCount(issues, IniDiagnosticCode::DuplicateKey) == 1);
+    REQUIRE(DiagnosticCount(issues, net::derpaul::yaip::IniDiagnosticCode::DuplicateKey) == 1);
 
-    const IniDiagnostic *duplicate = FindDiagnostic(issues, IniDiagnosticCode::DuplicateKey);
+    const net::derpaul::yaip::IniDiagnostic *duplicate = FindDiagnostic(issues, net::derpaul::yaip::IniDiagnosticCode::DuplicateKey);
     REQUIRE(duplicate != nullptr);
-    REQUIRE(duplicate->Severity == IniDiagnosticSeverity::Error);
+    REQUIRE(duplicate->Severity == net::derpaul::yaip::IniDiagnosticSeverity::Error);
     REQUIRE(duplicate->Section == "Section");
     REQUIRE(duplicate->Key == "dup");
     REQUIRE(duplicate->SectionIndex == 0);
@@ -152,17 +141,17 @@ TEST_CASE("IniDiagnosticsVisitor - implicit global section is not treated as an 
         out << "empty =" << std::endl;
     }
 
-    YAIP ini;
+    net::derpaul::yaip::YAIP ini;
     REQUIRE(ini.INIFileLoad(iniFile));
 
-    IniDiagnosticsVisitor diagnostics;
+    net::derpaul::yaip::IniDiagnosticsVisitor diagnostics;
     diagnostics.Analyze(ini);
 
     const auto &issues = diagnostics.DiagnosticsGet();
-    REQUIRE(DiagnosticCount(issues, IniDiagnosticCode::EmptySectionName) == 0);
-    REQUIRE(DiagnosticCount(issues, IniDiagnosticCode::EmptyEntryValue) == 1);
+    REQUIRE(DiagnosticCount(issues, net::derpaul::yaip::IniDiagnosticCode::EmptySectionName) == 0);
+    REQUIRE(DiagnosticCount(issues, net::derpaul::yaip::IniDiagnosticCode::EmptyEntryValue) == 1);
 
-    const IniDiagnostic *emptyValue = FindDiagnostic(issues, IniDiagnosticCode::EmptyEntryValue);
+    const net::derpaul::yaip::IniDiagnostic *emptyValue = FindDiagnostic(issues, net::derpaul::yaip::IniDiagnosticCode::EmptyEntryValue);
     REQUIRE(emptyValue != nullptr);
     REQUIRE(emptyValue->Section == "");
     REQUIRE(emptyValue->Key == "empty");
@@ -172,9 +161,9 @@ TEST_CASE("IniDiagnosticsVisitor - implicit global section is not treated as an 
 
 TEST_CASE("IniDiagnosticsVisitor - formatting is stable", "[IniDiagnosticsVisitor]")
 {
-    IniDiagnostic diagnostic{
-        IniDiagnosticSeverity::Error,
-        IniDiagnosticCode::DuplicateKey,
+    net::derpaul::yaip::IniDiagnostic diagnostic{
+        net::derpaul::yaip::IniDiagnosticSeverity::Error,
+        net::derpaul::yaip::IniDiagnosticCode::DuplicateKey,
         "Main",
         "port",
         2,
@@ -182,26 +171,26 @@ TEST_CASE("IniDiagnosticsVisitor - formatting is stable", "[IniDiagnosticsVisito
         3,
         "Duplicate key in section."};
 
-    REQUIRE(std::string(IniDiagnosticsVisitor::SeverityToString(IniDiagnosticSeverity::Warning)) == "Warning");
-    REQUIRE(std::string(IniDiagnosticsVisitor::SeverityToString(IniDiagnosticSeverity::Error)) == "Error");
-    REQUIRE(std::string(IniDiagnosticsVisitor::CodeToString(IniDiagnosticCode::DuplicateKey)) == "DuplicateKey");
+    REQUIRE(std::string(net::derpaul::yaip::IniDiagnosticsVisitor::SeverityToString(net::derpaul::yaip::IniDiagnosticSeverity::Warning)) == "Warning");
+    REQUIRE(std::string(net::derpaul::yaip::IniDiagnosticsVisitor::SeverityToString(net::derpaul::yaip::IniDiagnosticSeverity::Error)) == "Error");
+    REQUIRE(std::string(net::derpaul::yaip::IniDiagnosticsVisitor::CodeToString(net::derpaul::yaip::IniDiagnosticCode::DuplicateKey)) == "DuplicateKey");
 
-    REQUIRE(IniDiagnosticsVisitor::DiagnosticToString(diagnostic) ==
+    REQUIRE(net::derpaul::yaip::IniDiagnosticsVisitor::DiagnosticToString(diagnostic) ==
             "[Error] DuplicateKey section[2] entry[5] sectionName='Main' key='port' occurrence=3: Duplicate key in section.");
 
-    REQUIRE(IniDiagnosticsVisitor::DiagnosticToJson(diagnostic) ==
+    REQUIRE(net::derpaul::yaip::IniDiagnosticsVisitor::DiagnosticToJson(diagnostic) ==
             "{\"severity\":\"Error\",\"code\":\"DuplicateKey\",\"section\":\"Main\",\"key\":\"port\",\"sectionIndex\":2,\"entryIndex\":5,\"keyOccurrenceInSection\":3,\"message\":\"Duplicate key in section.\"}");
 }
 
 TEST_CASE("IniDiagnosticsVisitor - report output is newline separated", "[IniDiagnosticsVisitor]")
 {
-    YAIP ini;
-    IniDocumentBuilder{}
+    net::derpaul::yaip::YAIP ini;
+    net::derpaul::yaip::IniDocumentBuilder{}
         .section("")
         .entry("empty", "")
         .build(ini);
 
-    IniDiagnosticsVisitor diagnostics;
+    net::derpaul::yaip::IniDiagnosticsVisitor diagnostics;
     diagnostics.Analyze(ini);
 
     REQUIRE(diagnostics.DiagnosticsGet().size() == 2);

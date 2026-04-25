@@ -354,7 +354,6 @@ TEST_CASE("At most one nameless section exists regardless of how entries are add
 {
     net::derpaul::yaip::YAIP sut;
 
-    // Add via SectionKeyValueSet with empty section name twice
     REQUIRE(sut.SectionKeyValueSet("", "key1", "value1"));
     REQUIRE(sut.SectionKeyValueSet("", "key2", "value2"));
 
@@ -372,4 +371,4 @@ TEST_CASE("At most one nameless section exists regardless of how entries are add
     REQUIRE(sut.SectionKeyValueGet("", "key2", std::string()) == "value2");
 }
 
-#endif // _TEST_YAIP_H_
+#endif

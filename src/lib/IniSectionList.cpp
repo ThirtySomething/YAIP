@@ -17,31 +17,15 @@
 // along with YAIP. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************
 
-/**
- * \file    IniSectionList.cpp
- * \author  ThirtySomething
- * \date    2016-09-19
- * \brief   List of INI sections
- */
 #include "IniSectionList.h"
 #include <algorithm>
-/**
- * Namespace of YAIP
- */
+
 namespace net
 {
-    /**
-     * Namespace of YAIP
-     */
     namespace derpaul
     {
-        /**
-         * Namespace of YAIP
-         */
         namespace yaip
         {
-            // ******************************************************************
-            // ******************************************************************
             void IniSectionList::ElementAdd(const IniSectionPtr &Element)
             {
                 if (!Element)
@@ -49,9 +33,6 @@ namespace net
                     return;
                 }
 
-                // Enforce the invariant: at most one nameless section exists.
-                // If a nameless section is already present, merge entries into it
-                // instead of inserting a duplicate.
                 if (Element->ElementIdentifierGet().empty())
                 {
                     auto existing = ElementFind("");
@@ -68,7 +49,6 @@ namespace net
                         return;
                     }
 
-                    // No existing nameless section — insert at front.
                     if (Element->IsImplicitGlobal())
                     {
                         m_Elements.insert(m_Elements.begin(), Element);
@@ -83,8 +63,6 @@ namespace net
                 m_Elements.push_back(Element);
             }
 
-            // ******************************************************************
-            // ******************************************************************
             void IniSectionList::sort(void)
             {
                 std::sort(m_Elements.begin(), m_Elements.end(), net::derpaul::yaip::IniSectionCompare);

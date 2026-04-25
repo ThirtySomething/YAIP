@@ -17,49 +17,28 @@
 // along with YAIP. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************
 
-/**
- * \file    IniSection.cpp
- * \author  ThirtySomething
- * \date    2016-09-19
- * \brief   Definition of IniSection as class to deal with sections
- */
-
 #include "IniSection.h"
+
 #include "IIniVisitor.h"
 #include "string_extensions.h"
 #include <iostream>
 #include <sstream>
 
-/**
- * Namespace of YAIP
- */
 namespace net
 {
-    /**
-     * Namespace of YAIP
-     */
     namespace derpaul
     {
-        /**
-         * Namespace of YAIP
-         */
         namespace yaip
         {
-            // ******************************************************************
-            // ******************************************************************
             IniSection::IniSection(void)
                 : m_SectionName(), m_SectionComment(), m_Entries(), m_IsImplicitGlobal(false)
             {
             }
 
-            // ******************************************************************
-            // ******************************************************************
             IniSection::~IniSection(void)
             {
             }
 
-            // ******************************************************************
-            // ******************************************************************
             void IniSection::clear(void)
             {
                 ElementIdentifierSet("");
@@ -68,85 +47,61 @@ namespace net
                 m_Entries.clear();
             }
 
-            // ******************************************************************
-            // ******************************************************************
             std::string IniSection::ElementCommentGet(void) const
             {
                 return m_SectionComment;
             }
 
-            // ******************************************************************
-            // ******************************************************************
             void IniSection::ElementCommentSet(const std::string &ElementComment)
             {
                 m_SectionComment = trim(ElementComment);
             }
 
-            // ******************************************************************
-            // ******************************************************************
             std::string IniSection::ElementIdentifierGet(void) const
             {
                 return m_SectionName;
             }
 
-            // ******************************************************************
-            // ******************************************************************
             void IniSection::ElementIdentifierSet(const std::string &ElementIdentifier)
             {
                 m_SectionName = trim(ElementIdentifier);
             }
 
-            // ******************************************************************
-            // ******************************************************************
             void IniSection::EntryAdd(const IniEntryPtr &Entry)
             {
                 m_Entries.ElementAdd(Entry);
             }
 
-            // ******************************************************************
-            // ******************************************************************
             void IniSection::EntryDelete(const IniEntryPtr &Entry)
             {
                 m_Entries.ElementDelete(Entry);
             }
 
-            // ******************************************************************
-            // ******************************************************************
             IniEntryPtr IniSection::EntryFind(const std::string &EntryName)
             {
                 return m_Entries.ElementFind(EntryName);
             }
 
-            // ******************************************************************
-            // ******************************************************************
             tListString IniSection::EntryKeyList(void) const
             {
                 return m_Entries.ElementIdentifierList();
             }
 
-            // ******************************************************************
-            // ******************************************************************
             bool IniSection::IsEmpty(void) const
             {
                 return (0 == m_Entries.size());
             }
 
-            // ******************************************************************
-            // ******************************************************************
             IniEntryList IniSection::SectionEntriesGet(void) const
             {
                 return m_Entries;
             }
 
-            // ******************************************************************
-            // ******************************************************************
             void IniSection::SectionEntriesSet(const IniEntryList &SectionEntries)
             {
                 m_Entries = SectionEntries;
             }
 
-            // ******************************************************************
-            // ******************************************************************
             std::string IniSection::to_string(void) const
             {
                 std::ostringstream DataStream;
@@ -169,8 +124,6 @@ namespace net
                 return DataStream.str();
             }
 
-            // ******************************************************************
-            // ******************************************************************
             void IniSection::Accept(IIniVisitor &visitor) const
             {
                 visitor.VisitSectionBegin(*this);
@@ -187,29 +140,21 @@ namespace net
                 visitor.VisitSectionEnd(*this);
             }
 
-            // ******************************************************************
-            // ******************************************************************
             void IniSection::ImplicitGlobalSet(const bool IsImplicitGlobal)
             {
                 m_IsImplicitGlobal = IsImplicitGlobal;
             }
 
-            // ******************************************************************
-            // ******************************************************************
             bool IniSection::IsImplicitGlobal(void) const
             {
                 return m_IsImplicitGlobal;
             }
 
-            // ******************************************************************
-            // ******************************************************************
             void IniSection::sort(void)
             {
                 m_Entries.sort();
             }
 
-            // ******************************************************************
-            // ******************************************************************
             bool IniSectionCompare(const IniSectionPtr Left, const IniSectionPtr Right)
             {
                 if (Left->IsImplicitGlobal() != Right->IsImplicitGlobal())

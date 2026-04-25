@@ -17,12 +17,6 @@
 // along with YAIP. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************
 
-/**
- * \file    YAIP.cpp
- * \author  ThirtySomething
- * \date    2016-09-19
- * \brief   Implementation of Yet Another INI Parser
- */
 #include "YAIP.h"
 #include "IIniVisitor.h"
 #include "IniParserFactory.h"
@@ -36,53 +30,34 @@
 #include <unistd.h>
 #endif
 
-/**
- * Namespace of YAIP
- */
 namespace net
 {
-    /**
-     * Namespace of YAIP
-     */
     namespace derpaul
     {
-        /**
-         * Namespace of YAIP
-         */
         namespace yaip
         {
-            // ******************************************************************
-            // ******************************************************************
             YAIP::YAIP()
                 : m_Sections(),
                   m_ParserStrategy(IniParserFactory::Create())
             {
             }
 
-            // ******************************************************************
-            // ******************************************************************
             YAIP::~YAIP(void)
             {
                 Clear();
             }
 
-            // ******************************************************************
-            // ******************************************************************
             void YAIP::Clear(void)
             {
                 m_Sections.clear();
             }
 
-            // ******************************************************************
-            // ******************************************************************
             bool YAIP::INIFileDelete(const std::string &Filename)
             {
                 bool deleted = (0 == remove(Filename.c_str()));
                 return deleted;
             }
 
-            // ******************************************************************
-            // ******************************************************************
             bool YAIP::INIFileExist(const std::string &Filename)
             {
 #ifdef _WIN32
@@ -95,56 +70,40 @@ namespace net
                 return result == 0;
             }
 
-            // ******************************************************************
-            // ******************************************************************
             bool YAIP::INIFileLoad(const std::string &Filename)
             {
                 bool Success = false;
                 std::ifstream IniFile;
 
-                // Always clear internal storage
                 Clear();
 
-                // Open the INI file for reading
                 IniFile.open(Filename, std::ios::in);
 
-                /**
-                 * \todo Handle file errors like file does not exist
-                 */
                 if (IniFile.is_open())
                 {
                     std::string CurrentLine;
 
-                    // Temporary storage for all lines of the INI file
                     tListString FileContent;
 
-                    // Read as long as lines exist
                     while (std::getline(IniFile, CurrentLine))
                     {
                         FileContent.push_back(CurrentLine);
                     }
                     IniFile.close();
 
-                    // Parse INI file
                     Success = ParseFileContent(FileContent);
                 }
 
                 return Success;
             }
 
-            // ******************************************************************
-            // ******************************************************************
             bool YAIP::INIFileSave(const std::string &Filename)
             {
                 bool Success = false;
                 std::ofstream IniFile;
 
-                // Open the INI file for writing
                 IniFile.open(Filename, std::ios::trunc);
 
-                /**
-                 * \todo Handle file errors like cannot open file
-                 */
                 if (IniFile.is_open())
                 {
                     m_Sections.sort();
@@ -156,8 +115,6 @@ namespace net
                 return Success;
             }
 
-            // ******************************************************************
-            // ******************************************************************
             bool YAIP::SectionKeyKill(const std::string &Section, const std::string &Key)
             {
                 bool Success = false;
@@ -181,8 +138,6 @@ namespace net
                 return Success;
             }
 
-            // ******************************************************************
-            // ******************************************************************
             tListString YAIP::SectionKeyListGet(const std::string &Section)
             {
                 tListString KeyList;
@@ -196,18 +151,14 @@ namespace net
                 return KeyList;
             }
 
-            // ******************************************************************
-            // ******************************************************************
             bool YAIP::SectionKeyValueClear(const std::string &Section, const std::string &Key)
             {
                 return SectionKeyValueSet(Section, Key, std::string());
             }
 
-            // ******************************************************************
-            // ******************************************************************
             std::string YAIP::SectionKeyValueGet(const std::string &Section, const std::string &Key, const std::string &Default)
             {
-                // Ensure default return value
+
                 std::string ReturnValue = Default;
 
                 if (auto CurrentSection = m_Sections.ElementFind(Section); nullptr != CurrentSection)
@@ -226,8 +177,6 @@ namespace net
                 return ReturnValue;
             }
 
-            // ******************************************************************
-            // ******************************************************************
             bool YAIP::SectionKeyValueSet(const std::string &Section, const std::string &Key, const std::string &Value)
             {
                 auto CurrentSection = m_Sections.ElementFind(Section);
@@ -255,8 +204,6 @@ namespace net
                 return true;
             }
 
-            // ******************************************************************
-            // ******************************************************************
             bool YAIP::SectionKeyValueSet(const std::string &Section, const std::string &Key, const char *Value)
             {
                 std::string ValueString;
@@ -268,22 +215,16 @@ namespace net
                 return SectionKeyValueSet(Section, Key, ValueString);
             }
 
-            // ******************************************************************
-            // ******************************************************************
             tListString YAIP::SectionListGet(void)
             {
                 return m_Sections.ElementIdentifierList();
             }
 
-            // ******************************************************************
-            // ******************************************************************
             std::string YAIP::to_string(void) const
             {
                 return m_Sections.to_string();
             }
 
-            // ******************************************************************
-            // ******************************************************************
             void YAIP::Accept(IIniVisitor &visitor) const
             {
                 visitor.VisitDocumentBegin(*this);
@@ -300,8 +241,6 @@ namespace net
                 visitor.VisitDocumentEnd(*this);
             }
 
-            // ******************************************************************
-            // ******************************************************************
             bool YAIP::ParseFileContent(tListString FileContent)
             {
                 std::ostringstream FileStream;

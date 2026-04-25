@@ -17,59 +17,36 @@
 // along with YAIP. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************
 
-/**
- * \file    string_extensions.cpp
- * \author  ThirtySomething
- * \date    2016-09-19
- * \brief   Extensions to std::string
- */
 #include "string_extensions.h"
 #include <algorithm>
 #include <cctype>
 #include <cstring>
 #include <iostream>
 
-/**
- * Namespace of YAIP
- */
 namespace net
 {
-    /**
-     * Namespace of YAIP
-     */
     namespace derpaul
     {
-        /**
-         * Namespace of YAIP
-         */
         namespace yaip
         {
-            // ******************************************************************
-            // ******************************************************************
             std::string ltrim(const std::string &in)
             {
                 size_t start = in.find_first_not_of(WHITESPACE);
                 return (start == std::string::npos) ? "" : in.substr(start);
             }
 
-            // ******************************************************************
-            // ******************************************************************
             std::string rtrim(const std::string &in)
             {
                 size_t end = in.find_last_not_of(WHITESPACE);
                 return (end == std::string::npos) ? "" : in.substr(0, end + 1);
             }
 
-            // ******************************************************************
-            // ******************************************************************
             bool strcmpcaseless(const std::string &left, const std::string &right)
             {
                 return std::lexicographical_compare(left.begin(), left.end(), right.begin(), right.end(), [](char first, char second)
                                                     { return std::tolower(static_cast<unsigned char>(first)) < std::tolower(static_cast<unsigned char>(second)); });
             }
 
-            // ******************************************************************
-            // ******************************************************************
             std::string trim(const std::string &in)
             {
                 return rtrim(ltrim(in));

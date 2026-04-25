@@ -66,4 +66,4 @@ SCENARIO("Test class IniEntryList", "[IniEntryList]")
     REQUIRE(size == 0);
 }
 
-#endif // _TEST_INIENTRYLIST_H_
+#endif

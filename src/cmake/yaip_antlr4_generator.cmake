@@ -1,10 +1,22 @@
-# Helper function to resolve the ANTLR4 generator tool (Java + antlr-4.x-complete.jar).
+# ******************************************************************************
+# Copyright 2016 ThirtySomething
+# ******************************************************************************
+# This file is part of YAIP.
 #
-# Parameters:
-# ANTLR4_VERSION          - ANTLR4 version string, e.g. 4.13.2
-# OUT_ENABLED_VAR         - Output variable set to ON/OFF for generator availability
-# OUT_JAVA_EXECUTABLE_VAR - Output variable containing Java executable path
-# OUT_JAR_PATH_VAR        - Output variable containing ANTLR4 JAR path
+# YAIP is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Lesser General Public License as published by the Free
+# Software Foundation, either version 3 of the License, or (at your option)
+# any later version.
+#
+# YAIP is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
+# more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with YAIP. If not, see <http://www.gnu.org/licenses/>.
+# ******************************************************************************
+
 include_guard(GLOBAL)
 
 function(yaip_antlr4_generator ANTLR4_VERSION OUT_ENABLED_VAR OUT_JAVA_EXECUTABLE_VAR OUT_JAR_PATH_VAR)

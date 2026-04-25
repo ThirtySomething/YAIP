@@ -17,12 +17,6 @@
 // along with YAIP. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************
 
-/**
- * \file    IniEntry.h
- * \author  ThirtySomething
- * \date    2016-11-06
- * \brief   Definition of IniEntry as class to deal with entries
- */
 #ifndef _INIENTRY_H_
 #define _INIENTRY_H_
 
@@ -31,118 +25,49 @@
 #include <memory>
 #include <string>
 
-/**
- * Namespace of YAIP
- */
 namespace net
 {
-    /**
-     * Namespace of YAIP
-     */
     namespace derpaul
     {
-        /**
-         * Namespace of YAIP
-         */
         namespace yaip
         {
             class IIniVisitor;
 
-            /**
-             * Represents an INI entry
-             */
             class IniEntry : public IElementCommon
             {
             public:
-                /**
-                 * Default constructor
-                 */
                 IniEntry(void);
 
-                /**
-                 * Default destructor
-                 */
                 virtual ~IniEntry(void);
 
-                /**
-                 * To clear object and reset to empty fields
-                 */
                 virtual void clear(void) override;
 
-                /**
-                 * Get the INI object comment
-                 * \return Comment of INI object
-                 */
                 virtual std::string ElementCommentGet(void) const override;
 
-                /**
-                 * Set the INI object comment
-                 * \param ElementComment Comment of INI object
-                 */
                 virtual void ElementCommentSet(const std::string &ElementComment) override;
 
-                /**
-                 * Get the unique element identifier aka the key of an INI entry
-                 * \return The key of the INI entry
-                 */
                 virtual std::string ElementIdentifierGet(void) const override;
 
-                /**
-                 * The unique element identifier is the key of an INI entry
-                 * \param ElementIdentifier The key of the INI entry
-                 */
                 virtual void ElementIdentifierSet(const std::string &ElementIdentifier) override;
 
-                /**
-                 * Get the INI object value
-                 * \return Value of INI object
-                 */
                 virtual std::string ElementValueGet(void) const;
 
-                /**
-                 * Set the INI object value
-                 * \param ElementValue Value of INI object
-                 */
                 virtual void ElementValueSet(const std::string &ElementValue);
 
-                /**
-                 * String representation of an INI entry
-                 * \return String representation of an INI entry
-                 */
                 std::string to_string(void) const override;
 
-                /**
-                 * Accept a visitor for this entry.
-                 * \param visitor Visitor instance
-                 */
                 void Accept(IIniVisitor &visitor) const;
 
             private:
-                /**
-                 * The comment of the INI entry
-                 */
                 std::string m_EntryComment;
 
-                /**
-                 * The key aka unique identifier of the INI entry
-                 */
                 std::string m_EntryKey;
 
-                /**
-                 * The value of the INI entry
-                 */
                 std::string m_EntryValue;
             };
 
-            /**
-             * Convenience typedef for lazy usage of smart_pointers for IniEntries
-             */
             using IniEntryPtr = std::shared_ptr<IniEntry>;
 
-            /**
-             * Compare two entries
-             * \return True on equal identifiers, otherwise false
-             */
             bool IniEntryCompare(const IniEntryPtr Left, const IniEntryPtr Right);
         }
     }

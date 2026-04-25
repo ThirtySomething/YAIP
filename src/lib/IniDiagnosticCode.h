@@ -17,11 +17,6 @@
 // along with YAIP. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************
 
-/**
- * \file    IniDiagnosticCode.h
- * \author  ThirtySomething
- * \brief   Diagnostic codes for INI document issues
- */
 #ifndef _INIDIAGNOSTICCODE_H_
 #define _INIDIAGNOSTICCODE_H_
 

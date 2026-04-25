@@ -17,11 +17,6 @@
 // along with YAIP. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************
 
-/**
- * \file    IniDocumentBuilder.h
- * \author  ThirtySomething
- * \brief   Fluent builder for constructing an INI document programmatically
- */
 #ifndef _INIDOCUMENTBUILDER_H_
 #define _INIDOCUMENTBUILDER_H_
 
@@ -39,57 +34,15 @@ namespace net
         {
             class YAIP;
 
-            /**
-             * Fluent builder that assembles sections and key/value entries and
-             * then populates a YAIP instance via build().
-             *
-             * Usage:
-             * @code
-             *   YAIP ini;
-             *   IniDocumentBuilder{}
-             *       .section("Database")
-             *           .entry("host", "localhost")
-             *           .entry("port", 5432)
-             *       .section("Auth")
-             *           .entry("user", "admin")
-             *       .build(ini);
-             * @endcode
-             */
             class IniDocumentBuilder
             {
             public:
-                /**
-                 * Start (or continue) a named section.
-                 * All subsequent entry() calls go into this section.
-                 * \param name  Section name
-                 * \return Reference to this builder for chaining
-                 */
                 IniDocumentBuilder &section(const std::string &name);
 
-                /**
-                 * Add a string key/value entry to the current section.
-                 * \param key   Entry key
-                 * \param value Entry value
-                 * \return Reference to this builder for chaining
-                 */
                 IniDocumentBuilder &entry(const std::string &key, const std::string &value);
 
-                /**
-                 * Overload to prevent implicit C-string → bool conversion in the
-                 * templated entry() below.
-                 * \param key   Entry key
-                 * \param value Entry value as C-string literal
-                 * \return Reference to this builder for chaining
-                 */
                 IniDocumentBuilder &entry(const std::string &key, const char *value);
 
-                /**
-                 * Add a typed key/value entry to the current section.
-                 * The value is converted to a string via Convert::ConvertTo.
-                 * \param key   Entry key
-                 * \param value Entry value of any type supported by Convert
-                 * \return Reference to this builder for chaining
-                 */
                 template <typename T>
                 IniDocumentBuilder &entry(const std::string &key, const T &value)
                 {
@@ -98,11 +51,6 @@ namespace net
                     return entry(key, converted);
                 }
 
-                /**
-                 * Populate the given YAIP instance with all accumulated sections
-                 * and entries.  Existing content in the target is cleared first.
-                 * \param target  YAIP instance to populate
-                 */
                 void build(YAIP &target) const;
 
             private:

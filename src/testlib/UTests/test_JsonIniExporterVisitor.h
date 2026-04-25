@@ -26,20 +26,18 @@
 #include "catch2/catch_all.hpp"
 #include <fstream>
 
-using namespace net::derpaul::yaip;
-
 TEST_CASE("JsonIniExporterVisitor - exports empty document", "[JsonIniExporterVisitor]")
 {
-    YAIP ini;
-    JsonIniExporterVisitor exporter;
+    net::derpaul::yaip::YAIP ini;
+    net::derpaul::yaip::JsonIniExporterVisitor exporter;
 
     REQUIRE(exporter.Export(ini) == "{}");
 }
 
 TEST_CASE("JsonIniExporterVisitor - exports sections and entries", "[JsonIniExporterVisitor]")
 {
-    YAIP ini;
-    IniDocumentBuilder{}
+    net::derpaul::yaip::YAIP ini;
+    net::derpaul::yaip::IniDocumentBuilder{}
         .section("Network")
         .entry("host", "localhost")
         .entry("port", 8080)
@@ -47,20 +45,20 @@ TEST_CASE("JsonIniExporterVisitor - exports sections and entries", "[JsonIniExpo
         .entry("user", "admin")
         .build(ini);
 
-    JsonIniExporterVisitor exporter;
+    net::derpaul::yaip::JsonIniExporterVisitor exporter;
     REQUIRE(exporter.Export(ini) == "{\"Network\":{\"host\":\"localhost\",\"port\":\"8080\"},\"Auth\":{\"user\":\"admin\"}}");
 }
 
 TEST_CASE("JsonIniExporterVisitor - escapes JSON characters", "[JsonIniExporterVisitor]")
 {
-    YAIP ini;
-    IniDocumentBuilder{}
+    net::derpaul::yaip::YAIP ini;
+    net::derpaul::yaip::IniDocumentBuilder{}
         .section("A\"B")
         .entry("path", "C:\\\\bin\\\"app\"")
         .entry("tab", "a\tb")
         .build(ini);
 
-    JsonIniExporterVisitor exporter;
+    net::derpaul::yaip::JsonIniExporterVisitor exporter;
     REQUIRE(exporter.Export(ini) == "{\"A\\\"B\":{\"path\":\"C:\\\\\\\\bin\\\\\\\"app\\\"\",\"tab\":\"a\\tb\"}}");
 }
 
@@ -75,10 +73,10 @@ TEST_CASE("JsonIniExporterVisitor - flattens implicit global section entries", "
         out << "port = 8080\n";
     }
 
-    YAIP ini;
+    net::derpaul::yaip::YAIP ini;
     REQUIRE(ini.INIFileLoad(iniFile));
 
-    JsonIniExporterVisitor exporter;
+    net::derpaul::yaip::JsonIniExporterVisitor exporter;
     REQUIRE(exporter.Export(ini) == "{\"host\":\"localhost\",\"Network\":{\"port\":\"8080\"}}");
 
     REQUIRE(ini.INIFileDelete(iniFile));

@@ -25,22 +25,20 @@
 #include "catch2/catch_all.hpp"
 #include <string>
 
-using namespace net::derpaul::yaip;
-
 TEST_CASE("IniDocumentBuilder - empty build clears target", "[IniDocumentBuilder]")
 {
-    YAIP ini;
+    net::derpaul::yaip::YAIP ini;
     ini.SectionKeyValueSet("OldSection", "key", "value");
 
-    IniDocumentBuilder{}.build(ini);
+    net::derpaul::yaip::IniDocumentBuilder{}.build(ini);
 
     REQUIRE(ini.SectionListGet().empty());
 }
 
 TEST_CASE("IniDocumentBuilder - single section single entry", "[IniDocumentBuilder]")
 {
-    YAIP ini;
-    IniDocumentBuilder{}
+    net::derpaul::yaip::YAIP ini;
+    net::derpaul::yaip::IniDocumentBuilder{}
         .section("Network")
         .entry("host", "localhost")
         .build(ini);
@@ -51,8 +49,8 @@ TEST_CASE("IniDocumentBuilder - single section single entry", "[IniDocumentBuild
 
 TEST_CASE("IniDocumentBuilder - multiple sections", "[IniDocumentBuilder]")
 {
-    YAIP ini;
-    IniDocumentBuilder{}
+    net::derpaul::yaip::YAIP ini;
+    net::derpaul::yaip::IniDocumentBuilder{}
         .section("Database")
         .entry("host", "db.example.com")
         .entry("port", "5432")
@@ -69,8 +67,8 @@ TEST_CASE("IniDocumentBuilder - multiple sections", "[IniDocumentBuilder]")
 
 TEST_CASE("IniDocumentBuilder - typed entry", "[IniDocumentBuilder]")
 {
-    YAIP ini;
-    IniDocumentBuilder{}
+    net::derpaul::yaip::YAIP ini;
+    net::derpaul::yaip::IniDocumentBuilder{}
         .section("Settings")
         .entry("count", 42)
         .entry("ratio", 3.14)
@@ -83,8 +81,8 @@ TEST_CASE("IniDocumentBuilder - typed entry", "[IniDocumentBuilder]")
 
 TEST_CASE("IniDocumentBuilder - revisit section appends entries", "[IniDocumentBuilder]")
 {
-    YAIP ini;
-    IniDocumentBuilder{}
+    net::derpaul::yaip::YAIP ini;
+    net::derpaul::yaip::IniDocumentBuilder{}
         .section("A")
         .entry("key1", "v1")
         .section("B")

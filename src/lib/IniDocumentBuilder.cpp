@@ -17,11 +17,6 @@
 // along with YAIP. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************
 
-/**
- * \file    IniDocumentBuilder.cpp
- * \author  ThirtySomething
- * \brief   Implementation of the fluent INI document builder
- */
 #include "IniDocumentBuilder.h"
 #include "IniEntry.h"
 #include "YAIP.h"
@@ -34,7 +29,6 @@ namespace net
     {
         namespace yaip
         {
-            // ******************************************************************
             IniDocumentBuilder &IniDocumentBuilder::section(const std::string &name)
             {
                 auto it = std::find_if(m_Sections.begin(), m_Sections.end(),
@@ -42,8 +36,7 @@ namespace net
                                        { return s->ElementIdentifierGet() == name; });
                 if (it != m_Sections.end())
                 {
-                    // Move already-existing section to back so subsequent
-                    // entry() calls append to it
+
                     IniSectionPtr reused = std::move(*it);
                     m_Sections.erase(it);
                     m_Sections.push_back(std::move(reused));
@@ -57,19 +50,16 @@ namespace net
                 return *this;
             }
 
-            // ******************************************************************
             IniDocumentBuilder &IniDocumentBuilder::entry(const std::string &key, const char *value)
             {
                 return entry(key, value ? std::string(value) : std::string{});
             }
 
-            // ******************************************************************
             IniDocumentBuilder &IniDocumentBuilder::entry(const std::string &key, const std::string &value)
             {
                 if (m_Sections.empty())
                 {
-                    // Implicitly create an unnamed section so the builder never
-                    // silently drops entries
+
                     auto unnamed = std::make_shared<IniSection>();
                     unnamed->ElementIdentifierSet("");
                     m_Sections.push_back(std::move(unnamed));
@@ -81,7 +71,6 @@ namespace net
                 return *this;
             }
 
-            // ******************************************************************
             void IniDocumentBuilder::build(YAIP &target) const
             {
                 target.Clear();

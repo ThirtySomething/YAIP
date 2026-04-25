@@ -17,11 +17,6 @@
 // along with YAIP. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************
 
-/**
- * \file    IIniVisitor.h
- * \author  ThirtySomething
- * \brief   Visitor interface for traversing YAIP documents
- */
 #ifndef _IINIVISITOR_H_
 #define _IINIVISITOR_H_
 
