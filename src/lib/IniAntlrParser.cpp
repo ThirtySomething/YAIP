@@ -6,6 +6,7 @@
 
 #include "IniEntry.h"
 #include "IniSection.h"
+#include "ParseErrorListener.h"
 #include "antlr/generated/IniLexer.h"
 #include "antlr/generated/IniParser.h"
 #include "antlr4-runtime.h"
@@ -13,25 +14,6 @@
 
 namespace
 {
-    class ParseErrorListener : public antlr4::BaseErrorListener
-    {
-    public:
-        ParseErrorListener() : m_HadError(false) {}
-
-        void syntaxError(antlr4::Recognizer *, antlr4::Token *, size_t, size_t, const std::string &, std::exception_ptr) override
-        {
-            m_HadError = true;
-        }
-
-        bool HadError() const
-        {
-            return m_HadError;
-        }
-
-    private:
-        bool m_HadError;
-    };
-
     std::string textFrom(IniParser::TextContext *ctx)
     {
         if (nullptr == ctx)
@@ -106,8 +88,8 @@ namespace net
                 antlr4::CommonTokenStream tokens(&lexer);
                 IniParser parser(&tokens);
 
-                ParseErrorListener lexerErrorListener;
-                ParseErrorListener parserErrorListener;
+                detail::ParseErrorListener lexerErrorListener;
+                detail::ParseErrorListener parserErrorListener;
 
                 lexer.removeErrorListeners();
                 parser.removeErrorListeners();

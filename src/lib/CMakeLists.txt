@@ -107,6 +107,8 @@ ADD_LIBRARY(yaip STATIC
     IniSection.h
     IniSectionList.cpp
     IniSectionList.h
+    ParseErrorListener.cpp
+    ParseErrorListener.h
     string_extensions.cpp
     string_extensions.h
     TIniElementList.h
