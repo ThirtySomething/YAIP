@@ -18,10 +18,10 @@
 //******************************************************************************
 
 /**
- * \file	IniEntry.cpp
- * \author	ThirtySomething
- * \date	2016-11-06
- * \brief	Definition of IniEntry as class to deal with entries
+ * \file    IniEntry.cpp
+ * \author  ThirtySomething
+ * \date    2016-11-06
+ * \brief   Definition of IniEntry as class to deal with entries
  */
 
 #include "IniEntry.h"

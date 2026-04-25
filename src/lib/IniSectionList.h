@@ -18,10 +18,10 @@
 //******************************************************************************
 
 /**
- * \file	IniSectionList.h
- * \author	ThirtySomething
- * \date	2016-09-19
- * \brief	List of INI sections
+ * \file    IniSectionList.h
+ * \author  ThirtySomething
+ * \date    2016-09-19
+ * \brief   List of INI sections
  */
 #ifndef _INISECTIONLIST_H_
 #define _INISECTIONLIST_H_

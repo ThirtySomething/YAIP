@@ -18,10 +18,10 @@
 //******************************************************************************
 
 /**
- * \file	string_extensions.h
- * \author	ThirtySomething
- * \date	2016-09-19
- * \brief	Extensions to std::string
+ * \file    string_extensions.h
+ * \author  ThirtySomething
+ * \date    2016-09-19
+ * \brief   Extensions to std::string
  */
 #ifndef _STRING_EXTENSIONS_H_
 #define _STRING_EXTENSIONS_H_
@@ -33,51 +33,51 @@
   */
 namespace net
 {
-	/**
-	 * Namespace of YAIP
-	 */
-	namespace derpaul
-	{
-		/**
-		 * Namespace of YAIP
-		 */
-		namespace yaip
-		{
-			/**
-			 * Defined whitepaces to trim
-			 */
-			const std::string WHITESPACE = " \n\r\t\f\v";
+    /**
+     * Namespace of YAIP
+     */
+    namespace derpaul
+    {
+        /**
+         * Namespace of YAIP
+         */
+        namespace yaip
+        {
+            /**
+             * Defined whitepaces to trim
+             */
+            const std::string WHITESPACE = " \n\r\t\f\v";
 
-			/**
-			 * Trim whitespaces from left side of string
-			 * \param in String to trim
-			 * \return Trimmed string
-			 */
-			std::string ltrim(const std::string& in);
+            /**
+             * Trim whitespaces from left side of string
+             * \param in String to trim
+             * \return Trimmed string
+             */
+            std::string ltrim(const std::string& in);
 
-			/**
-			 * Trim whitespaces from right side of string
-			 * \param in String to trim
-			 * \return Trimmed string
-			 */
-			std::string rtrim(const std::string& in);
+            /**
+             * Trim whitespaces from right side of string
+             * \param in String to trim
+             * \return Trimmed string
+             */
+            std::string rtrim(const std::string& in);
 
-			/**
-			 * Compare two strings case insensitive
-			 * \param left Left string
-			 * \param right Right string
-			 * \return True on equal, otherwise false
-			 */
-			bool strcmpcaseless(const std::string& left, const std::string& right);
+            /**
+             * Compare two strings case insensitive
+             * \param left Left string
+             * \param right Right string
+             * \return True on equal, otherwise false
+             */
+            bool strcmpcaseless(const std::string& left, const std::string& right);
 
-			/**
-			 * Trim whitespaces from both sides of string
-			 * \param in String to trim
-			 * \return Trimmed string
-			 */
-			std::string trim(const std::string& in);
-		}
-	}
+            /**
+             * Trim whitespaces from both sides of string
+             * \param in String to trim
+             * \return Trimmed string
+             */
+            std::string trim(const std::string& in);
+        }
+    }
 }
 
 #endif

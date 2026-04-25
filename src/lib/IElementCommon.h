@@ -18,10 +18,10 @@
 //******************************************************************************
 
 /**
- * \file	IElementCommon.h
- * \author	ThirtySomething
- * \date	2016-09-19
- * \brief	Interface for common element properties
+ * \file    IElementCommon.h
+ * \author  ThirtySomething
+ * \date    2016-09-19
+ * \brief   Interface for common element properties
  */
 #ifndef _IELEMENTCOMMON_H_
 #define _IELEMENTCOMMON_H_

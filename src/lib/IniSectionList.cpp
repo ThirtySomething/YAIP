@@ -18,10 +18,10 @@
 //******************************************************************************
 
 /**
- * \file	IniSectionList.cpp
- * \author	ThirtySomething
- * \date	2016-09-19
- * \brief	List of INI sections
+ * \file    IniSectionList.cpp
+ * \author  ThirtySomething
+ * \date    2016-09-19
+ * \brief   List of INI sections
  */
 #include "IniSectionList.h"
 #include <algorithm>

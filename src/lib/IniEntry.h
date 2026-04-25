@@ -18,10 +18,10 @@
 //******************************************************************************
 
 /**
- * \file	IniEntry.h
- * \author	ThirtySomething
- * \date	2016-11-06
- * \brief	Definition of IniEntry as class to deal with entries
+ * \file    IniEntry.h
+ * \author  ThirtySomething
+ * \date    2016-11-06
+ * \brief   Definition of IniEntry as class to deal with entries
  */
 #ifndef _INIENTRY_H_
 #define _INIENTRY_H_

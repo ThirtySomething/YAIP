@@ -18,10 +18,10 @@
 //******************************************************************************
 
 /**
- * \file	YAIP.cpp
- * \author	ThirtySomething
- * \date	2016-09-19
- * \brief	Implementation of Yet Another INI Parser
+ * \file    YAIP.cpp
+ * \author  ThirtySomething
+ * \date    2016-09-19
+ * \brief   Implementation of Yet Another INI Parser
  */
 #include "YAIP.h"
 #include "IIniVisitor.h"

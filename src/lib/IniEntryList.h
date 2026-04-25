@@ -18,10 +18,10 @@
 //******************************************************************************
 
 /**
- * \file	IniEntryList.h
- * \author	ThirtySomething
- * \date	2016-09-19
- * \brief	List of INI entries
+ * \file    IniEntryList.h
+ * \author  ThirtySomething
+ * \date    2016-09-19
+ * \brief   List of INI entries
  */
 #ifndef _INIENTRYLIST_H_
 #define _INIENTRYLIST_H_
@@ -34,29 +34,29 @@
   */
 namespace net
 {
-	/**
-	 * Namespace of YAIP
-	 */
-	namespace derpaul
-	{
-		/**
-		 * Namespace of YAIP
-		 */
-		namespace yaip
-		{
-			/**
-			 * List of INI entries
-			 */
-			class IniEntryList : public TIniElementList<IniEntryPtr>
-			{
-			public:
-				/**
-				 * We need to sort the own list
-				 */
-				virtual void sort(void) override;
-			};
-		}
-	}
+    /**
+     * Namespace of YAIP
+     */
+    namespace derpaul
+    {
+        /**
+         * Namespace of YAIP
+         */
+        namespace yaip
+        {
+            /**
+             * List of INI entries
+             */
+            class IniEntryList : public TIniElementList<IniEntryPtr>
+            {
+            public:
+                /**
+                 * We need to sort the own list
+                 */
+                virtual void sort(void) override;
+            };
+        }
+    }
 }
 
 #endif

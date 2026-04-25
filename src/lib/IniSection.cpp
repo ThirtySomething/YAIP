@@ -18,10 +18,10 @@
 //******************************************************************************
 
 /**
- * \file	IniSection.cpp
- * \author	ThirtySomething
- * \date	2016-09-19
- * \brief	Definition of IniSection as class to deal with sections
+ * \file    IniSection.cpp
+ * \author  ThirtySomething
+ * \date    2016-09-19
+ * \brief   Definition of IniSection as class to deal with sections
  */
 
 #include "IniSection.h"

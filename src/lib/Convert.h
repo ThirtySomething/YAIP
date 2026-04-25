@@ -18,10 +18,10 @@
 //******************************************************************************
 
 /**
- * \file	Convert.h
- * \author	ThirtySomething
- * \date	2016-09-19
- * \brief	Converter between different datatypes and std::string
+ * \file    Convert.h
+ * \author  ThirtySomething
+ * \date    2016-09-19
+ * \brief   Converter between different datatypes and std::string
  */
 #ifndef _CONVERT_H_
 #define _CONVERT_H_
@@ -34,93 +34,93 @@
   */
 namespace net
 {
-	/**
-	 * Namespace of YAIP
-	 */
-	namespace derpaul
-	{
-		/**
-		 * Namespace of YAIP
-		 */
-		namespace yaip
-		{
-			using ConvertValue = std::variant<bool,
-				char,
-				double,
-				float,
-				int,
-				long,
-				short,
-				std::string,
-				unsigned char,
-				unsigned int,
-				unsigned long,
-				unsigned short>;
+    /**
+     * Namespace of YAIP
+     */
+    namespace derpaul
+    {
+        /**
+         * Namespace of YAIP
+         */
+        namespace yaip
+        {
+            using ConvertValue = std::variant<bool,
+                char,
+                double,
+                float,
+                int,
+                long,
+                short,
+                std::string,
+                unsigned char,
+                unsigned int,
+                unsigned long,
+                unsigned short>;
 
-			/**
-			 * Class to convert data from and to std::string using std::variant
-			 * \see http://en.cppreference.com/w/cpp/language/types
-			 * <table>
-			 * <caption id="multi_row">Fundamental types</caption>
-			 * <tr><th>Type</th><th>Done</th></tr>
-			 * <tr><td>bool</td><td>x</td></tr>
-			 * <tr><td>char</td><td>x</td></tr>
-			 * <tr><td>double</td><td>x</td></tr>
-			 * <tr><td>float</td><td>x</td></tr>
-			 * <tr><td>int</td><td>x</td></tr>
-			 * <tr><td>long</td><td>x</td></tr>
-			 * <tr><td>short</td><td>x</td></tr>
-			 * <tr><td>std::string</td><td>x</td></tr>
-			 * <tr><td>unsigned char</td><td>x</td></tr>
-			 * <tr><td>unsigned int</td><td>x</td></tr>
-			 * <tr><td>unsigned long</td><td>x</td></tr>
-			 * <tr><td>unsigned short</td><td>x</td></tr>
-			 * </table>
-			 */
-			class Convert
-			{
-			public:
-				/**
-				 * Used as constant for bool
-				 */
-				static const std::string StringTrue;
+            /**
+             * Class to convert data from and to std::string using std::variant
+             * \see http://en.cppreference.com/w/cpp/language/types
+             * <table>
+             * <caption id="multi_row">Fundamental types</caption>
+             * <tr><th>Type</th><th>Done</th></tr>
+             * <tr><td>bool</td><td>x</td></tr>
+             * <tr><td>char</td><td>x</td></tr>
+             * <tr><td>double</td><td>x</td></tr>
+             * <tr><td>float</td><td>x</td></tr>
+             * <tr><td>int</td><td>x</td></tr>
+             * <tr><td>long</td><td>x</td></tr>
+             * <tr><td>short</td><td>x</td></tr>
+             * <tr><td>std::string</td><td>x</td></tr>
+             * <tr><td>unsigned char</td><td>x</td></tr>
+             * <tr><td>unsigned int</td><td>x</td></tr>
+             * <tr><td>unsigned long</td><td>x</td></tr>
+             * <tr><td>unsigned short</td><td>x</td></tr>
+             * </table>
+             */
+            class Convert
+            {
+            public:
+                /**
+                 * Used as constant for bool
+                 */
+                static const std::string StringTrue;
 
-				/**
-				 * Used as constant for bool
-				 */
-				static const std::string StringFalse;
+                /**
+                 * Used as constant for bool
+                 */
+                static const std::string StringFalse;
 
-				/**
-				 * Convert a variant value to std::string.
-				 * \param Value Value to convert from
-				 * \param ValueString Value to convert to
-				 */
-				static void ConvertTo(const ConvertValue &Value, std::string &ValueString);
+                /**
+                 * Convert a variant value to std::string.
+                 * \param Value Value to convert from
+                 * \param ValueString Value to convert to
+                 */
+                static void ConvertTo(const ConvertValue &Value, std::string &ValueString);
 
-				/**
-				 * Convert std::string to the active type stored in the variant.
-				 * \param ValueString Value to convert from
-				 * \param Value Variant with target type as active alternative
-				 */
-				static void ConvertTo(const std::string &ValueString, ConvertValue &Value);
+                /**
+                 * Convert std::string to the active type stored in the variant.
+                 * \param ValueString Value to convert from
+                 * \param Value Variant with target type as active alternative
+                 */
+                static void ConvertTo(const std::string &ValueString, ConvertValue &Value);
 
-				template <typename T>
-				static void ConvertTo(const T &Value, std::string &ValueString)
-				{
-					ConvertValue VariantValue = Value;
-					ConvertTo(VariantValue, ValueString);
-				}
+                template <typename T>
+                static void ConvertTo(const T &Value, std::string &ValueString)
+                {
+                    ConvertValue VariantValue = Value;
+                    ConvertTo(VariantValue, ValueString);
+                }
 
-				template <typename T>
-				static void ConvertTo(const std::string &ValueString, T &Value)
-				{
-					ConvertValue VariantValue = T{};
-					ConvertTo(ValueString, VariantValue);
-					Value = std::get<T>(VariantValue);
-				}
-			};
-		}
-	}
+                template <typename T>
+                static void ConvertTo(const std::string &ValueString, T &Value)
+                {
+                    ConvertValue VariantValue = T{};
+                    ConvertTo(ValueString, VariantValue);
+                    Value = std::get<T>(VariantValue);
+                }
+            };
+        }
+    }
 }
 
 #endif

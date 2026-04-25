@@ -18,10 +18,10 @@
 //******************************************************************************
 
 /**
- * \file	string_extensions.cpp
- * \author	ThirtySomething
- * \date	2016-09-19
- * \brief	Extensions to std::string
+ * \file    string_extensions.cpp
+ * \author  ThirtySomething
+ * \date    2016-09-19
+ * \brief   Extensions to std::string
  */
 #include "string_extensions.h"
 #include <algorithm>

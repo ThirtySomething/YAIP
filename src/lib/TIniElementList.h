@@ -18,10 +18,10 @@
 //******************************************************************************
 
 /**
- * \file	TIniElementList.h
- * \author	ThirtySomething
- * \date	2016-09-19
- * \brief	Template for list of elements
+ * \file    TIniElementList.h
+ * \author  ThirtySomething
+ * \date    2016-09-19
+ * \brief   Template for list of elements
  */
 #ifndef _TINIELEMENTLIST_H_
 #define _TINIELEMENTLIST_H_
@@ -38,149 +38,149 @@
   */
 namespace net
 {
-	/**
-	 * Namespace of YAIP
-	 */
-	namespace derpaul
-	{
-		/**
-		 * Namespace of YAIP
-		 */
-		namespace yaip
-		{
-			/**
-			 * Convenience typedef for lazy usage of vector of strings
-			 */
-			typedef std::list<std::string> tListString;
+    /**
+     * Namespace of YAIP
+     */
+    namespace derpaul
+    {
+        /**
+         * Namespace of YAIP
+         */
+        namespace yaip
+        {
+            /**
+             * Convenience typedef for lazy usage of vector of strings
+             */
+            typedef std::list<std::string> tListString;
 
-			/**
-			 * Templated  class as base for list of sections and list of entries
-			 */
-			template <typename TIniElement> class TIniElementList
-			{
-			public:
-				/**
-				 * Default constructor
-				 */
-				TIniElementList(void)
-					: m_Elements()
-				{
-				}
+            /**
+             * Templated  class as base for list of sections and list of entries
+             */
+            template <typename TIniElement> class TIniElementList
+            {
+            public:
+                /**
+                 * Default constructor
+                 */
+                TIniElementList(void)
+                    : m_Elements()
+                {
+                }
 
-				/**
-				 * Default destructor
-				 */
-				virtual ~TIniElementList(void)
-				{
-					clear();
-				}
+                /**
+                 * Default destructor
+                 */
+                virtual ~TIniElementList(void)
+                {
+                    clear();
+                }
 
-				/**
-				 * Clear the list
-				 */
-				void clear(void)
-				{
-					m_Elements.clear();
-				}
+                /**
+                 * Clear the list
+                 */
+                void clear(void)
+                {
+                    m_Elements.clear();
+                }
 
-				/**
-				 * Add an element to the list
-				 * \param Element Element to add
-				 */
-				void ElementAdd(const TIniElement &Element)
-				{
-					m_Elements.push_back(Element);
-				}
+                /**
+                 * Add an element to the list
+                 * \param Element Element to add
+                 */
+                void ElementAdd(const TIniElement &Element)
+                {
+                    m_Elements.push_back(Element);
+                }
 
-				/**
-				 * Remove given element from list
-				 * \param Element Element to delete
-				 */
-				void ElementDelete(const TIniElement &Element)
-				{
-					m_Elements.erase(
-						std::remove_if(
-							m_Elements.begin(),
-							m_Elements.end(),
-							[&Element](const TIniElement &obj) { return obj->ElementIdentifierGet() == Element->ElementIdentifierGet(); }
-						),
-						m_Elements.end()
-					);
-				}
+                /**
+                 * Remove given element from list
+                 * \param Element Element to delete
+                 */
+                void ElementDelete(const TIniElement &Element)
+                {
+                    m_Elements.erase(
+                        std::remove_if(
+                            m_Elements.begin(),
+                            m_Elements.end(),
+                            [&Element](const TIniElement &obj) { return obj->ElementIdentifierGet() == Element->ElementIdentifierGet(); }
+                        ),
+                        m_Elements.end()
+                    );
+                }
 
-				/**
-				 * Find element by identifier
-				 * \param ElementName Name to identify element
-				 * \return Pointer to element if exists otherwise nullptr
-				 */
-				TIniElement ElementFind(const std::string &ElementName)
-				{
-					std::string ElementNameWork = trim(ElementName);
-					TIniElement Element = nullptr;
+                /**
+                 * Find element by identifier
+                 * \param ElementName Name to identify element
+                 * \return Pointer to element if exists otherwise nullptr
+                 */
+                TIniElement ElementFind(const std::string &ElementName)
+                {
+                    std::string ElementNameWork = trim(ElementName);
+                    TIniElement Element = nullptr;
 
-					auto it = std::find_if(m_Elements.begin(), m_Elements.end(), [&ElementNameWork](const TIniElement &obj) {return obj->ElementIdentifierGet() == ElementNameWork; });
-					if (it != m_Elements.end())
-					{
-						Element = *it;
-					}
+                    auto it = std::find_if(m_Elements.begin(), m_Elements.end(), [&ElementNameWork](const TIniElement &obj) {return obj->ElementIdentifierGet() == ElementNameWork; });
+                    if (it != m_Elements.end())
+                    {
+                        Element = *it;
+                    }
 
-					return Element;
-				}
+                    return Element;
+                }
 
-				/**
-				 * Get a list of all element identifiers
-				 * \return Vector of all identifiers
-				 */
-				tListString ElementIdentifierList(void) const
-				{
-					tListString List;
+                /**
+                 * Get a list of all element identifiers
+                 * \return Vector of all identifiers
+                 */
+                tListString ElementIdentifierList(void) const
+                {
+                    tListString List;
 
-					for (auto CurrentElementPtr = m_Elements.begin(); CurrentElementPtr != m_Elements.end(); ++CurrentElementPtr)
-					{
-						List.push_back((*CurrentElementPtr)->ElementIdentifierGet());
-					}
+                    for (auto CurrentElementPtr = m_Elements.begin(); CurrentElementPtr != m_Elements.end(); ++CurrentElementPtr)
+                    {
+                        List.push_back((*CurrentElementPtr)->ElementIdentifierGet());
+                    }
 
-					return List;
-				}
+                    return List;
+                }
 
-				/**
-				 * Determine size of list
-				 * \return Size of list
-				 */
-				int size(void) const
-				{
-					return static_cast<int>(m_Elements.size());
-				}
+                /**
+                 * Determine size of list
+                 * \return Size of list
+                 */
+                int size(void) const
+                {
+                    return static_cast<int>(m_Elements.size());
+                }
 
-				/**
-				 * String representation of the list
-				 * \return String representation of the list
-				 */
-				std::string to_string(void) const
-				{
-					std::ostringstream tmpStream;
+                /**
+                 * String representation of the list
+                 * \return String representation of the list
+                 */
+                std::string to_string(void) const
+                {
+                    std::ostringstream tmpStream;
 
-					for (auto CurrentElementPtr = m_Elements.begin(); CurrentElementPtr != m_Elements.end(); ++CurrentElementPtr)
-					{
-						tmpStream << (*CurrentElementPtr)->to_string();
-					}
+                    for (auto CurrentElementPtr = m_Elements.begin(); CurrentElementPtr != m_Elements.end(); ++CurrentElementPtr)
+                    {
+                        tmpStream << (*CurrentElementPtr)->to_string();
+                    }
 
-					return tmpStream.str();
-				}
+                    return tmpStream.str();
+                }
 
-				/**
-				 * Each list has to implement it's own sorting mechanism if required
-				 */
-				virtual void sort(void) = 0;
+                /**
+                 * Each list has to implement it's own sorting mechanism if required
+                 */
+                virtual void sort(void) = 0;
 
-			protected:
-				/**
-				 * Vector of elements
-				 */
-				std::vector<TIniElement> m_Elements;
-			};
-		}
-	}
+            protected:
+                /**
+                 * Vector of elements
+                 */
+                std::vector<TIniElement> m_Elements;
+            };
+        }
+    }
 }
 
 #endif

@@ -18,10 +18,10 @@
 //******************************************************************************
 
 /**
- * \file	YAIP.h
- * \author	ThirtySomething
- * \date	2016-09-19
- * \brief	Header of Yet Another INI Parser
+ * \file    YAIP.h
+ * \author  ThirtySomething
+ * \date    2016-09-19
+ * \brief   Header of Yet Another INI Parser
  */
 #ifndef _YAIP_H_
 #define _YAIP_H_
