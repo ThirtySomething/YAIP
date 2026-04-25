@@ -1,4 +1,4 @@
-# Helper macro to configure ANTLR4 C++ code generation with fallback to checked-in sources.
+# Helper function to configure ANTLR4 C++ code generation with fallback to checked-in sources.
 #
 # Parameters:
 # TARGET_NAME          - CMake target name for the library
@@ -9,9 +9,27 @@
 # PARSER_GRAMMAR_NAME  - Base name of the parser grammar (without .g4), e.g. IniParser
 # OUT_FILES_VAR        - Output variable receiving the list of generated/fallback source files
 # OUT_TARGET_VAR       - Output variable receiving the name of the code-generation custom target
+include_guard(GLOBAL)
+
 include(${CMAKE_CURRENT_LIST_DIR}/yaip_antlr4_generator.cmake)
 
-macro(yaip_grammar_2_code TARGET_NAME GRAMMAR_DIR GENERATED_DIR FALLBACK_DIR LEXER_GRAMMAR_NAME PARSER_GRAMMAR_NAME OUT_FILES_VAR OUT_TARGET_VAR)
+function(yaip_grammar_2_code TARGET_NAME GRAMMAR_DIR GENERATED_DIR FALLBACK_DIR LEXER_GRAMMAR_NAME PARSER_GRAMMAR_NAME OUT_FILES_VAR OUT_TARGET_VAR)
+    if("${TARGET_NAME}" STREQUAL "" OR "${GRAMMAR_DIR}" STREQUAL "" OR "${GENERATED_DIR}" STREQUAL "" OR "${FALLBACK_DIR}" STREQUAL "")
+        message(FATAL_ERROR "yaip_grammar_2_code: TARGET_NAME, GRAMMAR_DIR, GENERATED_DIR and FALLBACK_DIR are required.")
+    endif()
+
+    if("${LEXER_GRAMMAR_NAME}" STREQUAL "" OR "${PARSER_GRAMMAR_NAME}" STREQUAL "")
+        message(FATAL_ERROR "yaip_grammar_2_code: LEXER_GRAMMAR_NAME and PARSER_GRAMMAR_NAME are required.")
+    endif()
+
+    if("${OUT_FILES_VAR}" STREQUAL "" OR "${OUT_TARGET_VAR}" STREQUAL "")
+        message(FATAL_ERROR "yaip_grammar_2_code: OUT_FILES_VAR and OUT_TARGET_VAR are required.")
+    endif()
+
+    if("${YAIP_ANTLR4_VERSION}" STREQUAL "")
+        message(FATAL_ERROR "yaip_grammar_2_code: YAIP_ANTLR4_VERSION must be defined before calling this macro.")
+    endif()
+
     set(_ANTLR_GENERATED_SOURCES
         ${GENERATED_DIR}/${LEXER_GRAMMAR_NAME}.cpp
         ${GENERATED_DIR}/${LEXER_GRAMMAR_NAME}.h
@@ -64,7 +82,7 @@ macro(yaip_grammar_2_code TARGET_NAME GRAMMAR_DIR GENERATED_DIR FALLBACK_DIR LEX
                 DEPENDS ${_ANTLR_GENERATED_SOURCES}
             )
 
-            set(${OUT_FILES_VAR} ${_ANTLR_GENERATED_SOURCES})
+            set(${OUT_FILES_VAR} ${_ANTLR_GENERATED_SOURCES} PARENT_SCOPE)
         endif()
     endif()
 
@@ -78,8 +96,9 @@ macro(yaip_grammar_2_code TARGET_NAME GRAMMAR_DIR GENERATED_DIR FALLBACK_DIR LEX
             ${FALLBACK_DIR}/${PARSER_GRAMMAR_NAME}BaseVisitor.h
             ${FALLBACK_DIR}/${PARSER_GRAMMAR_NAME}Visitor.cpp
             ${FALLBACK_DIR}/${PARSER_GRAMMAR_NAME}Visitor.h
+            PARENT_SCOPE
         )
     endif()
 
-    set(${OUT_TARGET_VAR} ${_ANTLR_TARGET_NAME})
-endmacro()
+    set(${OUT_TARGET_VAR} ${_ANTLR_TARGET_NAME} PARENT_SCOPE)
+endfunction()

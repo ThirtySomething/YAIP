@@ -24,7 +24,6 @@ set(YAIP_ANTLR4_PARSER_GRAMMAR "IniParser")
 set(YAIP_CATCH2_VERSION "v3.14.0")
 
 include(CTest)
-include(FetchContent)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/yaip_grammar_2_code.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/yaip_antlr4_runtime.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/yaip_catch2.cmake)
