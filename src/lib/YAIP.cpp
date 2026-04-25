@@ -24,7 +24,7 @@
  * \brief	Implementation of Yet Another INI Parser
  */
 #include "YAIP.h"
-#include "IniAntlrParser.h"
+#include "IniParserFactory.h"
 #include <fstream>
 #include <memory>
 #include <sstream>
@@ -53,7 +53,8 @@ namespace net
             // ******************************************************************
             // ******************************************************************
             YAIP::YAIP()
-                : m_Sections()
+                : m_Sections(),
+                  m_ParserStrategy(IniParserFactory::Create())
             {
             }
 
@@ -290,7 +291,12 @@ namespace net
                     FileStream << Loop << '\n';
                 }
 
-                return IniAntlrParser::Parse(FileStream.str(), m_Sections);
+                if (!m_ParserStrategy)
+                {
+                    return false;
+                }
+
+                return m_ParserStrategy->Parse(FileStream.str(), m_Sections);
             }
         }
     }

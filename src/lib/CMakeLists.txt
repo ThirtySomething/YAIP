@@ -96,6 +96,7 @@ ENDIF()
 ADD_LIBRARY(yaip STATIC
     Convert.cpp
     Convert.h
+    IIniParserStrategy.h
     IElementCommon.h
     IniAntlrParser.cpp
     IniAntlrParser.h
@@ -107,6 +108,8 @@ ADD_LIBRARY(yaip STATIC
     IniSection.h
     IniSectionList.cpp
     IniSectionList.h
+    IniParserFactory.cpp
+    IniParserFactory.h
     ParseErrorListener.cpp
     ParseErrorListener.h
     string_extensions.cpp

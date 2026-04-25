@@ -27,6 +27,7 @@
 #define _YAIP_H_
 
 #include "Convert.h"
+#include "IIniParserStrategy.h"
 #include "IniSection.h"
 #include "IniSectionList.h"
 #include <functional>
@@ -204,6 +205,11 @@ namespace net
                  * \param FileContent The INI file as a vector of std::strings, each line a string
                  */
                 bool ParseFileContent(tListString FileContent);
+
+                /**
+                 * Parser strategy used to transform INI content into section model
+                 */
+                std::unique_ptr<IIniParserStrategy> m_ParserStrategy;
             };
         }
     }

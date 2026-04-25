@@ -5,7 +5,7 @@
 #ifndef _INIANTLRPARSER_H_
 #define _INIANTLRPARSER_H_
 
-#include "IniSectionList.h"
+#include "IIniParserStrategy.h"
 #include <string>
 
 namespace net
@@ -14,10 +14,10 @@ namespace net
     {
         namespace yaip
         {
-            class IniAntlrParser
+            class IniAntlrParser : public IIniParserStrategy
             {
             public:
-                static bool Parse(const std::string &content, IniSectionList &sections);
+                bool Parse(const std::string &content, IniSectionList &sections) const override;
             };
         }
     }

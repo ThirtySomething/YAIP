@@ -81,7 +81,7 @@ namespace net
     {
         namespace yaip
         {
-            bool IniAntlrParser::Parse(const std::string &content, IniSectionList &sections)
+            bool IniAntlrParser::Parse(const std::string &content, IniSectionList &sections) const
             {
                 antlr4::ANTLRInputStream input;
                 input.load(encodeBytesAsUtf8(content), true);
