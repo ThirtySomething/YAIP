@@ -35,7 +35,7 @@ namespace net
         namespace yaip
         {
             JsonIniExporterVisitor::JsonIniExporterVisitor()
-                : m_Stream(), m_FirstSection(true), m_FirstEntry(true)
+                : m_Stream(), m_FirstSection(true), m_FirstEntry(true), m_CurrentSectionIsImplicitGlobal(false)
             {
             }
 
@@ -45,6 +45,7 @@ namespace net
                 m_Stream.clear();
                 m_FirstSection = true;
                 m_FirstEntry = true;
+                m_CurrentSectionIsImplicitGlobal = false;
 
                 document.Accept(*this);
                 return m_Stream.str();
@@ -58,6 +59,14 @@ namespace net
 
             void JsonIniExporterVisitor::VisitSectionBegin(const IniSection &section)
             {
+                m_CurrentSectionIsImplicitGlobal = section.IsImplicitGlobal();
+
+                if (m_CurrentSectionIsImplicitGlobal)
+                {
+                    m_FirstEntry = m_FirstSection;
+                    return;
+                }
+
                 if (!m_FirstSection)
                 {
                     m_Stream << ",";
@@ -82,8 +91,19 @@ namespace net
 
             void JsonIniExporterVisitor::VisitSectionEnd(const IniSection &section)
             {
-                (void)section;
-                m_Stream << "}";
+                if (section.IsImplicitGlobal())
+                {
+                    if (!m_FirstEntry)
+                    {
+                        m_FirstSection = false;
+                    }
+                }
+                else
+                {
+                    m_Stream << "}";
+                }
+
+                m_CurrentSectionIsImplicitGlobal = false;
             }
 
             void JsonIniExporterVisitor::VisitDocumentEnd(const YAIP &document)

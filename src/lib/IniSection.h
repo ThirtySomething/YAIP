@@ -156,6 +156,21 @@ namespace net
                  */
                 void Accept(IIniVisitor &visitor) const;
 
+                /**
+                 * Marks this section as the implicit global section used for
+                 * top-level entries without an explicit [section] header.
+                 *
+                 * \param IsImplicitGlobal True if this section is the implicit global section
+                 */
+                void ImplicitGlobalSet(const bool IsImplicitGlobal);
+
+                /**
+                 * Indicates whether this section is the implicit global section.
+                 *
+                 * \return True if this section represents top-level entries
+                 */
+                bool IsImplicitGlobal(void) const;
+
             private:
                 /**
                  * All entries to this section
@@ -171,6 +186,12 @@ namespace net
                  * The name of the section
                  */
                 std::string m_SectionName;
+
+                /**
+                 * True when this section represents top-level entries without
+                 * an explicit [section] header.
+                 */
+                bool m_IsImplicitGlobal;
             };
 
             /**

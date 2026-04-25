@@ -15,6 +15,20 @@
 
 namespace
 {
+    net::derpaul::yaip::IniSection *ensureImplicitGlobalSection(net::derpaul::yaip::IniSectionList &sections)
+    {
+        if (auto existing = sections.ElementFind(""); existing != nullptr)
+        {
+            existing->ImplicitGlobalSet(true);
+            return existing.get();
+        }
+
+        auto sectionPtr = std::make_shared<net::derpaul::yaip::IniSection>();
+        sectionPtr->ImplicitGlobalSet(true);
+        sections.ElementAdd(sectionPtr);
+        return sectionPtr.get();
+    }
+
     std::string textFrom(IniParser::TextContext *ctx)
     {
         if (nullptr == ctx)
@@ -130,8 +144,13 @@ namespace net
                         continue;
                     }
 
-                    if (statement->pairStatement() && (nullptr != currentSection))
+                    if (statement->pairStatement())
                     {
+                        if (nullptr == currentSection)
+                        {
+                            currentSection = ensureImplicitGlobalSection(sections);
+                        }
+
                         IniParser::PairStatementContext *pairCtx = statement->pairStatement();
 
                         auto entryPtr = std::make_shared<IniEntry>();

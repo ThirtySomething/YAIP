@@ -24,6 +24,7 @@
 #include "JsonIniExporterVisitor.h"
 #include "YAIP.h"
 #include "catch2/catch_all.hpp"
+#include <fstream>
 
 using namespace net::derpaul::yaip;
 
@@ -61,6 +62,26 @@ TEST_CASE("JsonIniExporterVisitor - escapes JSON characters", "[JsonIniExporterV
 
     JsonIniExporterVisitor exporter;
     REQUIRE(exporter.Export(ini) == "{\"A\\\"B\":{\"path\":\"C:\\\\\\\\bin\\\\\\\"app\\\"\",\"tab\":\"a\\tb\"}}");
+}
+
+TEST_CASE("JsonIniExporterVisitor - flattens implicit global section entries", "[JsonIniExporterVisitor]")
+{
+    const std::string iniFile = "yaip_global_json.ini";
+    {
+        std::ofstream out(iniFile, std::ios::trunc);
+        REQUIRE(out.is_open());
+        out << "host = localhost\n";
+        out << "[Network]\n";
+        out << "port = 8080\n";
+    }
+
+    YAIP ini;
+    REQUIRE(ini.INIFileLoad(iniFile));
+
+    JsonIniExporterVisitor exporter;
+    REQUIRE(exporter.Export(ini) == "{\"host\":\"localhost\",\"Network\":{\"port\":\"8080\"}}");
+
+    REQUIRE(ini.INIFileDelete(iniFile));
 }
 
 #endif

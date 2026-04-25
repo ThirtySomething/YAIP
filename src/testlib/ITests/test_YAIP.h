@@ -22,7 +22,9 @@
 
 #include "YAIP.h"
 #include "catch2/catch_all.hpp"
+#include <fstream>
 #include <limits>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -309,6 +311,65 @@ TEST_CASE("Test C-string literal values and empty-value roundtrip", "[YAIP]")
     REQUIRE(reload.SectionKeyListGet("Main").size() == 2);
 
     REQUIRE(reload.INIFileDelete(S_FILE_INI));
+}
+
+TEST_CASE("Test sectionless entries are loaded into the global scope", "[YAIP]")
+{
+    const std::string iniFile = "yaip_global_entries.ini";
+    {
+        std::ofstream out(iniFile, std::ios::trunc);
+        REQUIRE(out.is_open());
+        out << "host = localhost\n";
+        out << "port = 8080\n";
+        out << "[Network]\n";
+        out << "mode = tcp\n";
+    }
+
+    net::derpaul::yaip::YAIP sut;
+    REQUIRE(sut.INIFileLoad(iniFile));
+
+    REQUIRE(sut.SectionKeyValueGet("", "host", std::string()) == "localhost");
+    REQUIRE(sut.SectionKeyValueGet("", "port", std::string()) == "8080");
+    REQUIRE(sut.SectionKeyValueGet("Network", "mode", std::string()) == "tcp");
+
+    REQUIRE(sut.INIFileSave(iniFile));
+
+    std::ifstream in(iniFile);
+    REQUIRE(in.is_open());
+
+    std::ostringstream saved;
+    saved << in.rdbuf();
+
+    const std::string savedIni = saved.str();
+    REQUIRE(savedIni.find("[]") == std::string::npos);
+    REQUIRE(savedIni.find("host = localhost") != std::string::npos);
+    REQUIRE(savedIni.find("port = 8080") != std::string::npos);
+    REQUIRE(savedIni.find("[Network]") != std::string::npos);
+    REQUIRE(savedIni.find("host = localhost") < savedIni.find("[Network]"));
+
+    REQUIRE(sut.INIFileDelete(iniFile));
+}
+
+TEST_CASE("At most one nameless section exists regardless of how entries are added", "[YAIP]")
+{
+    net::derpaul::yaip::YAIP sut;
+
+    // Add via SectionKeyValueSet with empty section name twice
+    REQUIRE(sut.SectionKeyValueSet("", "key1", "value1"));
+    REQUIRE(sut.SectionKeyValueSet("", "key2", "value2"));
+
+    auto sections = sut.SectionListGet();
+    int namelessCount = 0;
+    for (const auto &name : sections)
+    {
+        if (name.empty())
+        {
+            ++namelessCount;
+        }
+    }
+    REQUIRE(namelessCount <= 1);
+    REQUIRE(sut.SectionKeyValueGet("", "key1", std::string()) == "value1");
+    REQUIRE(sut.SectionKeyValueGet("", "key2", std::string()) == "value2");
 }
 
 #endif // _TEST_YAIP_H_

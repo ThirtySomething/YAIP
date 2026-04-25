@@ -136,6 +136,34 @@ TEST_CASE("IniDiagnosticsVisitor - duplicate keys loaded from file", "[IniDiagno
     REQUIRE(ini.INIFileDelete(iniFile));
 }
 
+TEST_CASE("IniDiagnosticsVisitor - implicit global section is not treated as an empty section", "[IniDiagnosticsVisitor]")
+{
+    const std::string iniFile = "yaip_global_diagnostics.ini";
+    {
+        std::ofstream out(iniFile, std::ios::trunc);
+        REQUIRE(out.is_open());
+        out << "host = localhost" << std::endl;
+        out << "empty =" << std::endl;
+    }
+
+    YAIP ini;
+    REQUIRE(ini.INIFileLoad(iniFile));
+
+    IniDiagnosticsVisitor diagnostics;
+    diagnostics.Analyze(ini);
+
+    const auto &issues = diagnostics.DiagnosticsGet();
+    REQUIRE(DiagnosticCount(issues, IniDiagnosticCode::EmptySectionName) == 0);
+    REQUIRE(DiagnosticCount(issues, IniDiagnosticCode::EmptyEntryValue) == 1);
+
+    const IniDiagnostic *emptyValue = FindDiagnostic(issues, IniDiagnosticCode::EmptyEntryValue);
+    REQUIRE(emptyValue != nullptr);
+    REQUIRE(emptyValue->Section == "");
+    REQUIRE(emptyValue->Key == "empty");
+
+    REQUIRE(ini.INIFileDelete(iniFile));
+}
+
 TEST_CASE("IniDiagnosticsVisitor - formatting is stable", "[IniDiagnosticsVisitor]")
 {
     IniDiagnostic diagnostic{

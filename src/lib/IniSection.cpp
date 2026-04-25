@@ -48,7 +48,7 @@ namespace net
             // ******************************************************************
             // ******************************************************************
             IniSection::IniSection(void)
-                : m_SectionName(), m_SectionComment(), m_Entries()
+                : m_SectionName(), m_SectionComment(), m_Entries(), m_IsImplicitGlobal(false)
             {
             }
 
@@ -64,6 +64,7 @@ namespace net
             {
                 ElementIdentifierSet("");
                 ElementCommentSet("");
+                ImplicitGlobalSet(false);
                 m_Entries.clear();
             }
 
@@ -150,6 +151,12 @@ namespace net
             {
                 std::ostringstream DataStream;
 
+                if (m_IsImplicitGlobal)
+                {
+                    DataStream << m_Entries.to_string();
+                    return DataStream.str();
+                }
+
                 DataStream << "[" << m_SectionName << "]";
                 if (!m_SectionComment.empty())
                 {
@@ -182,6 +189,20 @@ namespace net
 
             // ******************************************************************
             // ******************************************************************
+            void IniSection::ImplicitGlobalSet(const bool IsImplicitGlobal)
+            {
+                m_IsImplicitGlobal = IsImplicitGlobal;
+            }
+
+            // ******************************************************************
+            // ******************************************************************
+            bool IniSection::IsImplicitGlobal(void) const
+            {
+                return m_IsImplicitGlobal;
+            }
+
+            // ******************************************************************
+            // ******************************************************************
             void IniSection::sort(void)
             {
                 m_Entries.sort();
@@ -191,6 +212,11 @@ namespace net
             // ******************************************************************
             bool IniSectionCompare(const IniSectionPtr Left, const IniSectionPtr Right)
             {
+                if (Left->IsImplicitGlobal() != Right->IsImplicitGlobal())
+                {
+                    return Left->IsImplicitGlobal();
+                }
+
                 return strcmpcaseless(Left->ElementIdentifierGet(), Right->ElementIdentifierGet());
             }
         }

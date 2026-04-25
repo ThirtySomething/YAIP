@@ -231,7 +231,7 @@ namespace net
                 const std::size_t sectionIndex = m_CurrentSectionIndex;
                 ++m_CurrentSectionIndex;
 
-                if (m_CurrentSection.empty())
+                if (m_CurrentSection.empty() && !section.IsImplicitGlobal())
                 {
                     m_Diagnostics.push_back({IniDiagnosticSeverity::Error,
                                              IniDiagnosticCode::EmptySectionName,

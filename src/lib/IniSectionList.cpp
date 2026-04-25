@@ -25,32 +25,74 @@
  */
 #include "IniSectionList.h"
 #include <algorithm>
- /**
-  * Namespace of YAIP
-  */
+/**
+ * Namespace of YAIP
+ */
 namespace net
 {
-	/**
-	 * Namespace of YAIP
-	 */
-	namespace derpaul
-	{
-		/**
-		 * Namespace of YAIP
-		 */
-		namespace yaip
-		{
-			// ******************************************************************
-			// ******************************************************************
-			void IniSectionList::sort(void)
-			{
-				std::sort(m_Elements.begin(), m_Elements.end(), net::derpaul::yaip::IniSectionCompare);
-				for (auto CurrentElementPtr = m_Elements.begin(); CurrentElementPtr != m_Elements.end(); ++CurrentElementPtr)
-				{
-					(*CurrentElementPtr)->sort();
-				}
-			}
-		}
-	}
-}
+    /**
+     * Namespace of YAIP
+     */
+    namespace derpaul
+    {
+        /**
+         * Namespace of YAIP
+         */
+        namespace yaip
+        {
+            // ******************************************************************
+            // ******************************************************************
+            void IniSectionList::ElementAdd(const IniSectionPtr &Element)
+            {
+                if (!Element)
+                {
+                    return;
+                }
 
+                // Enforce the invariant: at most one nameless section exists.
+                // If a nameless section is already present, merge entries into it
+                // instead of inserting a duplicate.
+                if (Element->ElementIdentifierGet().empty())
+                {
+                    auto existing = ElementFind("");
+                    if (existing != nullptr)
+                    {
+                        existing->ImplicitGlobalSet(true);
+                        for (const auto &key : Element->EntryKeyList())
+                        {
+                            if (auto entry = Element->EntryFind(key); entry != nullptr)
+                            {
+                                existing->EntryAdd(entry);
+                            }
+                        }
+                        return;
+                    }
+
+                    // No existing nameless section — insert at front.
+                    if (Element->IsImplicitGlobal())
+                    {
+                        m_Elements.insert(m_Elements.begin(), Element);
+                    }
+                    else
+                    {
+                        m_Elements.push_back(Element);
+                    }
+                    return;
+                }
+
+                m_Elements.push_back(Element);
+            }
+
+            // ******************************************************************
+            // ******************************************************************
+            void IniSectionList::sort(void)
+            {
+                std::sort(m_Elements.begin(), m_Elements.end(), net::derpaul::yaip::IniSectionCompare);
+                for (auto CurrentElementPtr = m_Elements.begin(); CurrentElementPtr != m_Elements.end(); ++CurrentElementPtr)
+                {
+                    (*CurrentElementPtr)->sort();
+                }
+            }
+        }
+    }
+}

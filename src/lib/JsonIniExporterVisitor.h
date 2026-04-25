@@ -54,6 +54,7 @@ namespace net
                 std::ostringstream m_Stream;
                 bool m_FirstSection;
                 bool m_FirstEntry;
+                bool m_CurrentSectionIsImplicitGlobal;
             };
         }
     }

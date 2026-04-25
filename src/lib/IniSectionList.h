@@ -29,35 +29,40 @@
 #include "IniSection.h"
 #include "TIniElementList.h"
 
- /**
-  * Namespace of YAIP
-  */
+/**
+ * Namespace of YAIP
+ */
 namespace net
 {
-	/**
-	 * Namespace of YAIP
-	 */
-	namespace derpaul
-	{
-		/**
-		 * Namespace of YAIP
-		 */
-		namespace yaip
-		{
-			/**
-			 * List of INI sections
-			 */
-			class IniSectionList : public TIniElementList<IniSectionPtr>
-			{
-			public:
-				/**
-				 * We need to sort the own list and also all childs
-				 */
-				virtual void sort(void) override;
-			};
-		}
-	}
+    /**
+     * Namespace of YAIP
+     */
+    namespace derpaul
+    {
+        /**
+         * Namespace of YAIP
+         */
+        namespace yaip
+        {
+            /**
+             * List of INI sections
+             */
+            class IniSectionList : public TIniElementList<IniSectionPtr>
+            {
+            public:
+                /**
+                 * Override ElementAdd to ensure implicit global sections are always
+                 * stored at the front of the list, before any named sections.
+                 */
+                void ElementAdd(const IniSectionPtr &Element);
+
+                /**
+                 * We need to sort the own list and also all childs
+                 */
+                virtual void sort(void) override;
+            };
+        }
+    }
 }
 
 #endif
-
