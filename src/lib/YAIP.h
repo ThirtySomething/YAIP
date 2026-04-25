@@ -29,11 +29,9 @@
 #include "Convert.h"
 #include "IniSection.h"
 #include "IniSectionList.h"
-#include <ctype.h>
 #include <functional>
 #include <map>
 #include <memory>
-#include <regex>
 #include <vector>
 
 /**
