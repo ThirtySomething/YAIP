@@ -5,6 +5,7 @@ ADD_EXECUTABLE(yaiptest
     testlib.cpp
     ITests/test_YAIP.h
     UTests/test_Convert.h
+    UTests/test_IniDiagnosticsVisitor.h
     UTests/test_IniEntry.h
     UTests/test_IniEntryList.h
     UTests/test_IniSection.h

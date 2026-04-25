@@ -24,6 +24,7 @@
  * \brief	Implementation of Yet Another INI Parser
  */
 #include "YAIP.h"
+#include "IIniVisitor.h"
 #include "IniParserFactory.h"
 #include <fstream>
 #include <memory>
@@ -279,6 +280,24 @@ namespace net
             std::string YAIP::to_string(void) const
             {
                 return m_Sections.to_string();
+            }
+
+            // ******************************************************************
+            // ******************************************************************
+            void YAIP::Accept(IIniVisitor &visitor) const
+            {
+                visitor.VisitDocumentBegin(*this);
+
+                IniSectionList sections = m_Sections;
+                for (const auto &sectionName : sections.ElementIdentifierList())
+                {
+                    if (auto section = sections.ElementFind(sectionName); section != nullptr)
+                    {
+                        section->Accept(visitor);
+                    }
+                }
+
+                visitor.VisitDocumentEnd(*this);
             }
 
             // ******************************************************************

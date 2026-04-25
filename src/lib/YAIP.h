@@ -50,6 +50,8 @@ namespace net
          */
         namespace yaip
         {
+            class IIniVisitor;
+
             /**
              * Class to manipulate INI files
              */
@@ -193,6 +195,12 @@ namespace net
                  * \return String representation of an INI entry
                  */
                 std::string to_string(void) const;
+
+                /**
+                 * Accept a visitor and traverse this INI document.
+                 * \param visitor Visitor instance
+                 */
+                void Accept(IIniVisitor &visitor) const;
 
             protected:
                 /**

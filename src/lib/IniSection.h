@@ -48,6 +48,8 @@ namespace net
          */
         namespace yaip
         {
+            class IIniVisitor;
+
             /**
              * Represents an INI section
              */
@@ -147,6 +149,12 @@ namespace net
                  * \return String representation of an INI entry
                  */
                 std::string to_string(void) const override;
+
+                /**
+                 * Accept a visitor and traverse all entries.
+                 * \param visitor Visitor instance
+                 */
+                void Accept(IIniVisitor &visitor) const;
 
             private:
                 /**

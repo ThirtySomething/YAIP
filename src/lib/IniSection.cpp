@@ -25,6 +25,7 @@
  */
 
 #include "IniSection.h"
+#include "IIniVisitor.h"
 #include "string_extensions.h"
 #include <iostream>
 #include <sstream>
@@ -159,6 +160,24 @@ namespace net
                 DataStream << std::endl;
 
                 return DataStream.str();
+            }
+
+            // ******************************************************************
+            // ******************************************************************
+            void IniSection::Accept(IIniVisitor &visitor) const
+            {
+                visitor.VisitSectionBegin(*this);
+
+                IniEntryList entries = SectionEntriesGet();
+                for (const auto &key : entries.ElementIdentifierList())
+                {
+                    if (auto entry = entries.ElementFind(key); entry != nullptr)
+                    {
+                        entry->Accept(visitor);
+                    }
+                }
+
+                visitor.VisitSectionEnd(*this);
             }
 
             // ******************************************************************

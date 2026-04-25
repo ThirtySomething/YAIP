@@ -25,6 +25,7 @@
  */
 
 #include "IniEntry.h"
+#include "IIniVisitor.h"
 #include "string_extensions.h"
 #include <iostream>
 #include <sstream>
@@ -122,6 +123,13 @@ namespace net
                 DataStream << std::endl;
 
                 return DataStream.str();
+            }
+
+            // ******************************************************************
+            // ******************************************************************
+            void IniEntry::Accept(IIniVisitor &visitor) const
+            {
+                visitor.VisitEntry(*this);
             }
 
             // ******************************************************************

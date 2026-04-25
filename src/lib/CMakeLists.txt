@@ -97,9 +97,12 @@ ADD_LIBRARY(yaip STATIC
     Convert.cpp
     Convert.h
     IIniParserStrategy.h
+    IIniVisitor.h
     IElementCommon.h
     IniAntlrParser.cpp
     IniAntlrParser.h
+    IniDiagnosticsVisitor.cpp
+    IniDiagnosticsVisitor.h
     IniDocumentBuilder.cpp
     IniDocumentBuilder.h
     IniEntry.cpp
@@ -112,6 +115,8 @@ ADD_LIBRARY(yaip STATIC
     IniSectionList.h
     IniParserFactory.cpp
     IniParserFactory.h
+    JsonIniExporterVisitor.cpp
+    JsonIniExporterVisitor.h
     ParseErrorListener.cpp
     ParseErrorListener.h
     string_extensions.cpp
