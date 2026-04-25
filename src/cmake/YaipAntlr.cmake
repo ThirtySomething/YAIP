@@ -1,18 +1,27 @@
 # Helper macro to configure ANTLR4 C++ code generation with fallback to checked-in sources.
-macro(yaip_configure_antlr_cpp_generation TARGET_NAME GRAMMAR_DIR GENERATED_DIR FALLBACK_DIR OUT_FILES_VAR OUT_TARGET_VAR)
+#
+# Parameters:
+#   TARGET_NAME          - CMake target name for the library
+#   GRAMMAR_DIR          - Directory containing the .g4 grammar files
+#   GENERATED_DIR        - Directory where ANTLR will write generated sources
+#   FALLBACK_DIR         - Directory with checked-in generated sources (used when Java/JAR unavailable)
+#   LEXER_GRAMMAR_NAME   - Base name of the lexer grammar (without .g4), e.g. IniLexer
+#   PARSER_GRAMMAR_NAME  - Base name of the parser grammar (without .g4), e.g. IniParser
+#   OUT_FILES_VAR        - Output variable receiving the list of generated/fallback source files
+#   OUT_TARGET_VAR       - Output variable receiving the name of the code-generation custom target
+macro(yaip_configure_antlr_cpp_generation TARGET_NAME GRAMMAR_DIR GENERATED_DIR FALLBACK_DIR LEXER_GRAMMAR_NAME PARSER_GRAMMAR_NAME OUT_FILES_VAR OUT_TARGET_VAR)
     set(_ANTLR_GENERATED_SOURCES
-        ${GENERATED_DIR}/IniLexer.cpp
-        ${GENERATED_DIR}/IniLexer.h
-        ${GENERATED_DIR}/IniParser.cpp
-        ${GENERATED_DIR}/IniParser.h
-        ${GENERATED_DIR}/IniParserBaseVisitor.cpp
-        ${GENERATED_DIR}/IniParserBaseVisitor.h
-        ${GENERATED_DIR}/IniParserVisitor.cpp
-        ${GENERATED_DIR}/IniParserVisitor.h
+        ${GENERATED_DIR}/${LEXER_GRAMMAR_NAME}.cpp
+        ${GENERATED_DIR}/${LEXER_GRAMMAR_NAME}.h
+        ${GENERATED_DIR}/${PARSER_GRAMMAR_NAME}.cpp
+        ${GENERATED_DIR}/${PARSER_GRAMMAR_NAME}.h
+        ${GENERATED_DIR}/${PARSER_GRAMMAR_NAME}BaseVisitor.cpp
+        ${GENERATED_DIR}/${PARSER_GRAMMAR_NAME}BaseVisitor.h
+        ${GENERATED_DIR}/${PARSER_GRAMMAR_NAME}Visitor.cpp
+        ${GENERATED_DIR}/${PARSER_GRAMMAR_NAME}Visitor.h
     )
 
     option(YAIP_GENERATE_ANTLR "Generate ANTLR parser code from grammar files." ON)
-    set(ANTLR4_VERSION 4.13.2)
     set(ANTLR4_JAR "" CACHE FILEPATH "Path to antlr-4.x-complete.jar used for parser generation")
 
     set(_ANTLR_GENERATION_ENABLED ${YAIP_GENERATE_ANTLR})
@@ -23,12 +32,12 @@ macro(yaip_configure_antlr_cpp_generation TARGET_NAME GRAMMAR_DIR GENERATED_DIR 
 
         if(Java_Runtime_FOUND)
             if(NOT ANTLR4_JAR)
-                set(ANTLR4_JAR ${CMAKE_BINARY_DIR}/antlr-${ANTLR4_VERSION}-complete.jar)
+                set(ANTLR4_JAR ${CMAKE_BINARY_DIR}/antlr-${YAIP_ANTLR4_VERSION}-complete.jar)
             endif()
 
             if(NOT EXISTS ${ANTLR4_JAR})
                 file(DOWNLOAD
-                    https://www.antlr.org/download/antlr-${ANTLR4_VERSION}-complete.jar
+                    https://www.antlr.org/download/antlr-${YAIP_ANTLR4_VERSION}-complete.jar
                     ${ANTLR4_JAR}
                     STATUS _ANTLR_DOWNLOAD_STATUS
                     SHOW_PROGRESS
@@ -57,15 +66,15 @@ macro(yaip_configure_antlr_cpp_generation TARGET_NAME GRAMMAR_DIR GENERATED_DIR 
                 -no-listener
                 -o
                 ${GENERATED_DIR}
-                ${GRAMMAR_DIR}/IniLexer.g4
-                ${GRAMMAR_DIR}/IniParser.g4
+                ${GRAMMAR_DIR}/${LEXER_GRAMMAR_NAME}.g4
+                ${GRAMMAR_DIR}/${PARSER_GRAMMAR_NAME}.g4
             )
 
             add_custom_command(
                 OUTPUT ${_ANTLR_GENERATED_SOURCES}
                 COMMAND ${CMAKE_COMMAND} -E make_directory ${GENERATED_DIR}
                 COMMAND ${_ANTLR_GENERATOR_COMMAND}
-                DEPENDS ${GRAMMAR_DIR}/IniLexer.g4 ${GRAMMAR_DIR}/IniParser.g4
+                DEPENDS ${GRAMMAR_DIR}/${LEXER_GRAMMAR_NAME}.g4 ${GRAMMAR_DIR}/${PARSER_GRAMMAR_NAME}.g4
                 COMMENT "Generating ANTLR C++ sources from INI grammar"
                 VERBATIM
             )
@@ -81,14 +90,14 @@ macro(yaip_configure_antlr_cpp_generation TARGET_NAME GRAMMAR_DIR GENERATED_DIR 
 
     if(NOT _ANTLR_GENERATION_ENABLED)
         set(${OUT_FILES_VAR}
-            ${FALLBACK_DIR}/IniLexer.cpp
-            ${FALLBACK_DIR}/IniLexer.h
-            ${FALLBACK_DIR}/IniParser.cpp
-            ${FALLBACK_DIR}/IniParser.h
-            ${FALLBACK_DIR}/IniParserBaseVisitor.cpp
-            ${FALLBACK_DIR}/IniParserBaseVisitor.h
-            ${FALLBACK_DIR}/IniParserVisitor.cpp
-            ${FALLBACK_DIR}/IniParserVisitor.h
+            ${FALLBACK_DIR}/${LEXER_GRAMMAR_NAME}.cpp
+            ${FALLBACK_DIR}/${LEXER_GRAMMAR_NAME}.h
+            ${FALLBACK_DIR}/${PARSER_GRAMMAR_NAME}.cpp
+            ${FALLBACK_DIR}/${PARSER_GRAMMAR_NAME}.h
+            ${FALLBACK_DIR}/${PARSER_GRAMMAR_NAME}BaseVisitor.cpp
+            ${FALLBACK_DIR}/${PARSER_GRAMMAR_NAME}BaseVisitor.h
+            ${FALLBACK_DIR}/${PARSER_GRAMMAR_NAME}Visitor.cpp
+            ${FALLBACK_DIR}/${PARSER_GRAMMAR_NAME}Visitor.h
         )
     endif()
 
