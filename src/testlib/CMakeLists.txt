@@ -1,29 +1,52 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.6)
 PROJECT(yaiptest VERSION 1.0.0 LANGUAGES CXX)
 
+set(CATCH2_LOCAL_SINGLE_INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/../../externals/Catch2/single_include)
+find_path(CATCH2_INCLUDE_DIR catch2/catch.hpp
+    HINTS ${CATCH2_LOCAL_SINGLE_INCLUDE}
+)
+
+if(NOT CATCH2_INCLUDE_DIR)
+    message(WARNING "Catch2 header not found. Skipping yaiptest target.")
+    return()
+endif()
+
 ADD_EXECUTABLE(yaiptest
-	../../externals/Catch2/single_include/catch2/catch.hpp
-	testlib.cpp
-	ITests/test_YAIP.h
-	UTests/test_Convert.h
-	UTests/test_IniEntry.h
-	UTests/test_IniEntryList.h
-	UTests/test_IniSection.h
+    testlib.cpp
+    ITests/test_YAIP.h
+    UTests/test_Convert.h
+    UTests/test_IniEntry.h
+    UTests/test_IniEntryList.h
+    UTests/test_IniSection.h
 )
 
 # TARGET_COMPILE_OPTIONS(yaiptest PRIVATE -Werror)
-
-SET (CMAKE_CXX_STANDARD 11)
+SET(CMAKE_CXX_STANDARD 11)
 
 TARGET_INCLUDE_DIRECTORIES(yaiptest PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../externals/Catch2/single_include>  
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../lib>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/ITests>  
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/UTests>  
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../lib>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/ITests>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/UTests>
 )
+
+if(EXISTS ${CATCH2_LOCAL_SINGLE_INCLUDE}/catch2/catch.hpp)
+    TARGET_INCLUDE_DIRECTORIES(yaiptest PUBLIC
+        $<BUILD_INTERFACE:${CATCH2_LOCAL_SINGLE_INCLUDE}>
+    )
+endif()
+
+if(NOT EXISTS ${CATCH2_LOCAL_SINGLE_INCLUDE}/catch2/catch.hpp)
+    TARGET_INCLUDE_DIRECTORIES(yaiptest PUBLIC
+        $<BUILD_INTERFACE:${CATCH2_INCLUDE_DIR}>
+    )
+endif()
 
 LINK_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../lib)
 TARGET_LINK_LIBRARIES(yaiptest yaip)
+
+if(BUILD_TESTING)
+    add_test(NAME yaiptest COMMAND yaiptest)
+endif()
 
 SET(dir ${CMAKE_CURRENT_SOURCE_DIR}/../../Build/)
 SET(EXECUTABLE_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
@@ -31,7 +54,7 @@ SET(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${dir})
 SET(CMAKE_BUILD_FILES_DIRECTORY ${dir})
 SET(CMAKE_BUILD_DIRECTORY ${dir})
-SET(CMAKE_BINARY_DIR  ${dir})
+SET(CMAKE_BINARY_DIR ${dir})
 SET(EXECUTABLE_OUTPUT_PATH ${dir})
 SET(LIBRARY_OUTPUT_PATH ${dir}lib)
 SET(CMAKE_CACHEFILE_DIR ${dir})

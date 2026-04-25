@@ -36,170 +36,179 @@
 #include <regex>
 #include <vector>
 
- /**
-  * Namespace of YAIP
-  */
+/**
+ * Namespace of YAIP
+ */
 namespace net
 {
-	/**
-	 * Namespace of YAIP
-	 */
-	namespace derpaul
-	{
-		/**
-		 * Namespace of YAIP
-		 */
-		namespace yaip
-		{
-			/**
-			 * Class to manipulate INI files
-			 */
-			class YAIP
-			{
-			public:
-				/**
-				 * Default constructor
-				 */
-				YAIP(void);
+    /**
+     * Namespace of YAIP
+     */
+    namespace derpaul
+    {
+        /**
+         * Namespace of YAIP
+         */
+        namespace yaip
+        {
+            /**
+             * Class to manipulate INI files
+             */
+            class YAIP
+            {
+            public:
+                /**
+                 * Default constructor
+                 */
+                YAIP(void);
 
-				/**
-				 * Default destructor
-				 */
-				virtual ~YAIP(void);
+                /**
+                 * Default destructor
+                 */
+                virtual ~YAIP(void);
 
-				/**
-				 * Drop all data to get a clean INI
-				 */
-				void Clear(void);
+                /**
+                 * Drop all data to get a clean INI
+                 */
+                void Clear(void);
 
-				/**
-				 * Delete given INI file
-				 * \param Filename Full qualified filename of the INI file
-				 * \return true if file is deleted otherwise false
-				 */
-				static bool INIFileDelete(const std::string &Filename);
+                /**
+                 * Delete given INI file
+                 * \param Filename Full qualified filename of the INI file
+                 * \return true if file is deleted otherwise false
+                 */
+                static bool INIFileDelete(const std::string &Filename);
 
-				/**
-				 * Check if given INI file exists
-				 * \param Filename Full qualified filename of the INI file
-				 * \return true if file exists otherwise false
-				 */
-				static bool INIFileExist(const std::string &Filename);
+                /**
+                 * Check if given INI file exists
+                 * \param Filename Full qualified filename of the INI file
+                 * \return true if file exists otherwise false
+                 */
+                static bool INIFileExist(const std::string &Filename);
 
-				/**
-				 * Load and parse INI file into internal structures
-				 * \param Filename Full qualified filename of the INI file
-				 * \return true on success otherwise false
-				 */
-				bool INIFileLoad(const std::string &Filename);
+                /**
+                 * Load and parse INI file into internal structures
+                 * \param Filename Full qualified filename of the INI file
+                 * \return true on success otherwise false
+                 */
+                bool INIFileLoad(const std::string &Filename);
 
-				/**
-				 * Save internal structures to INI file
-				 * \param Filename Full qualified filename of the INI file
-				 * \return true on success otherwise false
-				 */
-				bool INIFileSave(const std::string &Filename);
+                /**
+                 * Save internal structures to INI file
+                 * \param Filename Full qualified filename of the INI file
+                 * \return true on success otherwise false
+                 */
+                bool INIFileSave(const std::string &Filename);
 
-				/**
-				 * Remove key completely from section of internal data structure
-				 * \param Section Specified section
-				 * \param Key Specified key
-				 * \return true on success otherwise false
-				 */
-				bool SectionKeyKill(const std::string &Section, const std::string &Key);
+                /**
+                 * Remove key completely from section of internal data structure
+                 * \param Section Specified section
+                 * \param Key Specified key
+                 * \return true on success otherwise false
+                 */
+                bool SectionKeyKill(const std::string &Section, const std::string &Key);
 
-				/**
-				 * Get all keys of a section of the INI file
-				 * \param Section Specified section
-				 * \return Vector with a std::strings for each key
-				 */
-				tListString SectionKeyListGet(const std::string &Section);
+                /**
+                 * Get all keys of a section of the INI file
+                 * \param Section Specified section
+                 * \return Vector with a std::strings for each key
+                 */
+                tListString SectionKeyListGet(const std::string &Section);
 
-				/**
-				 * Clear a key value
-				 * \param Section Specified section
-				 * \param Key Specified key
-				 * \return true on success otherwise false
-				 */
-				bool SectionKeyValueClear(const std::string &Section, const std::string &Key);
+                /**
+                 * Clear a key value
+                 * \param Section Specified section
+                 * \param Key Specified key
+                 * \return true on success otherwise false
+                 */
+                bool SectionKeyValueClear(const std::string &Section, const std::string &Key);
 
-				/**
-				 * Method to retrieve a value of the specified section/key combination for std::string
-				 * \param Section Specified section
-				 * \param Key Specified key
-				 * \param Default Specified default value in case key does not exist
-				 * \return Returns either the default value or the value of the existing section/key combination
-				 */
-				std::string SectionKeyValueGet(const std::string &Section, const std::string &Key, const std::string &Default);
+                /**
+                 * Method to retrieve a value of the specified section/key combination for std::string
+                 * \param Section Specified section
+                 * \param Key Specified key
+                 * \param Default Specified default value in case key does not exist
+                 * \return Returns either the default value or the value of the existing section/key combination
+                 */
+                std::string SectionKeyValueGet(const std::string &Section, const std::string &Key, const std::string &Default);
 
-				/**
-				 * Templated method to retrieve a value of the specified section/key combination
-				 * \param Section Specified section
-				 * \param Key Specified key
-				 * \param Default Specified default value in case key does not exist
-				 * \return Returns either the default value or the value of the existing section/key combination
-				 */
-				template<typename VariableType>
-				VariableType SectionKeyValueGet(const std::string &Section, const std::string &Key, const VariableType &Default)
-				{
-					VariableType ValueReturn;
-					std::string ValueDefault;
-					Convert::ConvertTo(Default, ValueDefault);
-					std::string ValueRaw = SectionKeyValueGet(Section, Key, ValueDefault);
-					Convert::ConvertTo(ValueRaw, ValueReturn);
-					return ValueReturn;
-				}
+                /**
+                 * Templated method to retrieve a value of the specified section/key combination
+                 * \param Section Specified section
+                 * \param Key Specified key
+                 * \param Default Specified default value in case key does not exist
+                 * \return Returns either the default value or the value of the existing section/key combination
+                 */
+                template <typename VariableType>
+                VariableType SectionKeyValueGet(const std::string &Section, const std::string &Key, const VariableType &Default)
+                {
+                    VariableType ValueReturn;
+                    std::string ValueDefault;
+                    Convert::ConvertTo(Default, ValueDefault);
+                    std::string ValueRaw = SectionKeyValueGet(Section, Key, ValueDefault);
+                    Convert::ConvertTo(ValueRaw, ValueReturn);
+                    return ValueReturn;
+                }
 
-				/**
-				 * Method to set a value of the specified section/key combination for std:string
-				 * \param Section Specified section
-				 * \param Key Specified key
-				 * \param Value Specified value to set
-				 * \return true on success otherwise false
-				 */
-				bool SectionKeyValueSet(const std::string &Section, const std::string &Key, const std::string &Value);
+                /**
+                 * Method to set a value of the specified section/key combination for std:string
+                 * \param Section Specified section
+                 * \param Key Specified key
+                 * \param Value Specified value to set
+                 * \return true on success otherwise false
+                 */
+                bool SectionKeyValueSet(const std::string &Section, const std::string &Key, const std::string &Value);
 
-				/**
-				 * Templated method to set a value of the specified section/key combination
-				 * \param Section Specified section
-				 * \param Key Specified key
-				 * \param Value Specified value to set
-				 * \return true on success otherwise false
-				 */
-				template<typename VariableType>
-				bool SectionKeyValueSet(const std::string &Section, const std::string &Key, const VariableType &Value)
-				{
-					std::string ValueString;
-					Convert::ConvertTo(Value, ValueString);
-					return SectionKeyValueSet(Section, Key, ValueString);
-				}
+                /**
+                 * Overload to avoid implicit conversion of C-string literals to bool
+                 * \param Section Specified section
+                 * \param Key Specified key
+                 * \param Value Specified value to set as C-string
+                 * \return true on success otherwise false
+                 */
+                bool SectionKeyValueSet(const std::string &Section, const std::string &Key, const char *Value);
 
-				/**
-				 * Get all sections of the INI file
-				 * \return Vector with std::strings of section names
-				 */
-				tListString SectionListGet(void);
+                /**
+                 * Templated method to set a value of the specified section/key combination
+                 * \param Section Specified section
+                 * \param Key Specified key
+                 * \param Value Specified value to set
+                 * \return true on success otherwise false
+                 */
+                template <typename VariableType>
+                bool SectionKeyValueSet(const std::string &Section, const std::string &Key, const VariableType &Value)
+                {
+                    std::string ValueString;
+                    Convert::ConvertTo(Value, ValueString);
+                    return SectionKeyValueSet(Section, Key, ValueString);
+                }
 
-				/**
-				 * String representation of whole INI file
-				 * \return String representation of an INI entry
-				 */
-				std::string to_string(void) const;
+                /**
+                 * Get all sections of the INI file
+                 * \return Vector with std::strings of section names
+                 */
+                tListString SectionListGet(void);
 
-			protected:
-				/**
-				 * List of all sections
-				 */
-				IniSectionList m_Sections;
+                /**
+                 * String representation of whole INI file
+                 * \return String representation of an INI entry
+                 */
+                std::string to_string(void) const;
 
-				/**
-				 * Loop over file content to determine sections and key/values to populate internal storage
-				 * \param FileContent The INI file as a vector of std::strings, each line a string
-				 */
-				void ParseFileContent(tListString FileContent);
-			};
-		}
-	}
+            protected:
+                /**
+                 * List of all sections
+                 */
+                IniSectionList m_Sections;
+
+                /**
+                 * Loop over file content to determine sections and key/values to populate internal storage
+                 * \param FileContent The INI file as a vector of std::strings, each line a string
+                 */
+                void ParseFileContent(tListString FileContent);
+            };
+        }
+    }
 }
 
 #endif

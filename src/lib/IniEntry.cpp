@@ -26,148 +26,146 @@
 
 #include "IniEntry.h"
 #include "string_extensions.h"
-#include <sstream>
 #include <iostream>
+#include <sstream>
 
- /**
-  * Namespace of YAIP
-  */
+/**
+ * Namespace of YAIP
+ */
 namespace net
 {
-	/**
-	 * Namespace of YAIP
-	 */
-	namespace derpaul
-	{
-		/**
-		 * Namespace of YAIP
-		 */
-		namespace yaip
-		{
-			// ******************************************************************
-			// ******************************************************************
-			// Regular expression mask for matching a section
-			const std::regex IniEntry::RegExKeyValue("\\s*([^=]+)\\s*=\\s*([^;]+);?(.+)?");
+    /**
+     * Namespace of YAIP
+     */
+    namespace derpaul
+    {
+        /**
+         * Namespace of YAIP
+         */
+        namespace yaip
+        {
+            // ******************************************************************
+            // ******************************************************************
+            // Regular expression mask for matching a section
+            const std::regex IniEntry::RegExKeyValue("^\\s*([^=]+?)\\s*=\\s*([^;]*?)\\s*(?:;\\s*(.*))?\\s*$");
 
-			// Index of entry comment in regular expression
-			const int IniEntry::IndexEntryComment = 3;
+            // Index of entry comment in regular expression
+            const int IniEntry::IndexEntryComment = 3;
 
-			// Index of entry key in regular expression
-			const int IniEntry::IndexEntryKey = 1;
+            // Index of entry key in regular expression
+            const int IniEntry::IndexEntryKey = 1;
 
-			// Index of entry value in regular expression
-			const int IniEntry::IndexEntryValue = 2;
+            // Index of entry value in regular expression
+            const int IniEntry::IndexEntryValue = 2;
 
-			// ******************************************************************
-			// ******************************************************************
-			IniEntry::IniEntry(void)
-				: m_EntryKey()
-				, m_EntryValue()
-				, m_EntryComment()
-			{
-			}
+            // ******************************************************************
+            // ******************************************************************
+            IniEntry::IniEntry(void)
+                : m_EntryKey(), m_EntryValue(), m_EntryComment()
+            {
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			IniEntry::~IniEntry(void)
-			{
-			}
+            // ******************************************************************
+            // ******************************************************************
+            IniEntry::~IniEntry(void)
+            {
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			void IniEntry::clear(void)
-			{
-				ElementIdentifierSet("");
-				ElementCommentSet("");
-				ElementValueSet("");
-			}
+            // ******************************************************************
+            // ******************************************************************
+            void IniEntry::clear(void)
+            {
+                ElementIdentifierSet("");
+                ElementCommentSet("");
+                ElementValueSet("");
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			bool IniEntry::CreateFromRawData(const std::string &RawData)
-			{
-				bool Success = false;
-				std::smatch RegExpMatch;
+            // ******************************************************************
+            // ******************************************************************
+            bool IniEntry::CreateFromRawData(const std::string &RawData)
+            {
+                bool Success = false;
+                std::smatch RegExpMatch;
 
-				// Check for match
-				if (std::regex_search(RawData, RegExpMatch, RegExKeyValue))
-				{
-					// Change new key/value pair only in case of a match.
-					// Unfortunately in C++ there are no named groups possible
-					// so we have to use the index of the group.
-					ElementIdentifierSet(RegExpMatch[IndexEntryKey]);
-					ElementValueSet(RegExpMatch[IndexEntryValue]);
-					ElementCommentSet(RegExpMatch[IndexEntryComment]);
-					Success = true;
-				}
+                // Check for match
+                if (std::regex_search(RawData, RegExpMatch, RegExKeyValue))
+                {
+                    // Change new key/value pair only in case of a match.
+                    // Unfortunately in C++ there are no named groups possible
+                    // so we have to use the index of the group.
+                    ElementIdentifierSet(RegExpMatch[IndexEntryKey]);
+                    ElementValueSet(RegExpMatch[IndexEntryValue]);
+                    ElementCommentSet(RegExpMatch[IndexEntryComment]);
+                    Success = true;
+                }
 
-				return Success;
-			}
+                return Success;
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			std::string IniEntry::ElementCommentGet(void) const
-			{
-				return m_EntryComment;
-			}
+            // ******************************************************************
+            // ******************************************************************
+            std::string IniEntry::ElementCommentGet(void) const
+            {
+                return m_EntryComment;
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			void IniEntry::ElementCommentSet(const std::string &ElementComment)
-			{
-				m_EntryComment = trim(ElementComment);
-			}
+            // ******************************************************************
+            // ******************************************************************
+            void IniEntry::ElementCommentSet(const std::string &ElementComment)
+            {
+                m_EntryComment = trim(ElementComment);
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			std::string IniEntry::ElementIdentifierGet(void) const
-			{
-				return m_EntryKey;
-			}
+            // ******************************************************************
+            // ******************************************************************
+            std::string IniEntry::ElementIdentifierGet(void) const
+            {
+                return m_EntryKey;
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			void IniEntry::ElementIdentifierSet(const std::string &ElementIdentifier)
-			{
-				m_EntryKey = trim(ElementIdentifier);
-			}
+            // ******************************************************************
+            // ******************************************************************
+            void IniEntry::ElementIdentifierSet(const std::string &ElementIdentifier)
+            {
+                m_EntryKey = trim(ElementIdentifier);
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			std::string IniEntry::ElementValueGet(void) const
-			{
-				return m_EntryValue;
-			}
+            // ******************************************************************
+            // ******************************************************************
+            std::string IniEntry::ElementValueGet(void) const
+            {
+                return m_EntryValue;
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			void IniEntry::ElementValueSet(const std::string &ElementValue)
-			{
-				m_EntryValue = trim(ElementValue);
-			}
+            // ******************************************************************
+            // ******************************************************************
+            void IniEntry::ElementValueSet(const std::string &ElementValue)
+            {
+                m_EntryValue = trim(ElementValue);
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			std::string IniEntry::to_string(void) const
-			{
-				std::ostringstream DataStream;
-				DataStream << m_EntryKey << " = " << m_EntryValue;
+            // ******************************************************************
+            // ******************************************************************
+            std::string IniEntry::to_string(void) const
+            {
+                std::ostringstream DataStream;
+                DataStream << m_EntryKey << " = " << m_EntryValue;
 
-				if (!m_EntryComment.empty())
-				{
-					DataStream << " ; " << m_EntryComment;
-				}
-				DataStream << std::endl;
+                if (!m_EntryComment.empty())
+                {
+                    DataStream << " ; " << m_EntryComment;
+                }
+                DataStream << std::endl;
 
-				return DataStream.str();
-			}
+                return DataStream.str();
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			bool IniEntryCompare(const IniEntryPtr Left, const IniEntryPtr Right)
-			{
-				return strcmpcaseless(Left->ElementIdentifierGet(), Right->ElementIdentifierGet());
-			}
-		}
-	}
+            // ******************************************************************
+            // ******************************************************************
+            bool IniEntryCompare(const IniEntryPtr Left, const IniEntryPtr Right)
+            {
+                return strcmpcaseless(Left->ElementIdentifierGet(), Right->ElementIdentifierGet());
+            }
+        }
+    }
 }

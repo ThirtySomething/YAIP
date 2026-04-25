@@ -20,10 +20,10 @@
 #ifndef _TEST_YAIP_H_
 #define _TEST_YAIP_H_
 
-#include "catch2/catch.hpp"
 #include "YAIP.h"
-#include <string>
+#include "catch2/catch.hpp"
 #include <limits>
+#include <string>
 #include <vector>
 
 static const std::string S_FILE_INI = "yaip.ini";
@@ -31,251 +31,285 @@ static const std::string S_SECTION = "SECTION";
 static const std::string S_KEY = "KEY";
 static const std::string S_KEY_INVALID = "KEY_INVALID";
 
-template <typename T> T GetDefaultValue(void);
+template <typename T>
+T GetDefaultValue(void);
 
-template < > bool GetDefaultValue<bool>(void)
+template <>
+bool GetDefaultValue<bool>(void)
 {
-	return true;
+    return true;
 }
 
-template < > char GetDefaultValue<char>(void)
+template <>
+char GetDefaultValue<char>(void)
 {
-	return 'Y';
+    return 'Y';
 }
 
-template < > double GetDefaultValue<double>(void)
+template <>
+double GetDefaultValue<double>(void)
 {
-	return 0.0;
+    return 0.0;
 }
 
-template < > float GetDefaultValue<float>(void)
+template <>
+float GetDefaultValue<float>(void)
 {
-	return 0.0f;
+    return 0.0f;
 }
 
-template < > int GetDefaultValue<int>(void)
+template <>
+int GetDefaultValue<int>(void)
 {
-	return 0;
+    return 0;
 }
 
-template < > long GetDefaultValue<long>(void)
+template <>
+long GetDefaultValue<long>(void)
 {
-	return 0L;
+    return 0L;
 }
 
-template < > short GetDefaultValue<short>(void)
+template <>
+short GetDefaultValue<short>(void)
 {
-	return 0;
+    return 0;
 }
 
-template < > std::string GetDefaultValue<std::string>(void)
+template <>
+std::string GetDefaultValue<std::string>(void)
 {
-	std::string DefaultString = "-=>DEFAULT<=-";
-	return DefaultString;
+    std::string DefaultString = "-=>DEFAULT<=-";
+    return DefaultString;
 }
 
-template < > unsigned char GetDefaultValue<unsigned char>(void)
+template <>
+unsigned char GetDefaultValue<unsigned char>(void)
 {
-	return 'Y';
+    return 'Y';
 }
 
-template < > unsigned int GetDefaultValue<unsigned int>(void)
+template <>
+unsigned int GetDefaultValue<unsigned int>(void)
 {
-	return 0;
+    return 0;
 }
 
-template < > unsigned long GetDefaultValue<unsigned long>(void)
+template <>
+unsigned long GetDefaultValue<unsigned long>(void)
 {
-	return 0L;
+    return 0L;
 }
 
-template < > unsigned short GetDefaultValue<unsigned short>(void)
+template <>
+unsigned short GetDefaultValue<unsigned short>(void)
 {
-	return 0;
+    return 0;
 }
 
 template <typename T>
 void CompareForEqual(const T &ValueLeft, const T &ValueRight)
 {
-	REQUIRE(ValueLeft == ValueRight);
+    REQUIRE(ValueLeft == ValueRight);
 }
 
-template < > void CompareForEqual<double>(const double &ValueLeft, const double &ValueRight)
+template <>
+void CompareForEqual<double>(const double &ValueLeft, const double &ValueRight)
 {
-	REQUIRE(ValueLeft == Approx(ValueRight));
+    REQUIRE(ValueLeft == Approx(ValueRight));
 }
 
-template < > void CompareForEqual<float>(const float &ValueLeft, const float &ValueRight)
+template <>
+void CompareForEqual<float>(const float &ValueLeft, const float &ValueRight)
 {
-	REQUIRE(ValueLeft == Approx(ValueRight));
+    REQUIRE(ValueLeft == Approx(ValueRight));
 }
 
 template <typename T>
 void test_yaip(T Value)
 {
-	T ValueDefault = GetDefaultValue<T>();
-	GIVEN("An empty instance of the YAIP parser")
-	{
-		net::derpaul::yaip::YAIP sut;
-		REQUIRE(sut.SectionListGet().empty());
-		REQUIRE(sut.SectionKeyValueSet(S_SECTION, S_KEY, Value));
+    T ValueDefault = GetDefaultValue<T>();
+    GIVEN("An empty instance of the YAIP parser")
+    {
+        net::derpaul::yaip::YAIP sut;
+        REQUIRE(sut.SectionListGet().empty());
+        REQUIRE(sut.SectionKeyValueSet(S_SECTION, S_KEY, Value));
 
-		WHEN("Add a new section/key/value")
-		{
-			THEN("Count of section should be 1")
-			{
-				REQUIRE(!sut.SectionListGet().empty());
-				REQUIRE(1 == sut.SectionListGet().size());
-				REQUIRE(1 == sut.SectionKeyListGet(S_SECTION).size());
-			}
-		}
+        WHEN("Add a new section/key/value")
+        {
+            THEN("Count of section should be 1")
+            {
+                REQUIRE(!sut.SectionListGet().empty());
+                REQUIRE(1 == sut.SectionListGet().size());
+                REQUIRE(1 == sut.SectionKeyListGet(S_SECTION).size());
+            }
+        }
 
-		WHEN("Save ini file")
-		{
-			REQUIRE(sut.INIFileSave(S_FILE_INI));
+        WHEN("Save ini file")
+        {
+            REQUIRE(sut.INIFileSave(S_FILE_INI));
 
-			THEN("File exists")
-			{
-				REQUIRE(sut.INIFileExist(S_FILE_INI));
-			}
-		}
+            THEN("File exists")
+            {
+                REQUIRE(sut.INIFileExist(S_FILE_INI));
+            }
+        }
 
-		WHEN("Set value of key to empty")
-		{
-			REQUIRE(sut.SectionKeyValueClear(S_SECTION, S_KEY));
+        WHEN("Set value of key to empty")
+        {
+            REQUIRE(sut.SectionKeyValueClear(S_SECTION, S_KEY));
 
-			THEN("Read value should return default")
-			{
-				T ini_value = sut.SectionKeyValueGet(S_SECTION, S_KEY, ValueDefault);
-				CompareForEqual(ValueDefault, ini_value);
-			}
-		}
+            THEN("Read value should return default")
+            {
+                T ini_value = sut.SectionKeyValueGet(S_SECTION, S_KEY, ValueDefault);
+                CompareForEqual(ValueDefault, ini_value);
+            }
+        }
 
-		WHEN("Clear internal data")
-		{
-			sut.Clear();
+        WHEN("Clear internal data")
+        {
+            sut.Clear();
 
-			THEN("Section list should be empty")
-			{
-				REQUIRE(sut.SectionListGet().empty());
-			}
-		}
+            THEN("Section list should be empty")
+            {
+                REQUIRE(sut.SectionListGet().empty());
+            }
+        }
 
-		WHEN("Reload from ini file")
-		{
-			REQUIRE(sut.INIFileExist(S_FILE_INI));
-			REQUIRE(sut.INIFileLoad(S_FILE_INI));
+        WHEN("Reload from ini file")
+        {
+            REQUIRE(sut.INIFileExist(S_FILE_INI));
+            REQUIRE(sut.INIFileLoad(S_FILE_INI));
 
-			THEN("What you save is what you get")
-			{
-				auto SectionList = sut.SectionListGet();
-				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION);
+            THEN("What you save is what you get")
+            {
+                auto SectionList = sut.SectionListGet();
+                auto SectionKeyList = sut.SectionKeyListGet(S_SECTION);
 
-				REQUIRE(1 == SectionList.size());
-				REQUIRE(1 == SectionKeyList.size());
+                REQUIRE(1 == SectionList.size());
+                REQUIRE(1 == SectionKeyList.size());
 
-				T ini_value = sut.SectionKeyValueGet(S_SECTION, S_KEY, ValueDefault);
-				CompareForEqual(Value, ini_value);
-			}
-		}
+                T ini_value = sut.SectionKeyValueGet(S_SECTION, S_KEY, ValueDefault);
+                CompareForEqual(Value, ini_value);
+            }
+        }
 
-		WHEN("Read from invalid key")
-		{
-			T ini_value = sut.SectionKeyValueGet(S_SECTION, S_KEY_INVALID, ValueDefault);
+        WHEN("Read from invalid key")
+        {
+            T ini_value = sut.SectionKeyValueGet(S_SECTION, S_KEY_INVALID, ValueDefault);
 
-			THEN("We get the default value")
-			{
-				CompareForEqual(ValueDefault, ini_value);
-			}
-		}
+            THEN("We get the default value")
+            {
+                CompareForEqual(ValueDefault, ini_value);
+            }
+        }
 
-		WHEN("Delete key")
-		{
-			REQUIRE(sut.SectionKeyKill(S_SECTION, S_KEY));
+        WHEN("Delete key")
+        {
+            REQUIRE(sut.SectionKeyKill(S_SECTION, S_KEY));
 
-			THEN("No entries, no section")
-			{
-				auto SectionList = sut.SectionListGet();
-				auto SectionKeyList = sut.SectionKeyListGet(S_SECTION);
+            THEN("No entries, no section")
+            {
+                auto SectionList = sut.SectionListGet();
+                auto SectionKeyList = sut.SectionKeyListGet(S_SECTION);
 
-				REQUIRE(0 == SectionList.size());
-				REQUIRE(0 == SectionKeyList.size());
+                REQUIRE(0 == SectionList.size());
+                REQUIRE(0 == SectionKeyList.size());
 
-				T ini_value = sut.SectionKeyValueGet(S_SECTION, S_KEY, ValueDefault);
-				CompareForEqual(ValueDefault, ini_value);
-			}
-		}
+                T ini_value = sut.SectionKeyValueGet(S_SECTION, S_KEY, ValueDefault);
+                CompareForEqual(ValueDefault, ini_value);
+            }
+        }
 
-		WHEN("Cleanup and delete ini file")
-		{
-			REQUIRE(sut.INIFileExist(S_FILE_INI));
-			REQUIRE(sut.INIFileDelete(S_FILE_INI));
+        WHEN("Cleanup and delete ini file")
+        {
+            REQUIRE(sut.INIFileExist(S_FILE_INI));
+            REQUIRE(sut.INIFileDelete(S_FILE_INI));
 
-			THEN("When the ini file is gone")
-			{
-				REQUIRE(!sut.INIFileExist(S_FILE_INI));
-			}
-		}
-	}
+            THEN("When the ini file is gone")
+            {
+                REQUIRE(!sut.INIFileExist(S_FILE_INI));
+            }
+        }
+    }
 }
 
 TEMPLATE_TEST_CASE("Test YAIP with datatypes except string", "[YAIP]", bool, char, double, float, int, long, short, unsigned char, unsigned int, unsigned long, unsigned short)
 {
-	auto VALUE = GENERATE(std::numeric_limits<TestType>::min(), std::numeric_limits<TestType>::max(), std::numeric_limits<TestType>::infinity());
+    auto VALUE = GENERATE(std::numeric_limits<TestType>::min(), std::numeric_limits<TestType>::max(), std::numeric_limits<TestType>::infinity());
 
-	test_yaip<TestType>(VALUE);
+    test_yaip<TestType>(VALUE);
 }
 
 TEST_CASE("Test YAIP with datatype string", "[YAIP]")
 {
-	std::string testString("ABCDEFGHIJKLMNOPQRSTUVXYZ abcdefghijklmnopqrstuvxyz () 0123456789 ., _ +- |");
-	test_yaip<std::string>(testString);
+    std::string testString("ABCDEFGHIJKLMNOPQRSTUVXYZ abcdefghijklmnopqrstuvxyz () 0123456789 ., _ +- |");
+    test_yaip<std::string>(testString);
 }
 
 TEST_CASE("Test sorting of INI file", "[YAIP]")
 {
-	net::derpaul::yaip::YAIP sut;
+    net::derpaul::yaip::YAIP sut;
 
-	sut.Clear();
+    sut.Clear();
 
-	sut.SectionKeyValueSet("Section005", "key02", "kadabra");
-	sut.SectionKeyValueSet("Section005", "key03", "trois");
-	sut.SectionKeyValueSet("Section005", "key01", "abra");
+    sut.SectionKeyValueSet("Section005", "key02", "kadabra");
+    sut.SectionKeyValueSet("Section005", "key03", "trois");
+    sut.SectionKeyValueSet("Section005", "key01", "abra");
 
-	sut.SectionKeyValueSet("Section001", "entry02", "kadabra");
-	sut.SectionKeyValueSet("Section001", "entry01", "trois");
-	sut.SectionKeyValueSet("Section001", "entry03", "abra");
+    sut.SectionKeyValueSet("Section001", "entry02", "kadabra");
+    sut.SectionKeyValueSet("Section001", "entry01", "trois");
+    sut.SectionKeyValueSet("Section001", "entry03", "abra");
 
-	sut.SectionKeyValueSet("Section003", "name01", "blubb");
-	sut.SectionKeyValueSet("Section003", "name05", "value");
-	sut.SectionKeyValueSet("Section003", "name02", "test");
-	sut.SectionKeyValueSet("Section003", "name04", "text");
-	sut.SectionKeyValueSet("Section003", "name03", "secret");
+    sut.SectionKeyValueSet("Section003", "name01", "blubb");
+    sut.SectionKeyValueSet("Section003", "name05", "value");
+    sut.SectionKeyValueSet("Section003", "name02", "test");
+    sut.SectionKeyValueSet("Section003", "name04", "text");
+    sut.SectionKeyValueSet("Section003", "name03", "secret");
 
-	sut.SectionKeyValueSet("Section002", "foo", "foo");
-	sut.SectionKeyValueSet("Section002", "baz", "baz");
-	sut.SectionKeyValueSet("Section002", "wtf", "ftw");
-	sut.SectionKeyValueSet("Section002", "bar", "bar");
+    sut.SectionKeyValueSet("Section002", "foo", "foo");
+    sut.SectionKeyValueSet("Section002", "baz", "baz");
+    sut.SectionKeyValueSet("Section002", "wtf", "ftw");
+    sut.SectionKeyValueSet("Section002", "bar", "bar");
 
-	sut.SectionKeyValueSet("Section004", "yellow", "color");
-	sut.SectionKeyValueSet("Section004", "bird", "blackbird");
-	sut.SectionKeyValueSet("Section004", "porsche", "kind of sportswagon");
+    sut.SectionKeyValueSet("Section004", "yellow", "color");
+    sut.SectionKeyValueSet("Section004", "bird", "blackbird");
+    sut.SectionKeyValueSet("Section004", "porsche", "kind of sportswagon");
 
-	std::string INIUnsorted = sut.to_string();
-	std::string INIExpectedUnSorted = "[Section005]\nkey02 = true\nkey03 = true\nkey01 = true\n\n[Section001]\nentry02 = true\nentry01 = true\nentry03 = true\n\n[Section003]\nname01 = true\nname05 = true\nname02 = true\nname04 = true\nname03 = true\n\n[Section002]\nfoo = true\nbaz = true\nwtf = true\nbar = true\n\n[Section004]\nyellow = true\nbird = true\nporsche = true\n\n";
+    std::string INIUnsorted = sut.to_string();
+    std::string INIExpectedUnSorted = "[Section005]\nkey02 = kadabra\nkey03 = trois\nkey01 = abra\n\n[Section001]\nentry02 = kadabra\nentry01 = trois\nentry03 = abra\n\n[Section003]\nname01 = blubb\nname05 = value\nname02 = test\nname04 = text\nname03 = secret\n\n[Section002]\nfoo = foo\nbaz = baz\nwtf = ftw\nbar = bar\n\n[Section004]\nyellow = color\nbird = blackbird\nporsche = kind of sportswagon\n\n";
 
-	REQUIRE(!sut.INIFileExist(S_FILE_INI));
-	REQUIRE(sut.INIFileSave(S_FILE_INI));
-	REQUIRE(sut.INIFileExist(S_FILE_INI));
-	REQUIRE(0 == INIUnsorted.compare(INIExpectedUnSorted));
+    REQUIRE(!sut.INIFileExist(S_FILE_INI));
+    REQUIRE(sut.INIFileSave(S_FILE_INI));
+    REQUIRE(sut.INIFileExist(S_FILE_INI));
+    REQUIRE(0 == INIUnsorted.compare(INIExpectedUnSorted));
 
-	std::string INISorted = sut.to_string();
-	std::string INIExpectedSorted = "[Section001]\nentry01 = true\nentry02 = true\nentry03 = true\n\n[Section002]\nbar = true\nbaz = true\nfoo = true\nwtf = true\n\n[Section003]\nname01 = true\nname02 = true\nname03 = true\nname04 = true\nname05 = true\n\n[Section004]\nbird = true\nporsche = true\nyellow = true\n\n[Section005]\nkey01 = true\nkey02 = true\nkey03 = true\n\n";
-	REQUIRE(0 != INIUnsorted.compare(INISorted));
-	REQUIRE(0 == INISorted.compare(INIExpectedSorted));
+    std::string INISorted = sut.to_string();
+    std::string INIExpectedSorted = "[Section001]\nentry01 = trois\nentry02 = kadabra\nentry03 = abra\n\n[Section002]\nbar = bar\nbaz = baz\nfoo = foo\nwtf = ftw\n\n[Section003]\nname01 = blubb\nname02 = test\nname03 = secret\nname04 = text\nname05 = value\n\n[Section004]\nbird = blackbird\nporsche = kind of sportswagon\nyellow = color\n\n[Section005]\nkey01 = abra\nkey02 = kadabra\nkey03 = trois\n\n";
+    REQUIRE(0 != INIUnsorted.compare(INISorted));
+    REQUIRE(0 == INISorted.compare(INIExpectedSorted));
 
-	sut.INIFileDelete(S_FILE_INI);
-	REQUIRE(!sut.INIFileExist(S_FILE_INI));
+    sut.INIFileDelete(S_FILE_INI);
+    REQUIRE(!sut.INIFileExist(S_FILE_INI));
+}
+
+TEST_CASE("Test C-string literal values and empty-value roundtrip", "[YAIP]")
+{
+    net::derpaul::yaip::YAIP sut;
+
+    REQUIRE(sut.SectionKeyValueSet("Main", "Literal", "literal-value"));
+    REQUIRE("literal-value" == sut.SectionKeyValueGet("Main", "Literal", "default"));
+
+    REQUIRE(sut.SectionKeyValueSet("Main", "Empty", "value"));
+    REQUIRE(sut.SectionKeyValueClear("Main", "Empty"));
+    REQUIRE(sut.INIFileSave(S_FILE_INI));
+
+    net::derpaul::yaip::YAIP reload;
+    REQUIRE(reload.INIFileLoad(S_FILE_INI));
+    REQUIRE("fallback" == reload.SectionKeyValueGet("Main", "Empty", "fallback"));
+    REQUIRE(reload.SectionKeyListGet("Main").size() == 2);
+
+    REQUIRE(reload.INIFileDelete(S_FILE_INI));
 }
 
 #endif // _TEST_YAIP_H_

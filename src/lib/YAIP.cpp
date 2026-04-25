@@ -28,272 +28,285 @@
 #include <sstream>
 
 #ifndef _WIN32
-#include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <unistd.h>
 #endif
 
- /**
-  * Namespace of YAIP
-  */
+/**
+ * Namespace of YAIP
+ */
 namespace net
 {
-	/**
-	 * Namespace of YAIP
-	 */
-	namespace derpaul
-	{
-		/**
-		 * Namespace of YAIP
-		 */
-		namespace yaip
-		{
-			// ******************************************************************
-			// ******************************************************************
-			YAIP::YAIP()
-				: m_Sections()
-			{
-			}
+    /**
+     * Namespace of YAIP
+     */
+    namespace derpaul
+    {
+        /**
+         * Namespace of YAIP
+         */
+        namespace yaip
+        {
+            // ******************************************************************
+            // ******************************************************************
+            YAIP::YAIP()
+                : m_Sections()
+            {
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			YAIP::~YAIP(void)
-			{
-				Clear();
-			}
+            // ******************************************************************
+            // ******************************************************************
+            YAIP::~YAIP(void)
+            {
+                Clear();
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			void YAIP::Clear(void)
-			{
-				m_Sections.clear();
-			}
+            // ******************************************************************
+            // ******************************************************************
+            void YAIP::Clear(void)
+            {
+                m_Sections.clear();
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			bool YAIP::INIFileDelete(const std::string &Filename)
-			{
-				bool deleted = (0 == remove(Filename.c_str()));
-				return deleted;
-			}
+            // ******************************************************************
+            // ******************************************************************
+            bool YAIP::INIFileDelete(const std::string &Filename)
+            {
+                bool deleted = (0 == remove(Filename.c_str()));
+                return deleted;
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			bool YAIP::INIFileExist(const std::string &Filename)
-			{
+            // ******************************************************************
+            // ******************************************************************
+            bool YAIP::INIFileExist(const std::string &Filename)
+            {
 #ifdef _WIN32
-				struct _stat tmpbuffer;
-				int result = _stat(Filename.c_str(), &tmpbuffer);
+                struct _stat tmpbuffer;
+                int result = _stat(Filename.c_str(), &tmpbuffer);
 #else
-				struct stat tmpbuffer;
-				int result = stat(Filename.c_str(), &tmpbuffer);
+                struct stat tmpbuffer;
+                int result = stat(Filename.c_str(), &tmpbuffer);
 #endif
-				return result == 0;
-			}
+                return result == 0;
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			bool YAIP::INIFileLoad(const std::string &Filename)
-			{
-				bool Success = false;
-				std::ifstream IniFile;
+            // ******************************************************************
+            // ******************************************************************
+            bool YAIP::INIFileLoad(const std::string &Filename)
+            {
+                bool Success = false;
+                std::ifstream IniFile;
 
-				// Always clear internal storage
-				Clear();
+                // Always clear internal storage
+                Clear();
 
-				// Open the INI file for reading
-				IniFile.open(Filename, std::ios::in);
+                // Open the INI file for reading
+                IniFile.open(Filename, std::ios::in);
 
-				/**
-				 * \todo Handle file errors like file does not exist
-				 */
-				if (IniFile.is_open())
-				{
-					std::string CurrentLine;
+                /**
+                 * \todo Handle file errors like file does not exist
+                 */
+                if (IniFile.is_open())
+                {
+                    std::string CurrentLine;
 
-					// Temporary storage for all lines of the INI file
-					tListString FileContent;
+                    // Temporary storage for all lines of the INI file
+                    tListString FileContent;
 
-					// Read as long as lines exist
-					while (std::getline(IniFile, CurrentLine))
-					{
-						FileContent.push_back(CurrentLine);
-					}
-					IniFile.close();
+                    // Read as long as lines exist
+                    while (std::getline(IniFile, CurrentLine))
+                    {
+                        FileContent.push_back(CurrentLine);
+                    }
+                    IniFile.close();
 
-					// Parse INI file
-					ParseFileContent(FileContent);
-					Success = true;
-				}
+                    // Parse INI file
+                    ParseFileContent(FileContent);
+                    Success = true;
+                }
 
-				return Success;
-			}
+                return Success;
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			bool YAIP::INIFileSave(const std::string &Filename)
-			{
-				bool Success = false;
-				std::ofstream IniFile;
+            // ******************************************************************
+            // ******************************************************************
+            bool YAIP::INIFileSave(const std::string &Filename)
+            {
+                bool Success = false;
+                std::ofstream IniFile;
 
-				// Open the INI file for writing
-				IniFile.open(Filename, std::ios::trunc);
+                // Open the INI file for writing
+                IniFile.open(Filename, std::ios::trunc);
 
-				/**
-				 * \todo Handle file errors like cannot open file
-				 */
-				if (IniFile.is_open())
-				{
-					m_Sections.sort();
-					IniFile << m_Sections.to_string();
-					IniFile.close();
-					Success = true;
-				}
+                /**
+                 * \todo Handle file errors like cannot open file
+                 */
+                if (IniFile.is_open())
+                {
+                    m_Sections.sort();
+                    IniFile << m_Sections.to_string();
+                    IniFile.close();
+                    Success = true;
+                }
 
-				return Success;
-			}
+                return Success;
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			bool YAIP::SectionKeyKill(const std::string &Section, const std::string &Key)
-			{
-				bool Success = false;
+            // ******************************************************************
+            // ******************************************************************
+            bool YAIP::SectionKeyKill(const std::string &Section, const std::string &Key)
+            {
+                bool Success = false;
 
-				IniSectionPtr CurrentSection = m_Sections.ElementFind(Section);
-				if (nullptr != CurrentSection)
-				{
-					IniEntryPtr CurrentEntry = CurrentSection->EntryFind(Key);
-					if (nullptr != CurrentEntry)
-					{
-						CurrentSection->EntryDelete(CurrentEntry);
-						Success = true;
-					}
+                IniSectionPtr CurrentSection = m_Sections.ElementFind(Section);
+                if (nullptr != CurrentSection)
+                {
+                    IniEntryPtr CurrentEntry = CurrentSection->EntryFind(Key);
+                    if (nullptr != CurrentEntry)
+                    {
+                        CurrentSection->EntryDelete(CurrentEntry);
+                        Success = true;
+                    }
 
-					if (CurrentSection->IsEmpty())
-					{
-						m_Sections.ElementDelete(CurrentSection);
-					}
-				}
+                    if (CurrentSection->IsEmpty())
+                    {
+                        m_Sections.ElementDelete(CurrentSection);
+                    }
+                }
 
-				return Success;
-			}
+                return Success;
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			tListString YAIP::SectionKeyListGet(const std::string &Section)
-			{
-				tListString KeyList;
+            // ******************************************************************
+            // ******************************************************************
+            tListString YAIP::SectionKeyListGet(const std::string &Section)
+            {
+                tListString KeyList;
 
-				IniSectionPtr CurrentSection = m_Sections.ElementFind(Section);
-				if (nullptr != CurrentSection)
-				{
-					KeyList = CurrentSection->EntryKeyList();
-				}
+                IniSectionPtr CurrentSection = m_Sections.ElementFind(Section);
+                if (nullptr != CurrentSection)
+                {
+                    KeyList = CurrentSection->EntryKeyList();
+                }
 
-				return KeyList;
-			}
+                return KeyList;
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			bool YAIP::SectionKeyValueClear(const std::string &Section, const std::string &Key)
-			{
-				return SectionKeyValueSet(Section, Key, ' ');
-			}
+            // ******************************************************************
+            // ******************************************************************
+            bool YAIP::SectionKeyValueClear(const std::string &Section, const std::string &Key)
+            {
+                return SectionKeyValueSet(Section, Key, std::string());
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			std::string YAIP::SectionKeyValueGet(const std::string &Section, const std::string &Key, const std::string &Default)
-			{
-				// Ensure default return value
-				std::string ReturnValue = Default;
+            // ******************************************************************
+            // ******************************************************************
+            std::string YAIP::SectionKeyValueGet(const std::string &Section, const std::string &Key, const std::string &Default)
+            {
+                // Ensure default return value
+                std::string ReturnValue = Default;
 
-				IniSectionPtr CurrentSection = m_Sections.ElementFind(Section);
-				if (nullptr != CurrentSection)
-				{
-					IniEntryPtr CurrentEntry = CurrentSection->EntryFind(Key);
-					if (nullptr != CurrentEntry)
-					{
-						ReturnValue = CurrentEntry->ElementValueGet();
-					}
-				}
+                IniSectionPtr CurrentSection = m_Sections.ElementFind(Section);
+                if (nullptr != CurrentSection)
+                {
+                    IniEntryPtr CurrentEntry = CurrentSection->EntryFind(Key);
+                    if (nullptr != CurrentEntry)
+                    {
+                        ReturnValue = CurrentEntry->ElementValueGet();
+                    }
+                }
 
-				if (0 == ReturnValue.length())
-				{
-					ReturnValue = Default;
-				}
+                if (0 == ReturnValue.length())
+                {
+                    ReturnValue = Default;
+                }
 
-				return ReturnValue;
-			}
+                return ReturnValue;
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			bool YAIP::SectionKeyValueSet(const std::string &Section, const std::string &Key, const std::string &Value)
-			{
-				IniSectionPtr CurrentSection = m_Sections.ElementFind(Section);
-				if (nullptr == CurrentSection)
-				{
-					CurrentSection.reset(new IniSection);
-					CurrentSection->ElementIdentifierSet(Section);
-					m_Sections.ElementAdd(CurrentSection);
-				}
+            // ******************************************************************
+            // ******************************************************************
+            bool YAIP::SectionKeyValueSet(const std::string &Section, const std::string &Key, const std::string &Value)
+            {
+                IniSectionPtr CurrentSection = m_Sections.ElementFind(Section);
+                if (nullptr == CurrentSection)
+                {
+                    CurrentSection.reset(new IniSection);
+                    CurrentSection->ElementIdentifierSet(Section);
+                    m_Sections.ElementAdd(CurrentSection);
+                }
 
-				IniEntryPtr CurrentEntry = CurrentSection->EntryFind(Key);
-				if (nullptr != CurrentEntry)
-				{
-					CurrentSection->EntryDelete(CurrentEntry);
-				}
-				else
-				{
-					CurrentEntry.reset(new IniEntry);
-				}
+                IniEntryPtr CurrentEntry = CurrentSection->EntryFind(Key);
+                if (nullptr != CurrentEntry)
+                {
+                    CurrentSection->EntryDelete(CurrentEntry);
+                }
+                else
+                {
+                    CurrentEntry.reset(new IniEntry);
+                }
 
-				CurrentEntry->ElementIdentifierSet(Key);
-				CurrentEntry->ElementValueSet(Value);
-				CurrentSection->EntryAdd(CurrentEntry);
+                CurrentEntry->ElementIdentifierSet(Key);
+                CurrentEntry->ElementValueSet(Value);
+                CurrentSection->EntryAdd(CurrentEntry);
 
-				return true;
-			}
+                return true;
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			tListString YAIP::SectionListGet(void)
-			{
-				return m_Sections.ElementIdentifierList();
-			}
+            // ******************************************************************
+            // ******************************************************************
+            bool YAIP::SectionKeyValueSet(const std::string &Section, const std::string &Key, const char *Value)
+            {
+                std::string ValueString;
+                if (nullptr != Value)
+                {
+                    ValueString = Value;
+                }
 
-			// ******************************************************************
-			// ******************************************************************
-			std::string YAIP::to_string(void) const
-			{
-				return m_Sections.to_string();
-			}
+                return SectionKeyValueSet(Section, Key, ValueString);
+            }
 
-			// ******************************************************************
-			// ******************************************************************
-			void YAIP::ParseFileContent(tListString FileContent)
-			{
-				IniSection* CurrentSectionPtr = nullptr;
+            // ******************************************************************
+            // ******************************************************************
+            tListString YAIP::SectionListGet(void)
+            {
+                return m_Sections.ElementIdentifierList();
+            }
 
-				// Loop over the INI file
-				for (auto const& Loop : FileContent)
-				{
-					std::string Line = Loop;
+            // ******************************************************************
+            // ******************************************************************
+            std::string YAIP::to_string(void) const
+            {
+                return m_Sections.to_string();
+            }
 
-					// Got a new section?
-					IniSectionPtr SectionPtr(new IniSection);
-					if (SectionPtr->CreateFromRawData(Line))
-					{
-						m_Sections.ElementAdd(SectionPtr);
-						CurrentSectionPtr = SectionPtr.get();
-						continue;
-					}
+            // ******************************************************************
+            // ******************************************************************
+            void YAIP::ParseFileContent(tListString FileContent)
+            {
+                IniSection *CurrentSectionPtr = nullptr;
 
-					if (nullptr != CurrentSectionPtr)
-					{
-						CurrentSectionPtr->AddRawEntry(Line);
-					}
-				}
-			}
-		}
-	}
+                // Loop over the INI file
+                for (auto const &Loop : FileContent)
+                {
+                    std::string Line = Loop;
+
+                    // Got a new section?
+                    IniSectionPtr SectionPtr(new IniSection);
+                    if (SectionPtr->CreateFromRawData(Line))
+                    {
+                        m_Sections.ElementAdd(SectionPtr);
+                        CurrentSectionPtr = SectionPtr.get();
+                        continue;
+                    }
+
+                    if (nullptr != CurrentSectionPtr)
+                    {
+                        CurrentSectionPtr->AddRawEntry(Line);
+                    }
+                }
+            }
+        }
+    }
 }

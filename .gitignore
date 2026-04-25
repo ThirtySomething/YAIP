@@ -59,3 +59,6 @@
 /src/testlib/cmake_install.cmake
 /src/testlib/testlib.vcxproj.filters
 /src/testlib/testlib.vcxproj.user
+
+build
+.vscode
