@@ -2,7 +2,7 @@ set(ANTLR_GRAMMAR_DIR ${CMAKE_CURRENT_SOURCE_DIR}/antlr)
 set(ANTLR_GENERATED_DIR ${CMAKE_CURRENT_BINARY_DIR}/antlr/generated)
 set(ANTLR_FALLBACK_DIR ${CMAKE_CURRENT_SOURCE_DIR}/antlr/generated)
 
-yaip_configure_antlr_cpp_generation(
+yaip_grammar_2_code(
     yaip
     ${ANTLR_GRAMMAR_DIR}
     ${ANTLR_GENERATED_DIR}

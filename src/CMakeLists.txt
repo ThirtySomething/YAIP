@@ -21,20 +21,16 @@ set(CMAKE_CACHEFILE_DIR ${YAIP_BUILD_DIR})
 set(YAIP_ANTLR4_VERSION "4.13.2")
 set(YAIP_ANTLR4_LEXER_GRAMMAR "IniLexer")
 set(YAIP_ANTLR4_PARSER_GRAMMAR "IniParser")
+set(YAIP_CATCH2_VERSION "v3.14.0")
 
 include(CTest)
 include(FetchContent)
-include(${CMAKE_CURRENT_LIST_DIR}/cmake/YaipAntlr.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/cmake/antlr4-runtime.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/yaip_grammar_2_code.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/yaip_antlr4_runtime.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/yaip_catch2.cmake)
 
-yaip_fetch_antlr4_runtime(${YAIP_ANTLR4_VERSION})
-
-FetchContent_Declare(
-    Catch2
-    GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-    GIT_TAG v3.14.0
-)
-FetchContent_MakeAvailable(Catch2)
+yaip_antlr4_runtime(${YAIP_ANTLR4_VERSION})
+yaip_catch2(${YAIP_CATCH2_VERSION})
 
 add_subdirectory(lib)
 add_subdirectory(testlib)

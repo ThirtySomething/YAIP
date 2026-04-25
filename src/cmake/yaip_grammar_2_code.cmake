@@ -9,9 +9,9 @@
 # PARSER_GRAMMAR_NAME  - Base name of the parser grammar (without .g4), e.g. IniParser
 # OUT_FILES_VAR        - Output variable receiving the list of generated/fallback source files
 # OUT_TARGET_VAR       - Output variable receiving the name of the code-generation custom target
-include(${CMAKE_CURRENT_LIST_DIR}/antlr4-generator.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/yaip_antlr4_generator.cmake)
 
-macro(yaip_configure_antlr_cpp_generation TARGET_NAME GRAMMAR_DIR GENERATED_DIR FALLBACK_DIR LEXER_GRAMMAR_NAME PARSER_GRAMMAR_NAME OUT_FILES_VAR OUT_TARGET_VAR)
+macro(yaip_grammar_2_code TARGET_NAME GRAMMAR_DIR GENERATED_DIR FALLBACK_DIR LEXER_GRAMMAR_NAME PARSER_GRAMMAR_NAME OUT_FILES_VAR OUT_TARGET_VAR)
     set(_ANTLR_GENERATED_SOURCES
         ${GENERATED_DIR}/${LEXER_GRAMMAR_NAME}.cpp
         ${GENERATED_DIR}/${LEXER_GRAMMAR_NAME}.h
@@ -29,7 +29,7 @@ macro(yaip_configure_antlr_cpp_generation TARGET_NAME GRAMMAR_DIR GENERATED_DIR 
     set(_ANTLR_TARGET_NAME "")
 
     if(_ANTLR_GENERATION_ENABLED)
-        yaip_configure_antlr4_generator(
+        yaip_antlr4_generator(
             ${YAIP_ANTLR4_VERSION}
             _ANTLR_GENERATION_ENABLED
             _ANTLR_JAVA_EXECUTABLE

@@ -1,7 +1,7 @@
 # Macro to fetch the ANTLR4 C++ runtime via FetchContent.
-# Call yaip_fetch_antlr4_runtime(VERSION) once from the top-level CMakeLists.txt
+# Call yaip_antlr4_runtime(VERSION) once from the top-level CMakeLists.txt
 # before any subdirectory that needs to link against antlr4_static.
-macro(yaip_fetch_antlr4_runtime ANTLR4_VERSION)
+macro(yaip_antlr4_runtime ANTLR4_VERSION)
     include(FetchContent)
 
     set(ANTLR4_INSTALL OFF CACHE BOOL "" FORCE)

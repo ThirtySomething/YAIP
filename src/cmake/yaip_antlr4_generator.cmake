@@ -5,7 +5,7 @@
 # OUT_ENABLED_VAR         - Output variable set to ON/OFF for generator availability
 # OUT_JAVA_EXECUTABLE_VAR - Output variable containing Java executable path
 # OUT_JAR_PATH_VAR        - Output variable containing ANTLR4 JAR path
-macro(yaip_configure_antlr4_generator ANTLR4_VERSION OUT_ENABLED_VAR OUT_JAVA_EXECUTABLE_VAR OUT_JAR_PATH_VAR)
+macro(yaip_antlr4_generator ANTLR4_VERSION OUT_ENABLED_VAR OUT_JAVA_EXECUTABLE_VAR OUT_JAR_PATH_VAR)
     set(ANTLR4_JAR "" CACHE FILEPATH "Path to antlr-4.x-complete.jar used for parser generation")
 
     set(_YAIP_ANTLR_GENERATION_ENABLED ON)
