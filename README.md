@@ -14,7 +14,7 @@
 
 ## Requirements
 
-To use **YAIP** you need to have an modern [C++11][cpp_eleven] compiler. See the used parts at the section **Implementation Details**. Tested with
+To use **YAIP** you need to have an modern [C++17][cpp_seventeen] compiler. See the used parts at the section **Implementation Details**. Tested with
 [Visual Studio 2019][msvs].
 
 ## Supported Platforms
@@ -245,7 +245,7 @@ bool SectionKeyValueClear(const std::string &Section, const std::string &Key);
 [antlr4]: https://www.antlr.org/
 [CMake]: https://cmake.org/
 [CppCheck]: http://cppcheck.sourceforge.net/
-[cpp_eleven]: https://en.wikipedia.org/wiki/C%2B%2B11
+[cpp_seventeen]: https://en.wikipedia.org/wiki/C%2B%2B17
 [cpp_map]: http://en.cppreference.com/w/cpp/container/map
 [cpp_templates]: https://en.wikipedia.org/wiki/Template_(C%2B%2B)
 [cpp_stl]: https://de.wikipedia.org/wiki/Standard_Template_Library
