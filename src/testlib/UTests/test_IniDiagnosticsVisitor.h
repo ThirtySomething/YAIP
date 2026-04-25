@@ -154,6 +154,9 @@ TEST_CASE("IniDiagnosticsVisitor - formatting is stable", "[IniDiagnosticsVisito
 
     REQUIRE(IniDiagnosticsVisitor::DiagnosticToString(diagnostic) ==
             "[Error] DuplicateKey section[2] entry[5] sectionName='Main' key='port' occurrence=3: Duplicate key in section.");
+
+    REQUIRE(IniDiagnosticsVisitor::DiagnosticToJson(diagnostic) ==
+            "{\"severity\":\"Error\",\"code\":\"DuplicateKey\",\"section\":\"Main\",\"key\":\"port\",\"sectionIndex\":2,\"entryIndex\":5,\"keyOccurrenceInSection\":3,\"message\":\"Duplicate key in section.\"}");
 }
 
 TEST_CASE("IniDiagnosticsVisitor - report output is newline separated", "[IniDiagnosticsVisitor]")
@@ -171,6 +174,10 @@ TEST_CASE("IniDiagnosticsVisitor - report output is newline separated", "[IniDia
     REQUIRE(diagnostics.ReportGet() ==
             "[Error] EmptySectionName section[0] entry[0]: Section name is empty.\n"
             "[Warning] EmptyEntryValue section[0] entry[0] key='empty' occurrence=1: Entry value is empty.");
+
+    REQUIRE(diagnostics.ReportJsonGet() ==
+            "[{\"severity\":\"Error\",\"code\":\"EmptySectionName\",\"section\":\"\",\"key\":\"\",\"sectionIndex\":0,\"entryIndex\":0,\"keyOccurrenceInSection\":0,\"message\":\"Section name is empty.\"},"
+            "{\"severity\":\"Warning\",\"code\":\"EmptyEntryValue\",\"section\":\"\",\"key\":\"empty\",\"sectionIndex\":0,\"entryIndex\":0,\"keyOccurrenceInSection\":1,\"message\":\"Entry value is empty.\"}]");
 }
 
 #endif

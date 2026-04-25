@@ -29,6 +29,47 @@
 #include "YAIP.h"
 #include <sstream>
 
+namespace
+{
+    std::string EscapeJsonString(const std::string &value)
+    {
+        std::ostringstream escaped;
+
+        for (const auto c : value)
+        {
+            switch (c)
+            {
+            case '\\':
+                escaped << "\\\\";
+                break;
+            case '"':
+                escaped << "\\\"";
+                break;
+            case '\b':
+                escaped << "\\b";
+                break;
+            case '\f':
+                escaped << "\\f";
+                break;
+            case '\n':
+                escaped << "\\n";
+                break;
+            case '\r':
+                escaped << "\\r";
+                break;
+            case '\t':
+                escaped << "\\t";
+                break;
+            default:
+                escaped << c;
+                break;
+            }
+        }
+
+        return escaped.str();
+    }
+}
+
 namespace net
 {
     namespace derpaul
@@ -79,6 +120,25 @@ namespace net
                     stream << DiagnosticToString(m_Diagnostics[i]);
                 }
 
+                return stream.str();
+            }
+
+            std::string IniDiagnosticsVisitor::ReportJsonGet(void) const
+            {
+                std::ostringstream stream;
+                stream << '[';
+
+                for (std::size_t i = 0; i < m_Diagnostics.size(); ++i)
+                {
+                    if (i > 0)
+                    {
+                        stream << ',';
+                    }
+
+                    stream << DiagnosticToJson(m_Diagnostics[i]);
+                }
+
+                stream << ']';
                 return stream.str();
             }
 
@@ -135,6 +195,24 @@ namespace net
                 }
 
                 stream << ": " << diagnostic.Message;
+
+                return stream.str();
+            }
+
+            std::string IniDiagnosticsVisitor::DiagnosticToJson(const IniDiagnostic &diagnostic)
+            {
+                std::ostringstream stream;
+
+                stream << '{'
+                       << "\"severity\":\"" << EscapeJsonString(SeverityToString(diagnostic.Severity)) << "\","
+                       << "\"code\":\"" << EscapeJsonString(CodeToString(diagnostic.Code)) << "\","
+                       << "\"section\":\"" << EscapeJsonString(diagnostic.Section) << "\","
+                       << "\"key\":\"" << EscapeJsonString(diagnostic.Key) << "\","
+                       << "\"sectionIndex\":" << diagnostic.SectionIndex << ','
+                       << "\"entryIndex\":" << diagnostic.EntryIndex << ','
+                       << "\"keyOccurrenceInSection\":" << diagnostic.KeyOccurrenceInSection << ','
+                       << "\"message\":\"" << EscapeJsonString(diagnostic.Message) << "\""
+                       << '}';
 
                 return stream.str();
             }

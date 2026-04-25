@@ -70,10 +70,12 @@ namespace net
                 const std::vector<IniDiagnostic> &DiagnosticsGet(void) const;
                 bool HasDiagnostics(void) const;
                 std::string ReportGet(void) const;
+                std::string ReportJsonGet(void) const;
 
                 static const char *SeverityToString(const IniDiagnosticSeverity severity);
                 static const char *CodeToString(const IniDiagnosticCode code);
                 static std::string DiagnosticToString(const IniDiagnostic &diagnostic);
+                static std::string DiagnosticToJson(const IniDiagnostic &diagnostic);
 
                 virtual void VisitDocumentBegin(const YAIP &document) override;
                 virtual void VisitSectionBegin(const IniSection &section) override;
