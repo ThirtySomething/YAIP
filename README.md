@@ -125,7 +125,7 @@ bool INIFileSave(std::string Filename);
  * \param Filename Full qualified filename of the INI file
  * \return true if file exists otherwise false
  */
-bool INIFileExist(const std::string &Filename) const;
+static bool INIFileExist(const std::string &Filename);
 ```
 
 - Delete INI file
@@ -136,7 +136,7 @@ bool INIFileExist(const std::string &Filename) const;
  * \param Filename Full qualified filename of the INI file
  * \return true if file is deleted otherwise false
  */
-bool INIFileDelete(const std::string &Filename) const;
+static bool INIFileDelete(const std::string &Filename);
 ```
 
 ### Section related actions
@@ -148,28 +148,7 @@ bool INIFileDelete(const std::string &Filename) const;
  * Get all sections of the INI file
  * \return Vector with a std::strings for each section
  */
-tVectorString SectionListGet(void) const;
-```
-
-- Delete a section
-
-```C++
-/**
- * Remove section completely from internal data structure
- * \param Section Specified section
- */
-void SectionKill(const std::string &Section);
-```
-
-- Check if section is empty
-
-```C++
-/**
- * Check if section contains data
- * \param Section Specified section
- * \return true for empty section otherwise false
- */
-bool SectionEmpty(const std::string &Section) const;
+tListString SectionListGet(void);
 ```
 
 ### Key related actions
@@ -182,7 +161,7 @@ bool SectionEmpty(const std::string &Section) const;
  * \param Section Specified section
  * \return Vector with a std::strings for each key
  */
-tVectorString SectionKeyListGet(const std::string &Section) const;
+tListString SectionKeyListGet(const std::string &Section);
 ```
 
 - Get a value of a section/key combination - _Note: This is a templated method and requires in any case a default value._
@@ -221,7 +200,7 @@ bool SectionKeyValueSet(const std::string &Section, const std::string &Key, cons
  * \param Section Specified section
  * \param Key Specified key
  */
-void SectionKeyKill(const std::string &Section, const std::string &Key);
+bool SectionKeyKill(const std::string &Section, const std::string &Key);
 ```
 
 - Set/Clear a key value and keep an empty key

@@ -21,33 +21,32 @@
  * \file	IniEntryList.cpp
  * \author	ThirtySomething
  * \date	2016-09-19
- * \brief	List of INI sections
+ * \brief	List of INI entries
  */
 #include "IniEntryList.h"
 #include <algorithm>
 
- /**
-  * Namespace of YAIP
-  */
+/**
+ * Namespace of YAIP
+ */
 namespace net
 {
-	/**
-	 * Namespace of YAIP
-	 */
-	namespace derpaul
-	{
-		/**
-		 * Namespace of YAIP
-		 */
-		namespace yaip
-		{
-			// ******************************************************************
-			// ******************************************************************
-			void IniEntryList::sort(void)
-			{
-				std::sort(m_Elements.begin(), m_Elements.end(), net::derpaul::yaip::IniEntryCompare);
-			}
-		}
-	}
+    /**
+     * Namespace of YAIP
+     */
+    namespace derpaul
+    {
+        /**
+         * Namespace of YAIP
+         */
+        namespace yaip
+        {
+            // ******************************************************************
+            // ******************************************************************
+            void IniEntryList::sort(void)
+            {
+                std::sort(m_Elements.begin(), m_Elements.end(), net::derpaul::yaip::IniEntryCompare);
+            }
+        }
+    }
 }
-
