@@ -9,39 +9,36 @@
 
 ## General information
 
-**YAIP** is distributed under the terms of the **GNU LESSER GENERAL PUBLIC LICENSE**, version 3.0. The text of the license is included in the file
-[`LICENSE.TXT`][license] in the project root.
+**YAIP** is distributed under the terms of the **GNU LESSER GENERAL PUBLIC LICENSE**, version 3.0. The text of the license is included in the file [`LICENSE.TXT`][license] in the project root.
 
 ## Requirements
 
-To use **YAIP** you need to have an modern [C++17][cpp_seventeen] compiler. See the used parts at the section **Implementation Details**. Tested with
-[Visual Studio 2019][msvs].
+To use **YAIP** you need to have an modern [C++17][cpp_seventeen] compiler. See the used parts at the section **Implementation Details**. Tested on [WSL2][url_wsl2] on Windows.
 
 ## Supported Platforms
 
-Supported platforms are all platforms where the code compiles and the tests run without any error. A raw [CMake] configuration exists and is working for
-
-- `nmake` - the command line make system of Microsoft
-- `make` - the default Unix make system
+Supported platforms are all platforms where the code compiles and the tests run without any error. As build system [CMake] is defined.
 
 ## Motivation
 
 Searching for INI parsers for C++ fires up a lot of them. Most of them come with a lot of stuff/classes around, some of them as library. Only a few of them offers plain classes. Also only a few of them are portable. And I'm missing the usage of modern C++ like own [templates][cpp_templates] and the usage of the [STL][cpp_stl]. I like to improve my C++ skills so I decided to write my own INI file parser.
 
+The re-work of the parser was done and supported by [AI][url_ai].
+
 ## Implementation Details
 
-- Detection of sections, keys, values, and comments is done with an [ANTLR4][antlr4]-based parser generated from INI grammar files.
+- The parser is an [ANTLR4][antlr4]-based parser generated from INI grammar files.
 - The internal data storage methods are based on [std::string][cpp_string].
 - Templated methods are used for other datatypes calling converters from and to [std::string][cpp_string].
 
 ## Used tools
 
-- As testing framework [Catch2][catch2] is used.
-- Catch2 is fetched automatically from GitHub during CMake configure (no git submodule required).
-- The parser is generated with [ANTLR4][antlr4] during CMake build.
-- For general C++ style [CppCheck][CppCheck] is used.
-- For code metrics [SourceMonitor][SourceMonitor] is used.
-- For code coverage [OpenCppCoverage][OpenCppCoverage] is used.
+- [Catch2][catch2]
+  - Used as testing framework
+  - Fetched automatically from GitHub during CMake configure (git submodule no longer required)
+- [ANTLR4][antlr4]
+  - Fetched automatically from GitHub/Homepage during CMake configure
+  - Used as parser when reading INI files
 
 ## ANTLR Parser Generation
 
@@ -218,23 +215,25 @@ bool SectionKeyValueClear(const std::string &Section, const std::string &Key);
 - The implementation has to be checked against the inofficial specification at [Wikipedia][wiki_ini] and the tests have to satisfiy the specification.
 - Add tests for untested classes.
 
-[catch2]: https://github.com/catchorg/Catch2
-[antlr4]: https://www.antlr.org/
 [CMake]: https://cmake.org/
 [CppCheck]: http://cppcheck.sourceforge.net/
-[cpp_seventeen]: https://en.wikipedia.org/wiki/C%2B%2B17
-[cpp_map]: http://en.cppreference.com/w/cpp/container/map
-[cpp_templates]: https://en.wikipedia.org/wiki/Template_(C%2B%2B)
-[cpp_stl]: https://de.wikipedia.org/wiki/Standard_Template_Library
-[cpp_string]: http://en.cppreference.com/w/cpp/string/basic_string
-[cpp_vector]: http://en.cppreference.com/w/cpp/container/vector
-[license]: https://github.com/ThirtySomething/YAIP/blob/master/LICENSE.TXT
-[msvs]: https://www.visualstudio.com/
 [OpenCppCoverage]: https://github.com/OpenCppCoverage
 [SourceMonitor]: http://www.campwoodsw.com/sourcemonitor.html
-[wiki_ini]: https://en.wikipedia.org/wiki/INI_file#Comments
+[antlr4]: https://www.antlr.org/
+[catch2]: https://github.com/catchorg/Catch2
+[cpp_map]: http://en.cppreference.com/w/cpp/container/map
+[cpp_seventeen]: https://en.wikipedia.org/wiki/C%2B%2B17
+[cpp_stl]: https://de.wikipedia.org/wiki/Standard_Template_Library
+[cpp_string]: http://en.cppreference.com/w/cpp/string/basic_string
+[cpp_templates]: https://en.wikipedia.org/wiki/Template_(C%2B%2B)
+[cpp_vector]: http://en.cppreference.com/w/cpp/container/vector
 [lang_cpp]: https://isocpp.org/
 [lang_cpp_badge]: https://img.shields.io/badge/language-C++-blue.svg
+[license]: https://github.com/ThirtySomething/YAIP/blob/master/LICENSE.TXT
+[msvs]: https://www.visualstudio.com/
+[url_ai]: https://en.wikipedia.org/wiki/Artificial_intelligence
+[url_wsl2]: https://learn.microsoft.com/windows/wsl/
+[wiki_ini]: https://en.wikipedia.org/wiki/INI_file#Comments
 [yaip_issues]: # "Open Issues"
 [yaip_issues_badge]: https://img.shields.io/github/issues/ThirtySomething/YAIP.svg?maxAge=360
 [yaip_license]: http://www.gnu.org/licenses/lgpl-3.0
