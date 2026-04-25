@@ -39,50 +39,29 @@ namespace net
             {
             public:
                 IniSection(void);
-
                 virtual ~IniSection(void);
-
                 virtual void clear(void) override;
-
                 virtual std::string ElementCommentGet(void) const override;
-
                 virtual void ElementCommentSet(const std::string &ElementComment) override;
-
                 virtual std::string ElementIdentifierGet(void) const override;
-
                 virtual void ElementIdentifierSet(const std::string &ElementIdentifier) override;
-
                 void EntryAdd(const IniEntryPtr &Entry);
-
                 void EntryDelete(const IniEntryPtr &Entry);
-
                 IniEntryPtr EntryFind(const std::string &EntryName);
-
                 tListString EntryKeyList(void) const;
-
                 bool IsEmpty(void) const;
-
                 IniEntryList SectionEntriesGet(void) const;
-
                 void SectionEntriesSet(const IniEntryList &SectionEntries);
-
                 void sort(void);
-
                 std::string to_string(void) const override;
-
                 void Accept(IIniVisitor &visitor) const;
-
                 void ImplicitGlobalSet(const bool IsImplicitGlobal);
-
                 bool IsImplicitGlobal(void) const;
 
             private:
                 IniEntryList m_Entries;
-
                 std::string m_SectionComment;
-
                 std::string m_SectionName;
-
                 bool m_IsImplicitGlobal;
             };
 

@@ -33,7 +33,6 @@ namespace net
             {
             public:
                 virtual ~IIniParserStrategy() = default;
-
                 virtual bool Parse(const std::string &content, IniSectionList &sections) const = 0;
             };
         }

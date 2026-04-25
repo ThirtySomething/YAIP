@@ -37,37 +37,24 @@ namespace net
             {
             public:
                 IniEntry(void);
-
                 virtual ~IniEntry(void);
-
                 virtual void clear(void) override;
-
                 virtual std::string ElementCommentGet(void) const override;
-
                 virtual void ElementCommentSet(const std::string &ElementComment) override;
-
                 virtual std::string ElementIdentifierGet(void) const override;
-
                 virtual void ElementIdentifierSet(const std::string &ElementIdentifier) override;
-
                 virtual std::string ElementValueGet(void) const;
-
                 virtual void ElementValueSet(const std::string &ElementValue);
-
                 std::string to_string(void) const override;
-
                 void Accept(IIniVisitor &visitor) const;
 
             private:
                 std::string m_EntryComment;
-
                 std::string m_EntryKey;
-
                 std::string m_EntryValue;
             };
 
             using IniEntryPtr = std::shared_ptr<IniEntry>;
-
             bool IniEntryCompare(const IniEntryPtr Left, const IniEntryPtr Right);
         }
     }

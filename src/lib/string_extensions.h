@@ -28,15 +28,13 @@ namespace net
     {
         namespace yaip
         {
-            const std::string WHITESPACE = " \n\r\t\f\v";
+            static const std::string WHITESPACE = " \n\r\t\f\v";
 
             std::string ltrim(const std::string &in);
-
             std::string rtrim(const std::string &in);
-
             bool strcmpcaseless(const std::string &left, const std::string &right);
-
             std::string trim(const std::string &in);
+            std::string EscapeJsonString(const std::string &value);
         }
     }
 }

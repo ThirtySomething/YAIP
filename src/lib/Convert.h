@@ -46,11 +46,9 @@ namespace net
             {
             public:
                 static const std::string StringTrue;
-
                 static const std::string StringFalse;
 
                 static void ConvertTo(const ConvertValue &Value, std::string &ValueString);
-
                 static void ConvertTo(const std::string &ValueString, ConvertValue &Value);
 
                 template <typename T>

@@ -18,6 +18,7 @@
 //******************************************************************************
 
 #include "IniEntry.h"
+
 #include "IIniVisitor.h"
 #include "string_extensions.h"
 #include <iostream>

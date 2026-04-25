@@ -18,6 +18,7 @@
 //******************************************************************************
 
 #include "YAIP.h"
+
 #include "IIniVisitor.h"
 #include "IniParserFactory.h"
 #include <fstream>

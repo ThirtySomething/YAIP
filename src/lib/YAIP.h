@@ -41,25 +41,18 @@ namespace net
             {
             public:
                 YAIP(void);
-
                 virtual ~YAIP(void);
 
                 void Clear(void);
 
                 static bool INIFileDelete(const std::string &Filename);
-
                 static bool INIFileExist(const std::string &Filename);
-
                 bool INIFileLoad(const std::string &Filename);
-
                 bool INIFileSave(const std::string &Filename);
 
                 bool SectionKeyKill(const std::string &Section, const std::string &Key);
-
                 tListString SectionKeyListGet(const std::string &Section);
-
                 bool SectionKeyValueClear(const std::string &Section, const std::string &Key);
-
                 std::string SectionKeyValueGet(const std::string &Section, const std::string &Key, const std::string &Default);
 
                 template <typename VariableType>
@@ -74,7 +67,6 @@ namespace net
                 }
 
                 bool SectionKeyValueSet(const std::string &Section, const std::string &Key, const std::string &Value);
-
                 bool SectionKeyValueSet(const std::string &Section, const std::string &Key, const char *Value);
 
                 template <typename VariableType>
@@ -86,16 +78,12 @@ namespace net
                 }
 
                 tListString SectionListGet(void);
-
                 std::string to_string(void) const;
-
                 void Accept(IIniVisitor &visitor) const;
 
             protected:
                 IniSectionList m_Sections;
-
                 bool ParseFileContent(tListString FileContent);
-
                 std::unique_ptr<IIniParserStrategy> m_ParserStrategy;
             };
         }

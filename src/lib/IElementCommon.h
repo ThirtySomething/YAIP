@@ -33,15 +33,10 @@ namespace net
             {
             public:
                 virtual void clear(void) = 0;
-
                 virtual std::string ElementCommentGet(void) const = 0;
-
                 virtual void ElementCommentSet(const std::string &ElementComment) = 0;
-
                 virtual std::string ElementIdentifierGet(void) const = 0;
-
                 virtual void ElementIdentifierSet(const std::string &ElementIdentifier) = 0;
-
                 virtual std::string to_string(void) const = 0;
             };
         }

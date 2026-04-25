@@ -18,10 +18,12 @@
 //******************************************************************************
 
 #include "string_extensions.h"
+
 #include <algorithm>
 #include <cctype>
 #include <cstring>
 #include <iostream>
+#include <sstream>
 
 namespace net
 {
@@ -51,6 +53,45 @@ namespace net
             {
                 return rtrim(ltrim(in));
             }
+
+            std::string EscapeJsonString(const std::string &value)
+            {
+                std::ostringstream escaped;
+
+                for (const auto c : value)
+                {
+                    switch (c)
+                    {
+                    case '\\':
+                        escaped << "\\\\";
+                        break;
+                    case '"':
+                        escaped << "\\\"";
+                        break;
+                    case '\b':
+                        escaped << "\\b";
+                        break;
+                    case '\f':
+                        escaped << "\\f";
+                        break;
+                    case '\n':
+                        escaped << "\\n";
+                        break;
+                    case '\r':
+                        escaped << "\\r";
+                        break;
+                    case '\t':
+                        escaped << "\\t";
+                        break;
+                    default:
+                        escaped << c;
+                        break;
+                    }
+                }
+
+                return escaped.str();
+            }
+
         }
     }
 }

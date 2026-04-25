@@ -34,7 +34,6 @@ namespace net
             {
             public:
                 virtual ~IIniVisitor() = default;
-
                 virtual void VisitDocumentBegin(const YAIP &document) = 0;
                 virtual void VisitSectionBegin(const IniSection &section) = 0;
                 virtual void VisitEntry(const IniEntry &entry) = 0;

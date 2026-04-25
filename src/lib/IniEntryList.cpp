@@ -18,6 +18,7 @@
 //******************************************************************************
 
 #include "IniEntryList.h"
+
 #include <algorithm>
 
 namespace net

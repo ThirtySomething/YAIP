@@ -38,9 +38,7 @@ namespace net
             {
             public:
                 IniDocumentBuilder &section(const std::string &name);
-
                 IniDocumentBuilder &entry(const std::string &key, const std::string &value);
-
                 IniDocumentBuilder &entry(const std::string &key, const char *value);
 
                 template <typename T>
